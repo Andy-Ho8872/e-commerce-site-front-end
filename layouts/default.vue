@@ -21,7 +21,7 @@ export default {
 
 <style>
   html, body {
-        overflow-x: hidden;
+      overflow-x: hidden;
     }
 </style>>
 

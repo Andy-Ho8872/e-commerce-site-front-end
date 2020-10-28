@@ -38,7 +38,7 @@
                 dense
                 placeholder="搜尋商品"
                 class="d-flex mt-2 mx-2"
-                append-icon="mdi-map-marker">
+                append-icon="fa-search">
             </v-text-field>
             
             <a href="#" class="CartLogo">
@@ -71,11 +71,7 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
-    html, body {
-        overflow-x: hidden;
-    }
-
+<style lang="scss" scoped> 
     .Navbar {
         padding: 1em 10em; 
     }
