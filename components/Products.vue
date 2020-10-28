@@ -2,7 +2,7 @@
     <v-card max-width="300" height="200" class="Products justify-center align-center flex-wrap my-10">
         <v-col>
             <v-card-subtitle class="text-center">{{ title }}</v-card-subtitle>
-            <v-img :src="imgURL" max-width="100" max-height="100" class="mx-auto"></v-img>
+            <v-img :src="imgURL" max-width="100" max-height="100" class="ma-auto"></v-img>
         </v-col>
     </v-card>
 </template>

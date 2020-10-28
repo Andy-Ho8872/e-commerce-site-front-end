@@ -9,10 +9,10 @@
     <v-divider></v-divider>
 
     <!-- 商品陳列 -->
-    <div v-for="product in products" :key="product.id">
+    <div v-for="item in products" :key="item.id">
       <Products
-      :title="product.title"
-      :imgURL="product.url"
+      :title="item.title"
+      :imgURL="item.url"
       />
     </div>   
 

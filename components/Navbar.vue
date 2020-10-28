@@ -28,11 +28,11 @@
         <v-row class="d-flex flex-nowrap">
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
             <v-spacer class="hidden-sm-and-down"></v-spacer>
-
+            <!-- 商城 ICON -->
             <a href="#" class="BrandLogo">
                 <img src="../static/logo_size_invert.png" alt="LOGO" width="45" height="45" class="mx-6 mt-1">
             </a>
-            
+            <!-- 搜尋區域 -->
             <v-text-field 
                 solo 
                 dense
@@ -40,11 +40,11 @@
                 class="d-flex mt-2 mx-2"
                 append-icon="fa-search">
             </v-text-field>
-            
+            <!-- 購物車 ICON -->
             <a href="#" class="CartLogo">
                 <v-icon medium color="white" class="d-flex mx-6 py-5">mdi-cart-outline</v-icon>
             </a>
-            
+            <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
             <v-spacer class="hidden-sm-and-down"></v-spacer>
         </v-row>
 
