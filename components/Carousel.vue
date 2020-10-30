@@ -30,7 +30,9 @@ export default {
     data () {
         return {
             // 計數器從 0 開始
-            counter: 0
+            counter: 0,
+            // 圖片移動量從 預設為 355px (v-card 寬度)
+            slideValue: 355
         }
     },
     methods: {
@@ -39,15 +41,34 @@ export default {
             this.counter += value
             console.log(this.counter);
         },
-        // 依據 counter 輪播圖片每次移動 (-355 x counter) px, 355px 為 v-card 寬度
         Slide () {
             // 先取得使用者當前螢幕的寬度
-            let clientWidth = document.querySelector('.carousel').offsetWidth
-            
-            // 
+            const clientWidth = document.body.offsetWidth
             const slide = document.querySelector('.switch_photo')
-            slide.style.transform = `translateX( ${-(this.counter) * 355}px )`
+
+            // i Phone 6, 7, 8, X 寬度 (375px)
+            if (clientWidth === 375) {
+                this.slideValue = clientWidth - 20 // 355 px
+            } 
+            // i Phone 6, 7, 8, plus 寬度(414px)
+            else if (clientWidth === 414) {
+                this.slideValue = clientWidth - 20 // 394 px
+            }
+            // i pad 寬度 (768px)
+            else if (clientWidth === 768) {
+                this.slideValue = clientWidth - 20 // 748 px
+            }
+            // i pad pro 寬度 (1024px)
+            else if (clientWidth === 1024) {
+                this.slideValue = clientWidth - 148 // 876 px
+            }
+            // 原始寬度 (355 px (v-card 寬度) )
+            else {
+                this.slideValue = this.slideValue
+            }
+            // 圖片轉場、位移
             slide.style.transition = "transform 0.4s ease-in-out"
+            slide.style.transform = `translateX( ${ -(this.counter) * this.slideValue }px )`
             // 若圖片已達最左邊
             if (this.counter < 0) {
                 // 將移動量重設為 0 (即不動)
@@ -86,7 +107,47 @@ export default {
         color:white !important;
     }
 
-    // @media (max-width: 412px) {
-    //     
-    // }
+    @media (max-width: 375px) {
+        .v-card {
+            max-width: 355px !important;
+            
+        }
+        .v-image {
+            max-width: 355px !important;
+            max-height: 355px !important;
+        }
+    }
+
+    @media (min-width: 414px) {
+        .v-card {
+            max-width: 394px !important;
+            
+        }
+        .v-image {
+            max-width: 394px !important;
+            max-height: 394px !important;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .v-card {
+            max-width: 374px !important;
+            
+        }
+        .v-image {
+            max-width: 374px !important;
+            max-height: 374px !important;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .v-card {
+            max-width: 438px !important;
+            
+        }
+        .v-image {
+            max-width: 438px !important;
+            max-height: 438px !important;
+        }
+    }
 </style>
