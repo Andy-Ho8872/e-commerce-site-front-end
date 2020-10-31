@@ -16,7 +16,8 @@
         </v-icon>
         <!-- 輪播圖片 -->
         <div class="switch_photo d-flex ">
-            <v-card v-for="(item, index) in products" :key="index" tile max-width="355">
+            <!-- v-card 和 v-img 預設寬度為 355 px -->
+            <v-card class="single_card" v-for="(item, index) in products" :key="index" tile max-width="355">
                 <v-img :src="item.url" max-width="355" max-height="355" class="my-auto"></v-img>
                 <v-card-subtitle class="text-center heading-6">{{ item.title }}</v-card-subtitle>
             </v-card>
@@ -31,40 +32,48 @@ export default {
         return {
             // 計數器從 0 開始
             counter: 0,
-            // 圖片移動量從 預設為 355px (v-card 寬度)
-            slideValue: 355
+            // 圖片移動量  預設為 355px (v-card 寬度)
+            slideValue: 355,
+            // 最大滑動次數 (會依照使用者當前螢幕寬度來取值)
+            maxSlide: null
         }
     },
     methods: {
-        // 增加 或 減少 counter 計數
+        // 增加 或 減少 counter 計數 (手動點擊箭頭)
         Counter (value) {
             this.counter += value
-            console.log(this.counter);
+            console.log('counter',this.counter);
         },
+        // 輪播張數為 10張
         Slide () {
             // 先取得使用者當前螢幕的寬度
             const clientWidth = document.body.offsetWidth
+            // 滑動區域
             const slide = document.querySelector('.switch_photo')
-
             // i Phone 6, 7, 8, X 寬度 (375px)
             if (clientWidth === 375) {
                 this.slideValue = clientWidth - 20 // 355 px
+                this.maxSlide = 9
             } 
             // i Phone 6, 7, 8, plus 寬度(414px)
             else if (clientWidth === 414) {
                 this.slideValue = clientWidth - 20 // 394 px
+                this.maxSlide = 9
             }
-            // i pad 寬度 (768px)
+            // i pad 寬度 (768px) 一次顯示 2 張圖片
             else if (clientWidth === 768) {
                 this.slideValue = clientWidth - 20 // 748 px
+                this.maxSlide = 4
             }
-            // i pad pro 寬度 (1024px)
+            // i pad pro 寬度 (1024px) 一次顯示 2 張圖片
             else if (clientWidth === 1024) {
                 this.slideValue = clientWidth - 148 // 876 px
+                this.maxSlide = 4
             }
-            // 原始寬度 (355 px (v-card 寬度) )
+            // 桌電瀏覽原始寬度 (355 px (v-card 寬度) )
             else {
                 this.slideValue = this.slideValue
+                this.maxSlide = 5
             }
             // 圖片轉場、位移
             slide.style.transition = "transform 0.4s ease-in-out"
@@ -75,7 +84,25 @@ export default {
                 slide.style.transform = `translateX(0)`
                 this.counter = 0
             }
+            // 若圖片已達最右邊
+            if (this.counter > this.maxSlide - 1) {
+                this.counter = this.maxSlide
+                this.maxSlide = this.maxSlide
+                slide.style.transform = `translateX( ${ -(this.maxSlide) * this.slideValue }px )`
+            }
         },
+    },
+    mounted () {
+        // 圖片自動輪播
+        setInterval(() => {
+            this.counter++ // 自動增加計數
+            this.Slide()
+            if (this.counter > this.maxSlide - 1) {
+                // 圖片重新移動至最左邊
+                this.counter = 0
+                this.maxSlide = this.maxSlide
+            }
+        }, 8000) // 8 秒觸發一次
     }
 }
 </script>
@@ -107,7 +134,7 @@ export default {
         color:white !important;
     }
 
-    @media (max-width: 375px) {
+    @media (width: 375px) {
         .v-card {
             max-width: 355px !important;
             
@@ -118,7 +145,7 @@ export default {
         }
     }
 
-    @media (min-width: 414px) {
+    @media (width: 414px) {
         .v-card {
             max-width: 394px !important;
             
@@ -129,7 +156,7 @@ export default {
         }
     }
 
-    @media (min-width: 768px) {
+    @media (width: 768px) {
         .v-card {
             max-width: 374px !important;
             
@@ -140,7 +167,7 @@ export default {
         }
     }
 
-    @media (min-width: 1024px) {
+    @media (width: 1024px) {
         .v-card {
             max-width: 438px !important;
             
