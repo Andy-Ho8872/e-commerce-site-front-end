@@ -1,13 +1,15 @@
 <template>
   <!-- v-container will automaticlly use default margin -->
   <v-container>
+    <!-- 資訊公告 -->
+    <Announcement
+    
+    />
     <!-- 圖片輪播 -->
     <Carousel
     :products="products"
     />
-    
     <v-divider></v-divider>
-
     <!-- 商品陳列 -->
     <div v-for="item in products" :key="item.id">
       <Products

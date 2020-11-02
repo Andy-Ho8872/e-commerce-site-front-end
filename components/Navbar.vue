@@ -30,7 +30,7 @@
             <v-spacer class="hidden-sm-and-down"></v-spacer>
             <!-- 商城 ICON -->
             <a href="#" class="BrandLogo">
-                <img src="../static/logo_size_invert.png" alt="LOGO" width="45" height="45" class="mx-6 mt-1">
+                <img src="../static/logo.png" alt="LOGO" width="45" height="45" class="mx-6 mt-1">
             </a>
             <!-- 搜尋區域 -->
             <v-text-field 

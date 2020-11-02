@@ -35,7 +35,9 @@ export default {
             // 圖片移動量  預設為 355px (v-card 寬度)
             slideValue: 355,
             // 最大滑動次數 (會依照使用者當前螢幕寬度來取值)
-            maxSlide: null
+            maxSlide: null,
+            // 將 intetval 寫進變數裡面，來中止或繼續執行
+            interval: ''
         }
     },
     methods: {
@@ -94,7 +96,7 @@ export default {
     },
     mounted () {
         // 圖片自動輪播
-        setInterval(() => {
+        this.interval = setInterval(() => {
             this.counter++ // 自動增加計數
             this.Slide()
             if (this.counter > this.maxSlide - 1) {
@@ -102,7 +104,11 @@ export default {
                 this.counter = 0
                 this.maxSlide = this.maxSlide
             }
-        }, 8000) // 8 秒觸發一次
+        }, 5000) // 觸發頻率
+    },
+    // 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
+    beforeDestroy () { // 在 Vue3 為 beforeUnmount
+        clearInterval(this.interval)
     }
 }
 </script>
