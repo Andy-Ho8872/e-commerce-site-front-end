@@ -18,7 +18,7 @@
                     <span>{{ list.text }}</span>
                 </li>
                 <!-- 註冊 登入(文字) -->
-                <a href="#" class="mx-2">註冊</a>
+                <nuxt-link to="/register" class="mx-2">註冊</nuxt-link>
                 <v-divider vertical class="my-1"></v-divider>
                 <a href="#" class="mx-2">登入</a>
             </ul>
@@ -29,9 +29,9 @@
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
             <v-spacer class="hidden-sm-and-down"></v-spacer>
             <!-- 商城 ICON -->
-            <a href="#" class="BrandLogo">
+            <nuxt-link to="/">
                 <img src="../static/logo.png" alt="LOGO" width="45" height="45" class="mx-6 mt-1">
-            </a>
+            </nuxt-link>
             <!-- 搜尋區域 -->
             <v-text-field 
                 solo 
