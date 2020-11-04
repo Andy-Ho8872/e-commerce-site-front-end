@@ -1,9 +1,15 @@
 <template>
   <!-- v-container will automaticlly use default margin -->
   <v-container>
-    <!-- 資訊公告 -->
+    <!-- 優惠計時 (月份從0開始計算， 例如: 數字5 == 6月)-->
     <Announcement
-    
+    :year='2020'
+    :month='12'
+    :day='5'
+    :hour='8'
+    :minute='7'
+    :second='6'
+    :millisecond='4'
     />
     <!-- 圖片輪播 -->
     <Carousel
