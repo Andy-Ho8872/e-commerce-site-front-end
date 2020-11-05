@@ -1,4 +1,5 @@
 <template>
+<!-- 商品卡片 -->
     <v-card max-width="300" height="200" class="Products justify-center align-center flex-wrap my-10">
         <v-col>
             <v-card-subtitle class="text-center">{{ title }}</v-card-subtitle>

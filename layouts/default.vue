@@ -1,6 +1,6 @@
 <template>
   <v-app dark app>
-    <Navbar/>
+    <Header/>
     <v-main>
       <!-- v-container will automaticlly use default margin -->
         <nuxt />  

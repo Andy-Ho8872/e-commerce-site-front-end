@@ -2,24 +2,25 @@
 <!-- 倒數計時器 -->
     <v-card color="Timer_wrapper purple lighten-2 mb-4 headline">
         <v-row>
+            <!-- 日 -->
             <v-col class="days text-center">   
                 <div>{{ showDays }}</div>
                 <span>天</span>
             </v-col>
             <span class="pt-5 display-1">:</span>
-
+            <!-- 時 -->
             <v-col class="hours text-center">
                 <div>{{ showHours }}</div>
                 <span>時</span>
             </v-col>
             <span class="pt-5 display-1">:</span>
-
+            <!-- 分 -->
             <v-col class="hours text-center">
                 <div>{{ showMinutes }}</div>
                 <span>分</span>
             </v-col>
             <span class="pt-5 display-1">:</span>
-
+            <!-- 秒 -->
             <v-col class="seconds text-center">
                 <div>{{ showSeconds }}</div>
                 <span>秒</span>
