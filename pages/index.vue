@@ -16,6 +16,17 @@
     :products="products"
     />
     <v-divider></v-divider>
+    <!-- 置頂按鈕 -->
+    <v-btn
+      @click="scrollTop" 
+      class="to_Top mx-2"
+      fab
+      dark
+      large
+      color="primary"
+      >
+      <v-icon>fa-chevron-up</v-icon>
+    </v-btn>
     <!-- 商品陳列 -->
     <div v-for="item in products" :key="item.id">
       <Products
@@ -23,7 +34,6 @@
       :imgURL="item.url"
       />
     </div>   
-
   </v-container>
 </template> 
 
@@ -39,6 +49,24 @@ export default {
     // get product results
     return { products: res.data }
   },
+  methods: {
+    // 點擊移動到最上層
+    scrollTop () {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+    }
+  }
 }
 
 </script>
+
+<style lang="scss" scoped>
+  .to_Top {
+    bottom: 10%;
+    position: fixed;
+    right: 0;
+    z-index: 10000;
+  }
+</style>

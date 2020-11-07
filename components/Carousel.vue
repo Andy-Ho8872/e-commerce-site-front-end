@@ -1,4 +1,5 @@
 <template>
+
 <!-- 可以設置 max-width 來限制輪播的寬度 -->
     <div class="carousel">
         <!-- 輪播控制按鈕 -->
@@ -23,6 +24,7 @@
             </v-card>
         </div>
     </div>
+    
 </template>
 
 <script>

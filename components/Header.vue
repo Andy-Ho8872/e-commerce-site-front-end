@@ -2,8 +2,7 @@
     <div class="Navbar blue darken-1 white--text">
         <!-- Navbar 上層 -->
         <v-row class="Navbar_upper d-md-flex align-center justify-center px-5">
-
-            <div class="upper_content d-flex caption">
+            <div class="upper_content d-flex caption my-3">
                 <div class="d-flex">
                     <span >追蹤我們</span>
                     <div v-for="(icon,index) in icons" :key="index">
@@ -23,11 +22,37 @@
                     <span>{{ list.text }}</span>
                 </li>
                 <!-- 註冊 登入(文字) -->
-                <nuxt-link to="/Auth/register" class="mx-2">註冊</nuxt-link>
-                <v-divider vertical class="my-1"></v-divider>
-                <nuxt-link to="/Auth/login" class="mx-2">登入</nuxt-link>
-            </div>
+                <li>
+                    <nuxt-link 
+                        to="/Auth/register" 
+                        class="mx-2"
+                        >
+                        <v-icon 
+                            class="mb-1"
+                            x-small 
+                            color="white">
+                            fa-user-plus
+                        </v-icon>
+                        註冊
+                    </nuxt-link>
+                </li>
+                <v-divider vertical class="my-1 hidden-xs-only"></v-divider>
+                <li>
+                    <nuxt-link 
+                        to="/Auth/login" 
+                        class="mx-2"
+                        >
+                        <v-icon 
+                            class="mb-1"
+                            x-small 
+                            color="white">
+                            fa-user-plus
+                        </v-icon>
+                        登入
+                    </nuxt-link>
+                </li>
 
+            </div>
         </v-row>
 
         <!-- Navbar 下層 -->
@@ -79,7 +104,10 @@ export default {
 
 <style lang="scss" scoped> 
     .Navbar {
-        padding: 1em 10em; 
+        padding: 1em 10em;
+        width: 100%;
+        
+        top: 0;
     }
 
     .theme--light.v-divider {
@@ -98,16 +126,28 @@ export default {
     @media (max-width: 1024px) {
         .Navbar {
             padding: 1em 0em;
+            width: 100%;
             
+            top: 0;
+            z-index: 10000;
+
         }
     }
     @media (max-width :440px) {
-        .Navbar_upper, .lower_content {
+        .Navbar_upper {
+            background: rgba($color: #000000, $alpha: 0.8);
             flex-direction: column;
             align-content: flex-start;
             .upper_content {
                 span {
                     display: none;
+                }
+            }
+            .lower_content {
+                flex-direction: column;
+                align-content: flex-start;
+                li {
+                    margin: 20px 0px;
                 }
             }
         }     
