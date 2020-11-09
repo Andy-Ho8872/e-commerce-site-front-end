@@ -1,9 +1,9 @@
 <template>
-  <v-app dark app>
+  <v-app dark>
     <Header/>
     <v-main>
       <!-- v-container will automaticlly use default margin -->
-        <nuxt />  
+        <nuxt/>  
     </v-main>
   </v-app>
 </template>
