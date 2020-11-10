@@ -137,7 +137,7 @@ export default {
                 { 'icon' : 'fa-question', 'text' : '幫助中心'},
             ],
             // 觸發 class
-            active: true
+            active: false
         }
     },
 }
