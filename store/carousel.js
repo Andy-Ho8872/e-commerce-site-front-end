@@ -6,9 +6,6 @@ export const state = () => ({
     slideValue: 355,
     // 最大滑動次數 (會依照使用者當前螢幕寬度來取值)
     maxSlide: null,
-
-    // 將 intetval 寫進變數裡面，來中止或繼續執行
-    // interval: ''
 })
 
 export const mutations =  {
@@ -58,10 +55,10 @@ export const mutations =  {
         }
         // 若圖片已達最右邊
         if (state.counter > state.maxSlide - 1) {
-            state.counter = state.maxSlide
+            // state.counter = state.maxSlide
             state.maxSlide = state.maxSlide
             slide.style.transform = `translateX( ${ -(state.maxSlide) * state.slideValue }px )`
-            // state.counter = 0
+            state.counter = 0
         }
     }
 }

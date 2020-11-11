@@ -3,6 +3,7 @@
 <!-- 可以設置 max-width 來限制輪播的寬度 -->
     <div class="carousel">
         <!-- 輪播控制按鈕 --> 
+        
         <v-icon 
             large class="switchBtn" 
             id="prev" 
@@ -30,25 +31,14 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 
 export default {
     props: ['products'],
-
     data () {
         return {
-            // counter: 0,
-            // slideValue: 355,
-            // maxSlide: null,
             interval: ''
         }
-    },
-    computed : {
-        // Getters (待改)
-        ...mapGetters({
-            currentCounter : 'carousel/getCurrentCounter',
-            currentMaxSlide : 'carousel/getCurrentMaxSlide'
-        }),
     },
     methods: {
         // Mutations
@@ -65,91 +55,19 @@ export default {
         slideCarousel () {
             this.setCarousel()
         },
-
-        
-
-
-    // 原始 code
-        // // 增加 或 減少 counter 計數 (手動點擊箭頭)
-        // Counter (value) {
-        //     this.counter += value
-        //     console.log('counter',this.counter);
-        // },
-
-        // 輪播張數為 10張
-        // Slide () {
-        //     // 先取得使用者當前螢幕的寬度
-        //     const clientWidth = document.body.offsetWidth
-        //     // 滑動區域
-        //     const slide = document.querySelector('.switch_photo')
-        //     // i Phone 6, 7, 8, X 寬度 (375px)
-        //     if (clientWidth === 375) {
-        //         this.slideValue = clientWidth - 20 // 355 px
-        //         this.maxSlide = 9
-        //     } 
-        //     // i Phone 6, 7, 8, plus 寬度(414px)
-        //     else if (clientWidth === 414) {
-        //         this.slideValue = clientWidth - 20 // 394 px
-        //         this.maxSlide = 9
-        //     }
-        //     // i pad 寬度 (768px) 一次顯示 2 張圖片
-        //     else if (clientWidth === 768) {
-        //         this.slideValue = clientWidth - 20 // 748 px
-        //         this.maxSlide = 4
-        //     }
-        //     // i pad pro 寬度 (1024px) 一次顯示 2 張圖片
-        //     else if (clientWidth === 1024) {
-        //         this.slideValue = clientWidth - 148 // 876 px
-        //         this.maxSlide = 4
-        //     }
-        //     // 桌電瀏覽原始寬度 (355 px (v-card 寬度) )
-        //     else {
-        //         this.slideValue = this.slideValue
-        //         this.maxSlide = 5
-        //     }
-        //     // 圖片轉場、位移
-        //     slide.style.transition = "transform 0.4s ease-in-out"
-        //     slide.style.transform = `translateX( ${ -(this.counter) * this.slideValue }px )`
-        //     // 若圖片已達最左邊
-        //     if (this.counter < 0) {
-        //         // 將移動量重設為 0 (即不動)
-        //         slide.style.transform = `translateX(0)`
-        //         this.counter = 0
-        //     }
-        //     // 若圖片已達最右邊
-        //     if (this.counter > this.maxSlide - 1) {
-        //         this.counter = this.maxSlide
-        //         this.maxSlide = this.maxSlide
-        //         slide.style.transform = `translateX( ${ -(this.maxSlide) * this.slideValue }px )`
-        //     }
-        // },
     },
-
-    mounted () { // 待改
+    // 頁面掛載後執行自動輪播
+    mounted () {
         // 圖片自動輪播
         this.interval = setInterval(() => {
-            this.changeCounter(1)
-            this.slideCarousel()
-        }, 3000)
+            this.changeCounter(1);
+            this.slideCarousel(); 
+        }, 5000)
     },
-    
-    // mounted () {
-    //     // 圖片自動輪播
-    //     this.interval = setInterval(() => {
-    //         this.counter++ // 自動增加計數
-    //         this.Slide()
-    //         if (this.counter > this.maxSlide - 1) {
-    //             // 圖片重新移動至最左邊
-    //             this.counter = 0
-    //             this.maxSlide = this.maxSlide
-    //         }
-    //     }, 5000) // 觸發頻率
-    // },
-
-    // // 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
-    // beforeDestroy () { // 在 Vue3 為 beforeUnmount
-    //     clearInterval(this.interval)
-    // }
+    // 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
+    beforeDestroy () { // 在 Vue3 為 beforeUnmount
+        clearInterval(this.interval)
+    }
 }
 </script>
 
