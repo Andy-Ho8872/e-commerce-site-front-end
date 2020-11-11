@@ -2,22 +2,20 @@
 
 <!-- 可以設置 max-width 來限制輪播的寬度 -->
     <div class="carousel">
-        <!-- 輪播控制按鈕 --> 
-        
+        <!-- 輪播控制按鈕(左) --> 
         <v-icon 
             large class="switchBtn" 
             id="prev" 
             @click="changeCounter(-1) ; slideCarousel()">
             fa-angle-left
         </v-icon>
-        <!-- 測試用 -->
+        <!-- 輪播控制按鈕(右) --> 
         <v-icon 
             large class="switchBtn" 
             id="next" 
             @click="changeCounter(1) ; slideCarousel()">
             fa-angle-right
         </v-icon>
-
         <!-- 輪播圖片(圖片滑動區域) -->
         <div class="switch_photo d-flex ">
             <!-- v-card 和 v-img 預設寬度為 355 px -->

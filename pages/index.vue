@@ -19,7 +19,7 @@
     <!-- 置頂按鈕 -->
     <v-btn
         @click="scrollTop" 
-        class="to_Top mx-2"
+        class="to_top mx-2"
         fab
         dark
         large
@@ -28,12 +28,17 @@
       <v-icon>fa-chevron-up</v-icon>
     </v-btn>
     <!-- 商品陳列 -->
-    <div v-for="item in products" :key="item.id">
-      <Products
-        :title="item.title"
-        :imgURL="item.url"
-      />
-    </div>   
+    <div>
+
+      <div v-for="item in products" :key="item.id">
+        <Products
+          :title="item.title"
+          :imgURL="item.url"
+          :price="item.price"
+        />
+      </div>   
+
+    </div>
   </v-container>
 </template> 
 
@@ -63,7 +68,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .to_Top {
+  .to_top {
     bottom: 10%;
     position: fixed;
     right: 0;

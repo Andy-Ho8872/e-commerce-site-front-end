@@ -67,7 +67,7 @@ export default {
         showLeftTime () {
             const timer = setInterval(() => {
                 const now = new Date() // 取得當前時間
-                // 已經過的時間 = 結束時間 - 起始時間
+                // 剩下的時間 = 結束時間 - 起始時間
                 const distance = this.end.getTime() - now.getTime() // 使用 get 方法獲取特定時間
                 // 若倒數結束 ，則清除事件
                 if(distance < 0) {
