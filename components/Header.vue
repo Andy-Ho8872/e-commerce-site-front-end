@@ -1,8 +1,8 @@
 <template>
 
-    <div class="Navbar blue darken-1 white--text">
+    <div class="navbar blue darken-1 white--text">
         <!-- Navbar 上層 -->
-        <v-row class="Navbar_upper d-md-flex align-center justify-center ma-3" :class="{ show : active }">
+        <v-row class="navbar_upper d-md-flex align-center justify-center ma-3" :class="{ show : active }">
             <div class="content d-flex caption">
                 <!-- 社群帳號 icon -->
                 <v-row class="justify-center mx-1">
@@ -83,7 +83,7 @@
         </v-row>
 
         <!-- Navbar 下層 -->
-        <v-row class="Navbar_lower d-flex flex-nowrap">
+        <v-row class="navbar_lower d-flex flex-nowrap">
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
             <v-spacer class="hidden-md-and-down"></v-spacer>
             <!--  (extend bar) 只有在 600 px 以下才顯示 -->
@@ -105,7 +105,7 @@
                 >
             </v-text-field>
             <!-- 購物車 ICON -->
-            <a href="#" class="CartLogo">
+            <a href="#" class="cart_logo">
                 <v-icon 
                     medium 
                     color="white" 
@@ -145,7 +145,7 @@ export default {
 
 
 <style lang="scss" scoped> 
-    .Navbar {
+    .navbar {
         padding: 1em 10em;
         width: 100%;
         top: 0;
@@ -164,7 +164,7 @@ export default {
         color: white
     }
     @media (max-width: 1024px) {
-        .Navbar {
+        .navbar {
             padding: 1em 0em;
             width: 100%;
             top: 0;
@@ -172,7 +172,7 @@ export default {
         }
     }
     @media (max-width :484px) {
-        .Navbar_upper {
+        .navbar_upper {
             flex-direction: column;
             align-content: flex-start;
             position: absolute;

@@ -4,14 +4,14 @@
     <div class="carousel">
         <!-- 輪播控制按鈕(左) --> 
         <v-icon 
-            large class="switchBtn" 
+            large 
             id="prev" 
             @click="changeCounter(-1) ; slideCarousel()">
             fa-angle-left
         </v-icon>
         <!-- 輪播控制按鈕(右) --> 
         <v-icon 
-            large class="switchBtn" 
+            large
             id="next" 
             @click="changeCounter(1) ; slideCarousel()">
             fa-angle-right
@@ -97,39 +97,6 @@ export default {
     }
 
     // RWD 版面設定
-    @media (width: 375px) {
-        .v-card {
-            max-width: 355px !important;
-            
-        }
-        .v-image {
-            max-width: 355px !important;
-            max-height: 355px !important;
-        }
-    }
-
-    @media (width: 414px) {
-        .v-card {
-            max-width: 394px !important;
-            
-        }
-        .v-image {
-            max-width: 394px !important;
-            max-height: 394px !important;
-        }
-    }
-
-    @media (width: 768px) {
-        .v-card {
-            max-width: 374px !important;
-            
-        }
-        .v-image {
-            max-width: 374px !important;
-            max-height: 374px !important;
-        }
-    }
-
     @media (width: 1024px) {
         .v-card {
             max-width: 438px !important;
@@ -140,4 +107,46 @@ export default {
             max-height: 438px !important;
         }
     }
+    @media (width: 768px) {
+        .v-card {
+            max-width: 374px !important;
+            
+        }
+        .v-image {
+            max-width: 374px !important;
+            max-height: 374px !important;
+        }
+    }
+    
+    @media (width: 375px) {
+        .v-card {
+            max-width: 355px !important;
+            
+        }
+        .v-image {
+            max-width: 355px !important;
+            max-height: 355px !important;
+        }
+    }
+    @media (width: 414px) {
+        .v-card {
+            max-width: 394px !important;
+            
+        }
+        .v-image {
+            max-width: 394px !important;
+            max-height: 394px !important;
+        }
+    }
+    @media (width: 320px) {
+        .v-card {
+            max-width: 300px !important;
+            
+        }
+        .v-image {
+            max-width: 300px !important;
+            max-height: 300px !important;
+        }
+    }
+    
 </style>

@@ -11,7 +11,8 @@
                 caption
                 "
                 >
-                <span class="
+                <span 
+                    class="
                     red--text 
                     font-italic
                     font-weight-medium

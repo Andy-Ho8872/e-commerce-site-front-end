@@ -19,12 +19,17 @@ export const mutations =  {
         const clientWidth = document.body.offsetWidth
         // 滑動區域
         const slide = document.querySelector('.switch_photo')
+        // i Phone 5/SE 寬度 (320px)
+        if (clientWidth === 320) {
+            state.slideValue = clientWidth - 20 // 300 px
+            state.maxSlide = 9
+        }
         // i Phone 6, 7, 8, X 寬度 (375px)
-        if (clientWidth === 375) {
+        else if (clientWidth === 375) {
             state.slideValue = clientWidth - 20 // 355 px
             state.maxSlide = 9
         } 
-        // i Phone 6, 7, 8, plus 寬度(414px)
+        // i Phone 6/7/8, plus 寬度(414px)
         else if (clientWidth === 414) {
             state.slideValue = clientWidth - 20 // 394 px
             state.maxSlide = 9
