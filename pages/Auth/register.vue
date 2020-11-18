@@ -4,31 +4,52 @@
             <!--註冊(登入) Icon -->
             <div class="img_wrapper">
                 <v-img 
+                    class="mx-auto pt-2"
                     max-width="100" 
                     max-height="100" 
                     :src="require('../../static/form/1.png')" 
-                    class="mx-auto pt-2">
+                    >
                 </v-img>
             </div>
-            <!-- 登入表單 -->
-            <v-form class="form pa-8">
-                <h1 class="text-center my-10">註冊帳戶</h1>
+            <!-- 註冊表單 -->
+            <v-form 
+                class="form pa-8" 
+                ref="form"
+                v-model="valid"
+                method="POST" 
+                :action="this.backEndUrl"
+                >
+                <!-- 註冊帳戶文字 -->
+                <h1 class="text-center my-10">註冊</h1>
                 <!-- 電子郵件(帳號) -->
                 <v-text-field
                     class="ma-8"
+                    name="email"
+                    :rules="[rules.required, rules.email]"
+                    v-model="email"
+                    required
                     prepend-icon="fa-user"
                     color="blue" 
-                    dense
                     label="電子郵件" 
-                    placeholder="Email">
+                    placeholder="Email"
+                    >
                 </v-text-field>
                 <!-- 密碼 -->
                 <v-text-field
                     class="ma-8"
+                    name="password"
+                    @click:append="show = !show"
+                    :type="show ? 'text' : 'password'"
+                    v-model="password"
+                    required
+                    :rules="[rules.required, rules.min]"
+                    counter
+                    minlength="6" 
                     prepend-icon="fa-lock" 
-                    dense 
+                    :append-icon="show ? 'fa-eye' : 'fa-eye-slash'"
                     label="密碼"
-                    placeholder="Password">
+                    placeholder="Password"
+                    >
                 </v-text-field>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
@@ -43,12 +64,15 @@
                 <!-- 註冊按鈕 -->
                 <div class="text-center mt-10">
                     <v-btn
-                        class="title"  
+                        class="title"
+                        @click="validate"
+                        :disabled='!valid'  
                         color="pink" 
                         large
                         rounded
                         outlined 
-                        type="submit">
+                        type="submit"
+                        >
                         註冊
                     </v-btn>
                 </div>
@@ -59,7 +83,30 @@
 
 <script>
 export default {
-
+    data () {
+        return {
+            // 表單傳送至後端網址
+            backEndUrl: 'http://127.0.0.1:8000/api/auth/user' ,
+            // 表單驗證規則
+            valid: null, // 是否合格
+            show: false, // 顯示 / 不顯示 密碼
+            email: '',
+            password: '',
+            rules: {
+                required: value => !!value || '此欄位必填',
+                min: value => v.length >= 6 || '至少需要6個英文或數字',
+                email: value => {
+                    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    return pattern.test(value) || '範例 : abc123@gmail.com'
+                }
+            }
+        }
+    },
+    methods: {
+        validate () {
+            this.$refs.form.validate()
+        }
+    }
 }
 </script>
 
