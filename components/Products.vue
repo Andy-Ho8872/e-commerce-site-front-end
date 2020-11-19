@@ -1,6 +1,7 @@
 <template>
 <!-- 商品卡片 -->
-    
+    <!-- 產品連結 -->
+    <nuxt-link :to="'products/' + id">
         <v-card
         max-width="300" 
         height="250" 
@@ -76,7 +77,7 @@
             </v-card-subtitle>
         </v-col>
     </v-card>
-    
+    </nuxt-link>
     
 </template>
 
