@@ -29,12 +29,13 @@
     </v-btn>
     <!-- 商品陳列 -->
     <div>
-
+      <!-- 標題 、 圖片網址 、 價格 、 產品ID -->
       <div v-for="item in products" :key="item.id">
         <Products
           :title="item.title"
           :imgURL="item.url"
           :price="item.price"
+          :id="item.id"
         />
       </div>   
 

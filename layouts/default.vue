@@ -31,7 +31,7 @@ export default {
   .main_view {
     display: flex;
     justify-content: center;
-    align-items: center;
+    //align-items: center;
     padding-top: 10% !important;
   }
 

@@ -182,6 +182,7 @@ export default {
             background: rgba($color: #000000, $alpha: 0.8);
             // 預設不顯示，等點擊 extend bar 後才顯示
             opacity: 0;
+            transition: 0.5s ease-in-out;
             transform: translateX(-100%);
 
             .content {

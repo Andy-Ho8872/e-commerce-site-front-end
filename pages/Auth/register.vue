@@ -94,7 +94,7 @@ export default {
             password: '',
             rules: {
                 required: value => !!value || '此欄位必填',
-                min: value => v.length >= 6 || '至少需要6個英文或數字',
+                min: value => value.length >= 6 || '至少需要6個英文或數字',
                 email: value => {
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     return pattern.test(value) || '範例 : abc123@gmail.com'

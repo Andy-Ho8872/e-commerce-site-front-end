@@ -1,6 +1,15 @@
 <template>
 <!-- 商品卡片 -->
-    <v-card max-width="300" height="250" class="Products justify-center align-center flex-wrap my-10">
+    
+        <v-card
+        max-width="300" 
+        height="250" 
+        class="
+        Products 
+        justify-center 
+        align-center 
+        flex-wrap my-10"
+        >
         <v-col>
             <!-- 商品標籤 -->
             <v-card-subtitle 
@@ -67,12 +76,14 @@
             </v-card-subtitle>
         </v-col>
     </v-card>
+    
+    
 </template>
 
 
 <script>
 export default {
-    props: ['title', 'imgURL', 'price'] // passed from index.vue
+    props: ['title', 'imgURL', 'price', 'id'] // passed from index.vue
 }
 </script>
 
