@@ -20,7 +20,28 @@
         <div class="switch_photo d-flex ">
             <!-- v-card 和 v-img 預設寬度為 355 px -->
             <v-card class="single_card" v-for="(item, index) in products" :key="index" tile max-width="355">
-                <v-img :src="item.url" max-width="355" max-height="355" class="my-auto"></v-img>
+                <v-img 
+                    class="my-auto"
+                    :src="item.url" 
+                    :lazy-src="item.url" 
+                    max-width="355" 
+                    max-height="355" 
+                    >
+                    <!-- 當圖片 Loading 時 -->
+                    <template v-slot:placeholder>
+                        <v-row
+                            class="fill-height ma-0"
+                            align="center"
+                            justify="center"
+                            >
+                            <v-progress-circular
+                                indeterminate
+                                color="blue lighten-5"
+                                >
+                            </v-progress-circular>
+                        </v-row>
+                    </template>
+                </v-img>
                 <v-card-subtitle class="text-center heading-6">{{ item.title }}</v-card-subtitle>
             </v-card>
         </div>

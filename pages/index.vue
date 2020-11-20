@@ -28,7 +28,7 @@
       <v-icon>fa-chevron-up</v-icon>
     </v-btn>
     <!-- 商品陳列 -->
-    <div>
+    <div class="products d-flex flex-wrap justify-space-between">
       <!-- 標題 、 圖片網址 、 價格 、 產品ID -->
       <div v-for="item in products" :key="item.id">
         <Products
@@ -74,5 +74,10 @@ export default {
     position: fixed;
     right: 0;
     z-index: 10000;
+  }
+  @media (max-width: 650px)  {
+    .products {
+    justify-content: space-around !important;
+  }
   }
 </style>

@@ -1,9 +1,9 @@
 <template>
     <v-container>
-        <!-- <h1>{{ $route.params.id }}</h1> -->
 
         <v-card v-for="item in product" :key="item.id" class="d-flex justify-space-around">
-            <v-img :src="item.url" max-width="500" max-height="500"></v-img>
+            <v-img :src="item.url" max-width="400" max-height="400"></v-img>
+            <!-- 產品資訊 -->
             <div class="card_info">
                 <!-- 商品名稱 -->
                 <v-card-title class="justify-center">{{ item.title }}</v-card-title>
@@ -12,20 +12,36 @@
                 <!-- 商品價格 -->
                 <v-card-text class="headline">${{ item.price }}</v-card-text>
                 <!-- 輸入商品數量 -->
-                <div class="input_field">
-                    <v-text-field
-                        class="pa-3" 
-                        filled 
-                        label="購買數量" 
-                        value="1"
-                        >
-                    </v-text-field>
-                </div>
+                <v-row class="input_field align-center">
+                    <div class="px-2">購買數量</div>
+                    <!-- 減少數量 -->
+                    <v-btn
+                        @click="changeCount(-1)" 
+                        small 
+                        depressed 
+                        outlined 
+                        color="error">
+                        <v-icon>fa-minus</v-icon>
+                    </v-btn>
+                    <!-- 當前數量 -->
+                    <input
+                        class="grey lighten-2 text-center" 
+                        :value="counter"
+                    >
+                    <!-- 增加數量 -->
+                    <v-btn 
+                        @click="changeCount(1)"
+                        small 
+                        depressed 
+                        outlined 
+                        color="indigo">
+                        <v-icon>fa-plus</v-icon>
+                    </v-btn>
+                </v-row>
             </div>
         </v-card>
     
-    </v-container>
-    
+    </v-container>  
 </template>
 
 <script>
@@ -33,6 +49,11 @@ import axios from 'axios'
 let url = 'https://my-json-server.typicode.com/Andy-Ho8872/FakeJsonData/products'
 
 export default {
+    data () {
+        return {
+            counter: 1 // 產品當前數量
+        }
+    },
     async asyncData () {
         let res = await axios.get(url)
         // get product results
@@ -43,6 +64,12 @@ export default {
         product () {
             return this.products.filter(item => item.id == this.$route.params.id)
         }
+    },
+    methods: {
+        // 點擊按鈕以 增加 或 減少 購買數量
+        changeCount (value) {
+            this.counter += value
+        }
     }
 }
 </script>
@@ -51,7 +78,22 @@ export default {
     .card_info {
         width: 50%;
     }
+    input {
+        width: 10%;
+    }
     .input_field {
-        width: 30%;
+        padding: 0 5%;
+    }
+    @media (max-width: 1268px) {
+        .card_info {
+            width: 100%;
+            border-top: 0.5px solid grey;
+        }
+        .v-card {
+            flex-wrap: wrap;
+        }
+        .input_field {
+            padding: 0 3%;
+        }       
     }
 </style>

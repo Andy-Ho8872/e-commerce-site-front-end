@@ -2,8 +2,9 @@
 <!-- 商品卡片 -->
     <!-- 產品連結 -->
     <nuxt-link :to="'products/' + id">
+    <!-- max-width="300" -->
         <v-card
-        max-width="300" 
+        width="300" 
         height="250" 
         class="
         Products 
@@ -45,11 +46,26 @@
             </v-card-subtitle>
             <!-- 商品圖片 -->
             <v-img 
-                :src="imgURL" 
+                :src="imgURL"
+                :lazy-src="imgURL" 
                 max-width="100" 
                 max-height="100" 
                 class="ma-auto"
                 >
+                <!-- 當圖片 Loding 時  -->
+                <template v-slot:placeholder>
+                    <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                        >
+                        <v-progress-circular
+                            indeterminate
+                            color="blue lighten-5"
+                            >
+                        </v-progress-circular>
+                    </v-row>
+                </template>
             </v-img>
             <!-- 商品原價 -->
             <v-card-subtitle 
@@ -90,6 +106,9 @@ export default {
 
 
 <style lang="scss" scoped>
+    a {
+        text-decoration: none;
+    }
     .product_label {
         position: absolute;
         top: 0;
