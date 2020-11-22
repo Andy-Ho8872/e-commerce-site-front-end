@@ -1,98 +1,98 @@
 <template>
 <!-- 商品卡片 -->
-    <!-- 產品連結 -->
+    <!-- 產品連結  (待修正) -->
     <nuxt-link :to="'products/' + id">
     <!-- max-width="300" -->
         <v-card
-        width="300" 
-        height="250" 
-        class="
-        Products 
-        justify-center 
-        align-center 
-        flex-wrap my-10"
-        >
-        <v-col>
-            <!-- 商品標籤 -->
-            <v-card-subtitle 
-                class="
-                product_label
-                yellow
-                pa-1
-                caption
-                "
-                >
-                <span 
+            width="300" 
+            height="250" 
+            class="
+            Products 
+            justify-center 
+            align-center 
+            flex-wrap my-10"
+            >
+            <v-col>
+                <!-- 商品標籤 -->
+                <v-card-subtitle 
                     class="
-                    red--text 
-                    font-italic
-                    font-weight-medium
-                    text-uppercase
+                    product_label
+                    yellow
+                    pa-1
+                    caption
                     "
                     >
-                    50% off!!
-                </span>
-            </v-card-subtitle>
-            <!-- 商品標題文字 -->
-            <v-card-subtitle 
-                class="
-                product_title
-                pa-5
-                text-center
-                font-weight-black
-                "
-                >
-                {{ title }}
-            </v-card-subtitle>
-            <!-- 商品圖片 -->
-            <v-img 
-                :src="imgURL"
-                :lazy-src="imgURL" 
-                max-width="100" 
-                max-height="100" 
-                class="ma-auto"
-                >
-                <!-- 當圖片 Loding 時  -->
-                <template v-slot:placeholder>
-                    <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
+                    <span 
+                        class="
+                        red--text 
+                        font-italic
+                        font-weight-medium
+                        text-uppercase
+                        "
                         >
-                        <v-progress-circular
-                            indeterminate
-                            color="blue lighten-5"
+                        50% off!!
+                    </span>
+                </v-card-subtitle>
+                <!-- 商品標題文字 -->
+                <v-card-subtitle 
+                    class="
+                    product_title
+                    pa-5
+                    text-center
+                    font-weight-black
+                    "
+                    >
+                    {{ title }}
+                </v-card-subtitle>
+                <!-- 商品圖片 -->
+                <v-img 
+                    :src="imgURL"
+                    :lazy-src="imgURL" 
+                    max-width="100" 
+                    max-height="100" 
+                    class="ma-auto"
+                    >
+                    <!-- 當圖片 Loding 時  -->
+                    <template v-slot:placeholder>
+                        <v-row
+                            class="fill-height ma-0"
+                            align="center"
+                            justify="center"
                             >
-                        </v-progress-circular>
-                    </v-row>
-                </template>
-            </v-img>
-            <!-- 商品原價 -->
-            <v-card-subtitle 
-                class="
-                pa-1
-                text-center 
-                gray--text 
-                text--lighten-1
-                text-decoration-line-through
-                "
-                >
-                NT.{{ price }}
-            </v-card-subtitle>
-            <!-- 商品打折後價格 -->
-            <v-card-subtitle 
-                class="
-                discount_price
-                pa-0
-                title
-                red--text 
-                text--lighten-1
-                "
-                >
-                NT.{{ Math.floor(price / 2) }}
-            </v-card-subtitle>
-        </v-col>
-    </v-card>
+                            <v-progress-circular
+                                indeterminate
+                                color="blue lighten-5"
+                                >
+                            </v-progress-circular>
+                        </v-row>
+                    </template>
+                </v-img>
+                <!-- 商品原價 -->
+                <v-card-subtitle 
+                    class="
+                    pa-1
+                    text-center 
+                    gray--text 
+                    text--lighten-1
+                    text-decoration-line-through
+                    "
+                    >
+                    NT.{{ price }}
+                </v-card-subtitle>
+                <!-- 商品打折後價格 -->
+                <v-card-subtitle 
+                    class="
+                    discount_price
+                    pa-0
+                    title
+                    red--text 
+                    text--lighten-1
+                    "
+                    >
+                    NT.{{ Math.floor(price / 2) }}
+                </v-card-subtitle>
+            </v-col>
+        </v-card>
     </nuxt-link>
     
 </template>

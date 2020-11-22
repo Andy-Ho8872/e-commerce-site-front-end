@@ -19,7 +19,7 @@
                 <!-- 回到首頁 -->
                 <li class="mx-1">
                     <nuxt-link 
-                        to="/"
+                        :to="{ name: 'index' }"
                         >
                         <v-icon 
                             dark
@@ -50,7 +50,7 @@
                 <!-- 註冊 登入(文字) -->
                 <li>
                     <nuxt-link 
-                        to="/Auth/register" 
+                        :to="{ name: 'auth-register'}" 
                         class="mx-1"
                         >
                         <v-icon 
@@ -66,7 +66,7 @@
                 <v-divider vertical class="my-1 hidden-xs-only"></v-divider>
                 <li>
                     <nuxt-link 
-                        to="/Auth/login" 
+                        :to="{ name: 'auth-login'}" 
                         class="mx-1"
                         >
                         <v-icon 

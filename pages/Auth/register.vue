@@ -17,7 +17,7 @@
                 ref="form"
                 v-model="valid"
                 method="POST" 
-                :action="this.backEndUrl"
+                :action="backEndUrl"
                 >
                 <!-- 註冊帳戶文字 -->
                 <h1 class="text-center my-10">註冊</h1>
@@ -65,7 +65,6 @@
                 <div class="text-center mt-10">
                     <v-btn
                         class="title"
-                        @click="validate"
                         :disabled='!valid'  
                         color="pink" 
                         large
@@ -86,7 +85,7 @@ export default {
     data () {
         return {
             // 表單傳送至後端網址
-            backEndUrl: 'http://127.0.0.1:8000/api/auth/user' ,
+            backEndUrl: 'http://127.0.0.1:8000/api/auth/user/' ,
             // 表單驗證規則
             valid: null, // 是否合格
             show: false, // 顯示 / 不顯示 密碼
@@ -103,9 +102,12 @@ export default {
         }
     },
     methods: {
-        validate () {
-            this.$refs.form.validate()
-        }
+        // validate () {
+        //     this.$refs.form.validate()
+        //     // this.$router.push({ name:'Auth-login' })
+        //     this.$router.push('/')
+        // },
+
     }
 }
 </script>
