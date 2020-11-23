@@ -16,8 +16,8 @@
                 class="form pa-8" 
                 ref="form"
                 v-model="valid"
-                method="POST" 
-                :action="backEndUrl"
+
+
                 >
                 <!-- 註冊帳戶文字 -->
                 <h1 class="text-center my-10">註冊</h1>
@@ -26,7 +26,7 @@
                     class="ma-8"
                     name="email"
                     :rules="[rules.required, rules.email]"
-                    v-model="email"
+                    v-model="form.email"
                     required
                     prepend-icon="fa-user"
                     color="blue" 
@@ -40,7 +40,7 @@
                     name="password"
                     @click:append="show = !show"
                     :type="show ? 'text' : 'password'"
-                    v-model="password"
+                    v-model="form.password"
                     required
                     :rules="[rules.required, rules.min]"
                     counter
@@ -65,7 +65,8 @@
                 <div class="text-center mt-10">
                     <v-btn
                         class="title"
-                        :disabled='!valid'  
+                        :disabled='!valid'
+                        @click.prevent="register"  
                         color="pink" 
                         large
                         rounded
@@ -81,16 +82,23 @@
 </template>
 
 <script>
+import axios from 'axios'
+// axios url 
+let baseURL = 'http://127.0.0.1:8000'
+let backEndUrl = '/api/auth/register'
+
 export default {
     data () {
         return {
-            // 表單傳送至後端網址
-            backEndUrl: 'http://127.0.0.1:8000/api/auth/user/' ,
+            // 表單中的值
+            form: {
+                email: '',
+                password: '',
+                message: ''
+            },
             // 表單驗證規則
             valid: null, // 是否合格
             show: false, // 顯示 / 不顯示 密碼
-            email: '',
-            password: '',
             rules: {
                 required: value => !!value || '此欄位必填',
                 min: value => value.length >= 6 || '至少需要6個英文或數字',
@@ -102,12 +110,16 @@ export default {
         }
     },
     methods: {
-        // validate () {
-        //     this.$refs.form.validate()
-        //     // this.$router.push({ name:'Auth-login' })
-        //     this.$router.push('/')
-        // },
-
+        async register () {
+            let result = await axios.post((baseURL + backEndUrl), {
+                email: this.form.email,
+                password: this.form.password
+            })
+            console.log(result);
+            
+            //this.$router.push({ name: 'auth-login' }) // 註冊成功後跳轉至登入頁面
+            alert('註冊成功 請登入')
+        }    
     }
 }
 </script>
