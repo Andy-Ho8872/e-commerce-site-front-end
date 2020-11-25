@@ -16,8 +16,6 @@
                 class="form pa-8" 
                 ref="form"
                 v-model="valid"
-
-
                 >
                 <!-- 註冊帳戶文字 -->
                 <h1 class="text-center my-10">註冊</h1>
@@ -82,10 +80,12 @@
 </template>
 
 <script>
-import axios from 'axios'
-// axios url 
-let baseURL = 'http://127.0.0.1:8000'
-let backEndUrl = '/api/auth/register'
+import axios from 'axios' // default
+let baseURL = 'http://localhost:8000' // default
+let backEndUrl = '/api/auth/register' // default
+
+let NewBackEndUrl = '/auth/register' // new
+
 
 export default {
     data () {
@@ -110,13 +110,25 @@ export default {
         }
     },
     methods: {
+        // default
+        // async register () {
+        //     let result = await axios.post((baseURL + backEndUrl), {
+        //         email: this.form.email,
+        //         password: this.form.password
+        //     })
+        //     console.log(result);
+        //     //this.$router.push({ name: 'auth-login' }) // 註冊成功後跳轉至登入頁面
+        //     alert('註冊成功 請登入')
+        // }   
+
+        // new
         async register () {
-            let result = await axios.post((baseURL + backEndUrl), {
+            let result = await this.$axios.$post(NewBackEndUrl, {
                 email: this.form.email,
                 password: this.form.password
             })
             console.log(result);
-            
+
             //this.$router.push({ name: 'auth-login' }) // 註冊成功後跳轉至登入頁面
             alert('註冊成功 請登入')
         }    
