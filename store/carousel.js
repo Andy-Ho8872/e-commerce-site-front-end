@@ -8,7 +8,7 @@ export const state = () => ({
     maxSlide: null,
 })
 
-export const mutations =  {
+export const mutations = {
     // 增加 Counter 計數 (每次增加最少為 1)
     CHANGE_COUNTER (state, value) {
         state.counter = state.counter + value

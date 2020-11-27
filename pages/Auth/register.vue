@@ -49,6 +49,8 @@
                     placeholder="Password"
                     >
                 </v-text-field>
+                <!-- 顯示錯誤訊息(隱藏) -->
+                <h4 class="error_msg text-center red--text">{{ message }}</h4>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
                     已經註冊?
@@ -80,12 +82,7 @@
 </template>
 
 <script>
-import axios from 'axios' // default
-let baseURL = 'http://localhost:8000' // default
-let backEndUrl = '/api/auth/register' // default
-
-let NewBackEndUrl = '/auth/register' // new
-
+import { apiUserRegister } from '~/APIs/api.js'
 
 export default {
     data () {
@@ -94,44 +91,47 @@ export default {
             form: {
                 email: '',
                 password: '',
-                message: ''
             },
+            message: '', // 錯誤訊息
             // 表單驗證規則
             valid: null, // 是否合格
-            show: false, // 顯示 / 不顯示 密碼
+            show: false, // 顯示 or 不顯示 密碼
             rules: {
                 required: value => !!value || '此欄位必填',
                 min: value => value.length >= 6 || '至少需要6個英文或數字',
                 email: value => {
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     return pattern.test(value) || '範例 : abc123@gmail.com'
-                }
+                },
             }
         }
     },
-    methods: {
-        // default
-        // async register () {
-        //     let result = await axios.post((baseURL + backEndUrl), {
-        //         email: this.form.email,
-        //         password: this.form.password
-        //     })
-        //     console.log(result);
-        //     //this.$router.push({ name: 'auth-login' }) // 註冊成功後跳轉至登入頁面
-        //     alert('註冊成功 請登入')
-        // }   
-
-        // new
+    methods: { 
         async register () {
-            let result = await this.$axios.$post(NewBackEndUrl, {
-                email: this.form.email,
-                password: this.form.password
-            })
-            console.log(result);
+            try {
+                const result = await apiUserRegister({
+                    email: this.form.email,
+                    password: this.form.password
+                })
+                console.log(result.data);
+                this.message = '註冊成功，即將為您導向登入頁面'
+                this.clearMessage ()
+                //this.$router.push({ name: 'auth-login' }) // 註冊成功後跳轉至登入頁面
+            }
+            catch (error) {
+                const result = error.response.data
+                console.log(error.response.data);
 
-            //this.$router.push({ name: 'auth-login' }) // 註冊成功後跳轉至登入頁面
-            alert('註冊成功 請登入')
-        }    
+                this.message = result.errors.email
+                this.clearMessage ()
+            }
+        },
+        // 自動清除訊息
+        clearMessage () {
+            setTimeout(() => {
+                this.message = ''
+            },5000)
+        } 
     }
 }
 </script>
@@ -152,6 +152,5 @@ export default {
     }
     .has_account {
         margin: 0 10%;
-    }
-       
+    }    
 </style>
