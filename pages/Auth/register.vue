@@ -20,41 +20,47 @@
                 <!-- 註冊帳戶文字 -->
                 <h1 class="text-center my-10">註冊</h1>
                 <!-- 電子郵件(帳號) -->
-                <v-text-field
-                    class="ma-8"
-                    name="email"
-                    :rules="[rules.required, rules.email]"
-                    v-model="form.email"
-                    required
-                    prepend-icon="fa-user"
-                    color="blue" 
-                    label="電子郵件" 
-                    placeholder="Email"
-                    >
-                </v-text-field>
-                <!-- 密碼 -->
-                <v-text-field
-                    class="ma-8"
-                    name="password"
-                    @click:append="show = !show"
-                    :type="show ? 'text' : 'password'"
-                    v-model="form.password"
-                    required
-                    :rules="[rules.required, rules.min]"
-                    counter
-                    minlength="6" 
-                    prepend-icon="fa-lock" 
-                    :append-icon="show ? 'fa-eye' : 'fa-eye-slash'"
-                    label="密碼"
-                    placeholder="Password"
-                    >
-                </v-text-field>
+                <div>
+                    <v-text-field
+                        class="ma-6"
+                        name="email"
+                        :rules="[rules.required, rules.email]"
+                        v-model="form.email"
+                        required
+                        prepend-icon="fa-user"
+                        color="blue" 
+                        label="電子郵件" 
+                        placeholder="Email"
+                        >
+                    </v-text-field>
+                    <!-- 密碼 -->
+                    <v-text-field
+                        class="ma-6"
+                        name="password"
+                        @click:append="show = !show"
+                        :type="show ? 'text' : 'password'"
+                        v-model="form.password"
+                        required
+                        :rules="[rules.required, rules.min]"
+                        counter
+                        minlength="6" 
+                        prepend-icon="fa-lock" 
+                        :append-icon="show ? 'fa-eye' : 'fa-eye-slash'"
+                        label="密碼"
+                        placeholder="Password"
+                        >
+                    </v-text-field>
+                </div>
                 <!-- 顯示錯誤訊息(隱藏) -->
-                <h4 class="error_msg text-center red--text">{{ message }}</h4>
+                <div 
+                    class="error_msg text-center"
+                    :class="[is_valid ? 'valid' : 'invalid']">
+                    <h4 v-for="(msg, index) in messages" :key="index">{{ msg[0] }}</h4>
+                </div>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
                     已經註冊?
-                    <nuxt-link to="/Auth/login">
+                    <nuxt-link :to="{ name: 'auth-login' }">
                         <div class="mx-2 blue--text ligten-2">登入</div>
                     </nuxt-link>
                     <v-spacer></v-spacer> 
@@ -92,7 +98,9 @@ export default {
                 email: '',
                 password: '',
             },
-            message: '', // 錯誤訊息
+            // 錯誤訊息
+            messages: '',
+            is_valid: true,
             // 表單驗證規則
             valid: null, // 是否合格
             show: false, // 顯示 or 不顯示 密碼
@@ -113,23 +121,25 @@ export default {
                     email: this.form.email,
                     password: this.form.password
                 })
-                console.log(result.data);
-                this.message = '註冊成功，即將為您導向登入頁面'
+                this.is_valid = true 
+                this.messages = '註冊成功，即將為您導向登入頁面'
                 this.clearMessage ()
                 //this.$router.push({ name: 'auth-login' }) // 註冊成功後跳轉至登入頁面
             }
             catch (error) {
-                const result = error.response.data
-                console.log(error.response.data);
-
-                this.message = result.errors.email
+                const result = error.response.data.errors
+                console.log(error.response.data.errors);
+                
+                // 顯示錯誤訊息後自動清除
+                this.is_valid = false
+                this.messages = result
                 this.clearMessage ()
             }
         },
         // 自動清除訊息
         clearMessage () {
             setTimeout(() => {
-                this.message = ''
+                this.messages = ''
             },5000)
         } 
     }
@@ -137,6 +147,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 表單
     .form-wrapper {
         position: relative;
     background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 80%);
@@ -146,11 +157,20 @@ export default {
     .form {
         margin: 0 0;
     }
+    // 圖片
     .img_wrapper {
         position: relative;
         top: 30px;
     }
+    // 已有帳戶?
     .has_account {
         margin: 0 10%;
-    }    
+    } 
+    // 合格 or 不合格
+    .valid {
+        color: teal;
+    }
+    .invalid {
+        color: red;
+    }
 </style>
