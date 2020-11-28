@@ -88,6 +88,8 @@
 </template>
 
 <script>
+import { apiUserLogin, apiCsrfLogin } from '~/APIs/api.js'
+
 export default {
     data () {
         return {
@@ -113,7 +115,33 @@ export default {
         }
     },
     methods: {
-        
+        async login() {
+            try {
+                // 初次登入要先取得 CSRF
+                const csrf = await apiCsrfLogin()
+                // 登入使用者
+                try {
+                    const result = await apiUserLogin({
+                        email: this.form.email,
+                        password: this.form.password
+                    })
+                    console.log(result);
+                    // 若帳密正確，則給予 Token 並儲存在 localStorage
+                    localStorage.setItem('Token', 'Bearer' + result.data.token)
+                    // 使用者資訊 (EMAIL)
+                    localStorage.setItem('UserInfo', result.data.user.email)
+                    //this.messages = '註冊成功，即將為您導向登入頁面'
+                    this.$router.push({ name: 'index' })
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            }
+            catch (error) {
+                const result = error.response.data.errors
+                console.log(error.response.data.errors);
+            }
+        }
     }
 }
 </script>

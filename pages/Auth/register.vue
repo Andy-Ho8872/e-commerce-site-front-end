@@ -122,7 +122,7 @@ export default {
                     password: this.form.password
                 })
                 this.is_valid = true 
-                this.messages = '註冊成功，即將為您導向登入頁面'
+                //this.messages = '註冊成功，即將為您導向登入頁面'
                 this.clearMessage ()
                 //this.$router.push({ name: 'auth-login' }) // 註冊成功後跳轉至登入頁面
             }
