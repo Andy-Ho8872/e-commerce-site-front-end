@@ -3,10 +3,11 @@
     <div class="navbar blue darken-1 white--text">
         <!-- Navbar 上層 -->
         <v-row class="navbar_upper d-md-flex align-center justify-center ma-3" :class="{ show : active }">
-            <div class="content d-flex caption">
+
+            <div class="content_wrapper d-flex caption">
                 <!-- 社群帳號 icon -->
                 <v-row class="justify-center mx-1">
-                    <li v-for="(icon,index) in icons" :key="index">
+                    <li v-for="(icon,index) in socialList" :key="index">
                         <v-icon 
                             dark 
                             small 
@@ -17,68 +18,85 @@
                     </li>
                 </v-row>
                 <!-- 回到首頁 -->
-                <li class="mx-1">
-                    <nuxt-link 
-                        :to="{ name: 'index' }"
-                        >
-                        <v-icon 
-                            dark
-                            small
-                            class="mx-1 mb-1"
+                <v-row class="mx-1">
+                    <li class="mx-1">
+                        <nuxt-link 
+                            :to="{ name: 'index' }"
                             >
-                            fa-home
-                        </v-icon>
-                        回到首頁
-                    </nuxt-link>
-                </li>
+                            <v-icon 
+                                dark
+                                small
+                                class="mx-1 mb-1"
+                                >
+                                fa-home fa-fw
+                            </v-icon>
+                            <span>回到首頁</span>
+                        </nuxt-link>
+                    </li>
+                </v-row>
             </div>
-
+            
             <v-spacer></v-spacer>
+            <!-- 以上勿動 -->
+            <div class="content_wrapper d-flex caption">
 
-            <div class="content d-flex caption">
                 <!-- 通知總覽, 幫助中心(文字) -->
-                <li v-for="(list, index) in lists" :key="index" class="mx-1">
-                    <v-icon 
-                        dark 
-                        small 
-                        class="mx-1 mb-1"
-                        >
-                        {{ list.icon }}
-                    </v-icon>
-                    <span>{{ list.text }}</span>
-                </li>
-                <!-- 註冊 登入(文字) -->
-                <li>
-                    <nuxt-link 
-                        :to="{ name: 'auth-register'}" 
-                        class="mx-1"
-                        >
+                <v-row class="content mx-1">
+                    <li v-for="(list, index) in noteList" :key="index" class="mx-1">
                         <v-icon 
-                            class="mx-1 mb-1"
+                            dark 
                             small 
-                            color="white"
-                            >
-                            fa-user-plus
-                        </v-icon>
-                        註冊
-                    </nuxt-link>
-                </li>
-                <v-divider vertical class="my-1 hidden-xs-only"></v-divider>
-                <li>
-                    <nuxt-link 
-                        :to="{ name: 'auth-login'}" 
-                        class="mx-1"
-                        >
-                        <v-icon 
                             class="mx-1 mb-1"
-                            small 
-                            color="white"
                             >
-                            fa-user
+                            {{ list.icon }}
                         </v-icon>
-                        登入
-                    </nuxt-link>
-                </li>
+                        <span>{{ list.text }}</span>
+                    </li>
+                </v-row>
+
+                <!-- 如果有使用者登入，則顯示他的帳號(電子郵件)以及登出按鈕 -->
+                <v-row class="content mx-1" v-if="userInfo">
+                    <li class="mx-1">
+                        <v-icon
+                            dark 
+                            small 
+                            class="mx-1 mb-1"
+                            >
+                            fa-user fa-fw
+                        </v-icon>
+                        <span>{{ userInfo }}</span>
+                    </li>
+                    <li class="mx-1" @click="logout">
+                        <v-icon
+                            dark 
+                            small 
+                            class="mx-1 mb-1"
+                            >
+                            fa-user fa-fw
+                        </v-icon>
+                        <span>登出</span>
+                    </li>
+                </v-row>
+
+                <!--  若使用者沒有登入(無Token) -->
+                <v-row class="content mx-1" v-if="!userInfo"> 
+                    <li v-for="(list, index) in userList" :key="index">
+                        <nuxt-link 
+                            :to="list.to"
+                            class="mx-1"
+                            >
+                            <v-icon 
+                                class="mx-1 mb-1"
+                                small 
+                                color="white"
+                                >
+                                {{ list.icon }}
+                            </v-icon>
+                            <span>{{ list.text }}</span>
+                        </nuxt-link>
+                    </li>
+                </v-row>
+
             </div>
         </v-row>
 
@@ -91,7 +109,7 @@
                 @click="active = !active"
                 medium 
                 color="white" 
-                class="extend_Bar ml-5 mb-4"
+                class="extend_bar ml-5 mb-4"
                 >
                 fa-bars
             </v-icon>
@@ -122,24 +140,44 @@
     
 </template>
 
-
 <script>
 export default {
-    data() {
+    data () {
         return {
-            icons: [
-                { 'icon' : 'fa-facebook-square' },
-                { 'icon' : 'fa-instagram' },
-                { 'icon' : 'fa-google' },
+            socialList: [
+                { icon : 'fa-facebook-square fa-fw' },
+                { icon : 'fa-instagram fa-fw' },
+                { icon : 'fa-google fa-fw' },
             ],
-            lists: [
-                { 'icon' : 'fa-envelope', 'text' : '通知總覽'},
-                { 'icon' : 'fa-question', 'text' : '幫助中心'},
+            noteList: [
+                { icon : 'fa-envelope fa-fw', text : '通知總覽'},
+                { icon : 'fa-question-circle fa-fw', text : '幫助中心'},
+            ],
+            userList: [ 
+                { icon : 'fa-user-plus fa-fw', text : '註冊', to : '/auth/register' },
+                { icon : 'fa-user-circle fa-fw', text : '登入', to : '/auth/login' },
             ],
             // 觸發 class
-            active: false
+            active: false,
+            // 使用者登入後顯示帳號
+            userInfo: '',
         }
     },
+    methods: {
+        // 取得使用者資訊
+        getUserInfo () {
+            const getUserInfo = localStorage.getItem('UserInfo')
+            this.userInfo = getUserInfo
+            console.log('目前的使用者為:',getUserInfo);
+        },
+        // 登出使用者( 清除 storage 中的 token 與 UserInfo )
+        logout () {
+            const removeUserInfo = localStorage.clear()
+        }
+    },
+    mounted () {
+        this.getUserInfo()
+    }
 }
 </script>
 
@@ -150,15 +188,15 @@ export default {
         width: 100%;
         top: 0;
     }
-    
     .theme--light.v-divider {
         border-color: white;
     }
-
+    .extend_bar {
+        visibility: hidden; // 預設隱藏
+    }
     li {
         list-style: none;
     }
-
     a { // for <nuxt-link>
         text-decoration: none;
         color: white
@@ -172,6 +210,7 @@ export default {
         }
     }
     @media (max-width :484px) {
+    // navbar 上層
         .navbar_upper {
             flex-direction: column;
             align-content: flex-start;
@@ -183,15 +222,23 @@ export default {
             // 預設不顯示，等點擊 extend bar 後才顯示
             opacity: 0;
             transition: 0.5s ease-in-out;
-            transform: translateX(-100%);
-
-            .content {
-                flex-direction: column;
-                align-content: flex-start;
-                li {
-                    margin: 20px 0px;
-                }
+            transform: translateX(-100%);  
+        }
+        .content_wrapper {
+            // width: 100%;
+            flex-direction: column;
+            align-content: flex-start;
+            li {
+                margin: 20px 0px;
             }
+        }
+        // 使用者帳號、登出
+        .content {
+            flex-direction: column;
+        }
+    // 點擊後以 SideBar 的形式顯示
+        .extend_bar {
+            visibility: unset; // 預設隱藏
         }
         // 觸發後顯示
         .show {
