@@ -27,19 +27,21 @@
       >
       <v-icon>fa-chevron-up</v-icon>
     </v-btn>
+
     <!-- 商品陳列 -->
     <div class="products d-flex flex-wrap justify-space-between">
       <!-- 標題 、 圖片網址 、 價格 、 產品ID -->
-      <div v-for="item in products" :key="item.id">
+      <li v-for="item in products" :key="item.id">
         <Products
           :title="item.title"
           :imgURL="item.url"
           :price="item.price"
           :id="item.id"
+          :description="item.description"
         />
-      </div>   
-
+      </li>   
     </div>
+
   </v-container>
 </template> 
 
@@ -75,9 +77,12 @@ export default {
     right: 0;
     z-index: 10000;
   }
+  li {
+    list-style-type: none;
+  }
   @media (max-width: 650px)  {
     .products {
     justify-content: space-around !important;
   }
-  }
+}
 </style>

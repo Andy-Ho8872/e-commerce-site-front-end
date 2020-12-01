@@ -1,7 +1,7 @@
 <template>
     <v-container>
 
-        <v-card v-for="item in product" :key="item.id" class="d-flex justify-space-around">
+        <v-card elevation="2"  v-for="item in product" :key="item.id" class="d-flex justify-space-around">
             <v-img :src="item.url" max-width="400" max-height="400"></v-img>
             <!-- 產品資訊 -->
             <div class="card_info">
@@ -87,7 +87,7 @@ export default {
     @media (max-width: 1268px) {
         .card_info {
             width: 100%;
-            border-top: 0.5px solid grey;
+            // border-top: 0.5px solid grey;
         }
         .v-card {
             flex-wrap: wrap;

@@ -55,7 +55,7 @@
                 </v-row>
 
                 <!-- 如果有使用者登入，則顯示他的帳號(電子郵件)以及登出按鈕 -->
-                <v-row class="content mx-1" v-if="userInfo">
+                <v-row v-if="userInfo" class="content mx-1" >
                     <li class="mx-1">
                         <v-icon
                             dark 
@@ -79,7 +79,7 @@
                 </v-row>
 
                 <!--  若使用者沒有登入(無Token) -->
-                <v-row class="content mx-1" v-if="!userInfo"> 
+                <v-row v-else class="content mx-1" > 
                     <li v-for="(list, index) in userList" :key="index">
                         <nuxt-link 
                             :to="list.to"
