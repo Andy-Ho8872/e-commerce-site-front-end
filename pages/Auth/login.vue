@@ -128,8 +128,8 @@ export default {
                     console.log(result);
                     // 若帳密正確，則給予 Token 並儲存在 localStorage
                     localStorage.setItem('Token', 'Bearer' + result.data.token)
-                    // 使用者資訊 (EMAIL)
-                    localStorage.setItem('UserInfo', result.data.user.email)
+                    localStorage.setItem('UserID', result.data.user.id)
+                    localStorage.setItem('UserEmail', result.data.user.email)
                     //this.messages = '註冊成功，即將為您導向登入頁面'
                     this.$router.push({ name: 'index' })
                 }

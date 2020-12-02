@@ -21,5 +21,7 @@ export const apiUserRegister = data => userRequest.post('/register', data);
 export const apiUserLogin = data => userRequest.post('/login', data);
 // CSRF API
 export const apiCsrfLogin = () => userCsrfRequest.get('/sanctum/csrf-cookie', config);
+// 取得 User API
+export const apiGetUserInfo = id => userRequest.get(`/user/${id}`);
 
 

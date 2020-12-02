@@ -3,7 +3,6 @@
     <div class="navbar blue darken-1 white--text">
         <!-- Navbar 上層 -->
         <v-row class="navbar_upper d-md-flex align-center justify-center ma-3" :class="{ show : active }">
-
             <div class="content_wrapper d-flex caption">
                 <!-- 社群帳號 icon -->
                 <v-row class="justify-center mx-1">
@@ -34,12 +33,10 @@
                         </nuxt-link>
                     </li>
                 </v-row>
-            </div>
-            
+            </div>     
             <v-spacer></v-spacer>
             <!-- 以上勿動 -->
             <div class="content_wrapper d-flex caption">
-
                 <!-- 通知總覽, 幫助中心(文字) -->
                 <v-row class="content mx-1">
                     <li v-for="(list, index) in noteList" :key="index" class="mx-1">
@@ -53,7 +50,6 @@
                         <span>{{ list.text }}</span>
                     </li>
                 </v-row>
-
                 <!-- 如果有使用者登入，則顯示他的帳號(電子郵件)以及登出按鈕 -->
                 <v-row v-if="userInfo" class="content mx-1" >
                     <li class="mx-1">
@@ -74,10 +70,9 @@
                             >
                             fa-user fa-fw
                         </v-icon>
-                        <span>登出</span>
+                        <span class="logout">登出</span>
                     </li>
                 </v-row>
-
                 <!--  若使用者沒有登入(無Token) -->
                 <v-row v-else class="content mx-1" > 
                     <li v-for="(list, index) in userList" :key="index">
@@ -96,10 +91,8 @@
                         </nuxt-link>
                     </li>
                 </v-row>
-
             </div>
         </v-row>
-
         <!-- Navbar 下層 -->
         <v-row class="navbar_lower d-flex flex-nowrap">
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
@@ -134,13 +127,13 @@
             </a>
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
             <v-spacer class="hidden-md-and-down"></v-spacer>
-        </v-row>
-        
+        </v-row>       
     </div>
-    
 </template>
 
 <script>
+import { apiGetUserInfo } from '~/APIs/api.js'
+
 export default {
     data () {
         return {
@@ -160,24 +153,54 @@ export default {
             // 觸發 class
             active: false,
             // 使用者登入後顯示帳號
-            userInfo: '',
+            userInfo: null,
         }
     },
     methods: {
         // 取得使用者資訊
-        getUserInfo () {
-            const getUserInfo = localStorage.getItem('UserInfo')
-            this.userInfo = getUserInfo
-            console.log('目前的使用者為:',getUserInfo);
+        async getUserInfo () {
+        // 先取得使用者的 Email 與 ID
+            const getUserEmail = localStorage.getItem('UserEmail')
+            const getUserID = localStorage.getItem('UserID')
+            console.log('目前的使用者為:',getUserEmail); 
+
+            try {
+                const result = await apiGetUserInfo(getUserID)
+                this.userInfo = result.data.email
+            }
+            catch (error) {
+                console.log(error);
+            }
         },
+        // 再利用 AJAX 作資料(Header)的局部更新
+        // async updateUserInfo () {
+        //     try {
+        //         const result = await apiGetUserInfo(getUserID)
+        //         this.userInfo = result.data.email
+        //     }
+        //     catch (error) {
+        //         console.log(error);
+        //     }
+        // },
+
         // 登出使用者( 清除 storage 中的 token 與 UserInfo )
         logout () {
             const removeUserInfo = localStorage.clear()
+            this.userInfo = null
         }
     },
-    mounted () {
-        this.getUserInfo()
-    }
+    // mounted () {
+    //     // 一秒後更新
+    //     setTimeout(() => {
+    //         this.getUserInfo();
+    //     }, 1000)   
+    // },
+    created () {
+        // 一秒後更新
+        setTimeout(() => {
+            this.getUserInfo();
+        }, 1000)   
+    },
 }
 </script>
 
@@ -200,6 +223,9 @@ export default {
     a { // for <nuxt-link>
         text-decoration: none;
         color: white
+    }
+    .logout {
+        cursor: pointer;
     }
     @media (max-width: 1024px) {
         .navbar {

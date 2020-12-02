@@ -2,7 +2,7 @@
     <v-container>
 
         <v-card elevation="2"  v-for="item in product" :key="item.id" class="d-flex justify-space-around">
-            <v-img :src="item.url" max-width="400" max-height="400"></v-img>
+            <v-img :src="item.url" max-width="320" max-height="320"></v-img>
             <!-- 產品資訊 -->
             <div class="card_info">
                 <!-- 商品名稱 -->
@@ -12,30 +12,31 @@
                 <!-- 商品價格 -->
                 <v-card-text class="headline">${{ item.price }}</v-card-text>
                 <!-- 輸入商品數量 -->
-                <v-row class="input_field align-center">
-                    <div class="px-2">購買數量</div>
+                <v-row class="input_field align-center py-3">
+                    <span class="px-2">購買數量</span>
                     <!-- 減少數量 -->
                     <v-btn
-                        @click="changeCount(-1)" 
+                        @click="changeCount(-1)"
+                        tile 
                         small 
                         depressed 
                         outlined 
                         color="error">
-                        <v-icon>fa-minus</v-icon>
+                        <v-icon>fa-minus fa-fw</v-icon>
                     </v-btn>
                     <!-- 當前數量 -->
                     <input
-                        class="grey lighten-2 text-center" 
-                        :value="counter"
-                    >
+                        class="grey lighten-2 text-center pt-1" 
+                        :value="counter">
                     <!-- 增加數量 -->
                     <v-btn 
                         @click="changeCount(1)"
+                        tile
                         small 
                         depressed 
                         outlined 
                         color="indigo">
-                        <v-icon>fa-plus</v-icon>
+                        <v-icon>fa-plus fa-fw</v-icon>
                     </v-btn>
                 </v-row>
             </div>
@@ -79,12 +80,13 @@ export default {
         width: 50%;
     }
     input {
-        width: 10%;
+        width: 20%;
+        outline: none;
     }
     .input_field {
         padding: 0 5%;
     }
-    @media (max-width: 1268px) {
+    @media (max-width: 768px) {
         .card_info {
             width: 100%;
             // border-top: 0.5px solid grey;

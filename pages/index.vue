@@ -31,7 +31,7 @@
     <!-- 商品陳列 -->
     <div class="products d-flex flex-wrap justify-space-between">
       <!-- 標題 、 圖片網址 、 價格 、 產品ID -->
-      <li v-for="item in products" :key="item.id">
+      <li v-for="item in products" :key="item.id" class="my-10">
         <Products
           :title="item.title"
           :imgURL="item.url"
@@ -48,7 +48,7 @@
 <script>
 // import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import axios from 'axios'
-// products URL
+// products URL (假資料)
 let url = 'https://my-json-server.typicode.com/Andy-Ho8872/FakeJsonData/products'
 
 export default {
@@ -65,7 +65,7 @@ export default {
         behavior: 'smooth'
       })
     }
-  }
+  },
 }
 
 </script>
