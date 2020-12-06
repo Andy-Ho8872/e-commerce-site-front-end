@@ -1,9 +1,8 @@
 <template>
   <v-app dark>
-    <Header class="header"/>
     <v-main class="main_view">
-      <!-- v-container will automaticlly use default margin -->
-        <nuxt/>  
+      <Header class="header"/>
+      <nuxt/>  
     </v-main>
   </v-app>
 </template>
@@ -13,9 +12,12 @@
 export default {
   data () {
     return {
-
+  
     }
-  }
+  },
+  methods: {
+    
+  },
 }
 </script>
 

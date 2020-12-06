@@ -24,9 +24,9 @@
                     <v-text-field
                         class="ma-6"
                         name="email"
-                        :rules="[rules.required, rules.email]"
-                        v-model="form.email"
                         required
+                        v-model="form.email"
+                        :rules="[rules.required, rules.email]"
                         prepend-icon="fa-user"
                         color="blue" 
                         label="電子郵件" 
@@ -37,15 +37,15 @@
                     <v-text-field
                         class="ma-6"
                         name="password"
-                        @click:append="show = !show"
-                        :type="show ? 'text' : 'password'"
-                        v-model="form.password"
                         required
-                        :rules="[rules.required, rules.min]"
                         counter
+                        v-model="form.password"
+                        :rules="[rules.required, rules.min]"
+                        :type="show ? 'text' : 'password'"
+                        @click:append="show = !show"
+                        :append-icon="show ? 'fa-eye' : 'fa-eye-slash'"
                         minlength="6" 
                         prepend-icon="fa-lock" 
-                        :append-icon="show ? 'fa-eye' : 'fa-eye-slash'"
                         label="密碼"
                         placeholder="Password"
                         >
@@ -59,7 +59,7 @@
                 </div>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
-                    尚未註冊?
+                    <span>尚未註冊?</span>
                     <nuxt-link :to="{ name: 'auth-register' }">
                         <div class="mx-2 blue--text ligten-2">註冊</div>
                     </nuxt-link>
@@ -82,13 +82,15 @@
                         登入
                     </v-btn>
                 </div>
+                <!-- <span>HELLO-{{ email }}</span> -->
             </v-form>
         </div>
     </v-container>
 </template>
 
 <script>
-import { apiUserLogin, apiCsrfLogin } from '~/APIs/api.js'
+import { apiUserLogin, apiCsrfLogin } from '~/APIs/api.js';
+import { mapMutations, mapActions } from 'vuex';
 
 export default {
     data () {
@@ -111,36 +113,22 @@ export default {
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     return pattern.test(value) || '範例 : abc123@gmail.com'
                 },
-            }
+            },
         }
     },
     methods: {
-        async login() {
-            try {
-                // 初次登入要先取得 CSRF
-                const csrf = await apiCsrfLogin()
-                // 登入使用者
-                try {
-                    const result = await apiUserLogin({
-                        email: this.form.email,
-                        password: this.form.password
-                    })
-                    console.log(result);
-                    // 若帳密正確，則給予 Token 並儲存在 localStorage
-                    localStorage.setItem('Token', 'Bearer' + result.data.token)
-                    localStorage.setItem('UserID', result.data.user.id)
-                    localStorage.setItem('UserEmail', result.data.user.email)
-                    //this.messages = '註冊成功，即將為您導向登入頁面'
-                    this.$router.push({ name: 'index' })
-                }
-                catch (error) {
-                    console.log(error);
-                }
-            }
-            catch (error) {
-                const result = error.response.data.errors
-                console.log(error.response.data.errors);
-            }
+        ...mapMutations({
+            getFormValue: 'auth/SET_USER_DATA'
+        }),
+        ...mapActions({
+            logUserIn: 'auth/login'
+        }),
+        login () {
+            // 將 form 所接收到的值傳入到 vuex 
+            this.getFormValue({ userData: this.form })
+            // 使用 ajax 進行登入的程序
+            this.logUserIn();
+
         }
     }
 }
@@ -162,6 +150,5 @@ export default {
     }
     .has_account {
         margin: 0 10%;
-    }
-       
+    }      
 </style>

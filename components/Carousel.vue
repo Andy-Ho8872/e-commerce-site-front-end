@@ -65,14 +65,14 @@ export default {
             counter : 'carousel/CHANGE_COUNTER' 
         }),
         changeCounter (value) {
-            this.counter(value)
+            this.counter(value) // 使用上方的 Mutations
         },
         // Actions
         ...mapActions({
             setCarousel : 'carousel/setCarousel'
         }),
         slideCarousel () {
-            this.setCarousel()
+            this.setCarousel() // 使用上方的 Actions
         },
     },
     // 頁面掛載後執行自動輪播

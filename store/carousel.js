@@ -11,8 +11,8 @@ export const state = () => ({
 export const mutations = {
     // 增加 Counter 計數 (每次增加最少為 1)
     CHANGE_COUNTER (state, value) {
-        state.counter = state.counter + value
-        console.log(state.counter); 
+        state.counter += value
+        //console.log(state.counter); 
     },
     SLIDE_CAROUSEL (state) {
     //先取得使用者當前螢幕的寬度

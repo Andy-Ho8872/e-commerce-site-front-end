@@ -24,9 +24,9 @@
                     <v-text-field
                         class="ma-6"
                         name="email"
-                        :rules="[rules.required, rules.email]"
-                        v-model="form.email"
                         required
+                        v-model="form.email"
+                        :rules="[rules.required, rules.email]"
                         prepend-icon="fa-user"
                         color="blue" 
                         label="電子郵件" 
@@ -37,15 +37,15 @@
                     <v-text-field
                         class="ma-6"
                         name="password"
-                        @click:append="show = !show"
-                        :type="show ? 'text' : 'password'"
-                        v-model="form.password"
                         required
-                        :rules="[rules.required, rules.min]"
                         counter
+                        v-model="form.password"
+                        :rules="[rules.required, rules.min]"
+                        :type="show ? 'text' : 'password'"
+                        @click:append="show = !show"
+                        :append-icon="show ? 'fa-eye' : 'fa-eye-slash'"
                         minlength="6" 
                         prepend-icon="fa-lock" 
-                        :append-icon="show ? 'fa-eye' : 'fa-eye-slash'"
                         label="密碼"
                         placeholder="Password"
                         >
@@ -59,7 +59,7 @@
                 </div>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
-                    已經註冊?
+                    <span>已經註冊?</span>
                     <nuxt-link :to="{ name: 'auth-login' }">
                         <div class="mx-2 blue--text ligten-2">登入</div>
                     </nuxt-link>
