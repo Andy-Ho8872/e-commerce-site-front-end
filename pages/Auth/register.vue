@@ -53,9 +53,10 @@
                 </div>
                 <!-- 顯示錯誤訊息(隱藏) -->
                 <div 
-                    class="error_msg text-center"
-                    :class="[is_valid ? 'valid' : 'invalid']">
-                    <h4 v-for="(msg, index) in messages" :key="index">{{ msg[0] }}</h4>
+                    class="error_msg text-center red--text">
+                    <h4 v-for="(msg, index) in message" :key="index">
+                        {{ msg[0] }}
+                    </h4>
                 </div>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
@@ -88,7 +89,8 @@
 </template>
 
 <script>
-import { apiUserRegister } from '~/APIs/api.js'
+import { apiUserRegister } from '~/APIs/api.js';
+import { mapMutations, mapActions, mapGetters } from 'vuex';
 
 export default {
     data () {
@@ -98,9 +100,6 @@ export default {
                 email: '',
                 password: '',
             },
-            // 錯誤訊息
-            messages: '',
-            is_valid: true,
             // 表單驗證規則
             valid: null, // 是否合格
             show: false, // 顯示 or 不顯示 密碼
@@ -111,37 +110,35 @@ export default {
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     return pattern.test(value) || '範例 : abc123@gmail.com'
                 },
-            }
+            },
+            // 計時器
+            timer: 5000
         }
     },
     methods: { 
-        async register () {
-            try {
-                const result = await apiUserRegister({
-                    email: this.form.email,
-                    password: this.form.password
-                })
-                this.is_valid = true 
-                //this.messages = '註冊成功，即將為您導向登入頁面'
-                this.clearMessage ()
-                //this.$router.push({ name: 'auth-login' }) // 註冊成功後跳轉至登入頁面
-            }
-            catch (error) {
-                const result = error.response.data.errors
-                console.log(error.response.data.errors);
-                
-                // 顯示錯誤訊息後自動清除
-                this.is_valid = false
-                this.messages = result
-                this.clearMessage ()
-            }
-        },
-        // 自動清除訊息
-        clearMessage () {
+        ...mapMutations({
+            // 清除錯誤訊息
+            clearMessage: 'auth/CLEAR_MESSAGE'
+        }),
+        ...mapActions({
+            registerUser: 'auth/register'
+        }),
+        register () {
+            this.registerUser(this.form);
+            // 清除錯誤訊息
             setTimeout(() => {
-                this.messages = ''
-            },5000)
-        } 
+                this.clearMessage()
+            }, this.timer)
+            
+        },
+    },
+    computed: {
+        ...mapGetters({
+            fetchMessage: 'auth/fetchMessage'
+        }),
+        message () {
+            return this.fetchMessage
+        },
     }
 }
 </script>
@@ -166,11 +163,4 @@ export default {
     .has_account {
         margin: 0 10%;
     } 
-    // 合格 or 不合格
-    .valid {
-        color: teal;
-    }
-    .invalid {
-        color: red;
-    }
 </style>

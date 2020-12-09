@@ -52,10 +52,12 @@
                     </v-text-field>
                 </div>
                 <!-- 顯示錯誤訊息(隱藏) -->
+                <!-- 顯示錯誤訊息(隱藏) -->
                 <div 
-                    class="error_msg text-center"
-                    :class="[is_valid ? 'valid' : 'invalid']">
-                    <h4 v-for="(msg, index) in messages" :key="index">{{ msg[0] }}</h4>
+                    class="error_msg text-center red--text">
+                    <h4 v-for="(msg, index) in message" :key="index">
+                        {{ msg[0] }}
+                    </h4>
                 </div>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
@@ -90,7 +92,7 @@
 
 <script>
 import { apiUserLogin, apiCsrfLogin } from '~/APIs/api.js';
-import { mapMutations, mapActions } from 'vuex';
+import { mapMutations, mapActions, mapGetters } from 'vuex';
 
 export default {
     data () {
@@ -100,9 +102,6 @@ export default {
                 email: '',
                 password: '',
             },
-            // 錯誤訊息
-            messages: '',
-            is_valid: true,
             // 表單驗證規則
             valid: null, // 是否合格
             show: false, // 顯示 or 不顯示 密碼
@@ -114,22 +113,40 @@ export default {
                     return pattern.test(value) || '範例 : abc123@gmail.com'
                 },
             },
+            timer: 5000
         }
     },
     methods: {
         ...mapMutations({
-            getFormValue: 'auth/SET_USER_DATA'
+            // 使用者登入後從 Local Storage 抓取資料與 Token
+            fetchUserAccount: 'auth/FETCH_USER_ACCOUNT',
+            // 清除錯誤訊息
+            clearMessage: 'auth/CLEAR_MESSAGE'
         }),
         ...mapActions({
-            logUserIn: 'auth/login'
+            // commit 登入的 Mutation
+            loginUser: 'auth/login'
         }),
-        login () {
-            // 將 form 所接收到的值傳入到 vuex 
-            this.getFormValue({ userData: this.form })
-            // 使用 ajax 進行登入的程序
-            this.logUserIn();
-
+        async login () {
+            // 將 form 所接收到的值以物件(Object)的方式傳入到 vuex 
+            this.loginUser(this.form);
+            // 清除錯誤訊息
+            setTimeout(() => {
+                this.clearMessage();
+            }, this.timer)
+            // 必須要加上 setTimeout 否則在資料還沒接收到的時候就會執行
+            setTimeout(() => {
+                this.fetchUserAccount();
+            }, this.timer) 
         }
+    },
+    computed: {
+        ...mapGetters({
+            fetchMessage: 'auth/fetchMessage'
+        }),
+        message () {
+            return this.fetchMessage
+        },
     }
 }
 </script>

@@ -132,6 +132,7 @@
 
 <script>
 import { apiGetUserInfo } from '~/APIs/api.js'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
     data () {
@@ -151,44 +152,30 @@ export default {
             ],
             // 觸發 class
             active: false,
-            // 使用者登入後顯示帳號
-            user: null
         }
     },
     methods: {
-        // 取得使用者資訊
-        getUserInfo () {
-        // 從 localStorage 取得使用者的 Email 與 ID
-            const getUserID = localStorage.getItem('UserID')
-            const getUserEmail = localStorage.getItem('UserEmail')
-            console.log('目前的使用者為:',getUserEmail); 
-            // 寫入資料
-            //this.user.ID = getUserID;
-            this.user = getUserEmail
-            // 用 axios 不管了
-            
-            // try {
-            //     const result = await apiGetUserInfo(this.user.ID)
-            //     console.log('目前的使用者為(axios):', this.user.Email);
-            // }
-            // catch (error) {
-            //     console.log(error);
-            // }
-        },
-
+        ...mapMutations({
+            fetchAccount: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料
+            logUserOut: 'auth/LOGOUT' // 登出使用者
+        }),
         // 登出使用者( 清除 localStorage 中的 token 與 UserInfo )
         logout () {
-            const removeUserInfo = localStorage.clear()
-            this.user = null
-            console.log("使用者已登出");
+            this.logUserOut()  
         }
     },
-    
-    
-    watch: {
-        user:((value) => {
-            console.log("監控到變化了!!");    
-        })
+    computed: {
+        ...mapGetters({
+            userAccount: 'auth/fetchUserAccount'
+        }),
+        // 使用者資訊
+        user () {
+            return this.userAccount
+        }
+    },
+    // 頁面重新掛載時繼續抓取使用者資訊
+    mounted () {
+        this.fetchAccount()    
     }
 }
 </script>
