@@ -112,7 +112,7 @@ export default {
                 },
             },
             // 計時器
-            timer: 5000
+            timer: 3000
         }
     },
     methods: { 

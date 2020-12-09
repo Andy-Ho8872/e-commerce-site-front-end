@@ -1,4 +1,4 @@
-import { apiUserRegister, apiUserLogin, apiCsrfLogin } from '~/APIs/api.js'
+import { apiUserRegister, apiUserLogin, apiCsrfLogin, apiUserLogout } from '~/APIs/api.js'
 
 export const state = () => ({
     user: {
@@ -44,7 +44,7 @@ export const mutations = {
     },
 
     // 登出使用者( 清除 localStorage 中的 token 與 UserInfo )
-    LOGOUT (state) {
+    CLEAR_ALL_STORAGE (state) {
         localStorage.clear()
         state.userAccount = null
         console.log("使用者已登出");
@@ -84,7 +84,7 @@ export const actions = {
                     password: user.password
                 })
                 // 若帳密正確，則給予 Token 並儲存在 localStorage
-                localStorage.setItem('Token', 'Bearer' + result.data.token)
+                localStorage.setItem('Token', ('Bearer ' + result.data.token))
                 localStorage.setItem('UserID', result.data.user.id)
                 localStorage.setItem('UserEmail', result.data.user.email)
                 // 重新導向
@@ -103,4 +103,22 @@ export const actions = {
             state.commit('FETCH_MESSAGE', msg)
         }
     },
+
+    // 登出流程
+    async logout (state) {
+        const Bearer_token = localStorage.getItem('Token')
+        const config = { headers: { Authorization: Bearer_token } }
+
+        try {
+            // 要取得使用者的 Token 才能執行登出
+            const result = await apiUserLogout(config)
+            console.log(result);
+            // 清空 LocalStorage
+            state.commit('CLEAR_ALL_STORAGE')
+            alert('您已經登出')
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 }

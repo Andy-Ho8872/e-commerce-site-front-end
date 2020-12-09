@@ -15,12 +15,15 @@ const userRequest = axios.create({
 const userCsrfRequest = axios.create({
     baseURL: 'http://localhost:8000'
 });
+
 // 註冊 API
 export const apiUserRegister = data => userRequest.post('/register', data);
 // 登入 API
 export const apiUserLogin = data => userRequest.post('/login', data);
 // CSRF API
 export const apiCsrfLogin = () => userCsrfRequest.get('/sanctum/csrf-cookie', config);
+// 登出 API (要有 Token 才能登出)
+export const apiUserLogout = token => userRequest.get('/logout', token);
 // 取得 User API
 export const apiGetUserInfo = id => userRequest.get(`/user/${id}`);
 

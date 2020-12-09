@@ -51,6 +51,7 @@
                 </v-row>
                 <!-- 如果有使用者登入，則顯示他的帳號(電子郵件)以及登出按鈕 -->
                 <v-row v-if="user" class="content mx-1" >
+                    <!-- 使用者帳號 -->
                     <li class="mx-1">
                         <v-icon
                             dark 
@@ -61,6 +62,7 @@
                         </v-icon>
                         <span>{{ user }}</span>
                     </li>
+                    <!-- 登出按鈕 -->
                     <li class="mx-1" @click="logout">
                         <v-icon
                             dark 
@@ -131,8 +133,7 @@
 </template>
 
 <script>
-import { apiGetUserInfo } from '~/APIs/api.js'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
     data () {
@@ -152,20 +153,23 @@ export default {
             ],
             // 觸發 class
             active: false,
+            
         }
     },
     methods: {
         ...mapMutations({
             fetchAccount: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料
-            logUserOut: 'auth/LOGOUT' // 登出使用者
         }),
-        // 登出使用者( 清除 localStorage 中的 token 與 UserInfo )
+        ...mapActions({
+            logoutUser: 'auth/logout'
+        }),
         logout () {
-            this.logUserOut()  
+            this.logoutUser()  
         }
     },
     computed: {
         ...mapGetters({
+            // 抓取使用者資訊
             userAccount: 'auth/fetchUserAccount'
         }),
         // 使用者資訊

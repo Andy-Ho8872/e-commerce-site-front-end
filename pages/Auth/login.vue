@@ -113,7 +113,7 @@ export default {
                     return pattern.test(value) || '範例 : abc123@gmail.com'
                 },
             },
-            timer: 5000
+            timer: 3000
         }
     },
     methods: {
