@@ -127,7 +127,7 @@ export default {
             // commit 登入的 Mutation
             loginUser: 'auth/login'
         }),
-        async login () {
+        login () { // async login()
             // 將 form 所接收到的值以物件(Object)的方式傳入到 vuex 
             this.loginUser(this.form);
             // 清除錯誤訊息

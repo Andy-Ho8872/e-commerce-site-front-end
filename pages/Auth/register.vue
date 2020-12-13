@@ -147,7 +147,7 @@ export default {
 // 表單
     .form-wrapper {
         position: relative;
-    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 80%);
+        background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 80%);
         max-width: 600px;
         height: 600px;
     }

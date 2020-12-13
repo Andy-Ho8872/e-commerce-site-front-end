@@ -2,7 +2,7 @@
   <v-app dark>
     <v-main class="main_view">
       <Header class="header"/>
-      <nuxt/>  
+      <nuxt />  
     </v-main>
   </v-app>
 </template>
@@ -30,10 +30,12 @@ export default {
     top: 0;
     z-index: 10000;
   }
+  .v-main_wrap {
+    padding: auto 0;
+  }
   .main_view {
     display: flex;
     justify-content: center;
-    //align-items: center;
     padding-top: 10% !important;
   }
 

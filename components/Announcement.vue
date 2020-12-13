@@ -31,7 +31,7 @@
 
 <script>
 export default {
-    props : ['year', 'month', 'day', 'hour', 'minute', 'second', 'millisecond' ],
+    props : ['year', 'month', 'day', 'hour', 'minute', 'second', 'millisecond' ], // passed from pages/index.vue
     data () {
         return {
             showDays: 0,

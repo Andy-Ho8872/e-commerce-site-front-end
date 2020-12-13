@@ -23,21 +23,20 @@
             fab
             dark
             large
-            color="primary"
-        >
+            color="primary">
             <v-icon>fa-chevron-up</v-icon>
         </v-btn>
 
     <!-- 商品陳列 -->
         <div class="products d-flex flex-wrap justify-space-between">
         <!-- 標題 、 圖片網址 、 價格 、 產品ID -->
-            <li v-for="item in products" :key="item.id" class="my-10">
+            <li v-for="product in products" :key="product.id" class="my-10">
                 <Products
-                :title="item.title"
-                :imgURL="item.url"
-                :price="item.price"
-                :id="item.id"
-                :description="item.description"
+                :title="product.title"
+                :imgURL="product.imgUrl"
+                :price="product.unit_price"
+                :id="product.id"
+                :description="product.description"
                 />
             </li>   
         </div>
@@ -46,18 +45,18 @@
 
 <script>
 // import VuetifyLogo from '~/components/VuetifyLogo.vue'
-import axios from 'axios'
-// products URL (假資料)
-let url = 'https://my-json-server.typicode.com/Andy-Ho8872/FakeJsonData/products'
+import axios from 'axios';
+import { apiGetProducts, apiGetProduct } from '../APIs/api.js';
+
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-    async asyncData () {
-            let res = await axios.get(url)
-            // get product results
-            return { 
-            products: res.data 
-        }
+    // 測試用 (使用 asycsData 才可以在 Server 先渲染)  可留可不留????
+    async asyncData() {
+        const AllProducts = await apiGetProducts()
+        return { res: AllProducts.data }
     },
+
     methods: {
             // 點擊移動到最上層
             scrollTop () {
@@ -65,8 +64,24 @@ export default {
                 top: 0,
                 behavior: 'smooth'
             })
+        },
+        // 撈取產品資料
+        ...mapActions({
+            fetchAllProducts: 'product/fetchAllProducts'
+        })
+    },
+    computed: {
+        ...mapGetters({
+            getAllProducts: 'product/getAllProducts'
+        }),
+        // 撈取到的所有產品資料
+        products () {
+           return this.getAllProducts
         }
     },
+    created () {
+        this.fetchAllProducts()
+    }
 }
 
 </script>

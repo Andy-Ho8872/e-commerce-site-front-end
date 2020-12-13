@@ -11,20 +11,35 @@ let config = {
 const userRequest = axios.create({
     baseURL: `${ base }/auth`
 });
+
 // CSRF Protection API 使用者第一次登入時要先取得 CSRF 憑證
 const userCsrfRequest = axios.create({
     baseURL: 'http://localhost:8000'
 });
 
-// 註冊 API
+// Product Request 取得商品資訊 (假資料)
+const productRequest = axios.create({
+    //baseURL: 'https://my-json-server.typicode.com/Andy-Ho8872/FakeJsonData'
+    baseURL: base
+});
+
+
+// 與使用者相關的 API
+    // 註冊 
 export const apiUserRegister = data => userRequest.post('/register', data);
-// 登入 API
+    // 登入 (取得 Token)
 export const apiUserLogin = data => userRequest.post('/login', data);
-// CSRF API
+    // CSRF 
 export const apiCsrfLogin = () => userCsrfRequest.get('/sanctum/csrf-cookie', config);
-// 登出 API (要有 Token 才能登出)
+    // 登出 (要有 Token 才能登出)
 export const apiUserLogout = token => userRequest.get('/logout', token);
-// 取得 User API
+    // 取得 User 
 export const apiGetUserInfo = id => userRequest.get(`/user/${id}`);
 
 
+
+// 商品有關的 API
+    // 撈取所有產品
+export const apiGetProducts = () => productRequest.get('/products');
+    // 撈取單一產品
+export const apiGetProduct = (id) => productRequest.get(`/products/${id}`);

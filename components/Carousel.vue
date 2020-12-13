@@ -22,10 +22,10 @@
             <v-card class="single_card" v-for="(item, index) in products" :key="index" tile max-width="355">
                 <v-img 
                     class="my-auto"
-                    :src="item.url" 
-                    :lazy-src="item.url" 
-                    max-width="355" 
-                    max-height="355" 
+                    :src="item.imgUrl" 
+                    :lazy-src="item.imgUrl" 
+                    :max-width="cardWidth" 
+                    :max-height="cardHeight" 
                     >
                     <!-- 當圖片 Loading 時 -->
                     <template v-slot:placeholder>
@@ -53,10 +53,13 @@
 import { mapMutations, mapActions } from 'vuex'
 
 export default {
-    props: ['products'],
+    props: ['products'], // passed form pages/index.vue
     data () {
         return {
-            interval: ''
+            interval: '',
+            // 商品卡片長寬
+            cardWidth: 355,
+            cardHeight: 355
         }
     },
     methods: {

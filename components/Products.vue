@@ -14,6 +14,7 @@
                 :width="cardWidth" 
                 :height="cardHeight" 
                 >
+                <!-- 產品折扣 -->
                 <v-card-subtitle 
                     class="
                     product_discount_lable
@@ -66,6 +67,7 @@
                 <!-- 產品敘述 -->
                 <v-card-subtitle 
                     class="
+                    product_description
                     px-8
                     py-6
                     gray--text 
@@ -99,6 +101,7 @@
                 </div>
             </v-card>
         </nuxt-link>
+        
         <!-- 放入購物車按鈕 -->
         <v-btn class="add_to_cart" 
             tile 
@@ -116,7 +119,9 @@
 
 <script>
 export default {
-    props: ['title', 'imgURL', 'price', 'id', 'description'], // passed from index.vue
+    props: ['title', 'imgURL', 'price', 'id', 'description'], // passed from pages/index.vue
+   // props: ['products'],
+
     data () {
         return {
             // 商品卡片大小
