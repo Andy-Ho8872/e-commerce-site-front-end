@@ -1,8 +1,8 @@
 <template>
 <!-- 商品卡片 -->
     <div class="product_wrapper">
-        <!-- 產品連結  (待修正) -->
-        <nuxt-link :to="'products/' + id">
+        <!-- 產品連結  -->
+        <nuxt-link :to="`products/${id}`">
             <v-card
                 class="
                 Products 
@@ -74,7 +74,8 @@
                     text--lighten-2
                     text-justify"
                     >
-                    {{ description }}
+                    <!-- 縮減字數後的商品敘述 -->
+                    {{ subString }}
                 </v-card-subtitle>
                 <!-- 產品價格 -->
                 <div class="text--lighten-1 text-center">
@@ -121,12 +122,17 @@
 export default {
     props: ['title', 'imgURL', 'price', 'id', 'description'], // passed from pages/index.vue
    // props: ['products'],
-
     data () {
         return {
             // 商品卡片大小
             cardWidth: 300,
             cardHeight: 600
+        }
+    },
+    computed: {
+        // 縮減商品敘述的字串
+        subString () {
+            return this.description.substring(0, 50) + '...'
         }
     }
 }

@@ -5,6 +5,12 @@
       <nuxt />  
     </v-main>
   </v-app>
+  
+    <!-- <v-main class="main_view">
+      <Header class="header"/>
+      <nuxt />  
+    </v-main> -->
+  
 </template>
 
 <script>

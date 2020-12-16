@@ -65,8 +65,10 @@
                         <v-icon>fa-plus fa-fw</v-icon>
                     </v-btn>
                 </v-row>
-                <!-- 購買按鈕區 -->
 
+
+                <!-- 購買按鈕區 -->
+                <!-- 藉由 id 來新增至購物車? -->
                 <div class="purchase_btn text-center">
                     <v-btn
                         class="ma-3" 
@@ -92,53 +94,61 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+// import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { apiGetProduct } from '~/APIs/api.js';
 
 export default {
+    // 測試用
+    async asyncData({ params }) {
+        const res = await apiGetProduct(params.id)
+        return { product: res.data }
+    },
+
     data () {
         return {
             // 產品當前數量
             productQty: 1 ,
-
             loading: true
         }
     },
-    computed: {
-        ...mapGetters({
-            getSingleProduct: 'product/getSingleProduct'
-        }),
-        product () {
-            return this.getSingleProduct
-        }
-    },
+
+    // 使用 vuex 來讀取
+    // computed: {
+    //     ...mapGetters({
+    //         getSingleProduct: 'product/getSingleProduct'
+    //     }),
+    //     product () {
+    //         return this.getSingleProduct
+    //     }
+    // },
     methods: {
-        ...mapMutations({
-            resetProduct: 'product/RESET_PRODUCT'
-        }),
-        ...mapActions({
-            fetchSingleProduct: 'product/fetchSingleProduct'
-        }),
-        // 點擊按鈕以 增加 或 減少 購買數量
         changeCount (value) {
             this.productQty += value
         }
+        // ...mapMutations({
+        //     resetProduct: 'product/RESET_PRODUCT'
+        // }),
+        // ...mapActions({
+        //     fetchSingleProduct: 'product/fetchSingleProduct'
+        // }),
+        // 點擊按鈕以 增加 或 減少 購買數量
     },
-    // 撈取所點擊的商品並依該商品的 id 來撈取資料
-    created () {    
-        // 讀取中 
-        this.loadig = true
-        // 該商品的 id
-        const productId = this.$route.params.id
-        this.fetchSingleProduct(productId) 
-    },
+    // // 撈取所點擊的商品並依該商品的 id 來撈取資料
+    // created () {    
+    //     // 讀取中 
+    //     this.loadig = true
+    //     // 該商品的 id
+    //     const productId = this.$route.params.id
+    //     this.fetchSingleProduct(productId) 
+    // },
     mounted () {
         // 讀取完畢
         this.loading = false
     },
-    // 清空原本 Object 所存有的商品資訊，為了讓點選其他商品時的轉場更加順暢。
-    beforeDestroy () {
-        this.resetProduct()
-    }
+    // // 清空原本 Object 所存有的商品資訊，為了讓點選其他商品時的轉場更加順暢。
+    // beforeDestroy () {
+    //     this.resetProduct()
+    // }
 }
 </script>
 

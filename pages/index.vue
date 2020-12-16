@@ -31,13 +31,16 @@
         <div class="products d-flex flex-wrap justify-space-between">
         <!-- 標題 、 圖片網址 、 價格 、 產品ID -->
             <li v-for="product in products" :key="product.id" class="my-10">
-                <Products
+                <Product
                 :title="product.title"
                 :imgURL="product.imgUrl"
                 :price="product.unit_price"
                 :id="product.id"
                 :description="product.description"
                 />
+                <!-- <Product
+                :products="products"
+                /> -->
             </li>   
         </div>
     </v-container>
@@ -45,16 +48,16 @@
 
 <script>
 // import VuetifyLogo from '~/components/VuetifyLogo.vue'
-import axios from 'axios';
-import { apiGetProducts, apiGetProduct } from '../APIs/api.js';
+//import axios from 'axios';
 
+import { apiGetProducts, apiGetProduct } from '~/APIs/api.js';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
     // 測試用 (使用 asycsData 才可以在 Server 先渲染)  可留可不留????
     async asyncData() {
-        const AllProducts = await apiGetProducts()
-        return { res: AllProducts.data }
+        const res = await apiGetProducts()
+        return { products: res.data }
     },
 
     methods: {
@@ -70,18 +73,20 @@ export default {
             fetchAllProducts: 'product/fetchAllProducts'
         })
     },
-    computed: {
-        ...mapGetters({
-            getAllProducts: 'product/getAllProducts'
-        }),
-        // 撈取到的所有產品資料
-        products () {
-           return this.getAllProducts
-        }
-    },
-    created () {
-        this.fetchAllProducts()
-    }
+
+    // Vuex 方法
+    // computed: {
+    //     ...mapGetters({
+    //         getAllProducts: 'product/getAllProducts'
+    //     }),
+    //     // 撈取到的所有產品資料
+    //     products () {
+    //        return this.getAllProducts
+    //     }
+    // },
+    // created () {
+    //     this.fetchAllProducts()
+    // }
 }
 
 </script>

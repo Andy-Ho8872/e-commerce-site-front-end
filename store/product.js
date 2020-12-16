@@ -4,7 +4,11 @@ export const state = () => ({
     // 所有產品
     products: [],
     // 單一產品(由 id 進行篩選)
-    product: {} // 起始為空的 Object
+    product: {}, // 起始為空的 Object
+    // 以上已經用 asyncData 達成，所以目前暫不使用 ?
+
+    // 購物車
+    cart: []
 })
 
 export const getters = {
