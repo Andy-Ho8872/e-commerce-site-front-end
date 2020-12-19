@@ -19,7 +19,7 @@ const userCsrfRequest = axios.create({
 
 // Product Request 取得商品資訊 (假資料)
 const productRequest = axios.create({
-    //baseURL: 'https://my-json-server.typicode.com/Andy-Ho8872/FakeJsonData'
+    // baseURL: 'https://my-json-server.typicode.com/Andy-Ho8872/FakeJsonData'
     baseURL: base
 });
 

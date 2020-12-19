@@ -48,7 +48,7 @@
 
 <script>
 // import VuetifyLogo from '~/components/VuetifyLogo.vue'
-//import axios from 'axios';
+import axios from 'axios';
 
 import { apiGetProducts, apiGetProduct } from '~/APIs/api.js';
 import { mapActions, mapGetters } from 'vuex';
@@ -57,7 +57,8 @@ export default {
     // 測試用 (使用 asycsData 才可以在 Server 先渲染)  可留可不留????
     async asyncData() {
         const res = await apiGetProducts()
-        return { products: res.data }
+        return { products: res.data.products }
+        
     },
 
     methods: {
@@ -86,6 +87,12 @@ export default {
     // },
     // created () {
     //     this.fetchAllProducts()
+    // }
+    // created () {
+    //     const res = axios.get('http://127.0.0.1:8000/api/products')
+    //     .then((res) => {
+    //         console.log(res.data);
+    //     })
     // }
 }
 

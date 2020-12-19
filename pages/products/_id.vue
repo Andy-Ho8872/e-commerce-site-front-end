@@ -101,7 +101,7 @@ export default {
     // 測試用
     async asyncData({ params }) {
         const res = await apiGetProduct(params.id)
-        return { product: res.data }
+        return { product: res.data.product }
     },
 
     data () {
