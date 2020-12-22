@@ -33,10 +33,11 @@
             <li v-for="product in products" :key="product.id" class="my-10">
                 <Product
                 :title="product.title"
-                :imgURL="product.imgUrl"
+                :imgUrl="product.imgUrl"
                 :price="product.unit_price"
                 :id="product.id"
                 :description="product.description"
+                :tags="product.tags"
                 />
                 <!-- <Product
                 :products="products"
@@ -48,15 +49,16 @@
 
 <script>
 // import VuetifyLogo from '~/components/VuetifyLogo.vue'
-import axios from 'axios';
+// import axios from 'axios';
+// import { mapActions, mapGetters } from 'vuex';
 
 import { apiGetProducts, apiGetProduct } from '~/APIs/api.js';
-import { mapActions, mapGetters } from 'vuex';
 
 export default {
     // 測試用 (使用 asycsData 才可以在 Server 先渲染)  可留可不留????
     async asyncData() {
         const res = await apiGetProducts()
+        console.log(res.data);
         return { products: res.data.products }
         
     },
@@ -70,9 +72,9 @@ export default {
             })
         },
         // 撈取產品資料
-        ...mapActions({
-            fetchAllProducts: 'product/fetchAllProducts'
-        })
+        // ...mapActions({
+        //     fetchAllProducts: 'product/fetchAllProducts'
+        // })
     },
 
     // Vuex 方法

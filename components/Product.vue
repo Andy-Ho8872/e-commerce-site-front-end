@@ -8,7 +8,7 @@
                 Products 
                 justify-center 
                 align-center 
-                flex-wrap mt-5"
+                flex-wrap"
                 tile
                 color="grey lighten-5"
                 :width="cardWidth" 
@@ -29,14 +29,14 @@
                         font-weight-medium
                         text-uppercase"
                         >
-                        50% off!!
+                        product.discount
                     </span>
                 </v-card-subtitle>
                 <!-- 產品圖片 -->
                 <v-img 
                     class="product_image ma-auto"
-                    :src="imgURL"
-                    :lazy-src="imgURL" 
+                    :src="imgUrl"
+                    :lazy-src="imgUrl" 
                     >
                     <!-- 當圖片 Loading 時 -->
                         <template v-slot:placeholder>
@@ -57,7 +57,7 @@
                 <v-card-title 
                     class="
                     product_title
-                    pa-3
+                    mt-2 pa-3
                     text-center
                     font-weight-black
                     justify-center"
@@ -68,15 +68,23 @@
                 <v-card-subtitle 
                     class="
                     product_description
-                    px-8
-                    py-6
+                    px-8 py-4
                     gray--text 
                     text--lighten-2
                     text-justify"
                     >
                     <!-- 縮減字數後的商品敘述 -->
                     {{ subString }}
+                    <!-- 產品標籤 -->
+                    <v-chip-group class="my-5">
+                        <v-chip class="mx-1" color="primary" v-for="tag in tags" :key="tag.id">
+                            <v-icon size="medium">fa-check-circle fa-fw</v-icon>
+                            <span>{{ tag.title }}</span>
+                        </v-chip>
+                    </v-chip-group>      
                 </v-card-subtitle>
+
+
                 <!-- 產品價格 -->
                 <div class="text--lighten-1 text-center">
                     <!-- 原價 -->
@@ -100,6 +108,8 @@
                         NT.{{ Math.floor(price / 2) }}
                     </v-card-subtitle>
                 </div>
+
+                
             </v-card>
         </nuxt-link>
         
@@ -120,7 +130,7 @@
 
 <script>
 export default {
-    props: ['title', 'imgURL', 'price', 'id', 'description'], // passed from pages/index.vue
+    props: ['title', 'imgUrl', 'price', 'id', 'description', 'tags'], // passed from pages/index.vue
    // props: ['products'],
     data () {
         return {

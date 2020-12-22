@@ -35,6 +35,13 @@
                     class="headline">
                     ${{ product.unit_price }}
                 </v-card-text>
+                <!-- 產品標籤 -->
+                <v-chip-group class="ma-4">
+                    <v-chip class="mx-1" color="primary" v-for="tag in product.tags" :key="tag.id">
+                        <v-icon size="medium">fa-check-circle fa-fw</v-icon>
+                        <span>{{ tag.title }}</span>
+                    </v-chip>
+                </v-chip-group>
                 <!-- 輸入商品數量 -->
                 <v-row class="input_field align-center ma-3 pa-3">
                     <span class="px-2">購買數量</span>
