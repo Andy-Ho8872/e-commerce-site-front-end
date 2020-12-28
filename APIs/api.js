@@ -43,3 +43,5 @@ export const apiGetUserInfo = id => userRequest.get(`/user/${id}`);
 export const apiGetProducts = () => productRequest.get('/products');
     // 撈取單一產品
 export const apiGetProduct = (id) => productRequest.get(`/products/${id}`);
+    // 使用者在購物車中的產品
+export const apiGetCartProducts = (userId) => userRequest.get(`/user/${userId}/cart`);

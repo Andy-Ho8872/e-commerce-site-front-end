@@ -33,7 +33,8 @@
                 <!-- 商品價格 -->
                 <v-card-text 
                     class="headline">
-                    ${{ product.unit_price }}
+                    <!-- 包含折扣 -->
+                    ${{ Math.floor(product.unit_price * product.discount_rate) }}
                 </v-card-text>
                 <!-- 產品標籤 -->
                 <v-chip-group class="ma-4">
@@ -58,6 +59,9 @@
                     <!-- 當前數量 -->
                     <input
                         class="grey lighten-2 text-center"
+                        
+                        name="quantity"
+                        
                         type="text" 
                         v-model="productQty"
                         >

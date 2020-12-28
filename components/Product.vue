@@ -12,46 +12,41 @@
                 tile
                 color="grey lighten-5"
                 :width="cardWidth" 
-                :height="cardHeight" 
-                >
+                :height="cardHeight" >
                 <!-- 產品折扣 -->
-                <v-card-subtitle 
+                    <!-- 產品原始 折扣倍率為 1.00 即原價-->
+                <v-card-subtitle v-if="formatLabel != 10"
                     class="
                     product_discount_lable
                     yellow
                     pa-1
-                    caption"
-                    >
+                    caption">
                     <span 
                         class="
                         red--text 
                         font-italic
                         font-weight-medium
-                        text-uppercase"
-                        >
-                        product.discount
+                        overline">
+                        {{ formatLabel }} 折
                     </span>
                 </v-card-subtitle>
                 <!-- 產品圖片 -->
                 <v-img 
                     class="product_image ma-auto"
                     :src="imgUrl"
-                    :lazy-src="imgUrl" 
-                    >
+                    :lazy-src="imgUrl" >
                     <!-- 當圖片 Loading 時 -->
-                        <template v-slot:placeholder>
-                            <v-row
-                                class="fill-height ma-0"
-                                align="center"
-                                justify="center"
-                                >
-                                <v-progress-circular
-                                    indeterminate
-                                    color="blue lighten-5"
-                                    >
-                                </v-progress-circular>
-                            </v-row>
-                        </template>
+                    <template v-slot:placeholder>
+                        <v-row
+                            class="fill-height ma-0"
+                            align="center"
+                            justify="center">
+                            <v-progress-circular
+                                indeterminate
+                                color="blue lighten-5">
+                            </v-progress-circular>
+                        </v-row>
+                    </template>
                 </v-img>
                 <!-- 產品名稱 -->
                 <v-card-title 
@@ -60,8 +55,7 @@
                     mt-2 pa-3
                     text-center
                     font-weight-black
-                    justify-center"
-                    >
+                    justify-center">
                     {{ title }}
                 </v-card-title>
                 <!-- 產品敘述 -->
@@ -71,8 +65,7 @@
                     px-8 py-4
                     gray--text 
                     text--lighten-2
-                    text-justify"
-                    >
+                    text-justify">
                     <!-- 縮減字數後的商品敘述 -->
                     {{ subString }}
                     <!-- 產品標籤 -->
@@ -83,8 +76,6 @@
                         </v-chip>
                     </v-chip-group>      
                 </v-card-subtitle>
-
-
                 <!-- 產品價格 -->
                 <div class="text--lighten-1 text-center">
                     <!-- 原價 -->
@@ -92,45 +83,39 @@
                         class="
                         original_price
                         pa-1
-                        gray--text 
-                        text-decoration-line-through"
+                        subtitle-1
+                        gray--text "
+                        :class="[formatLabel == 10 ? '' : 'discounted']"
                         >
-                        NT.{{ price }}
+                        NT.{{ Math.floor(unit_price) }}
                     </v-card-subtitle>
                     <!-- 打折後 -->
-                    <v-card-subtitle 
+                    <v-card-subtitle v-if="formatLabel != 10"
                         class="
                         discount_price
                         pa-0
                         title
                         red--text"
                         >
-                        NT.{{ Math.floor(price / 2) }}
+                        NT.{{ Math.floor(unit_price * discount_rate) }}
                     </v-card-subtitle>
-                </div>
-
-                
+                </div>      
             </v-card>
-        </nuxt-link>
-        
+        </nuxt-link>      
         <!-- 放入購物車按鈕 -->
         <v-btn class="add_to_cart" 
             tile 
             large 
             depressed
-            color="primary"
-            >
+            color="primary">
             <span>加入購物車</span>
         </v-btn>   
     </div>
-    
-    
 </template>
-
 
 <script>
 export default {
-    props: ['title', 'imgUrl', 'price', 'id', 'description', 'tags'], // passed from pages/index.vue
+    props: ['title', 'imgUrl', 'unit_price', 'id', 'description', 'tags', 'discount_rate'], // passed from pages/index.vue
    // props: ['products'],
     data () {
         return {
@@ -140,6 +125,10 @@ export default {
         }
     },
     computed: {
+        // 折扣標籤
+        formatLabel () {
+            return this.discount_rate * 10
+        },
         // 縮減商品敘述的字串
         subString () {
             return this.description.substring(0, 50) + '...'
@@ -152,16 +141,16 @@ export default {
 <style lang="scss" scoped>
     // 常用變數
     $card_width: 300px; // 商品卡片寬度
-    $letter_sapcing: 2px;
+    $letter_sapcing: 2px; // 文字字距
     $btn_letter_sapcing: 4px; // 按鈕字距
-
     //  styling
-    .product_wrapper {
-        width: $card_width;
-    }
     a {
         text-decoration: none;
     }
+    .product_wrapper {
+        width: $card_width;
+    }
+    // 產品折扣標籤
     .product_discount_lable {
         position: absolute;
         z-index: 100;
@@ -172,18 +161,20 @@ export default {
     .product_title {
         letter-spacing: $letter_sapcing;
     }
-    // .discount_price {
-    //     position: absolute;
-    //     right: 20%;
-    //     bottom: 10%;
-    //     transform: rotate(-5deg);
-    // }
+    // 若原價有折扣 
+    .discounted {
+        text-decoration: line-through;
+    }
+    // 折扣後的樣式
+    .discount_price {
+        transform: rotate(-5deg);
+    }
+    // 加入至購物車
     .add_to_cart {
         position: absolute;
         width: inherit;
         letter-spacing: $btn_letter_sapcing;
-    }
-    
+    } 
     // RWD 
     @media (max-width: 768px) {
         .Products {

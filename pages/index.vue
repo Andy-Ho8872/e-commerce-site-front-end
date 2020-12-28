@@ -26,7 +26,6 @@
             color="primary">
             <v-icon>fa-chevron-up</v-icon>
         </v-btn>
-
     <!-- 商品陳列 -->
         <div class="products d-flex flex-wrap justify-space-between">
         <!-- 標題 、 圖片網址 、 價格 、 產品ID -->
@@ -34,14 +33,12 @@
                 <Product
                 :title="product.title"
                 :imgUrl="product.imgUrl"
-                :price="product.unit_price"
+                :unit_price="product.unit_price"
                 :id="product.id"
                 :description="product.description"
                 :tags="product.tags"
+                :discount_rate="product.discount_rate"
                 />
-                <!-- <Product
-                :products="products"
-                /> -->
             </li>   
         </div>
     </v-container>
@@ -62,7 +59,6 @@ export default {
         return { products: res.data.products }
         
     },
-
     methods: {
             // 點擊移動到最上層
             scrollTop () {
