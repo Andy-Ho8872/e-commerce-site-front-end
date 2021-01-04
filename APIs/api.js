@@ -7,9 +7,9 @@ let config = {
     headers: { 'Access-Control-Allow-Origin': 'http://localhost:3000' } // 前端 URL
 }; 
 
-// User register and login APIs
+// 使用者請求
 const userRequest = axios.create({
-    baseURL: `${ base }/auth`
+    baseURL: `${ base }/auth/user`
 });
 
 // CSRF Protection API 使用者第一次登入時要先取得 CSRF 憑證
@@ -34,7 +34,7 @@ export const apiCsrfLogin = () => userCsrfRequest.get('/sanctum/csrf-cookie', co
     // 登出 (要有 Token 才能登出)
 export const apiUserLogout = token => userRequest.get('/logout', token);
     // 取得 User 
-export const apiGetUserInfo = id => userRequest.get(`/user/${id}`);
+export const apiGetUserInfo = (id) => userRequest.get(`/user/${id}`);
 
 
 
@@ -43,5 +43,22 @@ export const apiGetUserInfo = id => userRequest.get(`/user/${id}`);
 export const apiGetProducts = () => productRequest.get('/products');
     // 撈取單一產品
 export const apiGetProduct = (id) => productRequest.get(`/products/${id}`);
+
+
+
+// 購物車相關 API
     // 使用者在購物車中的產品
-export const apiGetCartProducts = (userId) => userRequest.get(`/user/${userId}/cart`);
+export const apiGetCartProducts = (userId) => userRequest.get(`/${userId}/cart`);
+    // 使用者新增商品至購物車
+    export const apiAddToCart = (userId, productId) => userRequest.post(`/${userId}/cart/${productId}/create`);
+    // 使用者從購物車中移除商品
+export const apiDeleteFromCart = (userId, productId) => userRequest.delete(`/${userId}/cart/${productId}/delete`);
+
+
+    // 更新購物車商品的數量
+        // 直接輸入
+export const apiUpdateQuantity = (userId, product_Id) => userRequest.post(`/${userId}/cart/${product_Id}/update`);
+        // 增加 1
+// export const apiIncreseQuantityByOne = (userId, product_Id) => userRequest.post(`/${userId}/cart/${product_Id}/increseByOne`);
+//         // 減少 1
+// export const apiDecreseQuantityByOne = (userId, product_Id) => userRequest.post(`/${userId}/cart/${product_Id}/decreseByOne`);

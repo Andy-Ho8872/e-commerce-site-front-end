@@ -43,61 +43,64 @@
                         <span>{{ tag.title }}</span>
                     </v-chip>
                 </v-chip-group>
+
+
                 <!-- 輸入商品數量 -->
-                <v-row class="input_field align-center ma-3 pa-3">
-                    <span class="px-2">購買數量</span>
-                    <!-- 減少數量 -->
-                    <v-btn
-                        @click="changeCount(-1)"
-                        tile 
-                        small 
-                        depressed 
-                        outlined 
-                        color="error">
-                        <v-icon>fa-minus fa-fw</v-icon>
-                    </v-btn>
-                    <!-- 當前數量 -->
-                    <input
-                        class="grey lighten-2 text-center"
-                        
-                        name="quantity"
-                        
-                        type="text" 
-                        v-model="productQty"
+                <v-form>
+                    <v-row class="input_field align-center ma-3 pa-3">
+                        <span class="px-2">購買數量</span>
+                        <!-- 減少數量 -->
+                        <v-btn
+                            @click="changeCount(-1)"
+                            tile 
+                            small 
+                            depressed 
+                            outlined 
+                            color="error">
+                            <v-icon>fa-minus fa-fw</v-icon>
+                        </v-btn>
+                        <!-- 當前數量 -->
+                        <input
+                            class="grey lighten-2 text-center"
+                            name="product_quantity"
+                            type="text" 
+                            autocomplete="off"
+                            v-model="productQty" 
                         >
-                    <!-- 增加數量 -->
-                    <v-btn 
-                        @click="changeCount(1)"
-                        tile
-                        small 
-                        depressed 
-                        outlined 
-                        color="indigo">
-                        <v-icon>fa-plus fa-fw</v-icon>
-                    </v-btn>
-                </v-row>
-
-
-                <!-- 購買按鈕區 -->
-                <!-- 藉由 id 來新增至購物車? -->
-                <div class="purchase_btn text-center">
-                    <v-btn
-                        class="ma-3" 
-                        tile 
-                        x-large 
-                        depressed
-                        color="primary">
-                        <span>放入購物車</span>
-                    </v-btn>
-                    <v-btn
-                        class="ma-3" 
-                        tile 
-                        x-large 
-                        depressed
-                        color="success">
-                        <span>直接購買</span>
-                    </v-btn>
-                </div>
+                        <!-- 增加數量 -->
+                        <v-btn 
+                            @click="changeCount(1)"
+                            tile
+                            small 
+                            depressed 
+                            outlined 
+                            color="indigo">
+                            <v-icon>fa-plus fa-fw</v-icon>
+                        </v-btn>
+                        <!-- 購買按鈕區 -->
+                        <div class="purchase_btn text-center">
+                            <v-btn
+                                @click="addToCart(product.id)"
+                                class="ma-3" 
+                                tile 
+                                x-large 
+                                depressed
+                                color="primary">
+                                <span>放入購物車</span>
+                            </v-btn>
+                            <!-- <v-btn
+                                class="ma-3" 
+                                tile 
+                                x-large 
+                                depressed
+                                color="success">
+                                <span>直接購買</span>
+                            </v-btn> -->
+                        </div>
+                    </v-row>
+                </v-form>
+                
+                
             </div>
         </v-card> 
 
@@ -105,8 +108,8 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters, mapMutations } from 'vuex';
-import { apiGetProduct } from '~/APIs/api.js';
+import { mapActions } from 'vuex';
+import { apiGetProduct, apiAddToCart } from '~/APIs/api.js';
 
 export default {
     // 測試用
@@ -133,9 +136,16 @@ export default {
     //     }
     // },
     methods: {
+        ...mapActions({
+            addToCart: 'cart/addToCart'
+        }),
         changeCount (value) {
             this.productQty += value
-        }
+        },
+        
+
+
+
         // ...mapMutations({
         //     resetProduct: 'product/RESET_PRODUCT'
         // }),
@@ -193,9 +203,6 @@ export default {
         }
         .card_info_wrapper {
             width: 100%;
-        }
-        .input_field {
-            padding: 0 3%;
-        }       
+        }    
     }
 </style>

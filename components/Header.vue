@@ -117,7 +117,7 @@
                 >
             </v-text-field>
             <!-- 購物車 ICON -->
-            <a href="#" class="cart_logo">
+            <nuxt-link :to="{ name: 'cart' }" class="cart_logo">
                 <v-icon 
                     medium 
                     color="white" 
@@ -125,7 +125,7 @@
                     >
                     fa-cart-plus
                 </v-icon>
-            </a>
+            </nuxt-link>
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
             <v-spacer class="hidden-md-and-down"></v-spacer>
         </v-row>       

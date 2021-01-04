@@ -108,15 +108,17 @@
             large 
             depressed
             color="primary">
-            <span>加入購物車</span>
+            <span @click="addToCart(id)">加入購物車</span>
         </v-btn>   
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     props: ['title', 'imgUrl', 'unit_price', 'id', 'description', 'tags', 'discount_rate'], // passed from pages/index.vue
-   // props: ['products'],
+   
     data () {
         return {
             // 商品卡片大小
@@ -133,6 +135,11 @@ export default {
         subString () {
             return this.description.substring(0, 50) + '...'
         }
+    },
+    methods: {
+        ...mapActions({
+            addToCart: 'cart/addToCart'
+        })
     }
 }
 </script>

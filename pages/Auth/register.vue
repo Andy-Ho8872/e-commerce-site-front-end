@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { apiUserRegister } from '~/APIs/api.js';
+// import { apiUserRegister } from '~/APIs/api.js';
 import { mapMutations, mapActions, mapGetters } from 'vuex';
 
 export default {

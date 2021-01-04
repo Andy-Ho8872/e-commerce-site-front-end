@@ -115,6 +115,9 @@ export const actions = {
             console.log(result);
             // 清空 LocalStorage
             state.commit('CLEAR_ALL_STORAGE')
+            // 重新導向
+            await this.$router.push('/')
+            
             alert('您已經登出')
         }
         catch (error) {

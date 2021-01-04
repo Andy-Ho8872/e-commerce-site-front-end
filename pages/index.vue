@@ -3,8 +3,8 @@
     <v-container>
     <!-- 優惠計時 (月份從 0 開始計算， 例如: 數字5 == 6月)-->
         <Announcement
-        :year='2020'
-        :month='12'
+        :year='2021'
+        :month='1'
         :day='5'
         :hour='8'
         :minute='7'

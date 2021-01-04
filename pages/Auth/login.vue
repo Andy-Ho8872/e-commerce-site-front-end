@@ -84,14 +84,13 @@
                         登入
                     </v-btn>
                 </div>
-                <!-- <span>HELLO-{{ email }}</span> -->
             </v-form>
         </div>
     </v-container>
 </template>
 
 <script>
-import { apiUserLogin, apiCsrfLogin } from '~/APIs/api.js';
+// import { apiUserLogin, apiCsrfLogin } from '~/APIs/api.js';
 import { mapMutations, mapActions, mapGetters } from 'vuex';
 
 export default {
