@@ -49,8 +49,13 @@
                 <v-form>
                     <v-row class="input_field align-center ma-3 pa-3">
                         <span class="px-2">購買數量</span>
-                        <!-- 減少數量 -->
-                        <v-btn
+                        <!-- 測試 -->
+                        <QuantityField class="mx-2"
+                        :qty.sync="productQty"
+                        @changeCount="updateValue"
+                        />
+
+                        <!-- <v-btn
                             @click="changeCount(-1)"
                             tile 
                             small 
@@ -59,7 +64,7 @@
                             color="error">
                             <v-icon>fa-minus fa-fw</v-icon>
                         </v-btn>
-                        <!-- 當前數量 -->
+                        
                         <input
                             class="grey lighten-2 text-center"
                             name="product_quantity"
@@ -67,7 +72,7 @@
                             autocomplete="off"
                             v-model="productQty" 
                         >
-                        <!-- 增加數量 -->
+        
                         <v-btn 
                             @click="changeCount(1)"
                             tile
@@ -76,7 +81,7 @@
                             outlined 
                             color="indigo">
                             <v-icon>fa-plus fa-fw</v-icon>
-                        </v-btn>
+                        </v-btn> -->
                         <!-- 購買按鈕區 -->
                         <div class="purchase_btn text-center">
                             <v-btn
@@ -125,6 +130,9 @@ export default {
             loading: true
         }
     },
+    computed: {
+        
+    },
 
     // 使用 vuex 來讀取
     // computed: {
@@ -142,6 +150,9 @@ export default {
         changeCount (value) {
             this.productQty += value
         },
+        // updateValue (value) {
+        //     this.productQty = value
+        // }
         
 
 

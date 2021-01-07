@@ -108,17 +108,18 @@
             large 
             depressed
             color="primary">
+            <!-- 產品 ID -->
             <span @click="addToCart(id)">加入購物車</span>
         </v-btn>   
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-    props: ['title', 'imgUrl', 'unit_price', 'id', 'description', 'tags', 'discount_rate'], // passed from pages/index.vue
-   
+    // passed from pages/index.vue
+    props: ['id', 'title', 'description', 'imgUrl', 'unit_price', 'tags', 'discount_rate'], 
     data () {
         return {
             // 商品卡片大小
@@ -127,7 +128,7 @@ export default {
         }
     },
     computed: {
-        // 折扣標籤
+        // 商品折數
         formatLabel () {
             return this.discount_rate * 10
         },
@@ -140,7 +141,7 @@ export default {
         ...mapActions({
             addToCart: 'cart/addToCart'
         })
-    }
+    },
 }
 </script>
 

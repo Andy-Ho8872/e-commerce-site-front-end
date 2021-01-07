@@ -20,7 +20,7 @@
             </v-card>
             
             <!-- 購物車詳細內容 -->
-            <v-card tile class="d-flex justify-space-between pa-5" v-for="(order, index) in userCart" :key="index">
+            <v-card tile class="d-flex justify-space-between pa-5" v-for="order in userCart" :key="order.id">
                 <!-- 商品名稱與圖片 (可導覽至該商品頁面) -->
                 <nuxt-link :to="`products/${order.product_id}`">
                     <div class="d-flex align-center">
@@ -86,15 +86,11 @@
                     
 
                     <!-- 測試 -->
-                    
                     <!-- <span class="subtotal mx-8">測試當前數量: {{ currentCount }}</span> -->
-
-
-
 
                     <!-- 刪除按鈕 -->
                     <v-btn
-                        @click="deleteFromCart(order.product_id)" 
+                        @click="deleteItem(order.product_id)" 
                         color="red lighten-2" 
                         class="white--text">
                         刪除
@@ -127,62 +123,42 @@ export default {
     },
     methods: {
         ...mapActions({
-            fetchUserCart: 'cart/fetchUserCart',
-            increseByOne: 'cart/increseByOne',
-            deleteFromCart: 'cart/deleteFromCart'
+            fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
+            deleteFromCart: 'cart/deleteFromCart',
         }),
         ...mapMutations({
             changeByOne: 'cart/CHANGE_QUANTITY_BY_ONE'
         }),
-
-
-        // 更改購物車中產品數量 (增減 1)
-        // changeCount (value) {
-        //     this.changeByOne(value)
-            
-        //     // this.increseByOne(index)
-        // }
-        updateValue (val) {
-            this.qty += val
-            console.log(qty);
-            // console.log(`第${index}筆`);
+        async deleteItem(product_id) {
+            // 根據商品 id 刪除
+            await this.deleteFromCart(product_id);
+            // 刪除商品之後重新撈取資料
+            this.fetchUserCart();
         },
     },
     computed: {
         ...mapGetters({
             getUserCart: 'cart/getUserCart',
-            // 測試
-            getCurrentQuantity: 'cart/getCurrentQuantity'
         }),
         // 使用者的購物車
         userCart () {
-            return this.getUserCart
+            return this.getUserCart;
         },
-
-        // 測試
-        // 測試當前數量
-        currentCount () {
-            return this.getCurrentQuantity
-        },
-        
-
-
-
-
         // 價格小計
         subTotal () {
             // 初始為0
-            let summary = 0
+            let summary = 0;
             // 累加
             this.userCart.forEach(element => {
                summary += Number(element.Total) // 將字串轉換為數字(integer)
             });
-            return summary
+            return summary;
         }
     },
-    created() {
-        this.fetchUserCart()
-    }
+    // 初次載入時先撈取購物車資料
+    created () {
+        this.fetchUserCart();
+    },
 }
 </script>
 

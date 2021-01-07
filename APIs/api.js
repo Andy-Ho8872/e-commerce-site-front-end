@@ -50,7 +50,7 @@ export const apiGetProduct = (id) => productRequest.get(`/products/${id}`);
     // 使用者在購物車中的產品
 export const apiGetCartProducts = (userId) => userRequest.get(`/${userId}/cart`);
     // 使用者新增商品至購物車
-    export const apiAddToCart = (userId, productId) => userRequest.post(`/${userId}/cart/${productId}/create`);
+export const apiAddToCart = (userId, productId) => userRequest.post(`/${userId}/cart/${productId}/create`);
     // 使用者從購物車中移除商品
 export const apiDeleteFromCart = (userId, productId) => userRequest.delete(`/${userId}/cart/${productId}/delete`);
 
@@ -59,6 +59,6 @@ export const apiDeleteFromCart = (userId, productId) => userRequest.delete(`/${u
         // 直接輸入
 export const apiUpdateQuantity = (userId, product_Id) => userRequest.post(`/${userId}/cart/${product_Id}/update`);
         // 增加 1
-// export const apiIncreseQuantityByOne = (userId, product_Id) => userRequest.post(`/${userId}/cart/${product_Id}/increseByOne`);
+export const apiIncreseQuantityByOne = (userId, product_Id) => userRequest.post(`/${userId}/cart/${product_Id}/increseByOne`);
 //         // 減少 1
 // export const apiDecreseQuantityByOne = (userId, product_Id) => userRequest.post(`/${userId}/cart/${product_Id}/decreseByOne`);

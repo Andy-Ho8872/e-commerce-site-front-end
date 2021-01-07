@@ -15,7 +15,8 @@
             class="grey lighten-2 text-center"
             name="product_quantity"
             type="text" 
-            v-model="qty"
+            
+            v-model="productQty"
         >
         <!-- 增加數量 -->
         <v-btn 
@@ -27,7 +28,6 @@
             color="indigo">
             <v-icon>fa-plus fa-fw</v-icon>
         </v-btn>
-        {{ TEST }}
     </v-row>
 </template>
 
@@ -37,21 +37,24 @@ import { mapActions, mapMutations, mapGetters } from 'vuex'
 
 export default {
     props: ['qty'],
+    data () {  
+        return {
+            productQty: 0
+        }
+    },
     methods: {
         ...mapActions({
             increseByOne: 'cart/increseByOne'
         }),
         changeCount (value) {
-            this.qty += value
-            this.increseByOne()
+            this.productQty += value
+            // this.increseByOne()
             // 傳遞給父元件  事件名稱        計數
-            this.$emit('changeCount', this.qty)
+            // this.$emit('changeCount', this.qty)
         }
     },
     computed: {
-        TEST () {
-            return this.qty
-        }
+        
     }
 }
 </script>

@@ -31,13 +31,13 @@
         <!-- 標題 、 圖片網址 、 價格 、 產品ID -->
             <li v-for="product in products" :key="product.id" class="my-10">
                 <Product
+                :id="product.id"
                 :title="product.title"
+                :description="product.description"
                 :imgUrl="product.imgUrl"
                 :unit_price="product.unit_price"
-                :id="product.id"
-                :description="product.description"
-                :tags="product.tags"
                 :discount_rate="product.discount_rate"
+                :tags="product.tags"
                 />
             </li>   
         </div>
@@ -45,10 +45,7 @@
 </template> 
 
 <script>
-// import VuetifyLogo from '~/components/VuetifyLogo.vue'
-// import axios from 'axios';
-// import { mapActions, mapGetters } from 'vuex';
-
+import { mapActions, mapGetters } from 'vuex';
 import { apiGetProducts, apiGetProduct } from '~/APIs/api.js';
 
 export default {
@@ -60,38 +57,21 @@ export default {
         
     },
     methods: {
-            // 點擊移動到最上層
-            scrollTop () {
+        ...mapActions({
+            fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
+        }),
+        // 點擊移動到最上層
+        scrollTop () {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             })
         },
-        // 撈取產品資料
-        // ...mapActions({
-        //     fetchAllProducts: 'product/fetchAllProducts'
-        // })
     },
-
-    // Vuex 方法
-    // computed: {
-    //     ...mapGetters({
-    //         getAllProducts: 'product/getAllProducts'
-    //     }),
-    //     // 撈取到的所有產品資料
-    //     products () {
-    //        return this.getAllProducts
-    //     }
-    // },
-    // created () {
-    //     this.fetchAllProducts()
-    // }
-    // created () {
-    //     const res = axios.get('http://127.0.0.1:8000/api/products')
-    //     .then((res) => {
-    //         console.log(res.data);
-    //     })
-    // }
+    // 初次載入時先撈取購物車資料
+    created () {
+        this.fetchUserCart()
+    },
 }
 
 </script>
