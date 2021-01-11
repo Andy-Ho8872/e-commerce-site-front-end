@@ -19,7 +19,7 @@
     <!-- 置頂按鈕 -->
         <v-btn
             @click="scrollTop" 
-            class="to_top mx-2"
+            class="to-top mx-2"
             fab
             dark
             large
@@ -41,6 +41,10 @@
                 />
             </li>   
         </div>
+    <!-- 提示訊息 -->
+        <div class="alert-message">
+            <v-alert v-if="message" type="success">{{ message }}</v-alert>
+        </div>
     </v-container>
 </template> 
 
@@ -52,9 +56,12 @@ export default {
     // 測試用 (使用 asycsData 才可以在 Server 先渲染)  可留可不留????
     async asyncData() {
         const res = await apiGetProducts()
-        console.log(res.data);
-        return { products: res.data.products }
-        
+        return { products: res.data.products }     
+    },
+    computed: {
+        ...mapGetters({
+            message: 'cart/getMessage' // 提示訊息
+        })
     },
     methods: {
         ...mapActions({
@@ -77,15 +84,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .to_top {
-        bottom: 10%;
-        position: fixed;
-        right: 0;
-        z-index: 10000;
-    }
     li {
         list-style-type: none;
     }
+    .to-top {
+        z-index: 10000;
+        bottom: 10%;
+        position: fixed;
+        right: 0;
+    }
+    .alert-message {
+        z-index: 10000;
+        position: fixed;
+        left: 50%;
+        bottom: 10%;
+        transform: translateX(-50%);
+    }
+    // RWD
     @media (max-width: 650px)  {
         .products {
         justify-content: space-around !important;

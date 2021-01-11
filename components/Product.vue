@@ -161,7 +161,7 @@ export default {
     // 產品折扣標籤
     .product_discount_lable {
         position: absolute;
-        z-index: 100;
+        z-index: 1;
         top: 0;
         right: 0;
         letter-spacing: $letter_sapcing !important;

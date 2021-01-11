@@ -170,12 +170,8 @@ export default {
     computed: {
         ...mapGetters({
             // 抓取使用者資訊
-            userAccount: 'auth/fetchUserAccount'
+            user: 'auth/fetchUserAccount'
         }),
-        // 使用者資訊
-        user () {
-            return this.userAccount
-        }
     },
     // 頁面重新掛載時繼續抓取使用者資訊
     mounted () {
@@ -186,6 +182,13 @@ export default {
 
 
 <style lang="scss" scoped> 
+    li {
+        list-style: none;
+    }
+    a { // for <nuxt-link>
+        text-decoration: none;
+        color: white
+    }
     .navbar {
         padding: 1em 10em;
         width: 100%;
@@ -196,13 +199,6 @@ export default {
     }
     .extend_bar {
         visibility: hidden; // 預設隱藏
-    }
-    li {
-        list-style: none;
-    }
-    a { // for <nuxt-link>
-        text-decoration: none;
-        color: white
     }
     .logout {
         cursor: pointer;
@@ -231,7 +227,7 @@ export default {
             transform: translateX(-100%);  
         }
         .content_wrapper {
-            // width: 100%;
+            width: 100%;
             flex-direction: column;
             align-content: flex-start;
             li {

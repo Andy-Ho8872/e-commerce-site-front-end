@@ -2,7 +2,7 @@
     <v-row class="quantity_field_wrapper align-center justify-center">
         <!-- 減少數量 -->
         <v-btn
-            @click="changeCount(-1)"
+            @click="decreseByOne(product_id)"
             tile 
             small 
             depressed 
@@ -15,12 +15,11 @@
             class="grey lighten-2 text-center"
             name="product_quantity"
             type="text" 
-            
-            v-model="productQty"
+            v-model="product_quantity"
         >
         <!-- 增加數量 -->
         <v-btn 
-            @click="changeCount(1)"
+            @click="increseByOne(product_id)"
             tile
             small 
             depressed 
@@ -36,21 +35,19 @@
 import { mapActions, mapMutations, mapGetters } from 'vuex'
 
 export default {
-    props: ['qty'],
+    props: ['product_id', 'product_quantity'],
     data () {  
         return {
-            productQty: 0
+            productQty: 10
         }
     },
     methods: {
         ...mapActions({
-            increseByOne: 'cart/increseByOne'
+            increseByOne: 'cart/increseByOne',
+            decreseByOne: 'cart/decreseByOne'
         }),
         changeCount (value) {
             this.productQty += value
-            // this.increseByOne()
-            // 傳遞給父元件  事件名稱        計數
-            // this.$emit('changeCount', this.qty)
         }
     },
     computed: {
@@ -62,6 +59,7 @@ export default {
 <style lang="scss" scoped>
     input {
         width: 30%;
+        outline: 0;
     }
     .quantity_field_wrapper {
         max-width: 170px !important;

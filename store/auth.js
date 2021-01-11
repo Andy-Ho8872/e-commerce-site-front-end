@@ -35,7 +35,7 @@ export const mutations = {
     },
 
     // 取得錯誤訊息
-    FETCH_MESSAGE (state, msg) {
+    SET_MESSAGE (state, msg) {
         state.message = msg
     },
     // 清空錯誤訊息
@@ -66,7 +66,7 @@ export const actions = {
         }
         catch (error) {
             let msg = error.response.data.errors
-            state.commit('FETCH_MESSAGE', msg)
+            state.commit('SET_MESSAGE', msg)
         }
     },
 
@@ -79,7 +79,7 @@ export const actions = {
             // 登入使用者
             try {
                 const result = await apiUserLogin({
-                    // 從 state 抓取資料
+                    // 從 login 頁面 抓取資料
                     email: user.email,
                     password: user.password
                 })
@@ -94,13 +94,13 @@ export const actions = {
                 // 抓取錯誤訊息
                 let msg = error.response.data.errors
                 console.log(msg);
-                state.commit('FETCH_MESSAGE', msg)
+                state.commit('SET_MESSAGE', msg)
             }
         }
         catch (error) {
             // 抓取錯誤訊息
             let msg = error.response.data.errors
-            state.commit('FETCH_MESSAGE', msg)
+            state.commit('SET_MESSAGE', msg)
         }
     },
 

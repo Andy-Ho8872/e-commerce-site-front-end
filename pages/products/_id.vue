@@ -51,8 +51,6 @@
                         <span class="px-2">購買數量</span>
                         <!-- 測試 -->
                         <QuantityField class="mx-2"
-                        :qty.sync="productQty"
-                        @changeCount="updateValue"
                         />
 
                         <!-- <v-btn

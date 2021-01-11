@@ -72,7 +72,7 @@
                 <div class="text-center mt-10">
                     <v-btn
                         class="title"
-                        :disabled='!valid'
+                        :disabled="!valid"
                         @click.prevent="register"  
                         color="pink" 
                         large

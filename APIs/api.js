@@ -30,7 +30,7 @@ export const apiUserRegister = data => userRequest.post('/register', data);
     // 登入 (取得 Token)
 export const apiUserLogin = data => userRequest.post('/login', data);
     // CSRF 
-export const apiCsrfLogin = () => userCsrfRequest.get('/sanctum/csrf-cookie', config);
+export const apiCsrfLogin = () => userCsrfRequest.get('/sanctum/csrf-cookie');
     // 登出 (要有 Token 才能登出)
 export const apiUserLogout = token => userRequest.get('/logout', token);
     // 取得 User 
@@ -53,12 +53,14 @@ export const apiGetCartProducts = (userId) => userRequest.get(`/${userId}/cart`)
 export const apiAddToCart = (userId, productId) => userRequest.post(`/${userId}/cart/${productId}/create`);
     // 使用者從購物車中移除商品
 export const apiDeleteFromCart = (userId, productId) => userRequest.delete(`/${userId}/cart/${productId}/delete`);
+    // 清空購物車
+export const apiDeleteAllFromCart = (userId) => userRequest.delete(`/${userId}/cart/deleteAll`);
 
 
-    // 更新購物車商品的數量
-        // 直接輸入
+// 更新購物車商品的數量
+    // 直接輸入
 export const apiUpdateQuantity = (userId, product_Id) => userRequest.post(`/${userId}/cart/${product_Id}/update`);
-        // 增加 1
+    // 增加 1
 export const apiIncreseQuantityByOne = (userId, product_Id) => userRequest.post(`/${userId}/cart/${product_Id}/increseByOne`);
-//         // 減少 1
-// export const apiDecreseQuantityByOne = (userId, product_Id) => userRequest.post(`/${userId}/cart/${product_Id}/decreseByOne`);
+    // 減少 1
+export const apiDecreseQuantityByOne = (userId, product_Id) => userRequest.post(`/${userId}/cart/${product_Id}/decreseByOne`);
