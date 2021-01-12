@@ -7,10 +7,9 @@
                 <v-row class="justify-center mx-1">
                     <li v-for="(icon,index) in socialList" :key="index">
                         <v-icon 
-                            dark 
-                            small 
                             class="mx-1 mb-1"
-                            >
+                            dark 
+                            small>
                             {{ icon.icon }}
                         </v-icon>
                     </li>
@@ -18,14 +17,11 @@
                 <!-- 回到首頁 -->
                 <v-row class="mx-1">
                     <li class="mx-1">
-                        <nuxt-link 
-                            :to="{ name: 'index' }"
-                            >
+                        <nuxt-link :to="{ name: 'index' }">
                             <v-icon 
-                                dark
-                                small
                                 class="mx-1 mb-1"
-                                >
+                                dark
+                                small>
                                 fa-home fa-fw
                             </v-icon>
                             <span>回到首頁</span>
@@ -40,10 +36,9 @@
                 <v-row class="content mx-1">
                     <li v-for="(list, index) in noteList" :key="index" class="mx-1">
                         <v-icon 
-                            dark 
-                            small 
                             class="mx-1 mb-1"
-                            >
+                            dark 
+                            small>
                             {{ list.icon }}
                         </v-icon>
                         <span>{{ list.text }}</span>
@@ -54,10 +49,9 @@
                     <!-- 使用者帳號 -->
                     <li class="mx-1">
                         <v-icon
-                            dark 
-                            small 
                             class="mx-1 mb-1"
-                            >
+                            dark 
+                            small>
                             fa-user fa-fw
                         </v-icon>
                         <span>{{ user }}</span>
@@ -65,11 +59,10 @@
                     <!-- 登出按鈕 -->
                     <li class="mx-1" @click="logout">
                         <v-icon
-                            dark 
-                            small 
                             class="mx-1 mb-1"
-                            >
-                            fa-user fa-fw
+                            dark 
+                            small>
+                            fa-share fa-fw
                         </v-icon>
                         <span class="logout">登出</span>
                     </li>
@@ -77,15 +70,11 @@
                 <!--  若使用者沒有登入 -->
                 <v-row v-if="!user" class="content mx-1" > 
                     <li v-for="(list, index) in userList" :key="index">
-                        <nuxt-link 
-                            :to="list.to"
-                            class="mx-1"
-                            >
+                        <nuxt-link :to="list.to" class="mx-1">
                             <v-icon 
                                 class="mx-1 mb-1"
                                 small 
-                                color="white"
-                                >
+                                color="white">
                                 {{ list.icon }}
                             </v-icon>
                             <span>{{ list.text }}</span>
@@ -95,36 +84,36 @@
             </div>
         </v-row>
         <!-- Navbar 下層 -->
-        <v-row class="navbar_lower d-flex flex-nowrap">
+        <v-row class="navbar_lower d-flex flex-nowrap justify-center">
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
             <v-spacer class="hidden-md-and-down"></v-spacer>
-            <!--  (extend bar) 只有在 600 px 以下才顯示 -->
-            <v-icon
-                @click="active = !active"
-                medium 
-                color="white" 
-                class="extend_bar ml-5 mb-4"
-                >
-                fa-bars
-            </v-icon>
+            <!--  (Extend bar) 只有在 600 px 以下才顯示 -->
+                <!-- 點擊該區域外關閉 -->
+            <div @click="active = !active" ref="extended" class="extend_bar d-flex justify-center align-center">
+                <!-- 漢堡 svg -->
+                <svg viewBox="0 0 100 100" fill="#FFF" width="24" height="24">
+                    <rect width="100" height="15"></rect>
+                    <rect y="30" width="100" height="15"></rect>
+                    <rect y="60" width="100" height="15"></rect>
+                </svg>
+            </div>
             <!-- 搜尋區域 -->
             <v-text-field 
-                class="d-flex mt-2 mx-2"
+                class="searchBox d-flex mt-2 mx-2"
                 solo 
                 dense
                 placeholder="搜尋商品"
-                append-icon="fa-search"
-                >
+                append-icon="fa-search">
             </v-text-field>
             <!-- 購物車 ICON -->
-            <nuxt-link :to="{ name: 'cart' }" class="cart_logo">
-                <v-icon 
-                    medium 
-                    color="white" 
-                    class="mr-5 py-4"
-                    >
-                    fa-cart-plus
-                </v-icon>
+            <nuxt-link :to="{ name: 'cart' }" class="cart_logo d-flex justify-center align-center">
+                <!-- 如果購物車內有商品才顯示 -->
+                <v-badge :content="userCart.length" :value="userCart.length" color="orange">
+                    <!-- 購物車 svg -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#FFF" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M24 3l-.743 2h-1.929l-3.474 12h-13.239l-4.615-11h16.812l-.564 2h-13.24l2.937 7h10.428l3.432-12h4.195zm-15.5 15c-.828 0-1.5.672-1.5 1.5 0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm6.9-7-1.9 7c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5z"/>
+                    </svg>
+                </v-badge>
             </nuxt-link>
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
             <v-spacer class="hidden-md-and-down"></v-spacer>
@@ -138,22 +127,24 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
     data () {
         return {
+            // 社群媒體
             socialList: [
                 { icon : 'fa-facebook-square fa-fw' },
                 { icon : 'fa-instagram fa-fw' },
                 { icon : 'fa-google fa-fw' },
             ],
+            // 訊息通知
             noteList: [
                 { icon : 'fa-envelope fa-fw', text : '通知總覽'},
                 { icon : 'fa-question-circle fa-fw', text : '幫助中心'},
             ],
+            // 帳戶操作
             userList: [ 
                 { icon : 'fa-user-plus fa-fw', text : '註冊', to : '/auth/register' },
                 { icon : 'fa-user-circle fa-fw', text : '登入', to : '/auth/login' },
             ],
-            // 觸發 class
+            // 觸發 class (漢堡 SideBar)
             active: false,
-            
         }
     },
     methods: {
@@ -161,21 +152,26 @@ export default {
             fetchAccount: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料
         }),
         ...mapActions({
-            logoutUser: 'auth/logout'
+            logout: 'auth/logout' // 登出使用者
         }),
-        logout () {
-            this.logoutUser()  
-        }
     },
     computed: {
         ...mapGetters({
             // 抓取使用者資訊
-            user: 'auth/fetchUserAccount'
+            user: 'auth/fetchUserAccount',
+            // 使用者購物車中商品數量
+            userCart: 'cart/getUserCart'
         }),
     },
-    // 頁面重新掛載時繼續抓取使用者資訊
     mounted () {
-        this.fetchAccount()    
+        // 頁面重新掛載時繼續抓取使用者資訊
+        this.fetchAccount();
+        // 點擊漢堡 SideBar 以外的區域則會關閉 
+        document.addEventListener('click',(e) => {
+            if(!this.$refs.extended.contains(e.target)) {
+                this.active = false;
+            }
+        })
     }
 }
 </script>
@@ -194,15 +190,17 @@ export default {
         width: 100%;
         top: 0;
     }
-    .theme--light.v-divider {
-        border-color: white;
-    }
     .extend_bar {
         visibility: hidden; // 預設隱藏
     }
     .logout {
         cursor: pointer;
     }
+    // 搜尋區域
+    .searchBox {
+        transform: translateY(10%);
+    }
+    // 以下為 RWD
     @media (max-width: 1024px) {
         .navbar {
             padding: 1em 0em;
@@ -210,9 +208,13 @@ export default {
             top: 0;
             z-index: 10000;
         }
+        .navbar_lower {
+            width: 90%;
+            margin: auto;
+        }
     }
-    @media (max-width :484px) {
-    // navbar 上層
+    @media (max-width :640px) {
+    // navbar 上層 Start
         .navbar_upper {
             flex-direction: column;
             align-content: flex-start;
@@ -238,7 +240,9 @@ export default {
         .content {
             flex-direction: column;
         }
-    // 點擊後以 SideBar 的形式顯示
+    // navbar 上層 End
+
+    // 漢堡標籤 (sideBar) Start
         .extend_bar {
             visibility: unset; // 預設隱藏
         }
@@ -247,6 +251,7 @@ export default {
             opacity: 1 !important;
             transition: 0.5s ease-in-out;
             transform: translateX(0%);
-        }     
+        }
+    // 漢堡標籤  End
     }
 </style>
