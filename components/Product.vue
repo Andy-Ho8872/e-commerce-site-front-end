@@ -2,7 +2,7 @@
 <!-- 商品卡片 -->
     <div class="product_wrapper">
         <!-- 產品連結  -->
-        <nuxt-link :to="`products/${id}`">
+        <nuxt-link :to="`products/${product.id}`">
             <v-card
                 class="
                 Products 
@@ -12,7 +12,7 @@
                 tile
                 color="grey lighten-5"
                 :width="cardWidth" 
-                :height="cardHeight" >
+                :height="cardHeight">
                 <!-- 產品折扣 -->
                     <!-- 產品原始 折扣倍率為 1.00 即原價-->
                 <v-card-subtitle v-if="formatLabel != 10"
@@ -33,8 +33,8 @@
                 <!-- 產品圖片 -->
                 <v-img 
                     class="product_image ma-auto"
-                    :src="imgUrl"
-                    :lazy-src="imgUrl" >
+                    :src="product.imgUrl"
+                    :lazy-src="product.imgUrl">
                     <!-- 當圖片 Loading 時 -->
                     <template v-slot:placeholder>
                         <v-row
@@ -56,7 +56,7 @@
                     text-center
                     font-weight-black
                     justify-center">
-                    {{ title }}
+                    {{ product.title }}
                 </v-card-title>
                 <!-- 產品敘述 -->
                 <v-card-subtitle 
@@ -70,7 +70,7 @@
                     {{ subString }}
                     <!-- 產品標籤 -->
                     <v-chip-group class="my-5">
-                        <v-chip class="mx-1" color="primary" v-for="tag in tags" :key="tag.id">
+                        <v-chip class="mx-1" color="primary" v-for="tag in product.tags" :key="tag.id">
                             <v-icon size="medium">fa-check-circle fa-fw</v-icon>
                             <span>{{ tag.title }}</span>
                         </v-chip>
@@ -85,9 +85,8 @@
                         pa-1
                         subtitle-1
                         gray--text "
-                        :class="[formatLabel == 10 ? '' : 'discounted']"
-                        >
-                        NT.{{ Math.floor(unit_price) }}
+                        :class="[formatLabel == 10 ? '' : 'discounted']">
+                        NT.{{ Math.floor(product.unit_price) }}
                     </v-card-subtitle>
                     <!-- 打折後 -->
                     <v-card-subtitle v-if="formatLabel != 10"
@@ -95,9 +94,8 @@
                         discount_price
                         pa-0
                         title
-                        red--text"
-                        >
-                        NT.{{ Math.floor(unit_price * discount_rate) }}
+                        red--text">
+                        NT.{{ Math.floor(product.unit_price * product.discount_rate) }}
                     </v-card-subtitle>
                 </div>      
             </v-card>
@@ -109,7 +107,7 @@
             depressed
             color="primary">
             <!-- 產品 ID -->
-            <span @click="addToCart(id)">加入購物車</span>
+            <span @click="addToCart(product.id)">加入購物車</span>
         </v-btn>   
     </div>
 </template>
@@ -119,22 +117,15 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default {
     // passed from pages/index.vue
-    props: ['id', 'title', 'description', 'imgUrl', 'unit_price', 'tags', 'discount_rate'], 
-    data () {
-        return {
-            // 商品卡片大小
-            cardWidth: 300,
-            cardHeight: 600
-        }
-    },
+    props: ['product', 'cardWidth', 'cardHeight'], 
     computed: {
         // 商品折數
         formatLabel () {
-            return this.discount_rate * 10
+            return this.product.discount_rate * 10
         },
         // 縮減商品敘述的字串
         subString () {
-            return this.description.substring(0, 50) + '...'
+            return this.product.description.substring(0, 50) + '...'
         }
     },
     methods: {

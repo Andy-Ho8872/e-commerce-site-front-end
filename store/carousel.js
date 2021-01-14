@@ -9,12 +9,10 @@ export const state = () => ({
 })
 
 export const mutations = {
-    // 增加 Counter 計數 (每次增加最少為 1)
-    CHANGE_COUNTER (state, value) {
+    // 圖片滑動
+    SLIDE_CAROUSEL (state, value) {
+    // 滑動計數
         state.counter += value
-        //console.log(state.counter); 
-    },
-    SLIDE_CAROUSEL (state) {
     //先取得使用者當前螢幕的寬度
         const clientWidth = document.body.offsetWidth
         // 滑動區域
@@ -65,21 +63,5 @@ export const mutations = {
             slide.style.transform = `translateX( ${ -(state.maxSlide) * state.slideValue }px )`
             state.counter = 0
         }
-    }
-}
-
-export const actions = {
-    setCarousel (state) {
-        state.commit('SLIDE_CAROUSEL')
-    }
-}
-
-// 待改動
-export const getters = {
-    getCurrentCounter () {
-        state.counter
-    },
-    getCurrentMaxSlide () {
-        state.maxSlide
     }
 }

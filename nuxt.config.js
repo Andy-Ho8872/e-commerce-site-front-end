@@ -13,7 +13,10 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       // Font-AwesomeIcon (CDN)
-      { href: "https://cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css", rel: "stylesheet" }
+      { href: "https://cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css", rel: "stylesheet" },
+      // 字型
+      { rel: "preconnect", href: "https://fonts.gstatic.com",
+        href: "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,600;1,700&display=swap" ,rel: "stylesheet" }
     ],
 
   },

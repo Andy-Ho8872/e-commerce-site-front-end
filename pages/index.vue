@@ -12,10 +12,13 @@
         :millisecond='4'
         />
     <!-- 圖片輪播 -->
-        <Carousel
-        :products="products"
-        />
-        <v-divider></v-divider>
+    <div v-if="loading">
+        <SkeletonCarousel :cardWidth="1600" :cardHeight="355"/>
+    </div>
+    <div v-else>
+        <!-- 圖片輪播張數為 10 張 -->
+        <Carousel :products="products" :cardWidth="355" :cardHeight="355"/>
+    </div>
     <!-- 置頂按鈕 -->
         <v-btn
             @click="scrollTop" 
@@ -28,17 +31,15 @@
         </v-btn>
     <!-- 商品陳列 -->
         <div class="products d-flex flex-wrap justify-space-between">
-        <!-- 標題 、 圖片網址 、 價格 、 產品ID -->
             <li v-for="product in products" :key="product.id" class="my-10">
-                <Product
-                :id="product.id"
-                :title="product.title"
-                :description="product.description"
-                :imgUrl="product.imgUrl"
-                :unit_price="product.unit_price"
-                :discount_rate="product.discount_rate"
-                :tags="product.tags"
-                />
+                <!-- 骨架屏 -->
+                <div v-if="loading">
+                    <SkeletonCard :cardWidth="300"/>
+                </div>
+                <!-- 產品標題 、 圖片網址 、 價格 、 ID... -->
+                <div v-else>
+                    <Product :product="product" :cardWidth="300" :cardHeight="600"/>
+                </div>
             </li>   
         </div>
     <!-- 提示訊息 -->
@@ -53,9 +54,15 @@ import { mapActions, mapGetters } from 'vuex';
 import { apiGetProducts, apiGetProduct } from '~/APIs/api.js';
 
 export default {
-    // 測試用 (使用 asycsData 才可以在 Server 先渲染)  可留可不留????
+    data() {
+        return {
+            loading: true // 骨架屏狀態
+        }
+    },
+    // 從外部 API 讀取產品的資料
     async asyncData() {
         const res = await apiGetProducts()
+        // 回傳產品資料
         return { products: res.data.products }     
     },
     computed: {
@@ -79,6 +86,10 @@ export default {
     created () {
         this.fetchUserCart()
     },
+    // 掛載時結束 loading 狀態
+    mounted () {
+        this.loading = false;
+    }
 }
 
 </script>

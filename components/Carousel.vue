@@ -6,43 +6,41 @@
         <v-icon 
             large 
             id="prev" 
-            @click="changeCounter(-1) ; slideCarousel()">
+            @click="slide(-1)">
             fa-angle-left
         </v-icon>
         <!-- 輪播控制按鈕(右) --> 
         <v-icon 
             large
             id="next" 
-            @click="changeCounter(1) ; slideCarousel()">
+            @click="slide(1)">
             fa-angle-right
         </v-icon>
         <!-- 輪播圖片(圖片滑動區域) -->
         <div class="switch_photo d-flex ">
             <!-- v-card 和 v-img 預設寬度為 355 px -->
-            <v-card class="single_card" v-for="(item, index) in products" :key="index" tile max-width="355">
+            <v-card class="single_card" v-for="(product, index) in products" :key="index" tile max-width="355">
                 <v-img 
                     class="my-auto"
-                    :src="item.imgUrl" 
-                    :lazy-src="item.imgUrl" 
+                    :src="product.imgUrl" 
+                    :lazy-src="product.imgUrl" 
                     :max-width="cardWidth" 
-                    :max-height="cardHeight" 
-                    >
+                    :max-height="cardHeight">
                     <!-- 當圖片 Loading 時 -->
                     <template v-slot:placeholder>
                         <v-row
                             class="fill-height ma-0"
                             align="center"
-                            justify="center"
-                            >
+                            justify="center">
                             <v-progress-circular
                                 indeterminate
-                                color="blue lighten-5"
-                                >
+                                color="blue lighten-5">
                             </v-progress-circular>
                         </v-row>
                     </template>
                 </v-img>
-                <v-card-subtitle class="text-center heading-6">{{ item.title }}</v-card-subtitle>
+                <!-- 產品名稱 -->
+                <v-card-subtitle class="text-center heading-6">{{ product.title }}</v-card-subtitle>
             </v-card>
         </div>
     </div>
@@ -53,37 +51,26 @@
 import { mapMutations, mapActions } from 'vuex'
 
 export default {
-    props: ['products'], // passed form pages/index.vue
+    props: ['products', 'cardWidth', 'cardHeight'], // passed form pages/index.vue
     data () {
         return {
+            // 圖片輪播
             interval: '',
-            // 商品卡片長寬
-            cardWidth: 355,
-            cardHeight: 355
         }
     },
     methods: {
         // Mutations
         ...mapMutations({ 
-            counter : 'carousel/CHANGE_COUNTER' 
+            // changeCounter : 'carousel/CHANGE_COUNTER',
+            slide : 'carousel/SLIDE_CAROUSEL'
         }),
-        changeCounter (value) {
-            this.counter(value) // 使用上方的 Mutations
-        },
-        // Actions
-        ...mapActions({
-            setCarousel : 'carousel/setCarousel'
-        }),
-        slideCarousel () {
-            this.setCarousel() // 使用上方的 Actions
-        },
     },
     // 頁面掛載後執行自動輪播
     mounted () {
         // 圖片自動輪播
         this.interval = setInterval(() => {
-            this.changeCounter(1);
-            this.slideCarousel(); 
+            // this.changeCounter(1);
+            this.slide(1); 
         }, 5000)
     },
     // 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
@@ -172,5 +159,4 @@ export default {
             max-height: 300px !important;
         }
     }
-    
 </style>
