@@ -12,7 +12,7 @@
         :millisecond='4'
         />
     <!-- 圖片輪播 -->
-    <div v-if="loading">
+    <div v-if="!loading">
         <SkeletonCarousel :cardWidth="1600" :cardHeight="355"/>
     </div>
     <div v-else>
