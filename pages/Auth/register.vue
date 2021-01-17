@@ -7,16 +7,14 @@
                     class="mx-auto pt-2"
                     max-width="100" 
                     max-height="100" 
-                    :src="require('~/static/form/1.png')" 
-                    >
+                    :src="require('~/static/form/1.png')">
                 </v-img>
             </div>
             <!-- 註冊表單 -->
             <v-form 
                 class="form pa-8" 
                 ref="form"
-                v-model="valid"
-                >
+                v-model="valid">
                 <!-- 註冊帳戶文字 -->
                 <h1 class="text-center my-10">註冊</h1>
                 <!-- 電子郵件(帳號) -->
@@ -30,8 +28,7 @@
                         prepend-icon="fa-user"
                         color="blue" 
                         label="電子郵件" 
-                        placeholder="Email"
-                        >
+                        placeholder="Email">
                     </v-text-field>
                     <!-- 密碼 -->
                     <v-text-field
@@ -47,8 +44,7 @@
                         minlength="6" 
                         prepend-icon="fa-lock" 
                         label="密碼"
-                        placeholder="Password"
-                        >
+                        placeholder="Password">
                     </v-text-field>
                 </div>
                 <!-- 顯示錯誤訊息(隱藏) -->
@@ -78,8 +74,7 @@
                         large
                         rounded
                         outlined 
-                        type="submit"
-                        >
+                        type="submit">
                         註冊
                     </v-btn>
                 </div>
@@ -89,7 +84,6 @@
 </template>
 
 <script>
-// import { apiUserRegister } from '~/APIs/api.js';
 import { mapMutations, mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -129,16 +123,12 @@ export default {
             setTimeout(() => {
                 this.clearMessage()
             }, this.timer)
-            
         },
     },
     computed: {
         ...mapGetters({
-            fetchMessage: 'auth/fetchMessage'
+            message: 'auth/fetchMessage'
         }),
-        message () {
-            return this.fetchMessage
-        },
     }
 }
 </script>

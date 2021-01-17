@@ -59,6 +59,7 @@ export default {
 <style lang="scss" scoped>
     input {
         width: 30%;
+        padding: 2px 0;
         outline: 0;
     }
     .quantity_field_wrapper {

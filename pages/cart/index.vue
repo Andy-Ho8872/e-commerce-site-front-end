@@ -62,8 +62,6 @@
                 <!-- 結帳按鈕 -->
                 <v-btn color="blue lighten-2" class="white--text">結帳</v-btn>
             </v-card>
-            <!-- 提示訊息 -->
-            <v-alert v-if="message" type="error" class="mt-4">{{ message }}</v-alert>
         </v-col>
     </v-container>
 </template>

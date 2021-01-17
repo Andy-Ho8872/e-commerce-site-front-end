@@ -2,27 +2,25 @@
   <v-app dark>
     <v-main class="main_view">
       <Header class="header"/>
+      <!-- 提示訊息 -->
+        <div class="alert-message">
+          <v-alert v-if="message" dark border="left" :type="message.type">
+            {{ message.text }}
+          </v-alert>
+        </div>
       <nuxt />  
     </v-main>
   </v-app>
-  
-    <!-- <v-main class="main_view">
-      <Header class="header"/>
-      <nuxt />  
-    </v-main> -->
-  
 </template>
 
 <script>
-// import Navbar from '~/components/Navbar.vue'
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
-  data () {
-    return {
-  
-    }
-  },
-  methods: {
-    
+  computed: {
+    ...mapGetters({
+      message: 'cart/getMessage' // 提示訊息
+    })
   },
 }
 </script>
@@ -43,6 +41,14 @@ export default {
     display: flex;
     justify-content: center;
     padding-top: 10% !important;
+  }
+
+  .alert-message {
+    z-index: 10000;
+    position: fixed;
+    left: 50%;
+    bottom: 10%;
+    transform: translateX(-50%);
   }
 
 // RWD 版面設定

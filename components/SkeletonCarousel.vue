@@ -17,7 +17,7 @@
 
 <script>
 export default {
-    props:['cardWidth', 'cardHeight']
+    props:['cardHeight']
 }
 </script>
 

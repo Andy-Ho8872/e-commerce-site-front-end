@@ -12,8 +12,8 @@
         :millisecond='4'
         />
     <!-- 圖片輪播 -->
-    <div v-if="!loading">
-        <SkeletonCarousel :cardWidth="1600" :cardHeight="355"/>
+    <div v-if="loading">
+        <SkeletonCarousel :cardHeight="355"/>
     </div>
     <div v-else>
         <!-- 圖片輪播張數為 10 張 -->
@@ -41,10 +41,6 @@
                     <Product :product="product" :cardWidth="300" :cardHeight="600"/>
                 </div>
             </li>   
-        </div>
-    <!-- 提示訊息 -->
-        <div class="alert-message">
-            <v-alert v-if="message" type="success">{{ message }}</v-alert>
         </div>
     </v-container>
 </template> 
