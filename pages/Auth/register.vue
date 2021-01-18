@@ -48,11 +48,8 @@
                     </v-text-field>
                 </div>
                 <!-- 顯示錯誤訊息(隱藏) -->
-                <div 
-                    class="error_msg text-center red--text">
-                    <h4 v-for="(msg, index) in message" :key="index">
-                        {{ msg[0] }}
-                    </h4>
+                <div class="error_msg text-center red--text">
+                    <h4 v-for="(msg, index) in message" :key="index">{{ msg[0] }}</h4>
                 </div>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
@@ -84,7 +81,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     data () {
@@ -105,24 +102,14 @@ export default {
                     return pattern.test(value) || '範例 : abc123@gmail.com'
                 },
             },
-            // 計時器
-            timer: 3000
         }
     },
     methods: { 
-        ...mapMutations({
-            // 清除錯誤訊息
-            clearMessage: 'auth/CLEAR_MESSAGE'
-        }),
         ...mapActions({
             registerUser: 'auth/register'
         }),
         register () {
-            this.registerUser(this.form);
-            // 清除錯誤訊息
-            setTimeout(() => {
-                this.clearMessage()
-            }, this.timer)
+            this.registerUser(this.form); // 物件傳入 Vuex
         },
     },
     computed: {

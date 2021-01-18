@@ -48,11 +48,8 @@
                     </v-text-field>
                 </div>
                 <!-- 顯示錯誤訊息(隱藏) -->
-                <div 
-                    class="error_msg text-center red--text">
-                    <h4 v-for="(msg, index) in message" :key="index">
-                        {{ msg[0] }}
-                    </h4>
+                <div class="error_msg text-center red--text">
+                    <h4 v-for="(msg, index) in message" :key="index">{{ msg[0] }}</h4>
                 </div>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
@@ -106,15 +103,12 @@ export default {
                     return pattern.test(value) || '範例 : abc123@gmail.com'
                 },
             },
-            timer: 3000
         }
     },
     methods: {
         ...mapMutations({
             // 使用者登入後從 Local Storage 抓取資料與 Token
             fetchUserAccount: 'auth/FETCH_USER_ACCOUNT',
-            // 清除錯誤訊息
-            clearMessage: 'auth/CLEAR_MESSAGE'
         }),
         ...mapActions({
             // commit 登入的 Mutation
@@ -123,14 +117,6 @@ export default {
         login () { 
             // 將 form 所接收到的值以物件(Object)的方式傳入到 vuex 
             this.loginUser(this.form);
-            // 清除錯誤訊息
-            setTimeout(() => {
-                this.clearMessage();
-            }, this.timer)
-            // 必須要加上 setTimeout 否則在資料還沒接收到的時候就會執行
-            setTimeout(() => {
-                this.fetchUserAccount();
-            }, this.timer) 
         }
     },
     computed: {
