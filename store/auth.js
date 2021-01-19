@@ -1,10 +1,10 @@
 import { apiUserRegister, apiUserLogin, apiCsrfLogin, apiUserLogout } from '~/APIs/api.js';
 
 export const state = () => ({
-    user: {
-        email: '',
-        password: ''
-    },
+    // user: {
+    //     email: '',
+    //     password: ''
+    // },
     userAccount: null,
     message: null // 錯誤訊息
 })
@@ -48,7 +48,7 @@ export const mutations = {
 
 export const actions = {
     // 註冊流程
-    async register (context, user) {
+    async register ({ commit }, user) {
         try {
             await apiUserRegister({
                 email: user.email,
@@ -62,15 +62,15 @@ export const actions = {
         catch (error) {
             // 錯誤訊息
             let msg = error.response.data.errors;
-            context.commit('SET_MESSAGE', msg);
+            commit('SET_MESSAGE', msg);
             // 清除錯誤訊息
             setTimeout(() => {
-                context.commit('CLEAR_MESSAGE');
+                commit('CLEAR_MESSAGE');
             }, 3000)
         }
     },
     // 登入流程
-    async login (context, user) {
+    async login ({ commit }, user) {
         try {
             // 初次登入要先取得 CSRF
             await apiCsrfLogin();
@@ -88,37 +88,37 @@ export const actions = {
                 // 重新導向至首頁
                 this.$router.push('/');
                 // 撈取使用者資料
-                context.commit('FETCH_USER_ACCOUNT');
+                commit('FETCH_USER_ACCOUNT');
             }
             catch (error) {
                  // 錯誤訊息
                 let msg = error.response.data.errors;
-                context.commit('SET_MESSAGE', msg);
+                commit('SET_MESSAGE', msg);
                 // 清除錯誤訊息
                 setTimeout(() => {
-                    context.commit('CLEAR_MESSAGE');
+                    commit('CLEAR_MESSAGE');
                 }, 3000)
             }
         }
         catch (error) {
             // 錯誤訊息
             let msg = error.response.data.errors;
-            context.commit('SET_MESSAGE', msg);
+            commit('SET_MESSAGE', msg);
             // 清除錯誤訊息
             setTimeout(() => {
-                context.commit('CLEAR_MESSAGE');
+                commit('CLEAR_MESSAGE');
             }, 3000)
         }
     },
     // 登出流程
-    async logout (context) {
+    async logout ({ commit }) {
         const BearerToken = localStorage.getItem('Token');
         const config = { headers: { Authorization: BearerToken } };
         try {
             // 要取得使用者的 Token 才能執行登出
             await apiUserLogout(config);
             // 清空 LocalStorage
-            await context.commit('CLEAR_ALL_STORAGE');
+            await commit('CLEAR_ALL_STORAGE');
             // 重新導向
             this.$router.push('/');
             alert('您已經登出');
@@ -126,10 +126,10 @@ export const actions = {
         catch (error) {
             // 錯誤訊息
             let msg = error.response.data.errors;
-            context.commit('SET_MESSAGE', msg);
+            commit('SET_MESSAGE', msg);
             // 清除錯誤訊息
             setTimeout(() => {
-                context.commit('CLEAR_MESSAGE');
+                commit('CLEAR_MESSAGE');
             }, 3000)
         }
     }

@@ -1,6 +1,7 @@
 import { 
     apiGetCartProducts, 
     apiAddToCart,
+    apiAddToCartWithQuantity,
     apiDeleteFromCart,
     apiDeleteAllFromCart,
     apiUpdateQuantity, 
@@ -39,6 +40,7 @@ export const mutations = {
 }
 
 export const actions = {
+// 首頁 (pages/index.vue)
     // 抓取使用者的購物車
     async fetchUserCart ({ commit }) {
         const userId = localStorage.getItem('UserID');
@@ -47,22 +49,23 @@ export const actions = {
         // 將資料寫入
         commit('SET_USER_CART', payload);
     },
-    // 新增商品至購物車
-    async addToCart (context, productId) {
+
+    // 直接新增商品至購物車 (預設數量 1)
+    async addToCart ({ dispatch, commit }, productId) {
         const userId = localStorage.getItem('UserID');
         try {
             await apiAddToCart(userId, productId);
             // 重新撈取資料
-            await context.dispatch('fetchUserCart');
+            await dispatch('fetchUserCart');
             // 回傳提示訊息給使用者
             let message = {
                 type: 'success',
                 text: "已經新增至購物車"
             };
-            context.commit('SET_MESSAGE', message);
+            commit('SET_MESSAGE', message);
             // 清除訊息
             setTimeout(() => {
-                context.commit('CLEAR_MESSAGE');
+                commit('CLEAR_MESSAGE');
             }, 3000) 
         }
         catch (error) {
@@ -71,23 +74,50 @@ export const actions = {
         }
     },
 
+// 動態頁面  (pages/products/_id.vue)
+    // 新增商品至購物車(附帶商品數量)
+    async addToCartWithQuantity ({ dispatch, commit }, product) {
+        const userId = localStorage.getItem('UserID');
+        try {
+            // 若要從表單傳遞參數要透過 Object
+            await apiAddToCartWithQuantity(userId, product.id, { product_quantity: product.quantity });
+            // 重新撈取資料
+            await dispatch('fetchUserCart');
+            // 回傳提示訊息給使用者
+            let message = {
+                type: 'success',
+                text: "已經新增至購物車"
+            };
+            commit('SET_MESSAGE', message);
+            // 清除訊息
+            setTimeout(() => {
+                commit('CLEAR_MESSAGE');
+            }, 3000) 
+        }
+        catch (error) {
+            console.log(error);
+            console.log('新增失敗 from vuex');
+        }
+    },
+
+// 購物車結帳頁面 (pages/cart/index.vue)
     // 商品數量增加 1
-    async increseByOne (context, productId) {
+    async increseByOne ({ dispatch, commit }, productId) {
         const userId = localStorage.getItem('UserID');
 
         try {
             await apiIncreseQuantityByOne(userId, productId);
             // 重新撈取資料
-            await context.dispatch('fetchUserCart');
+            await dispatch('fetchUserCart');
             // 提示訊息
             let message = {
                 type: 'warning',
                 text: "您增加了商品數量，請查看"
             };
-            context.commit('SET_MESSAGE', message);
+            commit('SET_MESSAGE', message);
             // 清除訊息
             setTimeout(() => {
-                context.commit('CLEAR_MESSAGE');
+                commit('CLEAR_MESSAGE');
             }, 3000) 
         } 
         catch (error) {
@@ -95,24 +125,23 @@ export const actions = {
             console.log("數量增加失敗");
         }
     },
-
     // 商品數量減少 1
-    async decreseByOne (context, productId) {
+    async decreseByOne ({ dispatch, commit }, productId) {
         const userId = localStorage.getItem('UserID');
 
         try {
             await apiDecreseQuantityByOne(userId, productId);
             // 重新撈取資料
-            await context.dispatch('fetchUserCart');
+            await dispatch('fetchUserCart');
             // 提示訊息
             let message = {
                 type: 'warning',
                 text: "您減少了商品數量，請查看"
             };
-            context.commit('SET_MESSAGE', message);
+            commit('SET_MESSAGE', message);
             // 清除訊息
             setTimeout(() => {
-                context.commit('CLEAR_MESSAGE');
+                commit('CLEAR_MESSAGE');
             }, 3000)
         } 
         catch (error) {
@@ -120,24 +149,22 @@ export const actions = {
             console.log("數量增加失敗");
         }
     },
-
-
     // 從購物車中移除商品
-    async deleteFromCart (context, productId) {
+    async deleteFromCart ({ dispatch, commit }, productId) {
         const userId = localStorage.getItem('UserID');
         try {
             await apiDeleteFromCart(userId, productId);
             // 重新撈取資料
-            await context.dispatch('fetchUserCart');
+            await dispatch('fetchUserCart');
             // 提示訊息
             let message = {
                 type: 'error',
                 text: "您刪除了一項商品"
             };
-            context.commit('SET_MESSAGE', message);
+            commit('SET_MESSAGE', message);
             // 清除訊息
             setTimeout(() => {
-                context.commit('CLEAR_MESSAGE');
+                commit('CLEAR_MESSAGE');
             }, 3000)
         } 
         catch (error) {
@@ -146,21 +173,21 @@ export const actions = {
         }
     },
     // 清空購物車
-    async deleteAllFromCart (context) {
+    async deleteAllFromCart ({ dispatch, commit }) {
         const userId = localStorage.getItem('UserID');
         try{
             await apiDeleteAllFromCart(userId);
             // 清空完之後 重新 fetch 資料
-            await context.dispatch('fetchUserCart');
+            await dispatch('fetchUserCart');
             // 提示訊息
             let message = {
                 type: 'error',
                 text: "您的購物車已經清空"
             };
-            context.commit('SET_MESSAGE', message);
+            commit('SET_MESSAGE', message);
             // 清除訊息
             setTimeout(() => {
-                context.commit('CLEAR_MESSAGE');
+                commit('CLEAR_MESSAGE');
             }, 3000)
         }
         catch (error) {

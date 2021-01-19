@@ -51,6 +51,8 @@ export const apiGetProduct = (id) => productRequest.get(`/products/${id}`);
 export const apiGetCartProducts = (userId) => userRequest.get(`/${userId}/cart`);
     // 使用者新增商品至購物車
 export const apiAddToCart = (userId, productId) => userRequest.post(`/${userId}/cart/${productId}/create`);
+        // 新增商品至購物車(包含使用者所輸入的數量)
+export const apiAddToCartWithQuantity = (userId, productId, quantity) => userRequest.post(`/${userId}/cart/${productId}/create`, quantity);
     // 使用者從購物車中移除商品
 export const apiDeleteFromCart = (userId, productId) => userRequest.delete(`/${userId}/cart/${productId}/delete`);
     // 清空購物車
