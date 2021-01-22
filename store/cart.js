@@ -4,16 +4,16 @@ import {
     apiAddToCartWithQuantity,
     apiDeleteFromCart,
     apiDeleteAllFromCart,
-    apiUpdateQuantity, 
+    apiUpdateQuantity, // 尚未完成
     apiIncreseQuantityByOne, 
-    apiDecreseQuantityByOne } 
-from '../APIs/api.js';
+    apiDecreseQuantityByOne 
+} from '../APIs/api.js';
 
 export const state = () => ({
     // 購物車中的內容
     userCart: [], 
     // 提示訊息
-    message: null
+    message: null,
 })
 
 export const getters = {
@@ -44,17 +44,25 @@ export const actions = {
     // 抓取使用者的購物車
     async fetchUserCart ({ commit }) {
         const userId = localStorage.getItem('UserID');
-        const res = await apiGetCartProducts(userId);
-        let payload = res.data.orders;
-        // 將資料寫入
-        commit('SET_USER_CART', payload);
+        const token = { headers: { Authorization: localStorage.getItem('Token') } }; 
+        try {
+            const res = await apiGetCartProducts(userId, token);
+            let payload = res.data.orders;
+            // 將資料寫入
+            commit('SET_USER_CART', payload);
+        }
+        catch (error) {
+            console.log(error);
+            console.log("抓取失敗 from vuex");
+        }
     },
 
     // 直接新增商品至購物車 (預設數量 1)
-    async addToCart ({ dispatch, commit }, productId) {
+    async addToCart ({ dispatch, commit }, productId) {  
         const userId = localStorage.getItem('UserID');
+        const token = { headers: { Authorization: localStorage.getItem('Token') } };
         try {
-            await apiAddToCart(userId, productId);
+            await apiAddToCart(userId, productId, token);
             // 重新撈取資料
             await dispatch('fetchUserCart');
             // 回傳提示訊息給使用者
@@ -78,9 +86,10 @@ export const actions = {
     // 新增商品至購物車(附帶商品數量)
     async addToCartWithQuantity ({ dispatch, commit }, product) {
         const userId = localStorage.getItem('UserID');
+        const token = { headers: { Authorization: localStorage.getItem('Token') } };
         try {
-            // 若要從表單傳遞參數要透過 Object
-            await apiAddToCartWithQuantity(userId, product.id, { product_quantity: product.quantity });
+            // 若要從表單傳遞參數要透過 Object  使用者     產品                      購買數量                   憑證
+            await apiAddToCartWithQuantity(userId, product.id, { product_quantity: product.quantity }, token);
             // 重新撈取資料
             await dispatch('fetchUserCart');
             // 回傳提示訊息給使用者
@@ -104,9 +113,9 @@ export const actions = {
     // 商品數量增加 1
     async increseByOne ({ dispatch, commit }, productId) {
         const userId = localStorage.getItem('UserID');
-
+        const token = { headers: { Authorization: localStorage.getItem('Token') } };
         try {
-            await apiIncreseQuantityByOne(userId, productId);
+            await apiIncreseQuantityByOne(userId, productId, token);
             // 重新撈取資料
             await dispatch('fetchUserCart');
             // 提示訊息
@@ -128,9 +137,9 @@ export const actions = {
     // 商品數量減少 1
     async decreseByOne ({ dispatch, commit }, productId) {
         const userId = localStorage.getItem('UserID');
-
+        const token = { headers: { Authorization: localStorage.getItem('Token') } };
         try {
-            await apiDecreseQuantityByOne(userId, productId);
+            await apiDecreseQuantityByOne(userId, productId, token);
             // 重新撈取資料
             await dispatch('fetchUserCart');
             // 提示訊息
@@ -152,8 +161,9 @@ export const actions = {
     // 從購物車中移除商品
     async deleteFromCart ({ dispatch, commit }, productId) {
         const userId = localStorage.getItem('UserID');
+        const token = { headers: { Authorization: localStorage.getItem('Token') } };
         try {
-            await apiDeleteFromCart(userId, productId);
+            await apiDeleteFromCart(userId, productId, token);
             // 重新撈取資料
             await dispatch('fetchUserCart');
             // 提示訊息
@@ -175,8 +185,9 @@ export const actions = {
     // 清空購物車
     async deleteAllFromCart ({ dispatch, commit }) {
         const userId = localStorage.getItem('UserID');
+        const token = { headers: { Authorization: localStorage.getItem('Token') } };
         try{
-            await apiDeleteAllFromCart(userId);
+            await apiDeleteAllFromCart(userId, token);
             // 清空完之後 重新 fetch 資料
             await dispatch('fetchUserCart');
             // 提示訊息
