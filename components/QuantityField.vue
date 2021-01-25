@@ -3,6 +3,7 @@
         <!-- 減少數量 -->
         <v-btn
             @click="decreseByOne(product_id); decrement()"
+            :disabled='status'
             tile 
             small 
             depressed 
@@ -21,6 +22,7 @@
         <!-- 增加數量 -->
         <v-btn 
             @click="increseByOne(product_id); increment()"
+            :disabled='status'
             tile
             small 
             depressed 

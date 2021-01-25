@@ -7,7 +7,11 @@
                 <span class="dots"></span>
                 <span class="dots"></span>
                 <span class="star">
-                    <v-icon large class="yellow--text">fa-star</v-icon>
+                    <v-icon x-large class="yellow--text">fa-star fw</v-icon>
+                    <!-- 備用 -->
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#FFFF37">
+                        <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+                    </svg> -->
                 </span>
             </div>
             <div class="text">LOADING</div>
@@ -58,6 +62,7 @@ export default {
     .star {
         color: yellow;
         text-shadow: $glowing;
+        stroke-dasharray: 1px;
         animation: bouncing $bouncing-duration ease-in-out infinite;
         animation-delay: $bouncing-duration / 1;
     }

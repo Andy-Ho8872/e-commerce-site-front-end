@@ -57,7 +57,7 @@
                         <span>{{ user }}</span>
                     </li>
                     <!-- 登出按鈕 -->
-                    <li class="mx-1" @click="logout">
+                    <li class="mx-1" @click="logUserOut">
                         <v-icon
                             class="mx-1 mb-1"
                             dark 
@@ -149,11 +149,16 @@ export default {
     },
     methods: {
         ...mapMutations({
-            fetchAccount: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料
+            clearCart: 'cart/CLEAR_USER_CART' // 清空購物車暫存
         }),
         ...mapActions({
             logout: 'auth/logout' // 登出使用者
         }),
+        async logUserOut () {
+            await this.logout();
+            // 等使用者登出之後則清除暫存
+            this.clearCart()
+        }
     },
     computed: {
         ...mapGetters({
@@ -164,8 +169,6 @@ export default {
         }),
     },
     mounted () {
-        // 頁面重新掛載時繼續抓取使用者資訊
-        this.fetchAccount();
         // 點擊漢堡 SideBar 以外的區域則會關閉 
         document.addEventListener('click',(e) => {
             if(!this.$refs.extended.contains(e.target)) {

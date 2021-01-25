@@ -35,6 +35,10 @@ export const mutations = {
     SET_USER_CART (state, payload) {
         state.userCart = payload;
     },
+    // 使用者登出時清空暫存
+    CLEAR_USER_CART (state) {
+        state.userCart = []
+    },
     // 設置提示訊息
     SET_MESSAGE (state, message) {
         state.message = message;  
@@ -86,6 +90,8 @@ export const actions = {
         catch (error) {
             console.log(error);
             console.log('新增失敗 from vuex');
+            // 若使用者未登入則重新導向
+            this.$router.push({ name: 'auth-login' });
         }
     },
 
@@ -112,6 +118,7 @@ export const actions = {
         catch (error) {
             console.log(error);
             console.log('新增失敗 from vuex');
+            this.$router.push({ name: 'auth-login' });
         }
     },
 

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
   computed: {
@@ -23,13 +23,19 @@ export default {
     })
   },
   methods: {
+    ...mapMutations({
+      fetchAccount: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料 (從 localStorage)
+    }),
     ...mapActions({
       fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
     }),
   },
-  // 初次載入時先撈取購物車資料
+  // 初次載入時先撈取購物車資料 (測試用)
+  // created() {
+  //   this.fetchUserCart();
+  // },
   mounted () {
-    this.fetchUserCart();
+    this.fetchAccount();
   },
 }
 </script>
@@ -55,6 +61,7 @@ export default {
   .alert-message {
     z-index: 10000;
     position: fixed;
+    width: fit-content;
     left: 50%;
     bottom: 10%;
     transform: translateX(-50%);

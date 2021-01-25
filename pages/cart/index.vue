@@ -71,8 +71,10 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
+    middleware: 'authenticated', // 要先通過驗證才能訪問此頁面
     methods: {
         ...mapActions({
+            fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
             deleteFromCart: 'cart/deleteFromCart',
             deleteAllFromCart: 'cart/deleteAllFromCart', // 清空購物車
         }),
@@ -91,7 +93,11 @@ export default {
             });
             return summary;
         }
-    }
+    },
+    // 初次載入時先撈取購物車資料
+    created () {
+        this.fetchUserCart();
+    },
 }
 </script>
 

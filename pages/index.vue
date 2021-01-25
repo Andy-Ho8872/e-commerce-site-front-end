@@ -46,8 +46,8 @@
 </template> 
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import { apiGetProducts, apiGetProduct } from '~/APIs/api.js';
+import { apiGetProducts } from '~/APIs/api.js';
+import { mapActions } from 'vuex';
 
 export default {
     data() {
@@ -61,16 +61,10 @@ export default {
         // 回傳產品資料
         return { products: res.data.products }     
     },
-    computed: {
-        ...mapGetters({
-            message: 'cart/getMessage' // 提示訊息
-        })
-    },
     methods: {
         ...mapActions({
             fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
         }),
-        // 點擊移動到最上層
         scrollTop () {
             window.scrollTo({
                 top: 0,
@@ -80,7 +74,7 @@ export default {
     },
     // 初次載入時先撈取購物車資料
     created () {
-        this.fetchUserCart()
+        this.fetchUserCart();
     },
     // 掛載時結束 loading 狀態
     mounted () {

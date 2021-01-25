@@ -1,10 +1,6 @@
 import { apiUserRegister, apiUserLogin, apiCsrfLogin, apiUserLogout } from '~/APIs/api.js';
 
 export const state = () => ({
-    // user: {
-    //     email: '',
-    //     password: ''
-    // },
     userAccount: null,
     message: null // 錯誤訊息
 })
@@ -26,9 +22,11 @@ export const mutations = {
     },
     // 取得使用者資訊
     FETCH_USER_ACCOUNT (state) {
-        const getUserEmail = localStorage.getItem('UserEmail');
-        // 更新使用者狀態
-        state.userAccount = getUserEmail;
+        if(process.browser) {
+            const user = localStorage.getItem('UserEmail');
+            // 更新使用者狀態
+            state.userAccount = user;
+        }
     },
     // 取得錯誤訊息
     SET_MESSAGE (state, msg) {
@@ -76,15 +74,14 @@ export const actions = {
             await apiCsrfLogin();
             // 登入使用者
             try {
-                const result = await apiUserLogin({
+                const res = await apiUserLogin({
                     // 從 login 頁面 抓取資料
                     email: user.email,
                     password: user.password
                 });
                 // 若帳密正確，則給予 Token 並儲存在 localStorage
-                localStorage.setItem('Token', ('Bearer ' + result.data.token));
-                localStorage.setItem('UserID', result.data.user.id);
-                localStorage.setItem('UserEmail', result.data.user.email);
+                localStorage.setItem('Token', ('Bearer ' + res.data.token));
+                localStorage.setItem('UserEmail', res.data.user.email);
                 // 重新導向至首頁
                 this.$router.push('/');
                 // 撈取使用者資料
@@ -112,11 +109,10 @@ export const actions = {
     },
     // 登出流程
     async logout ({ commit }) {
-        const BearerToken = localStorage.getItem('Token');
-        const config = { headers: { Authorization: BearerToken } };
+        const token = { headers: { Authorization: localStorage.getItem('Token') } };
         try {
             // 要取得使用者的 Token 才能執行登出
-            await apiUserLogout(config);
+            await apiUserLogout(token);
             // 清空 LocalStorage
             await commit('CLEAR_ALL_STORAGE');
             // 重新導向
