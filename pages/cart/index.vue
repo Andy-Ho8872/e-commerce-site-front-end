@@ -1,6 +1,7 @@
 <template>
     <v-container>
-        <div v-if="userCart.length === 0">
+        <!-- 如果陣列內長度為 0 則顯示-->
+        <div v-if="! userCart.length">
             <h1>您的購物車中沒有東西。</h1>
         </div>
 
@@ -67,23 +68,18 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     methods: {
         ...mapActions({
-            fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
             deleteFromCart: 'cart/deleteFromCart',
-            deleteAllFromCart: 'cart/deleteAllFromCart' // 清空購物車
-        }),
-        ...mapMutations({
-            changeByOne: 'cart/CHANGE_QUANTITY_BY_ONE'
+            deleteAllFromCart: 'cart/deleteAllFromCart', // 清空購物車
         }),
     },
     computed: {
         ...mapGetters({
             userCart: 'cart/getUserCart', // 使用者的購物車
-            message: 'cart/getMessage' // 提示訊息
         }),
         // 價格小計
         subTotal () {
@@ -95,11 +91,7 @@ export default {
             });
             return summary;
         }
-    },
-    // 初次載入時先撈取購物車資料
-    mounted () {
-        this.fetchUserCart();
-    },
+    }
 }
 </script>
 

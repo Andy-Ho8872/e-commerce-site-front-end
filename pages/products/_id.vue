@@ -82,7 +82,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { apiGetProduct, apiAddToCart } from '~/APIs/api.js';
+import { apiGetProduct } from '~/APIs/api.js';
 
 export default {
     // 測試用
@@ -94,6 +94,7 @@ export default {
     },
     data () {
         return {
+            // 暫存資料
             productPayload: {
                 id: this.$route.params.id,
                  // 產品當前數量 預設 1 個

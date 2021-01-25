@@ -2,7 +2,7 @@
     <v-row class="quantity_field_wrapper align-center justify-center">
         <!-- 減少數量 -->
         <v-btn
-            @click="decreseByOne(product_id)"
+            @click="decreseByOne(product_id); decrement()"
             tile 
             small 
             depressed 
@@ -12,14 +12,15 @@
         </v-btn>
         <!-- 當前數量 -->
         <input
+            @change="updateQuantity(productPayload)" 
+            :disabled='status'
             class="grey lighten-2 text-center"
             name="product_quantity"
             type="text" 
-            v-model="product_quantity"
-        >
+            v-model="productPayload.quantity">
         <!-- 增加數量 -->
         <v-btn 
-            @click="increseByOne(product_id)"
+            @click="increseByOne(product_id); increment()"
             tile
             small 
             depressed 
@@ -32,27 +33,39 @@
 
 
 <script>
-import { mapActions, mapMutations, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     props: ['product_id', 'product_quantity'],
     data () {  
         return {
-            productQty: 10
-        }
-    },
-    methods: {
-        ...mapActions({
-            increseByOne: 'cart/increseByOne',
-            decreseByOne: 'cart/decreseByOne'
-        }),
-        changeCount (value) {
-            this.productQty += value
+            // 暫存數據
+            productPayload: {
+                id: this.product_id,
+                 // 產品當前數量 預設 1 個
+                quantity: this.product_quantity,
+            },
         }
     },
     computed: {
-        
-    }
+        ...mapGetters({
+            status: 'cart/getPendingStatus', // pending 的狀態
+        })
+    },
+    methods: {
+        ...mapActions({
+            increseByOne: 'cart/increseByOne', // 減 一
+            decreseByOne: 'cart/decreseByOne', // 加 一
+            updateQuantity: 'cart/updateQuantity' // 修改數量
+        }),
+        // 暫存數據 增 減
+        increment () {
+            this.productPayload.quantity++  
+        },
+        decrement () {
+            this.productPayload.quantity--
+        },
+    },
 }
 </script>
 

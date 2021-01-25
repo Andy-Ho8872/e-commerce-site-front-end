@@ -22,6 +22,15 @@ export default {
       message: 'cart/getMessage' // 提示訊息
     })
   },
+  methods: {
+    ...mapActions({
+      fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
+    }),
+  },
+  // 初次載入時先撈取購物車資料
+  mounted () {
+    this.fetchUserCart();
+  },
 }
 </script>
 
