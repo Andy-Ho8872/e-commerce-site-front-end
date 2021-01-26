@@ -80,8 +80,10 @@ export const actions = {
                     password: user.password
                 });
                 // 若帳密正確，則給予 Token 並儲存在 localStorage
-                localStorage.setItem('Token', ('Bearer ' + res.data.token));
-                localStorage.setItem('UserEmail', res.data.user.email);
+                if(process.browser) {
+                    localStorage.setItem('Token', ('Bearer ' + res.data.token));
+                    localStorage.setItem('UserEmail', res.data.user.email);
+                }
                 // 重新導向至首頁
                 this.$router.push('/');
                 // 撈取使用者資料

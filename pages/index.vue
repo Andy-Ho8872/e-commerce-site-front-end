@@ -72,7 +72,7 @@ export default {
             })
         },
     },
-    // 初次載入時先撈取購物車資料
+    // 初次載入時先撈取購物車資料 (使用 localStorage)
     created () {
         this.fetchUserCart();
     },

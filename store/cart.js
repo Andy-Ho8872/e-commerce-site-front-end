@@ -57,20 +57,22 @@ export const actions = {
 // 首頁 (pages/index.vue)
     // 抓取使用者的購物車
     async fetchUserCart ({ commit }) {
-        const token = { headers: { Authorization: localStorage.getItem('Token') } }; 
-        try {
-            const res = await apiGetCartProducts(token);
-            let payload = res.data.orders;
-            // 將資料寫入
-            commit('SET_USER_CART', payload);
-        }
-        catch (error) {
-            console.log(error);
-            console.log("抓取失敗 from vuex");
-        }
+        if(process.browser) {
+            const token = { headers: { Authorization: localStorage.getItem('Token') } };
+            try {
+                const res = await apiGetCartProducts(token);
+                let payload = res.data.orders;
+                // 將資料寫入
+                commit('SET_USER_CART', payload);
+            }
+            catch (error) {
+                console.log(error);
+                console.log("抓取失敗 from vuex");
+            }
+        } 
     },
     // 直接新增商品至購物車 (預設數量 1)
-    async addToCart ({ dispatch, commit }, productId) {  
+    async addToCart ({ dispatch, commit }, productId) { 
         const token = { headers: { Authorization: localStorage.getItem('Token') } };
         try {
             await apiAddToCart(productId, token);

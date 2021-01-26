@@ -26,14 +26,7 @@ export default {
     ...mapMutations({
       fetchAccount: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料 (從 localStorage)
     }),
-    // ...mapActions({
-    //   fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
-    // }),
   },
-  // 初次載入時先撈取購物車資料 (測試用)
-  // created() {
-  //   this.fetchUserCart();
-  // },
   mounted () {
     this.fetchAccount();
   },

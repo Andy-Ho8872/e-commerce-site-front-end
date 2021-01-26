@@ -95,7 +95,7 @@ export default {
         }
     },
     // 初次載入時先撈取購物車資料
-    created () {
+    created () { 
         this.fetchUserCart();
     },
 }
