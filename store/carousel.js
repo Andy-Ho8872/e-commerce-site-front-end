@@ -1,4 +1,3 @@
-
 export const state = () => ({
     // 計數器從 0 開始
     counter: 0,
@@ -10,10 +9,10 @@ export const state = () => ({
 
 export const mutations = {
     // 圖片滑動
-    SLIDE_CAROUSEL (state, value) {
-    // 滑動計數
+    SLIDE_CAROUSEL(state, value) {
+        // 滑動計數
         state.counter += value
-    //先取得使用者當前螢幕的寬度
+        //先取得使用者當前螢幕的寬度
         const clientWidth = document.body.offsetWidth
         // 滑動區域
         const slide = document.querySelector('.switch_photo')
@@ -26,7 +25,7 @@ export const mutations = {
         else if (clientWidth === 375) {
             state.slideValue = clientWidth - 20 // 355 px
             state.maxSlide = 9
-        } 
+        }
         // i Phone 6/7/8, plus 寬度(414px)
         else if (clientWidth === 414) {
             state.slideValue = clientWidth - 20 // 394 px
@@ -48,8 +47,9 @@ export const mutations = {
             state.maxSlide = 5
         }
         // 圖片轉場、位移
-        slide.style.transition = "transform 0.4s ease-in-out"
-        slide.style.transform = `translateX( ${ -(state.counter) * state.slideValue }px )`
+        slide.style.transition = 'transform 0.4s ease-in-out'
+        slide.style.transform = `translateX( ${-state.counter *
+            state.slideValue}px )`
         // 若圖片已達最左邊
         if (state.counter < 0) {
             // 將移動量重設為 0 (即不動)
@@ -60,8 +60,9 @@ export const mutations = {
         if (state.counter > state.maxSlide - 1) {
             // state.counter = state.maxSlide
             state.maxSlide = state.maxSlide
-            slide.style.transform = `translateX( ${ -(state.maxSlide) * state.slideValue }px )`
+            slide.style.transform = `translateX( ${-state.maxSlide *
+                state.slideValue}px )`
             state.counter = 0
         }
-    }
+    },
 }
