@@ -1,20 +1,18 @@
 <template>
-   <v-container class="pa-auto">
+    <v-container class="pa-auto">
         <div class="form-wrapper ma-auto">
             <!--註冊(登入) Icon -->
             <div class="img_wrapper">
-                <v-img 
+                <v-img
                     class="mx-auto pt-2"
-                    max-width="100" 
-                    max-height="100" 
-                    :src="require('~/static/form/1.png')">
+                    max-width="100"
+                    max-height="100"
+                    :src="require('~/static/form/1.png')"
+                >
                 </v-img>
             </div>
             <!-- 註冊表單 -->
-            <v-form 
-                class="form pa-8" 
-                ref="form"
-                v-model="valid">
+            <v-form class="form pa-8" ref="form" v-model="valid">
                 <!-- 帳戶文字 -->
                 <h1 class="text-center my-10">登入</h1>
                 <!-- 電子郵件(帳號) -->
@@ -26,9 +24,10 @@
                         v-model="form.email"
                         :rules="[rules.required, rules.email]"
                         prepend-icon="fa-user"
-                        color="blue" 
-                        label="電子郵件" 
-                        placeholder="Email">
+                        color="blue"
+                        label="電子郵件"
+                        placeholder="Email"
+                    >
                     </v-text-field>
                     <!-- 密碼 -->
                     <v-text-field
@@ -41,15 +40,18 @@
                         :type="show ? 'text' : 'password'"
                         @click:append="show = !show"
                         :append-icon="show ? 'fa-eye' : 'fa-eye-slash'"
-                        minlength="6" 
-                        prepend-icon="fa-lock" 
+                        minlength="6"
+                        prepend-icon="fa-lock"
                         label="密碼"
-                        placeholder="Password">
+                        placeholder="Password"
+                    >
                     </v-text-field>
                 </div>
                 <!-- 顯示錯誤訊息(隱藏) -->
                 <div class="error_msg text-center red--text">
-                    <h4 v-for="(msg, index) in message" :key="index">{{ msg[0] }}</h4>
+                    <h4 v-for="(msg, index) in message" :key="index">
+                        {{ msg[0] }}
+                    </h4>
                 </div>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
@@ -57,7 +59,7 @@
                     <nuxt-link :to="{ name: 'auth-register' }">
                         <div class="mx-2 blue--text ligten-2">註冊</div>
                     </nuxt-link>
-                    <v-spacer></v-spacer> 
+                    <v-spacer></v-spacer>
                     <!-- 忘記密碼 -->
                     <h4>忘記密碼</h4>
                 </v-row>
@@ -66,12 +68,13 @@
                     <v-btn
                         class="title"
                         :disabled="!valid"
-                        @click.prevent="login"  
-                        color="pink" 
+                        @click.prevent="login"
+                        color="pink"
                         large
                         rounded
-                        outlined 
-                        type="submit">
+                        outlined
+                        type="submit"
+                    >
                         登入
                     </v-btn>
                 </div>
@@ -81,11 +84,10 @@
 </template>
 
 <script>
-
-import { mapMutations, mapActions, mapGetters } from 'vuex';
+import { mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
-    data () {
+    data() {
         return {
             // 表單中的值
             form: {
@@ -112,36 +114,36 @@ export default {
         }),
         ...mapActions({
             // commit 登入的 Mutation
-            loginUser: 'auth/login'
+            loginUser: 'auth/login',
         }),
-        login () { 
-            // 將 form 所接收到的值以物件(Object)的方式傳入到 vuex 
-            this.loginUser(this.form);
-        }
+        login() {
+            // 將 form 所接收到的值以物件(Object)的方式傳入到 vuex
+            this.loginUser(this.form)
+        },
     },
     computed: {
         ...mapGetters({
-            message: 'auth/fetchMessage'
+            message: 'auth/fetchMessage',
         }),
-    }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-    .form-wrapper {
-        position: relative;
-        background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
-        max-width: 600px;
-        height: 600px;
-    }
-    .form {
-        margin: 0 0;
-    }
-    .img_wrapper {
-        position: relative;
-        top: 30px;
-    }
-    .has_account {
-        margin: 0 10%;
-    }      
+.form-wrapper {
+    position: relative;
+    background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+    max-width: 600px;
+    height: 600px;
+}
+.form {
+    margin: 0 0;
+}
+.img_wrapper {
+    position: relative;
+    top: 30px;
+}
+.has_account {
+    margin: 0 10%;
+}
 </style>

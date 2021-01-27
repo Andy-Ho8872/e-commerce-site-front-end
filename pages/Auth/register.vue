@@ -3,18 +3,16 @@
         <div class="form-wrapper ma-auto">
             <!--註冊(登入) Icon -->
             <div class="img_wrapper">
-                <v-img 
+                <v-img
                     class="mx-auto pt-2"
-                    max-width="100" 
-                    max-height="100" 
-                    :src="require('~/static/form/1.png')">
+                    max-width="100"
+                    max-height="100"
+                    :src="require('~/static/form/1.png')"
+                >
                 </v-img>
             </div>
             <!-- 註冊表單 -->
-            <v-form 
-                class="form pa-8" 
-                ref="form"
-                v-model="valid">
+            <v-form class="form pa-8" ref="form" v-model="valid">
                 <!-- 註冊帳戶文字 -->
                 <h1 class="text-center my-10">註冊</h1>
                 <!-- 電子郵件(帳號) -->
@@ -26,9 +24,10 @@
                         v-model="form.email"
                         :rules="[rules.required, rules.email]"
                         prepend-icon="fa-user"
-                        color="blue" 
-                        label="電子郵件" 
-                        placeholder="Email">
+                        color="blue"
+                        label="電子郵件"
+                        placeholder="Email"
+                    >
                     </v-text-field>
                     <!-- 密碼 -->
                     <v-text-field
@@ -41,15 +40,18 @@
                         :type="show ? 'text' : 'password'"
                         @click:append="show = !show"
                         :append-icon="show ? 'fa-eye' : 'fa-eye-slash'"
-                        minlength="6" 
-                        prepend-icon="fa-lock" 
+                        minlength="6"
+                        prepend-icon="fa-lock"
                         label="密碼"
-                        placeholder="Password">
+                        placeholder="Password"
+                    >
                     </v-text-field>
                 </div>
                 <!-- 顯示錯誤訊息(隱藏) -->
                 <div class="error_msg text-center red--text">
-                    <h4 v-for="(msg, index) in message" :key="index">{{ msg[0] }}</h4>
+                    <h4 v-for="(msg, index) in message" :key="index">
+                        {{ msg[0] }}
+                    </h4>
                 </div>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
@@ -57,7 +59,7 @@
                     <nuxt-link :to="{ name: 'auth-login' }">
                         <div class="mx-2 blue--text ligten-2">登入</div>
                     </nuxt-link>
-                    <v-spacer></v-spacer> 
+                    <v-spacer></v-spacer>
                     <!-- 忘記密碼 -->
                     <h4>忘記密碼</h4>
                 </v-row>
@@ -66,12 +68,13 @@
                     <v-btn
                         class="title"
                         :disabled="!valid"
-                        @click.prevent="register"  
-                        color="pink" 
+                        @click.prevent="register"
+                        color="pink"
                         large
                         rounded
-                        outlined 
-                        type="submit">
+                        outlined
+                        type="submit"
+                    >
                         註冊
                     </v-btn>
                 </div>
@@ -81,10 +84,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-    data () {
+    data() {
         return {
             // 表單中的值
             form: {
@@ -104,40 +107,40 @@ export default {
             },
         }
     },
-    methods: { 
+    methods: {
         ...mapActions({
-            registerUser: 'auth/register'
+            registerUser: 'auth/register',
         }),
-        register () {
-            this.registerUser(this.form); // 物件傳入 Vuex
+        register() {
+            this.registerUser(this.form) // 物件傳入 Vuex
         },
     },
     computed: {
         ...mapGetters({
-            message: 'auth/fetchMessage'
+            message: 'auth/fetchMessage',
         }),
-    }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
 // 表單
-    .form-wrapper {
-        position: relative;
-        background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 80%);
-        max-width: 600px;
-        height: 600px;
-    }
-    .form {
-        margin: 0 0;
-    }
-    // 圖片
-    .img_wrapper {
-        position: relative;
-        top: 30px;
-    }
-    // 已有帳戶?
-    .has_account {
-        margin: 0 10%;
-    } 
+.form-wrapper {
+    position: relative;
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 80%);
+    max-width: 600px;
+    height: 600px;
+}
+.form {
+    margin: 0 0;
+}
+// 圖片
+.img_wrapper {
+    position: relative;
+    top: 30px;
+}
+// 已有帳戶?
+.has_account {
+    margin: 0 10%;
+}
 </style>
