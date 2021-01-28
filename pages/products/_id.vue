@@ -135,6 +135,13 @@ export default {
             this.productPayload.quantity += value
         },
     },
+    // 監控使用者所輸入的數字
+    watch: {
+        'productPayload.quantity'() {                                  
+            // 將數字轉為 string
+            this.productPayload.quantity = this.productPayload.quantity.toString().replace(/^[^1-9][^0-9]?/g, '')
+        },
+    },
     mounted() {
         // 讀取完畢
         this.loading = false
