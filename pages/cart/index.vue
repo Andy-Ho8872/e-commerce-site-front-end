@@ -12,7 +12,7 @@
                     <span>商品</span>
                 </div>
                 <v-spacer></v-spacer>
-                <div class="content d-flex justify-space-between pr-2">
+                <div class="content d-flex justify-space-between">
                     <span>單價</span>
                     <span>數量</span>
                     <span>總計</span>
@@ -22,7 +22,7 @@
 
             <!-- 購物車詳細內容 -->
             <v-card
-                class="d-flex justify-space-between pa-5"
+                class="details d-flex justify-space-between pa-5"
                 tile
                 v-for="order in userCart"
                 :key="order.id"
@@ -40,8 +40,8 @@
                 </nuxt-link>
                 <div class="content d-flex justify-space-between align-center">
                     <!-- 商品單價 -->
-                    <div>
-                        <span>{{ Math.floor(order.unit_price) }}</span>
+                    <div class="unit_price">
+                        <span>${{ Math.floor(order.unit_price) }}</span>
                     </div>
                     <!-- 增加 減少數量按鈕 -->
                     <div>
@@ -51,7 +51,7 @@
                         />
                     </div>
                     <!-- 商品總價 -->
-                    <div>
+                    <div class="total">
                         <span>
                             {{
                                 Math.floor
@@ -65,7 +65,7 @@
                     </div>
                     <!-- 刪除按鈕(單項商品) -->
                     <v-btn
-                        class="white--text"
+                        class="action white--text"
                         color="red lighten-2"
                         @click="deleteFromCart(order.product_id)"
                     >
@@ -74,20 +74,29 @@
                 </div>
             </v-card>
             <!-- 購物車結算 -->
-            <v-card class="cart_page_footer d-flex mt-5 pa-5 align-center text-right">
-                <!-- 清空物品 -->
-                <v-btn
-                    class="white--text"
-                    color="error"
-                    @click="deleteAllFromCart"
-                >
-                    清空購物車
-                </v-btn>
+            <v-card class="cart_page_footer d-flex mt-4 pa-4 align-center text-right">
                 <!-- 小計金額 -->
-                <span class="subtotal mx-8">小計: {{ subTotal }}</span>
-                <!-- 結帳按鈕 -->
-                <v-btn class="white--text" color="blue lighten-2">結帳</v-btn>
+                <div class="subtotal">小計: {{ subTotal }}</div>
+                <!-- 按鈕群組 -->
+                <div class="d-flex">
+                    <!-- 清空物品 -->
+                    <v-btn
+                        class="white--text mx-6" 
+                        color="error"
+                        @click="deleteAllFromCart"
+                    >
+                        清空購物車
+                    </v-btn>
+                    <!-- 結帳按鈕 -->
+                    <v-btn 
+                        class="white--text mx-6" 
+                        color="blue lighten-2"
+                        >
+                        結帳
+                    </v-btn>
+                </div>
             </v-card>
+            
         </v-col>
     </v-container>
 </template>
@@ -138,5 +147,42 @@ input {
 }
 .quantity_field_wrapper {
     max-width: 170px !important;
+}
+
+
+@media (max-width: 768px) {
+    // cart page header   Start
+    .cart_page_header {
+        display: none !important;
+    }
+    .details {
+        flex-wrap: wrap;
+    }
+    .content {
+        flex-direction: column;
+        width: 100%
+    }
+    .unit_price {
+        margin: 1rem;
+    }
+    .total {
+        display: none;
+    }
+    // 刪除按鈕
+    .action {
+        margin-top: 16px;
+    }
+    // cart page header   End
+
+    // cart page footer   Start
+    .cart_page_footer {
+        position: relative;
+        flex-direction: column;
+    }
+    .subtotal {
+        text-align: center;
+        font-size: 1.2rem;
+    }  
+    // cart page footer   End
 }
 </style>

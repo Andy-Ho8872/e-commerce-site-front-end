@@ -139,7 +139,7 @@ export default {
     watch: {
         'productPayload.quantity'() {                                  
             // 將數字轉為 string
-            this.productPayload.quantity = this.productPayload.quantity.toString().replace(/^[^1-9][^0-9]?/g, '')
+            this.productPayload.quantity = this.productPayload.quantity.toString().replace(/[^1-9][0-9]/g, '')
         },
     },
     mounted() {
