@@ -47,6 +47,10 @@ export const apiUserLogout = token => userRequest.get('/logout', token);
 export const apiGetProducts = () => productRequest.get('/products');
     // 撈取單一產品
 export const apiGetProduct = (id) => productRequest.get(`/products/${id}`);
+    // 搜尋商品(名稱)
+export const apiSearchByTitle = (title) => productRequest.get(`/products/search/${title}`);
+    // 搜尋商品(標籤)  暫時未用到
+export const apiSearchByTag = (id) => productRequest.get(`/products/tag/${id}`);
 //------------------------------------------- 商品相關的 API -------------------------------------------//
 
 
