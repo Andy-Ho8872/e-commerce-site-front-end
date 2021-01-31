@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     data() {
@@ -108,10 +108,6 @@ export default {
         }
     },
     methods: {
-        ...mapMutations({
-            // 使用者登入後從 Local Storage 抓取資料與 Token
-            fetchUserAccount: 'auth/FETCH_USER_ACCOUNT',
-        }),
         ...mapActions({
             // commit 登入的 Mutation
             loginUser: 'auth/login',
@@ -123,7 +119,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            message: 'auth/fetchMessage',
+            message: 'auth/getMessage',
         }),
     },
 }

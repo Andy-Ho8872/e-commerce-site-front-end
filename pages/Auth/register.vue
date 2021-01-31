@@ -117,7 +117,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            message: 'auth/fetchMessage',
+            message: 'auth/getMessage',
         }),
     },
 }

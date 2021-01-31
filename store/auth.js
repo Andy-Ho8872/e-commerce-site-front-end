@@ -11,10 +11,10 @@ export const state = () => ({
 })
 
 export const getters = {
-    fetchUserAccount(state) {
+    getUserAccount(state) {
         return state.userAccount
     },
-    fetchMessage(state) {
+    getMessage(state) {
         return state.message
     },
 }

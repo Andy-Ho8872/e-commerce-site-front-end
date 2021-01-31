@@ -163,7 +163,7 @@ export default {
     computed: {
         ...mapGetters({
             // 抓取使用者資訊
-            user: 'auth/fetchUserAccount',
+            user: 'auth/getUserAccount',
             // 使用者購物車中商品數量
             userCart: 'cart/getUserCart'
         }),
