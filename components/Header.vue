@@ -97,8 +97,9 @@
                 v-model="searchText"
                 solo
                 dense
-                placeholder="搜尋商品"
+                placeholder="搜尋商品，例如:相機、螢幕..."
                 append-icon="fa-search"
+                @keydown.enter="search"
                 @click:append="search"
             >
             </v-text-field>
@@ -195,11 +196,7 @@ export default {
             // 等使用者登出之後則清除暫存
             this.clearCart()
         },
-
-
-
-
-        // 搜尋功能 (尚未完成)
+        // 搜尋功能
         search() {
             this.searchProducts(this.searchText)
         },

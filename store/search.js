@@ -23,7 +23,8 @@ export const actions = {
         try {
             const res = await apiSearchByTitle(title)
             // 將結果寫入 state
-            await commit('SET_SEARCH_PRODUCTS', res.data.products)
+            let result = res.data.products
+            await commit('SET_SEARCH_PRODUCTS', result)
             // 導向至搜尋結果
             this.$router.push({
                 name: 'search-title',
