@@ -24,18 +24,13 @@ export const actions = {
             const res = await apiSearchByTitle(title)
             // 將結果寫入 state
             await commit('SET_SEARCH_PRODUCTS', res.data.products)
-
             // 導向至搜尋結果
-
-            // 成功導向
-            // this.$router.push(`/search/${title}`)  
-
-            // 失敗  錯誤訊息:[vue-router] Route with name 'search-螢幕' does not exist
-            this.$router.push({ name: `search-${title}` }) 
-
-            // pages/search/:title
-
+            this.$router.push({
+                name: 'search-title',
+                params: { title: title },
+            })
         } catch (error) {
+            console.log(error);
             let msg = '搜尋失敗'
             alert(msg)
         }
