@@ -93,6 +93,8 @@
             <!-- 搜尋區域 -->
             <v-text-field
                 class="searchBox d-flex mt-2 mx-2"
+                name="search"
+                v-model="searchText"
                 solo
                 dense
                 placeholder="搜尋商品"
@@ -175,6 +177,8 @@ export default {
             ],
             // 觸發 class (漢堡 SideBar)
             active: false,
+            // 搜尋欄文字
+            searchText: ''
         }
     },
     methods: {
@@ -183,16 +187,21 @@ export default {
         }),
         ...mapActions({
             logout: 'auth/logout', // 登出使用者
+            searchProducts: 'search/searchProducts' // 搜尋商品
         }),
+        // 登出使用者
         async logUserOut() {
             await this.logout()
             // 等使用者登出之後則清除暫存
             this.clearCart()
         },
 
+
+
+
         // 搜尋功能 (尚未完成)
         search() {
-            alert('搜尋測試')
+            this.searchProducts(this.searchText)
         },
     },
     computed: {
