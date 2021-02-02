@@ -4,7 +4,6 @@
         <div v-if="!userCart.length">
             <h1>您的購物車中沒有東西。</h1>
         </div>
-
         <v-col cols="12" class="cart_page_wrapper">
             <!-- 購物車標頭 -->
             <v-card class="cart_page_header d-flex mb-5 pa-5">
@@ -19,35 +18,42 @@
                     <span>動作</span>
                 </div>
             </v-card>
-
             <!-- 購物車詳細內容 -->
             <v-card
                 class="details d-flex justify-space-between pa-5"
                 tile
-                v-for="order in userCart"
-                :key="order.id"
+                v-for="item in userCart"
+                :key="item.id"
             >
                 <!-- 商品名稱與圖片 (可導覽至該商品頁面) -->
-                <nuxt-link :to="`products/${order.product_id}`">
+                <nuxt-link :to="`products/${item.product_id}`">
                     <div class="d-flex align-center">
                         <v-img
                             width="80"
                             height="80"
-                            :src="order.imgUrl"
+                            :src="item.imgUrl"
                         ></v-img>
-                        <span class="mx-2">{{ order.title }}</span>
+                        <span class="mx-2">{{ item.title }}</span>
                     </div>
                 </nuxt-link>
                 <div class="content d-flex justify-space-between align-center">
-                    <!-- 商品單價 -->
-                    <div class="unit_price">
-                        <span>${{ Math.floor(order.unit_price) }}</span>
+                    <!-- 價格區域 -->
+                    <div class="price_zone d-flex flex-column ">
+                        <!-- 原價 -->
+                        <span  :class="[item.discount_rate == 1 ? '' : 'discounted']">
+                            ${{ Math.floor(item.unit_price) }}
+                        </span>
+                        <!-- 折扣後 -->
+                        <span v-if="item.discount_rate != 1" class="red--text text-lighten-5">
+                            ${{ Math.floor(item.unit_price * item.discount_rate) }}
+                        </span>
                     </div>
+                    
                     <!-- 增加 減少數量按鈕 -->
                     <div>
                         <QuantityField
-                            :product_quantity="order.product_quantity"
-                            :product_id="order.product_id"
+                            :product_quantity="item.product_quantity"
+                            :product_id="item.product_id"
                         />
                     </div>
                     <!-- 商品總價 -->
@@ -56,16 +62,16 @@
                             {{
                                 Math.floor
                                 (
-                                    order.unit_price *
-                                    order.product_quantity *
-                                    order.discount_rate
+                                    item.unit_price *
+                                    item.product_quantity *
+                                    item.discount_rate
                                 )
                             }}
                         </span>
                     </div>
                     <!-- 刪除按鈕(單項商品) -->
                     <v-btn
-                        @click="deleteFromCart(order.product_id)"
+                        @click="deleteFromCart(item.product_id)"
                         class="action white--text"
                         color="red lighten-2"
                     >
@@ -76,8 +82,10 @@
             <!-- 購物車結算 -->
             <v-card class="cart_page_footer d-flex mt-4 pa-4 align-center text-right">
                 <!-- 小計金額 -->
-                <div class="subtotal">小計: {{ subTotal }}</div>
-                <!-- 按鈕群組 -->
+                <div class="subtotal mb-2 title font-weight-bold">
+                    小計: <span class="red--text">{{ subTotal }}</span>
+                </div>
+                <!-- Footer 按鈕群組 -->
                 <div class="d-flex">
                     <!-- 清空物品 -->
                     <v-btn
@@ -96,7 +104,6 @@
                     </v-btn>
                 </div>
             </v-card>
-            
         </v-col>
     </v-container>
 </template>
@@ -145,13 +152,16 @@ export default {
 input {
     width: 30%;
 }
+.discounted {
+    text-decoration: line-through;
+}
 .quantity_field_wrapper {
     max-width: 170px !important;
 }
 
 
 @media (max-width: 768px) {
-    // cart page header   Start
+    // cart page header-----------------------------Start
     .cart_page_header {
         display: none !important;
     }
@@ -162,19 +172,23 @@ input {
         flex-direction: column;
         width: 100%
     }
-    .unit_price {
+    // 刪除按鈕
+    .action {
+        margin-top: 16px;
+    }
+    // 價格區域 ------------------Start
+    .price_zone {
         margin: 1rem;
     }
     .total {
         display: none;
     }
-    // 刪除按鈕
-    .action {
-        margin-top: 16px;
-    }
-    // cart page header   End
+    // 價格區域 ------------------End
+    
+    // cart page header-----------------------------End
 
-    // cart page footer   Start
+
+    // cart page footer -------------Start
     .cart_page_footer {
         position: relative;
         flex-direction: column;
@@ -183,6 +197,6 @@ input {
         text-align: center;
         font-size: 1.2rem;
     }  
-    // cart page footer   End
+    // cart page footer -------------End
 }
 </style>
