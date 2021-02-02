@@ -35,7 +35,7 @@
                             height="80"
                             :src="order.imgUrl"
                         ></v-img>
-                        <span>{{ order.title }}</span>
+                        <span class="mx-2">{{ order.title }}</span>
                     </div>
                 </nuxt-link>
                 <div class="content d-flex justify-space-between align-center">
@@ -65,9 +65,9 @@
                     </div>
                     <!-- 刪除按鈕(單項商品) -->
                     <v-btn
+                        @click="deleteFromCart(order.product_id)"
                         class="action white--text"
                         color="red lighten-2"
-                        @click="deleteFromCart(order.product_id)"
                     >
                         刪除
                     </v-btn>
@@ -81,9 +81,9 @@
                 <div class="d-flex">
                     <!-- 清空物品 -->
                     <v-btn
+                        @click="deleteAllFromCart"
                         class="white--text mx-6" 
                         color="error"
-                        @click="deleteAllFromCart"
                     >
                         清空購物車
                     </v-btn>
