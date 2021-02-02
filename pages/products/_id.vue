@@ -26,19 +26,17 @@
             <!-- 詳細資訊 -->
             <div class="card_info_wrapper">
                 <!-- 名稱 -->
-                <v-card-title class="justify-center">{{
-                    product.title
-                }}</v-card-title>
+                <v-card-title class="justify-center">
+                    {{ product.title }}
+                </v-card-title>
                 <!-- 敘述 -->
-                <v-card-text class="text-justify">{{
-                    product.description
-                }}</v-card-text>
+                <v-card-text class="text-justify">
+                    {{ product.description }}
+                </v-card-text>
                 <!-- 價格 -->
                 <v-card-text class="headline">
                     <!-- 包含折扣 -->
-                    ${{
-                        Math.floor(product.unit_price * product.discount_rate)
-                    }}
+                    ${{ Math.floor(product.unit_price * product.discount_rate) }}
                 </v-card-text>
                 <!-- 標籤 -->
                 <v-chip-group class="ma-4">
@@ -56,6 +54,7 @@
                 <v-form>
                     <v-row class="input_field align-center ma-3 pa-3">
                         <span class="px-2">購買數量</span>
+                        <!-- 增加按鈕 -->
                         <v-btn
                             @click="changeCount(-1)"
                             tile
@@ -66,6 +65,7 @@
                         >
                             <v-icon>fa-minus fa-fw</v-icon>
                         </v-btn>
+                        <!-- 輸入數量 -->
                         <input
                             class="grey lighten-2 text-center"
                             name="product_quantity"
@@ -73,6 +73,7 @@
                             autocomplete="off"
                             v-model="productPayload.quantity"
                         />
+                        <!-- 減少按鈕 -->
                         <v-btn
                             @click="changeCount(1)"
                             tile
@@ -83,20 +84,20 @@
                         >
                             <v-icon>fa-plus fa-fw</v-icon>
                         </v-btn>
-                        <!-- 購買按鈕-->
-                        <div class="purchase_btn text-center">
-                            <v-btn
-                                @click="addToCartWithQuantity(productPayload)"
-                                class="ma-3"
-                                tile
-                                x-large
-                                depressed
-                                color="primary"
-                            >
-                                <span>放入購物車</span>
-                            </v-btn>
-                        </div>
                     </v-row>
+                    <!-- 購買按鈕-->
+                    <div class="purchase_btn text-center">
+                        <v-btn
+                            @click="addToCartWithQuantity(productPayload)"
+                            class="ma-3"
+                            tile
+                            x-large
+                            depressed
+                            color="primary"
+                        >
+                            <span>放入購物車</span>
+                        </v-btn>
+                    </div>
                 </v-form>
             </div>
         </v-card>
@@ -135,13 +136,13 @@ export default {
             this.productPayload.quantity += value
         },
     },
-    // 監控使用者所輸入的數字
-    watch: {
-        'productPayload.quantity'() {                                  
-            // 將數字轉為 string
-            this.productPayload.quantity = this.productPayload.quantity.toString().replace(/[^1-9][0-9]/g, '')
-        },
-    },
+    // 監控使用者所輸入的數字 (待修正)
+    // watch: {
+    //     'productPayload.quantity'() {
+    //         // 將數字轉為 string
+    //         this.productPayload.quantity = this.productPayload.quantity.toString().replace(/[^0-9]/g, '')
+    //     },
+    // },
     mounted() {
         // 讀取完畢
         this.loading = false
