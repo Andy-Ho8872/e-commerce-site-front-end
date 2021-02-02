@@ -101,13 +101,15 @@
             </v-card>
         </nuxt-link>      
         <!-- 放入購物車按鈕 -->
-        <v-btn class="add_to_cart" 
+        <v-btn 
+            @click="addToCart(product.id)"
+            class="add_to_cart"
             tile 
             large 
             depressed
             color="primary">
             <!-- 產品 ID -->
-            <span @click="addToCart(product.id)">加入購物車</span>
+            <span>加入購物車</span>
         </v-btn>   
     </div>
 </template>
