@@ -1,35 +1,74 @@
 <template>
     <v-container>
-        <h2>
-            <span class="blue--text lighten-5">"{{ this.$route.params.title }}"</span> 的搜尋結果
-        </h2>
-        <v-row>
-            <v-col
-                v-for="product in result"
-                :key="product.id"
-                class="col-md-4"
-                align-self="start"
-                cols="8"
-                lg="2"
-                md="3"
-                sm="4"
-            >
-                <v-card color="grey lighten-5" width="200" height="400">
-                    <v-img
-                        :src="product.imgUrl"
-                        :lazy-src="product.imgUrl"
-                    ></v-img>
-                    <v-card-title>
-                        {{ product.title }}
-                    </v-card-title>
-                    <v-card-subtitle>
-                        {{ product.description }}
-                    </v-card-subtitle>
-                    <v-card-text>
-                        {{ product.unit_price }}
-                    </v-card-text>
-                </v-card>
-            </v-col>
+        <!-- 搜尋成功 -->
+        <div v-if="result.length">
+            <h2 class="text-center">
+                關於
+                <span class="blue--text lighten-5">
+                    "{{ this.$route.params.title }}"
+                </span>
+                的搜尋結果
+            </h2>
+            <v-row>
+                <v-col
+                    v-for="product in result"
+                    :key="product.id"
+                    class="product_wrapper"
+                    align-self="center"
+                    cols="8"
+                    lg="2"
+                    md="3"
+                    sm="4"
+                >
+                    <!-- 點擊後導覽至該商品 -->
+                    <nuxt-link :to="`../products/${product.id}`">
+                        <v-card color="grey lighten-5" width="200" height="400" class="product">
+                            <!-- 圖片 -->
+                            <v-img
+                                :src="product.imgUrl"
+                                :lazy-src="product.imgUrl"
+                            ></v-img>
+                            <!-- 名稱 -->
+                            <v-card-title
+                                class="subtitle-1 font-weight-bold my-1"
+                            >
+                                {{ product.title }}
+                            </v-card-title>
+                            <!-- 敘述 (縮減後)-->
+                            <v-card-subtitle class="text-truncate">
+                                {{ product.description }}
+                            </v-card-subtitle>
+                            <!-- 價格區域 -->
+                            <div class="price_zone">
+                                <!-- 原價格 -->
+                                <v-card-text
+                                    class="original"
+                                    :class="[product.discount_rate == 1 ? '' : 'discounted']"
+                                >
+                                    $ {{ Math.floor(product.unit_price) }}
+                                </v-card-text>
+                                <!-- 折扣後價格 -->
+                                <v-card-text
+                                    v-if="product.discount_rate != 1"
+                                    class="discounted_price blue--text text--darken-2"
+                                >
+                                    $ {{ Math.floor(product.unit_price *product.discount_rate) }}
+                                </v-card-text>
+                            </div>
+                        </v-card>
+                    </nuxt-link>
+                </v-col>
+            </v-row>
+        </div>
+        <!-- 搜尋失敗 -->
+        <v-row v-else>
+            <h2 class="ma-auto">
+                找不到關於
+                <span class="blue--text lighten-5">
+                    "{{ this.$route.params.title }}"
+                </span>
+                的搜尋結果
+            </h2>
         </v-row>
     </v-container>
 </template>
@@ -38,6 +77,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
+    methods: {},
     computed: {
         ...mapGetters({
             // 搜尋結果
@@ -47,4 +87,34 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+a {
+    text-decoration: none;
+}
+// 價格區域--------------------------Start
+.price_zone {
+    position: relative;
+}
+.discounted {
+    text-decoration: line-through;
+}
+// 折扣後的價格
+.discounted_price {
+    position: absolute;
+    top: 1rem;
+    left: 4rem;
+    width: fit-content;
+    transform: rotate(-5deg);
+    font-size: 1.2rem;
+}
+// 價格區域--------------------------End
+
+
+@media (max-width: 600px) {
+    // 商品卡片置中----------------------Start
+    .product, .product_wrapper {
+        margin: auto;
+    }
+    // 商品卡片置中----------------------End
+}
+</style>
