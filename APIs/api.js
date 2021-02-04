@@ -50,7 +50,7 @@ export const apiGetCarouselProducts = () => productRequest.get('/carousel');
     // 撈取單一產品
 export const apiGetProduct = (id) => productRequest.get(`/${id}`);
     // 商品換頁(Pagination) 
-export const apiGetProductsWithPagination = (page) => productRequest.get(`/pagination/page=${page}`);
+export const apiGetProductsWithPagination = (page) => productRequest.get(`/pagination?page=${page}`);
     // 搜尋商品(名稱)
 export const apiSearchByTitle = (title) => productRequest.get(`/search/${title}`);
     // 搜尋商品(標籤)  暫時未用到

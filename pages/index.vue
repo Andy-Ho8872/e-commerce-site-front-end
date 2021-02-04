@@ -22,10 +22,10 @@
         <v-btn
             @click="scrollTop"
             class="to-top mx-2"
+            color="primary"
             fab
             dark
             large
-            color="primary"
         >
             <v-icon>fa-chevron-up</v-icon>
         </v-btn>
@@ -45,6 +45,20 @@
                     />
                 </div>
             </li>
+        </div>
+        <!-- 觀看更多商品 -->
+        <div class="check_more text-center">
+            <nuxt-link
+                :to="{
+                    name: 'pagination-pageNumber',
+                    params: { pageNumber: 1 },
+                }"
+            >
+                <v-btn class="my-16" color="primary" dark x-large>
+                    查看更多
+                    <v-icon>fa-shopping-cart</v-icon>
+                </v-btn>
+            </nuxt-link>
         </div>
     </v-container>
 </template>
@@ -81,8 +95,8 @@ export default {
         this.fetchUserCart()
     },
     // 掛載時結束 loading 狀態
-    mounted() {  
-        this.loading = false 
+    mounted() {
+        this.loading = false
     },
 }
 </script>
