@@ -23,7 +23,7 @@ const userCsrfRequest = axios.create({
 
 // Product Request 取得商品資訊 (假資料)
 const productRequest = axios.create({
-    baseURL: base
+    baseURL: `${ base }/products`
 });
 
 
@@ -44,15 +44,17 @@ export const apiUserLogout = token => userRequest.get('/logout', token);
 
 //------------------------------------------- 商品相關的 API -------------------------------------------//
     // 撈取所有產品
-export const apiGetProducts = () => productRequest.get('/products');
+export const apiGetProducts = () => productRequest.get('/');
     // 圖片輪播產品
-export const apiGetCarouselProducts = () => productRequest.get('/products/carousel');
+export const apiGetCarouselProducts = () => productRequest.get('/carousel');
     // 撈取單一產品
-export const apiGetProduct = (id) => productRequest.get(`/products/${id}`);
+export const apiGetProduct = (id) => productRequest.get(`/${id}`);
+    // 商品換頁(Pagination) 
+export const apiGetProductsWithPagination = (page) => productRequest.get(`/pagination/page=${page}`);
     // 搜尋商品(名稱)
-export const apiSearchByTitle = (title) => productRequest.get(`/products/search/${title}`);
+export const apiSearchByTitle = (title) => productRequest.get(`/search/${title}`);
     // 搜尋商品(標籤)  暫時未用到
-export const apiSearchByTag = (id) => productRequest.get(`/products/tag/${id}`);
+export const apiSearchByTag = (id) => productRequest.get(`/tag/${id}`);
 //------------------------------------------- 商品相關的 API -------------------------------------------//
 
 
