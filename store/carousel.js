@@ -1,4 +1,8 @@
+import { apiGetCarouselProducts } from '../APIs/api.js'
+
 export const state = () => ({
+    // 圖片輪播的檔案
+    carouselItem: [],
     // 計數器從 0 開始
     counter: 0,
     // 圖片移動量  預設為 355px (v-card 寬度)
@@ -7,7 +11,17 @@ export const state = () => ({
     maxSlide: null,
 })
 
+export const getters = {
+    getCarouselItem(state) {
+        return state.carouselItem
+    },
+}
+
 export const mutations = {
+    SET_CAROUSEL_ITEM(state, items) {
+        state.carouselItem = items
+    },
+
     // 圖片滑動
     SLIDE_CAROUSEL(state, value) {
         // 滑動計數
@@ -63,6 +77,19 @@ export const mutations = {
             slide.style.transform = `translateX( ${-state.maxSlide *
                 state.slideValue}px )`
             state.counter = 0
+        }
+    },
+}
+
+export const actions = {
+    // 撈取輪播資料
+    async fetchCarouselItem({ commit }) {
+        try {
+            const res = await apiGetCarouselProducts()
+            let items = res.data.products
+            commit('SET_CAROUSEL_ITEM', items)
+        } catch (error) {
+            console.log(error)
         }
     },
 }

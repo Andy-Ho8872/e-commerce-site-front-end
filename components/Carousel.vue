@@ -1,162 +1,169 @@
 <template>
-
-<!-- 可以設置 max-width 來限制輪播的寬度 -->
+    <!-- 可以設置 max-width 來限制輪播的寬度 -->
     <div class="carousel">
-        <!-- 輪播控制按鈕(左) --> 
-        <v-icon 
-            large 
-            id="prev" 
-            @click="slide(-1)">
+        <!-- 輪播控制按鈕(左) -->
+        <v-icon large id="prev" @click="slide(-1)">
             fa-angle-left
         </v-icon>
-        <!-- 輪播控制按鈕(右) --> 
-        <v-icon 
-            large
-            id="next" 
-            @click="slide(1)">
+        <!-- 輪播控制按鈕(右) -->
+        <v-icon large id="next" @click="slide(1)">
             fa-angle-right
         </v-icon>
         <!-- 輪播圖片(圖片滑動區域) -->
         <div class="switch_photo d-flex ">
             <!-- v-card 和 v-img 預設寬度為 355 px -->
-            <v-card class="single_card" v-for="(product, index) in products" :key="index" tile max-width="355">
-                <v-img 
+            <v-card
+                class="single_card"
+                v-for="product in products"
+                :key="product.id"
+                tile
+                :max-width="cardWidth"
+            >
+                <v-img
                     class="my-auto"
-                    :src="product.imgUrl" 
-                    :lazy-src="product.imgUrl" 
-                    :max-width="cardWidth" 
-                    :max-height="cardHeight">
+                    :src="product.imgUrl"
+                    :lazy-src="product.imgUrl"
+                    :max-width="cardWidth"
+                    :max-height="cardHeight"
+                >
                     <!-- 當圖片 Loading 時 -->
                     <template v-slot:placeholder>
                         <v-row
                             class="fill-height ma-0"
                             align="center"
-                            justify="center">
+                            justify="center"
+                        >
                             <v-progress-circular
                                 indeterminate
-                                color="blue lighten-5">
+                                color="blue lighten-5"
+                            >
                             </v-progress-circular>
                         </v-row>
                     </template>
                 </v-img>
                 <!-- 產品名稱 -->
-                <v-card-subtitle class="text-center heading-6">{{ product.title }}</v-card-subtitle>
+                <v-card-subtitle class="text-center heading-6">
+                    {{ product.title }}
+                </v-card-subtitle>
             </v-card>
         </div>
     </div>
-    
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 
 export default {
-    props: ['products', 'cardWidth', 'cardHeight'], // passed form pages/index.vue
-    data () {
+    props: ['cardWidth', 'cardHeight'], // passed form pages/index.vue
+    data() {
         return {
             // 圖片輪播
             interval: '',
         }
     },
-    methods: {
-        // Mutations
-        ...mapMutations({ 
-            // changeCounter : 'carousel/CHANGE_COUNTER',
-            slide : 'carousel/SLIDE_CAROUSEL'
+    computed: {
+        ...mapGetters({
+            products: 'carousel/getCarouselItem',
         }),
     },
+    methods: {
+        ...mapActions({
+            fetchCarouselItem: 'carousel/fetchCarouselItem',
+        }),
+        ...mapMutations({
+            slide: 'carousel/SLIDE_CAROUSEL',
+        }),
+    },
+    // 撈取輪播資料
+    created() {
+        this.fetchCarouselItem()
+    },
     // 頁面掛載後執行自動輪播
-    mounted () {
+    mounted() {
         // 圖片自動輪播
         this.interval = setInterval(() => {
-            // this.changeCounter(1);
-            this.slide(1); 
+            this.slide(1)
         }, 5000)
     },
     // 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
-    beforeDestroy () { // 在 Vue3 為 beforeUnmount
+    beforeDestroy() { // 在 Vue3 為 beforeUnmount
         clearInterval(this.interval)
-    }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-    .carousel {
-        overflow-x: hidden; // 必要
-        position: relative;
-        // 輪播控制按鈕 ( 左 右 )
-        #prev {
-            left: 5%;
-        }
-        #next {
-            right: 5%;
-        }
+.carousel {
+    overflow-x: hidden; // 必要
+    position: relative;
+    // 輪播控制按鈕 ( 左 右 )
+    #prev {
+        left: 5%;
     }
-    .switch_photo {
-        max-width: 800px;
+    #next {
+        right: 5%;
     }
-    .v-icon {
-        position: absolute;
-        top: 50%;
-        z-index: 10;
-        color: red;
-        cursor: pointer;
-    }
-    .v-card__subtitle {
-        background: rgba(0, 0, 0, 0.7);
-        color:white !important;
-    }
+}
+.switch_photo {
+    max-width: 800px;
+}
+.v-icon {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    color: red;
+    cursor: pointer;
+}
+.v-card__subtitle {
+    background: rgba(0, 0, 0, 0.7);
+    color: white !important;
+}
 
-    // RWD 版面設定
-    @media (width: 1024px) {
-        .v-card {
-            max-width: 438px !important;
-            
-        }
-        .v-image {
-            max-width: 438px !important;
-            max-height: 438px !important;
-        }
+// RWD 版面設定
+@media (width: 1024px) {
+    .v-card {
+        max-width: 438px !important;
     }
-    @media (width: 768px) {
-        .v-card {
-            max-width: 374px !important;
-            
-        }
-        .v-image {
-            max-width: 374px !important;
-            max-height: 374px !important;
-        }
+    .v-image {
+        max-width: 438px !important;
+        max-height: 438px !important;
     }
-    
-    @media (width: 375px) {
-        .v-card {
-            max-width: 355px !important;
-            
-        }
-        .v-image {
-            max-width: 355px !important;
-            max-height: 355px !important;
-        }
+}
+@media (width: 768px) {
+    .v-card {
+        max-width: 374px !important;
     }
-    @media (width: 414px) {
-        .v-card {
-            max-width: 394px !important;
-            
-        }
-        .v-image {
-            max-width: 394px !important;
-            max-height: 394px !important;
-        }
+    .v-image {
+        max-width: 374px !important;
+        max-height: 374px !important;
     }
-    @media (width: 320px) {
-        .v-card {
-            max-width: 300px !important;
-            
-        }
-        .v-image {
-            max-width: 300px !important;
-            max-height: 300px !important;
-        }
+}
+
+@media (width: 375px) {
+    .v-card {
+        max-width: 355px !important;
     }
+    .v-image {
+        max-width: 355px !important;
+        max-height: 355px !important;
+    }
+}
+@media (width: 414px) {
+    .v-card {
+        max-width: 394px !important;
+    }
+    .v-image {
+        max-width: 394px !important;
+        max-height: 394px !important;
+    }
+}
+@media (width: 320px) {
+    .v-card {
+        max-width: 300px !important;
+    }
+    .v-image {
+        max-width: 300px !important;
+        max-height: 300px !important;
+    }
+}
 </style>

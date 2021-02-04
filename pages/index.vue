@@ -1,10 +1,9 @@
 <template>
-    <!-- v-container will automaticlly use default margin -->
     <v-container>
         <!-- 優惠計時 (月份從 0 開始計算， 例如: 數字5 == 6月)-->
         <Announcement
             :year="2021"
-            :month="1"
+            :month="2"
             :day="5"
             :hour="8"
             :minute="7"
@@ -17,7 +16,7 @@
         </div>
         <div v-else>
             <!-- 圖片輪播張數為 10 張 -->
-            <Carousel :products="products" :cardWidth="355" :cardHeight="355" />
+            <Carousel :cardWidth="355" :cardHeight="355" />
         </div>
         <!-- 置頂按鈕 -->
         <v-btn
@@ -82,8 +81,8 @@ export default {
         this.fetchUserCart()
     },
     // 掛載時結束 loading 狀態
-    mounted() {
-        this.loading = false
+    mounted() {  
+        this.loading = false 
     },
 }
 </script>
