@@ -1,6 +1,11 @@
 <template>
     <div class="text-center">
-        <v-pagination circle v-model="page" :length="length" @input="fetchProducts(page)"></v-pagination>
+        <v-pagination
+            circle
+            v-model="page"
+            :length="length"
+            @input="fetchProducts(page)"
+        ></v-pagination>
     </div>
 </template>
 
@@ -20,7 +25,7 @@ export default {
         // 總長度
         length() {
             return this.products.last_page
-        }
+        },
     },
     methods: {
         ...mapActions({
