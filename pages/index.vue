@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { apiGetProducts } from '~/APIs/api.js'
+import { apiGetIndexPageProducts } from '~/APIs/api.js'
 import { mapActions } from 'vuex'
 
 export default {
@@ -75,7 +75,7 @@ export default {
     },
     // 從外部 API 讀取產品的資料
     async asyncData() {
-        const res = await apiGetProducts()
+        const res = await apiGetIndexPageProducts()
         // 回傳產品資料
         return { products: res.data.products }
     },

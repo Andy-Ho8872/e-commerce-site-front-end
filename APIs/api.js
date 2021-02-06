@@ -45,6 +45,8 @@ export const apiUserLogout = token => userRequest.get('/logout', token);
 //------------------------------------------- 商品相關的 API -------------------------------------------//
     // 撈取所有產品
 export const apiGetProducts = () => productRequest.get('/');
+    // 網站首頁的產品
+export const apiGetIndexPageProducts = () => productRequest.get('/indexPage');
     // 圖片輪播產品
 export const apiGetCarouselProducts = () => productRequest.get('/carousel');
     // 撈取單一產品
