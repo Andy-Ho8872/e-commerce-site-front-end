@@ -2,7 +2,7 @@
 <!-- 商品卡片 -->
     <div class="product_wrapper">
         <!-- 產品連結  -->
-        <nuxt-link :to="`products/${product.id}`">
+        <nuxt-link :to="{ name: 'products-id', params: { id: product.id }}">
             <v-card
                 class="
                 Products 

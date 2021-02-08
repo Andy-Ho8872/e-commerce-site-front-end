@@ -21,7 +21,7 @@
                     sm="4"
                 >
                     <!-- 點擊後導覽至該商品 -->
-                    <nuxt-link :to="`../products/${product.id}`">
+                    <nuxt-link :to="{ name: 'products-id', params: { id: product.id }}">
                         <v-card color="grey lighten-5" width="200" height="400" class="product">
                             <!-- 圖片 -->
                             <v-img
@@ -77,7 +77,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-    methods: {},
+    // 此處的 search function 在 Components/Header.vue 裡
     computed: {
         ...mapGetters({
             // 搜尋結果
