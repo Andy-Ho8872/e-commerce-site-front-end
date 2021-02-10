@@ -61,10 +61,11 @@ export default {
             interval: '',
         }
     },
-    // pre-render 測試
-    // async fetch() {
-    //     await this.$store.dispatch('carousel/fetchCarouselItem')
-    // },
+    // 測試
+    async fetch() {
+        // 撈取輪播資料
+        await this.$store.dispatch('carousel/fetchCarouselItem')
+    },
 
     computed: {
         ...mapGetters({
@@ -72,21 +73,11 @@ export default {
         }),
     },
     methods: {
-        // 撈取資料
-        ...mapActions({
-            fetchCarouselItem: 'carousel/fetchCarouselItem',
-        }),
-
         // 滑動圖片
         ...mapMutations({
             slide: 'carousel/SLIDE_CAROUSEL',
         }),
     },
-    // 撈取輪播資料
-    created() {
-        this.fetchCarouselItem()
-    },
-
     // 頁面掛載後執行自動輪播
     mounted() {
         // 圖片自動輪播
@@ -94,7 +85,6 @@ export default {
             this.slide(1)
         }, 5000)
     },
-
     // 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
     beforeDestroy() { // 在 Vue3 為 beforeUnmount
         clearInterval(this.interval)
