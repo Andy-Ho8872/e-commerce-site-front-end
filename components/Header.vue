@@ -6,14 +6,6 @@
             :class="{ show: active }"
         >
             <div class="content_wrapper d-flex caption">
-                <!-- 社群帳號 icon -->
-                <v-row class="content justify-center mx-1">
-                    <li v-for="(icon, index) in socialList" :key="index">
-                        <v-icon class="mx-1 mb-1" dark small>
-                            {{ icon.icon }}
-                        </v-icon>
-                    </li>
-                </v-row>
                 <!-- 回到首頁 -->
                 <v-row class="mx-1">
                     <li class="mx-1">
@@ -140,18 +132,6 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
     data() {
         return {
-            // 社群媒體
-            socialList: [
-                {   
-                    icon: 'fa-facebook-square fa-fw' 
-                },
-                {   
-                    icon: 'fa-instagram fa-fw' 
-                },
-                {   
-                    icon: 'fa-google fa-fw' 
-                },
-            ],
             // 訊息通知
             noteList: [
                 { 
