@@ -9,6 +9,17 @@
                     {{ message.text }}
                 </v-alert>
             </div>
+            <!-- 置頂按鈕 -->
+            <v-btn
+                @click="scrollTop"
+                class="to-top mx-2"
+                color="primary"
+                fab
+                dark
+                large
+            >
+                <v-icon>fa-chevron-up</v-icon>
+            </v-btn>
             <PaginationController />
         </v-main>
     </v-app>
@@ -24,6 +35,12 @@ export default {
         }),
     },
     methods: {
+        scrollTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            })
+        },
         ...mapMutations({
             fetchAccount: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料 (從 localStorage)
         }),
@@ -40,3 +57,12 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+.to-top {
+    z-index: 10000;
+    bottom: 10%;
+    position: fixed;
+    right: 0;
+}
+</style>

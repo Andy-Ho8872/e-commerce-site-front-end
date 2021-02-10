@@ -62,9 +62,9 @@ export default {
         }
     },
     // pre-render 測試
-    async fetch() {
-        await this.$store.dispatch('carousel/fetchCarouselItem')
-    },
+    // async fetch() {
+    //     await this.$store.dispatch('carousel/fetchCarouselItem')
+    // },
 
     computed: {
         ...mapGetters({
@@ -73,9 +73,9 @@ export default {
     },
     methods: {
         // 撈取資料
-        // ...mapActions({
-        //     fetchCarouselItem: 'carousel/fetchCarouselItem',
-        // }),
+        ...mapActions({
+            fetchCarouselItem: 'carousel/fetchCarouselItem',
+        }),
 
         // 滑動圖片
         ...mapMutations({
@@ -83,9 +83,9 @@ export default {
         }),
     },
     // 撈取輪播資料
-    // created() {
-    //     this.fetchCarouselItem()
-    // },
+    created() {
+        this.fetchCarouselItem()
+    },
 
     // 頁面掛載後執行自動輪播
     mounted() {

@@ -18,17 +18,6 @@
             <!-- 圖片輪播張數為 10 張 -->
             <Carousel :cardWidth="355" :cardHeight="355" />
         </div>
-        <!-- 置頂按鈕 -->
-        <v-btn
-            @click="scrollTop"
-            class="to-top mx-2"
-            color="primary"
-            fab
-            dark
-            large
-        >
-            <v-icon>fa-chevron-up</v-icon>
-        </v-btn>
         <!-- 商品陳列 -->
         <div class="products d-flex flex-wrap justify-space-between">
             <li v-for="product in products" :key="product.id" class="my-10">
@@ -105,19 +94,7 @@ export default {
 li {
     list-style-type: none;
 }
-.to-top {
-    z-index: 10000;
-    bottom: 10%;
-    position: fixed;
-    right: 0;
-}
-.alert-message {
-    z-index: 10000;
-    position: fixed;
-    left: 50%;
-    bottom: 10%;
-    transform: translateX(-50%);
-}
+
 // RWD
 @media (max-width: 650px) {
     .products {

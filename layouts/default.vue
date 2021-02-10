@@ -2,13 +2,25 @@
     <v-app dark>
         <v-main class="main_view">
             <Header class="header" />
+            <!-- 路由頁面 -->
+            <nuxt />
             <!-- 提示訊息 -->
             <div class="alert-message">
                 <v-alert v-if="message" dark border="left" :type="message.type">
                     {{ message.text }}
                 </v-alert>
             </div>
-            <nuxt />
+            <!-- 置頂按鈕 -->
+            <v-btn
+                @click="scrollTop"
+                class="to-top mx-2"
+                color="primary"
+                fab
+                dark
+                large
+            >
+                <v-icon>fa-chevron-up</v-icon>
+            </v-btn>
         </v-main>
     </v-app>
 </template>
@@ -23,6 +35,12 @@ export default {
         }),
     },
     methods: {
+        scrollTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            })
+        },
         ...mapMutations({
             fetchAccount: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料 (從 localStorage)
         }),
@@ -51,7 +69,12 @@ body {
     justify-content: center;
     padding-top: 10% !important;
 }
-
+.to-top {
+    z-index: 10000;
+    bottom: 10%;
+    position: fixed;
+    right: 0;
+}
 .alert-message {
     z-index: 10000;
     position: fixed;
