@@ -30,22 +30,16 @@ export default {
         ],
     },
 
-    // axios 全域設定 , 所有的 axios request 都會使用 baseURL
-    // axios: {
-    //   baseURL: 'http://localhost:8000/api', // 後端 URL
-    //   credentials: true,
-    //   withCredentials : true,
-    //   common: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    // },
-
     // Modules (https://go.nuxtjs.dev/config-modules)
     modules: ['@nuxtjs/axios'],
 
     // Global CSS (https://go.nuxtjs.dev/config-css)
-    css: [],
+    css: [
+        // CSS 
+        '@/assets/css/main.css',
+        // SCSS 
+        '@/assets/css/main.scss'
+    ],
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
     plugins: ['~/plugins/axios.js'],

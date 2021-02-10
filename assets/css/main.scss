@@ -1,0 +1,36 @@
+// layouts-------------------------------- Start
+    // dafault.vue + paginate.vue
+html,
+body {
+    overflow-x: hidden;
+}
+.header {
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+}
+.v-main_wrap {
+    padding: auto 0;
+}
+// .main_view { // 暫時不用
+//     // padding-top: 5% !important;
+//     // margin-top: 0rem !important;
+// }
+
+// 置頂按鈕
+.to-top {
+    z-index: 10000;
+    bottom: 10%;
+    position: fixed;
+    right: 0;
+}
+// 購物提示訊息
+.alert-message {
+    z-index: 10000;
+    position: fixed;
+    width: fit-content;
+    left: 50%;
+    bottom: 10%;
+    transform: translateX(-50%);
+}
+// layouts-------------------------------- End

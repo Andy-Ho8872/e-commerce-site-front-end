@@ -1,7 +1,8 @@
 <template>
     <v-app dark>
-        <v-main>
-            <Header />
+        <v-main class="main_view">
+            <Header class="header" />
+            <!-- 路由頁面 -->
             <nuxt />
             <!-- 提示訊息 -->
             <div class="alert-message">
@@ -57,12 +58,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-.to-top {
-    z-index: 10000;
-    bottom: 10%;
-    position: fixed;
-    right: 0;
-}
-</style>
