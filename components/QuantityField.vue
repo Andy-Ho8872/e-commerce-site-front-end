@@ -13,13 +13,14 @@
         </v-btn>
         <!-- 當前數量 -->
         <input
+            @keyup="validateInput(productPayload.quantity)"
             @change="updateQuantity(productPayload)"
             autocomplete="off" 
             :disabled='status'
             class="grey lighten-2 text-center"
             name="product_quantity"
-            type="text" 
-            v-model="productPayload.quantity">
+            type="number" 
+            v-model.number="productPayload.quantity">
         <!-- 增加數量 -->
         <v-btn 
             @click="increment(product_id)"
@@ -61,6 +62,21 @@ export default {
             decreseByOne: 'cart/decreseByOne', // 加 一
             updateQuantity: 'cart/updateQuantity' // 修改數量
         }),
+        // 購買數量輸入驗證
+        validateInput(value) {
+            // 正則表達式的結果
+            const pattern = /^[1-9]\d{0,}/gi
+            let result = pattern.test(value) 
+            // 使用者輸入的值
+            let inputVal = this.productPayload.quantity
+            // 如果第一個數字不為 0 則回傳 false
+            if(result == false || inputVal < 1) {
+                this.productPayload.quantity = 1
+            }
+            else if(inputVal > 99) {
+                this.productPayload.quantity = 99         
+            }
+        },
         // 增 減
         async increment (productId) {
             await this.increseByOne(productId)
@@ -76,14 +92,6 @@ export default {
             }
         },
     },
-    
-    // 監控使用者所輸入的數字
-    watch: {
-        'productPayload.quantity'() {                                  
-            // 將數字轉為 string
-            this.productPayload.quantity = this.productPayload.quantity.toString().replace(/[^1-9][^0-9]?/gi, '')
-        },
-    }
 }
 </script>
 
@@ -93,7 +101,13 @@ input {
     padding: 2px 0;
     outline: 0;
 }
+// 移除 INPUT 數字預設的增減箭頭
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 .quantity_field_wrapper {
     max-width: 170px !important;
-    }
+}
 </style>

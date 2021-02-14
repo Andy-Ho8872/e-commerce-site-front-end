@@ -69,9 +69,10 @@
                         <input
                             class="grey lighten-2 text-center"
                             name="product_quantity"
-                            type="text"
+                            type="number"
                             autocomplete="off"
-                            v-model="productPayload.quantity"
+                            @blur="validateInput(productPayload.quantity)"
+                            v-model.number="productPayload.quantity"
                         />
                         <!-- 減少按鈕 -->
                         <v-btn
@@ -132,17 +133,36 @@ export default {
         ...mapActions({
             addToCartWithQuantity: 'cart/addToCartWithQuantity',
         }),
+        // 點擊按鈕變更購買數量
         changeCount(value) {
             this.productPayload.quantity += value
+            // 判斷以下數字
+            let inputVal = this.productPayload.quantity
+            // 數字將不會小於 1
+            if( inputVal < 1) {
+                this.productPayload.quantity = 1
+            }
+            // 數字將不大於 99
+            else if(inputVal > 99) {
+                this.productPayload.quantity = 99
+            }
         },
+        // 購買數量輸入驗證
+        validateInput(value) {
+            // 正則表達式的結果
+            const pattern = /^[1-9]\d{0,}/gi
+            let result = pattern.test(value) 
+            // 使用者輸入的值
+            let inputVal = this.productPayload.quantity
+            // 如果第一個數字不為 0 則回傳 false
+            if(result == false || inputVal < 1) {
+                this.productPayload.quantity = 1
+            }
+            else if(inputVal > 99) {
+                this.productPayload.quantity = 99         
+            }
+        }
     },
-    // 監控使用者所輸入的數字 (待修正)
-    // watch: {
-    //     'productPayload.quantity'() {
-    //         // 將數字轉為 string
-    //         this.productPayload.quantity = this.productPayload.quantity.toString().replace(/[^0-9]/g, '')
-    //     },
-    // },
     mounted() {
         // 讀取完畢
         this.loading = false
@@ -169,6 +189,13 @@ input {
     padding: 2px 0;
     outline: none;
 }
+// 移除 INPUT 數字預設的增減箭頭
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 // RWD
 @media (max-width: 1200px) {
     .product_wrapper {
