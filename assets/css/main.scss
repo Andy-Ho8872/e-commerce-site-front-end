@@ -1,30 +1,31 @@
 // layouts-------------------------------- Start
-    // dafault.vue + paginate.vue
+// dafault.vue & paginate.vue
 html,
 body {
     overflow-x: hidden;
 }
+
 .header {
     position: fixed;
     top: 0;
     z-index: 10000;
 }
+
 .v-main_wrap {
     padding: auto 0;
 }
-// .main_view { // 暫時不用
-//     // padding-top: 5% !important;
-//     // margin-top: 0rem !important;
-// }
 
-// 置頂按鈕
+.main_view {
+    padding-top: 10% !important;
+}
+
 .to-top {
     z-index: 10000;
     bottom: 10%;
-    position: fixed;
+    position: fixed !important;
     right: 0;
 }
-// 購物提示訊息
+
 .alert-message {
     z-index: 10000;
     position: fixed;
@@ -32,5 +33,59 @@ body {
     left: 50%;
     bottom: 10%;
     transform: translateX(-50%);
+}
+
+@media (max-width: 1600px) {
+    .main_view {
+        padding-top: 10% !important;
+    }
+}
+
+@media (max-width: 1400px) {
+    .main_view {
+        padding-top: 15% !important;
+    }
+}
+
+@media (max-width: 950px) {
+    .main_view {
+        padding-top: 18% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .main_view {
+        padding-top: 20% !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .main_view {
+        padding-top: 25% !important;
+    }
+}
+
+@media (max-width: 580px) {
+    .main_view {
+        padding-top: 27% !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .main_view {
+        padding-top: 28% !important;
+    }
+}
+
+@media (width: 414px) {
+    .main_view {
+        padding-top: 25% !important;
+    }
+}
+
+@media (width: 320px) {
+    .main_view {
+        padding-top: 33% !important;
+    }
 }
 // layouts-------------------------------- End
