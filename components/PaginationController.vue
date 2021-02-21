@@ -4,24 +4,30 @@
             circle
             v-model="page"
             :length="length"
-            @input="$fetch"
+            @input="fetchData(page)"
         ></v-pagination>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    props: {
+        pageNumber: [String, Number],
+    },
     data() {
         return {
-            page: 1,
+            page: this.pageNumber || 1,
         }
     },
-    async fetch() {
-        // 撈取該頁資料
-        await this.$store.dispatch('pagination/fetchPaginatedProducts', this.page)
-    },
+    // test Start
+    // async fetch() {
+    //     // 撈取該頁資料
+    //     await this.$store.dispatch('pagination/fetchPaginatedProducts', this.page)
+    // },
+    // test End
+
     computed: {
         ...mapGetters({
             products: 'pagination/getPaginatedProducts',
@@ -30,6 +36,15 @@ export default {
         length() {
             return this.products.last_page
         },
+    },
+    methods: {
+        ...mapActions({
+            fetchData: 'pagination/fetchPaginatedProducts',
+        }),
+    },
+
+    created() {
+        this.fetchData(this.page)  
     },
 }
 </script>

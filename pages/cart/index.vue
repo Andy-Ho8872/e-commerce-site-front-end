@@ -115,14 +115,13 @@ export default {
     middleware: 'authenticated', // 要先通過驗證才能訪問此頁面
     methods: {
         ...mapActions({
-            fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
-            deleteFromCart: 'cart/deleteFromCart',
-            deleteAllFromCart: 'cart/deleteAllFromCart', // 清空購物車
+            deleteFromCart: 'cart/deleteFromCart', // 點擊按鈕購物車內的商品 (單項)
+            deleteAllFromCart: 'cart/deleteAllFromCart', // 刪除購物車中的所有商品 (全品項)
         }),
     },
     computed: {
         ...mapGetters({
-            userCart: 'cart/getUserCart', // 使用者的購物車
+            userCart: 'cart/getUserCart', // 使用者的購物車資料
         }),
         // 價格小計
         subTotal() {
@@ -134,10 +133,6 @@ export default {
             })
             return summary
         },
-    },
-    // 初次載入時先撈取購物車資料
-    created() {
-        this.fetchUserCart()
     },
 }
 </script>

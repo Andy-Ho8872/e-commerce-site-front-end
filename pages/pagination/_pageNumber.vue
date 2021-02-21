@@ -1,5 +1,8 @@
 <template>
     <v-container>
+        <div v-if="pending" class="text-center">
+            pending...
+        </div>
         <!-- 該頁產品 -->
         <v-row>
             <v-col
@@ -15,21 +18,49 @@
                 />
             </v-col>
         </v-row>
-        <!-- <PaginationController /> -->
+        <PaginationController :pageNumber="pageNumber"/>
     </v-container>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { apiGetProductsWithPagination } from '../../APIs/api.js'
 
 export default {
-    layout: 'paginate', // 換頁(Pagination)專用
+    // layout: 'paginate', // 換頁(Pagination)專用
+    data() {
+        return {
+            pending: true,
+            // test
+            page: Number(this.$route.params.pageNumber) || 1,
+        }
+    },
+    // test Start
+
+    // async asyncData({ params }) {
+    //     const res = await apiGetProductsWithPagination(params.pageNumber)
+    //     return { products: res.data.products }
+    // },
+
+    // async fetch() {
+    //     // 撈取該頁資料
+    //     await this.$store.dispatch('pagination/fetchPaginatedProducts', this.page)
+    // },
+
+    // test End
+
     computed: {
         ...mapGetters({
             // 取得該頁資料
             products: 'pagination/getPaginatedProducts',
         }),
+        pageNumber() {
+            return Number(this.$route.params.pageNumber)
+        }
     },
+    mounted() {
+        this.pending = false
+    }
 }
 </script>
 

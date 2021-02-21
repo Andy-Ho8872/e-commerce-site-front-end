@@ -3,6 +3,8 @@
         <v-main class="main_view">
             <Header class="header" />
             <!-- 路由頁面 -->
+            <!-- <nuxt keep-alive :keep-alive-props="{ max: 10 }"/> -->
+            <!-- <nuxt keep-alive :keep-alive-props="{ include: ['Carousel'] }"/> -->
             <nuxt />
             <!-- 提示訊息 -->
             <div class="alert-message">
@@ -26,7 +28,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     computed: {
@@ -41,12 +43,6 @@ export default {
                 behavior: 'smooth',
             })
         },
-        ...mapMutations({
-            fetchAccount: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料 (從 localStorage)
-        }),
-    },
-    mounted() {
-        this.fetchAccount()
     },
 }
 </script>

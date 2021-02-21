@@ -165,10 +165,12 @@ export default {
     methods: {
         ...mapMutations({
             clearCart: 'cart/CLEAR_USER_CART', // 清空購物車暫存
+            fetchAccount: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料 (從 localStorage)
         }),
         ...mapActions({
             logout: 'auth/logout', // 登出使用者
-            searchProducts: 'search/searchProducts' // 搜尋商品
+            searchProducts: 'search/searchProducts', // 搜尋商品
+            fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
         }),
         // 登出使用者
         async logUserOut() {
@@ -183,13 +185,19 @@ export default {
     },
     computed: {
         ...mapGetters({
-            // 抓取使用者資訊
+            // 使用者資訊
             user: 'auth/getUserAccount',
             // 使用者購物車中商品數量
             userCart: 'cart/getUserCart',
         }),
     },
+    created() {
+        // 撈取使用者購物車
+        this.fetchUserCart()
+    },
     mounted() {
+        // 抓取使用者資料
+        this.fetchAccount()
         // 點擊漢堡 SideBar 以外的區域則會關閉
         document.addEventListener('click', e => {
             if (!this.$refs.extended.contains(e.target)) {
@@ -244,8 +252,8 @@ a {
         flex-direction: column;
         align-content: flex-start;
         position: absolute;
-        width: 50vw;
-        top: 104px;
+        width: 70vw;
+        top: 100%;
         margin: 0 !important;
         background: rgba($color: #000000, $alpha: 0.8);
         // 預設不顯示，等點擊 extend bar 後才顯示

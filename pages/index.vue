@@ -37,6 +37,7 @@
         </div>
         <!-- 觀看更多商品 -->
         <div class="check_more text-center">
+            <!-- 預設點擊後到第一頁 -->
             <nuxt-link
                 :to="{
                     name: 'pagination-pageNumber',
@@ -54,7 +55,6 @@
 
 <script>
 import { apiGetIndexPageProducts } from '~/APIs/api.js'
-import { mapActions } from 'vuex'
 
 export default {
     data() {
@@ -67,21 +67,6 @@ export default {
         const res = await apiGetIndexPageProducts()
         // 回傳產品資料
         return { products: res.data.products }
-    },
-    methods: {
-        ...mapActions({
-            fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
-        }),
-        scrollTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-            })
-        },
-    },
-    // 初次載入時先撈取購物車資料 (使用 localStorage)
-    created() {
-        this.fetchUserCart()
     },
     // 掛載時結束 loading 狀態
     mounted() {

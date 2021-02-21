@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapActions } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
     props: ['cardWidth', 'cardHeight'], // passed form pages/index.vue
@@ -87,6 +87,16 @@ export default {
     },
     // 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
     beforeDestroy() { // 在 Vue3 為 beforeUnmount
+        clearInterval(this.interval)
+    },
+    // 若有使用 Keep-Alive 的方式
+    activated() {
+        // 圖片自動輪播
+        this.interval = setInterval(() => {
+            this.slide(1)
+        }, 5000)
+    },
+    deactivated() {
         clearInterval(this.interval)
     },
 }

@@ -30,6 +30,7 @@ export const mutations = {
         const clientWidth = document.body.offsetWidth
         // 滑動區域
         const slide = document.querySelector('.switch_photo')
+
         // i Phone 5/SE 寬度 (320px)
         if (clientWidth === 320) {
             state.slideValue = clientWidth - 20 // 300 px
@@ -60,23 +61,24 @@ export const mutations = {
             state.slideValue = state.slideValue
             state.maxSlide = 5
         }
-        // 圖片轉場、位移
-        slide.style.transition = 'transform 0.4s ease-in-out'
-        slide.style.transform = `translateX( ${-state.counter *
-            state.slideValue}px )`
-        // 若圖片已達最左邊
-        if (state.counter < 0) {
-            // 將移動量重設為 0 (即不動)
-            slide.style.transform = `translateX(0)`
-            state.counter = 0
-        }
-        // 若圖片已達最右邊
-        if (state.counter > state.maxSlide - 1) {
-            // state.counter = state.maxSlide
-            state.maxSlide = state.maxSlide
-            slide.style.transform = `translateX( ${-state.maxSlide *
-                state.slideValue}px )`
-            state.counter = 0
+
+        // 圖片轉場、位移 (因為有使用 Keep-Alive 來 Cache 整個組件，所以要判斷 Slide 是否存在於當前頁面)
+        if (slide) {
+            slide.style.transition = 'transform 0.4s ease-in-out'
+            slide.style.transform = `translateX( ${-state.counter * state.slideValue}px )`
+            // 若圖片已達最左邊
+            if (state.counter < 0) {
+                // 將移動量重設為 0 (即不動)
+                slide.style.transform = `translateX(0)`
+                state.counter = 0
+            }
+            // 若圖片已達最右邊
+            if (state.counter > state.maxSlide - 1) {
+                // state.counter = state.maxSlide
+                state.maxSlide = state.maxSlide
+                slide.style.transform = `translateX( ${-state.maxSlide * state.slideValue}px )`
+                state.counter = 0
+            }
         }
     },
 }
