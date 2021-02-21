@@ -6,6 +6,7 @@
             <v-card
                 class="
                 Products 
+                rounded-t-xl
                 justify-center 
                 align-center 
                 flex-wrap"
@@ -18,6 +19,8 @@
                 <v-card-subtitle v-if="formatLabel != 10"
                     class="
                     product_discount_lable
+                    rounded-tl-lg
+                    rounded-bl-lg
                     yellow
                     pa-1
                     caption">
@@ -32,7 +35,7 @@
                 </v-card-subtitle>
                 <!-- 產品圖片 -->
                 <v-img 
-                    class="product_image ma-auto"
+                    class="product_image ma-auto rounded-t-xl"
                     :src="product.imgUrl"
                     :lazy-src="product.imgUrl">
                     <!-- 當圖片 Loading 時 -->
@@ -103,7 +106,7 @@
         <!-- 放入購物車按鈕 -->
         <v-btn 
             @click="addToCart(product.id)"
-            class="add_to_cart"
+            class="add_to_cart rounded-b-xl"
             tile 
             large 
             depressed

@@ -10,7 +10,7 @@
         <!-- 商品 -->
         <v-card
             v-else
-            class="product_wrapper d-flex justify-space-between"
+            class="product_wrapper d-flex justify-space-between rounded-xl"
             elevation="4"
             color="grey lighten-4"
         >
@@ -18,6 +18,7 @@
             <div class="img_wrapper">
                 <v-img
                     :src="product.imgUrl"
+                    class="rounded-xl"
                     max-width="inherit"
                     max-height="inherit"
                 >
@@ -90,7 +91,7 @@
                     <div class="purchase_btn text-center">
                         <v-btn
                             @click="addToCartWithQuantity(productPayload)"
-                            class="ma-3"
+                            class="ma-3 rounded-lg"
                             tile
                             x-large
                             depressed
@@ -197,7 +198,7 @@ input::-webkit-inner-spin-button {
 }
 
 // RWD
-@media (max-width: 1200px) {
+@media (max-width: 960px) {
     .product_wrapper {
         flex-wrap: wrap;
         margin: 0;
