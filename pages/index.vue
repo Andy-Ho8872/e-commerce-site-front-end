@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <!-- 優惠計時 (月份從 0 開始計算， 例如: 數字5 == 6月)-->
-        <Announcement
+        <CountdownTimer
             :year="2021"
             :month="2"
             :day="5"

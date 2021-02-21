@@ -1,6 +1,6 @@
 <template>
 <!-- 倒數計時器 -->
-    <v-card color="Timer_wrapper purple lighten-2 mb-4 headline">
+    <v-card color="Timer_wrapper purple lighten-2 mb-4 headline rounded-t-xl">
         <v-row>
             <!-- 日 -->
             <v-col class="days text-center">   
