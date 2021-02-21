@@ -1,5 +1,7 @@
 <template>
     <v-container>
+        <!-- 彈出式提醒 -->
+        <Popups />
         <!-- 優惠計時 (月份從 0 開始計算， 例如: 數字5 == 6月)-->
         <CountdownTimer
             :year="2021"
