@@ -16,7 +16,7 @@
                 :height="cardHeight">
                 <!-- 產品折扣 -->
                     <!-- 產品原始 折扣倍率為 1.00 即原價-->
-                <v-card-subtitle v-if="formatLabel != 10"
+                <v-card-subtitle v-if="product.discount_rate != 1"
                     class="
                     product_discount_lable
                     rounded-tl-lg
@@ -73,8 +73,13 @@
                     {{ subString }}
                     <!-- 產品標籤 -->
                     <v-chip-group class="my-5">
-                        <v-chip class="mx-1" color="primary" v-for="tag in product.tags" :key="tag.id">
-                            <v-icon size="medium">fa-check-circle fa-fw</v-icon>
+                        <v-chip color="primary" v-for="tag in product.tags" :key="tag.id">
+                            <!-- 判斷標籤的名稱是否相符，因為陣列從 0 起算，所以要減 1 -->
+                            <!-- 圖案 -->
+                            <v-icon size="medium" v-if="tag.title == productTags[tag.id - 1].title">
+                                {{ productTags[tag.id - 1].icon }}
+                            </v-icon>
+                            <!-- 名稱 -->
                             <span>{{ tag.title }}</span>
                         </v-chip>
                     </v-chip-group>      
@@ -88,11 +93,11 @@
                         pa-1
                         subtitle-1
                         gray--text "
-                        :class="[formatLabel == 10 ? '' : 'discounted']">
+                        :class="[product.discount_rate == 1 ? '' : 'discounted']">
                         NT.{{ Math.floor(product.unit_price) }}
                     </v-card-subtitle>
                     <!-- 打折後 -->
-                    <v-card-subtitle v-if="formatLabel != 10"
+                    <v-card-subtitle v-if="product.discount_rate != 1"
                         class="
                         discount_price
                         pa-0
@@ -122,7 +127,34 @@ import { mapActions } from 'vuex';
 
 export default {
     // passed from pages/index.vue
-    props: ['product', 'cardWidth', 'cardHeight'], 
+    props: {
+        'product': Object,
+        'cardWidth': Number,
+        'cardHeight': Number 
+    }, 
+    data() {
+        return {
+            // 產品標籤
+            productTags: [
+                {
+                    title: '3C產品',
+                    icon: 'fa-mobile-alt fa-fw'
+                },
+                {
+                    title: '服裝',
+                    icon: 'fa-tshirt fa-fw'
+                },
+                {
+                    title: '背包',
+                    icon: 'fa-shopping-bag fa-fw'
+                },
+                {
+                    title: '折扣',
+                    icon: 'fa-dollar-sign fa-fw'
+                }
+            ]
+        }
+    },
     computed: {
         // 商品折數
         formatLabel () {
