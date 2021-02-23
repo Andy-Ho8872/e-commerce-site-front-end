@@ -4,14 +4,15 @@
             pending...
         </div>
         <!-- 該頁產品 -->
+        <PaginationController :pageNumber="pageNumber"/>
         <v-row>
             <v-col
                 v-for="product in products.data"
                 :key="product.id"
-                class="my-4"
+                class="my-12"
             >
                 <!-- 產品 Component -->
-                <Product class="mx-auto my-6"
+                <Product class="mx-auto"
                     :product="product"
                     :cardWidth="300"
                     :cardHeight="600"
