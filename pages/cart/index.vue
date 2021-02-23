@@ -6,7 +6,7 @@
         </div>
         <v-col cols="12" class="cart_page_wrapper">
             <!-- 購物車標頭 -->
-            <v-card class="cart_page_header d-flex mb-5 pa-5">
+            <v-card class="cart_page_header d-flex mb-5 pa-5 rounded-t-xl" elevation="2">
                 <div>
                     <span>商品</span>
                 </div>
@@ -48,7 +48,6 @@
                             ${{ Math.floor(item.unit_price * item.discount_rate) }}
                         </span>
                     </div>
-                    
                     <!-- 增加 減少數量按鈕 -->
                     <div>
                         <QuantityField
@@ -80,7 +79,7 @@
                 </div>
             </v-card>
             <!-- 購物車結算 -->
-            <v-card class="cart_page_footer d-flex mt-4 pa-4 align-center text-right">
+            <v-card class="cart_page_footer d-flex mt-4 pa-4 rounded-b-xl align-center text-right" elevation="2">
                 <!-- 小計金額 -->
                 <div class="subtotal mb-2 title font-weight-bold">
                     小計: <span class="red--text">{{ subTotal }}</span>
@@ -169,7 +168,7 @@ input {
     }
     // 刪除按鈕
     .action {
-        margin-top: 16px;
+        margin-top: 20%;
     }
     // 價格區域 ------------------Start
     .price_zone {
