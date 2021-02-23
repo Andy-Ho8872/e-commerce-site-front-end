@@ -52,7 +52,7 @@
                     </li>
                 </v-row>
                 <!--  若使用者沒有登入 -->
-                <v-row v-if="!user" class="content mx-1">
+                <v-row v-else class="content mx-1">
                     <li v-for="(list, index) in userList" :key="index">
                         <nuxt-link :to="list.to" class="mx-1">
                             <v-icon class="mx-1 mb-1" small color="white">
@@ -89,7 +89,7 @@
                 v-model="searchText"
                 solo
                 dense
-                placeholder="搜尋商品，例如:相機、螢幕..."
+                placeholder="相機、螢幕、服裝、折扣..."
                 append-icon="fa-search"
                 @keydown.enter="search"
                 @click:append="search"
@@ -175,7 +175,7 @@ export default {
         // 登出使用者
         async logUserOut() {
             await this.logout()
-            // 等使用者登出之後則清除暫存
+            // 等使用者登出之後則清除購物車暫存
             this.clearCart()
         },
         // 搜尋功能
@@ -199,11 +199,13 @@ export default {
         // 抓取使用者資料
         this.fetchAccount()
         // 點擊漢堡 SideBar 以外的區域則會關閉
-        document.addEventListener('click', e => {
-            if (!this.$refs.extended.contains(e.target)) {
-                this.active = false
-            }
-        })
+        if(this.$refs.extended.style.visibility !== "hidden") {
+            document.addEventListener('click', e => { 
+                if (!this.$refs.extended.contains(e.target)) {
+                    this.active = false
+                }
+            })
+        }
     },
 }
 </script>
