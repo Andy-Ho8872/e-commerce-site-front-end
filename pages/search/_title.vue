@@ -13,23 +13,29 @@
                 <v-col
                     v-for="product in result"
                     :key="product.id"
-                    class="product_wrapper"
                     align-self="center"
-                    cols="8"
+                    cols="12"
                     lg="2"
                     md="3"
                     sm="4"
                 >
                     <!-- 點擊後導覽至該商品 -->
                     <nuxt-link :to="{ name: 'products-id', params: { id: product.id }}">
-                        <v-card color="grey lighten-5" width="200" height="400" class="product">
+                        <v-card color="grey lighten-5" width="200" height="400" class="mx-auto my-2 rounded-xl">
                             <!-- 圖片 -->
                             <v-img
                                 :src="product.imgUrl"
                                 :lazy-src="product.imgUrl"
                             ></v-img>
                             <!-- 名稱 -->
-                            <v-card-title
+                                <!-- 有縮減 -->
+                            <v-card-title v-if="product.title.substring(0, 13).length == 13"
+                                class="subtitle-1 font-weight-bold my-1"
+                            >
+                                {{ product.title.substring(0, 13) }} ...
+                            </v-card-title>
+                                <!-- 沒縮減 -->
+                            <v-card-title v-else
                                 class="subtitle-1 font-weight-bold my-1"
                             >
                                 {{ product.title }}
@@ -38,11 +44,16 @@
                             <v-card-subtitle class="text-truncate">
                                 {{ product.description }}
                             </v-card-subtitle>
+                            <!-- 標籤 -->
+                                <v-chip-group class="ml-2">
+                                    <v-chip v-for="tag in product.tags" :key="tag.id" color="blue darken-2" text-color="white">
+                                        {{ tag.title }}
+                                    </v-chip>
+                                </v-chip-group>  
                             <!-- 價格區域 -->
                             <div class="price_zone">
                                 <!-- 原價格 -->
                                 <v-card-text
-                                    class="original"
                                     :class="[product.discount_rate == 1 ? '' : 'discounted']"
                                 >
                                     $ {{ Math.floor(product.unit_price) }}
@@ -52,7 +63,7 @@
                                     v-if="product.discount_rate != 1"
                                     class="discounted_price blue--text text--darken-2"
                                 >
-                                    $ {{ Math.floor(product.unit_price *product.discount_rate) }}
+                                    $ {{ Math.floor(product.unit_price * product.discount_rate) }}
                                 </v-card-text>
                             </div>
                         </v-card>
@@ -108,13 +119,4 @@ a {
     font-size: 1.2rem;
 }
 // 價格區域--------------------------End
-
-
-@media (max-width: 600px) {
-    // 商品卡片置中----------------------Start
-    .product, .product_wrapper {
-        margin: auto;
-    }
-    // 商品卡片置中----------------------End
-}
 </style>
