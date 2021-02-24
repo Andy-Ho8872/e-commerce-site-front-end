@@ -45,17 +45,7 @@
                                 {{ product.description }}
                             </v-card-subtitle>
                             <!-- 標籤 -->
-                                <v-chip-group class="ml-2">
-                                    <v-chip v-for="tag in product.tags" :key="tag.id" color="primary">
-                                        <!-- 判斷標籤的名稱是否相符，因為陣列從 0 起算，所以要減 1 -->
-                                        <!-- 圖案 -->
-                                        <v-icon size="medium" v-if="tag.title == productTags[tag.id - 1].title">
-                                            {{ productTags[tag.id - 1].icon }}
-                                        </v-icon>
-                                        <!-- 名稱 -->
-                                        <span>{{ tag.title }}</span>
-                                    </v-chip>
-                                </v-chip-group>  
+                            <Tags :product="product" class="ml-2"/>
                             <!-- 價格區域 -->
                             <div class="price_zone">
                                 <!-- 原價格 -->
@@ -94,29 +84,6 @@
 import { mapGetters } from 'vuex'
 
 export default {
-    data() {
-        return {
-            // 產品標籤
-            productTags: [
-                {
-                    title: '3C產品',
-                    icon: 'fa-mobile-alt fa-fw'
-                },
-                {
-                    title: '服裝',
-                    icon: 'fa-tshirt fa-fw'
-                },
-                {
-                    title: '背包',
-                    icon: 'fa-shopping-bag fa-fw'
-                },
-                {
-                    title: '折扣',
-                    icon: 'fa-dollar-sign fa-fw'
-                }
-            ]
-        }
-    },
     // 此處的 search function 在 Components/Header.vue 裡
     computed: {
         ...mapGetters({
