@@ -56,7 +56,6 @@
                     class="
                     product_title
                     mt-2 pa-3
-                    text-center
                     font-weight-black
                     justify-center">
                     {{ product.title }}
@@ -66,37 +65,24 @@
                     class="
                     product_description
                     px-8 py-4
-                    gray--text 
-                    text--lighten-2
                     text-justify">
                     <!-- 縮減字數後的商品敘述 -->
                     {{ subString }}
                 </v-card-subtitle>
                 <!-- 星星數量 -->
-                <div class="d-flex align-center">
-                    <v-rating
-                        class="ml-5"
-                        v-model="rating"
-                        background-color="yellow darken-2"
-                        color="yellow darken-3"
-                        length="5"
-                        size="18"
-                        half-increments
-                        readonly>
-                    </v-rating>
-                    <span>({{ rating }})</span>
-                </div>
+                <Ratings :product="product" class="px-5"/>
                 <!-- 產品標籤 -->
-                <Tags :product="product" class="ml-5"/>
+                <Tags :product="product" class="px-5"/>
                 <!-- 產品價格 -->
-                <div class="text--lighten-1 text-center mt-2">
+                <div class="mt-2">
                     <!-- 原價 -->
                     <v-card-subtitle 
                         class="
                         original_price
-                        pa-1
-                        subtitle-1
-                        gray--text "
+                        font-weight-medium
+                        text-start
+                        px-8
+                        subtitle-1"
                         :class="[product.discount_rate == 1 ? '' : 'discounted']">
                         NT.{{ Math.floor(product.unit_price) }}
                     </v-card-subtitle>
@@ -104,6 +90,7 @@
                     <v-card-subtitle v-if="product.discount_rate != 1"
                         class="
                         discount_price
+                        text-center
                         pa-0
                         title
                         red--text">
@@ -116,10 +103,10 @@
         <v-btn 
             @click="addToCart(product.id)"
             class="add_to_cart rounded-b-xl"
+            color="primary"
             tile 
             large 
-            depressed
-            color="primary">
+            depressed>
             <!-- 產品 ID -->
             <span>加入購物車</span>
         </v-btn>   
@@ -145,10 +132,6 @@ export default {
         subString() {
             return this.product.description.substring(0, 50) + '...'
         },
-        // 星星數 (需轉換為數字)
-        rating() {
-            return Number(this.product.rating)
-        }
     },
     methods: {
         ...mapActions({
@@ -188,6 +171,9 @@ export default {
     }
     // 折扣後的樣式
     .discount_price {
+        position: absolute;
+        left: 40%;
+        bottom: 5%;
         transform: rotate(-5deg);
     }
     // 加入至購物車

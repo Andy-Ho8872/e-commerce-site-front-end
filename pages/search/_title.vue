@@ -21,7 +21,7 @@
                 >
                     <!-- 點擊後導覽至該商品 -->
                     <nuxt-link :to="{ name: 'products-id', params: { id: product.id }}">
-                        <v-card color="grey lighten-5" width="200" height="400" class="mx-auto my-2 rounded-xl">
+                        <v-card color="grey lighten-5" width="200" height="450" class="mx-auto my-2 rounded-xl">
                             <!-- 圖片 -->
                             <v-img
                                 :src="product.imgUrl"
@@ -44,6 +44,8 @@
                             <v-card-subtitle class="text-truncate">
                                 {{ product.description }}
                             </v-card-subtitle>
+                            <!-- 星星數 -->
+                            <Ratings :product="product"/>
                             <!-- 標籤 -->
                             <Tags :product="product" class="ml-2"/>
                             <!-- 價格區域 -->
