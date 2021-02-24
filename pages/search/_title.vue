@@ -52,6 +52,7 @@
                             <div class="price_zone">
                                 <!-- 原價格 -->
                                 <v-card-text
+                                    class="text-subtitle-1"
                                     :class="[product.discount_rate == 1 ? '' : 'discounted']"
                                 >
                                     $ {{ Math.floor(product.unit_price) }}
@@ -59,7 +60,7 @@
                                 <!-- 折扣後價格 -->
                                 <v-card-text
                                     v-if="product.discount_rate != 1"
-                                    class="discounted_price blue--text text--darken-2"
+                                    class="discounted_price blue--text text--darken-1"
                                 >
                                     $ {{ Math.floor(product.unit_price * product.discount_rate) }}
                                 </v-card-text>
