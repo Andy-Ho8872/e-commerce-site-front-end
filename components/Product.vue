@@ -71,21 +71,35 @@
                     text-justify">
                     <!-- 縮減字數後的商品敘述 -->
                     {{ subString }}
-                    <!-- 產品標籤 -->
-                    <v-chip-group class="my-5">
-                        <v-chip color="primary" v-for="tag in product.tags" :key="tag.id">
-                            <!-- 判斷標籤的名稱是否相符，因為陣列從 0 起算，所以要減 1 -->
-                            <!-- 圖案 -->
-                            <v-icon size="medium" v-if="tag.title == productTags[tag.id - 1].title">
-                                {{ productTags[tag.id - 1].icon }}
-                            </v-icon>
-                            <!-- 名稱 -->
-                            <span>{{ tag.title }}</span>
-                        </v-chip>
-                    </v-chip-group>      
                 </v-card-subtitle>
+                <!-- 星星數量 -->
+                <div class="d-flex align-center">
+                    <v-rating
+                        class="ml-5"
+                        v-model="rating"
+                        background-color="yellow darken-2"
+                        color="yellow darken-3"
+                        length="5"
+                        size="18"
+                        half-increments
+                        readonly>
+                    </v-rating>
+                    <span>({{ rating }})</span>
+                </div>
+                <!-- 產品標籤 -->
+                <v-chip-group class="ml-5">
+                    <v-chip color="primary" v-for="tag in product.tags" :key="tag.id">
+                        <!-- 判斷標籤的名稱是否相符，因為陣列從 0 起算，所以要減 1 -->
+                        <!-- 圖案 -->
+                        <v-icon size="medium" v-if="tag.title == productTags[tag.id - 1].title">
+                            {{ productTags[tag.id - 1].icon }}
+                        </v-icon>
+                        <!-- 名稱 -->
+                        <span>{{ tag.title }}</span>
+                    </v-chip>
+                </v-chip-group>      
                 <!-- 產品價格 -->
-                <div class="text--lighten-1 text-center">
+                <div class="text--lighten-1 text-center mt-2">
                     <!-- 原價 -->
                     <v-card-subtitle 
                         class="
@@ -157,12 +171,16 @@ export default {
     },
     computed: {
         // 商品折數
-        formatLabel () {
+        formatLabel() {
             return this.product.discount_rate * 10
         },
         // 縮減商品敘述的字串
-        subString () {
+        subString() {
             return this.product.description.substring(0, 50) + '...'
+        },
+        // 星星數 (需轉換為數字)
+        rating() {
+            return Number(this.product.rating)
         }
     },
     methods: {
