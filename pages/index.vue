@@ -13,28 +13,17 @@
             :millisecond="4"
         />
         <!-- 圖片輪播 -->
-        <div v-if="loading">
-            <SkeletonCarousel :cardHeight="355" />
-        </div>
-        <div v-else>
-            <!-- 圖片輪播張數為 10 張 -->
-            <Carousel :cardWidth="355" :cardHeight="355" />
-        </div>
+            <!-- 骨架屏 -->
+        <SkeletonCarousel :cardHeight="355" v-if="loading"/>
+            <!-- 輪播張數為 10 張 -->
+        <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading"/>
         <!-- 商品陳列 -->
         <div class="products d-flex flex-wrap justify-space-between">
             <li v-for="product in products" :key="product.id" class="my-10">
                 <!-- 骨架屏 -->
-                <div v-if="loading">
-                    <SkeletonCard :cardWidth="300" />
-                </div>
+                <SkeletonCard :cardWidth="300" v-if="loading"/>
                 <!-- 產品標題 、 圖片網址 、 價格 、 ID... -->
-                <div v-else>
-                    <Product
-                        :product="product"
-                        :cardWidth="300"
-                        :cardHeight="600"
-                    />
-                </div>
+                <Product :product="product" :cardWidth="300" :cardHeight="600" v-show="!loading"/>
             </li>
         </div>
         <!-- 觀看更多商品 -->
