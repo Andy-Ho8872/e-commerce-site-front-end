@@ -81,8 +81,8 @@
                         original_price
                         font-weight-medium
                         text-start
-                        px-8
-                        subtitle-1"
+                        px-6
+                        text-h6"
                         :class="[product.discount_rate == 1 ? '' : 'discounted']">
                         NT.{{ Math.floor(product.unit_price) }}
                     </v-card-subtitle>
