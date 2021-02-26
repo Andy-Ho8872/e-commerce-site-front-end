@@ -72,7 +72,7 @@ export const actions = {
         }
     },
     // 登入流程
-    async login({ commit }, user) {
+    async login({ commit, dispatch }, user) {
         try {
             // 初次登入要先取得 CSRF
             await apiCsrfLogin()
@@ -91,7 +91,9 @@ export const actions = {
                 // 重新導向至首頁
                 this.$router.push('/')
                 // 撈取使用者資料
-                commit('FETCH_USER_ACCOUNT')
+                await commit('FETCH_USER_ACCOUNT')
+                // 從 store/cart.js 撈取使用者的購物車資料
+                dispatch('cart/fetchUserCart', null, { root: true })
             } catch (error) {
                 // 錯誤訊息
                 let msg = error.response.data.errors
@@ -122,7 +124,7 @@ export const actions = {
             // 清空 LocalStorage
             await commit('CLEAR_ALL_STORAGE')
             // 重新導向
-            this.$router.push('/')
+            this.$router.push({ name: 'index' })
             alert('您已經登出')
         } catch (error) {
             // 錯誤訊息
