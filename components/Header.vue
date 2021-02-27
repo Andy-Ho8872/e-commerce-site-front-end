@@ -191,13 +191,7 @@ export default {
             userCart: 'cart/getUserCart',
         }),
     },
-    created() {
-        // 撈取使用者購物車
-        this.fetchUserCart()
-    },
-    mounted() {
-        // 抓取使用者資料
-        this.fetchAccount()
+    async mounted() {
         // 點擊漢堡 SideBar 以外的區域則會關閉
         if(this.$refs.extended.style.visibility !== "hidden") {
             document.addEventListener('click', e => { 
@@ -205,6 +199,13 @@ export default {
                     this.active = false
                 }
             })
+        }
+        // 抓取使用者資料
+        await this.fetchAccount()
+        // 若使用者有登入 (從 localStorage 中做初步判定)
+        if(this.user) {
+            // 撈取使用者購物車
+            this.fetchUserCart()
         }
     },
 }

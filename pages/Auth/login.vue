@@ -87,6 +87,19 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+    //new
+    // asyncData({ store, redirect }) {
+    //     const user = store.state.auth.userAccount
+    //     if(user) {
+    //         // alert("你已經登入囉")
+    //         console.log(user);
+    //         redirect({ name:'index' })
+    //     } else {
+    //         console.log("作用中..");
+    //     }
+    // },
+
+    // middleware: ['authenticated'],
     data() {
         return {
             // 表單中的值
