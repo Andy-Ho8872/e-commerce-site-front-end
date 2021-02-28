@@ -2,11 +2,11 @@
     <!-- 可以設置 max-width 來限制輪播的寬度 -->
     <div class="carousel">
         <!-- 輪播控制按鈕(左) -->
-        <v-icon large id="prev" @click="slide(-1)">
+        <v-icon large id="prev" @click="SLIDE(-1)">
             fa-angle-left
         </v-icon>
         <!-- 輪播控制按鈕(右) -->
-        <v-icon large id="next" @click="slide(1)">
+        <v-icon large id="next" @click="SLIDE(1)">
             fa-angle-right
         </v-icon>
         <!-- 輪播圖片(圖片滑動區域) -->
@@ -54,7 +54,11 @@
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
-    props: ['cardWidth', 'cardHeight'], // passed form pages/index.vue
+    // passed form pages/index.vue
+    props: {
+        'cardWidth': Number,
+        'cardHeight': Number,
+    }, 
     data() {
         return {
             // 圖片輪播
@@ -75,14 +79,14 @@ export default {
     methods: {
         // 滑動圖片
         ...mapMutations({
-            slide: 'carousel/SLIDE_CAROUSEL',
+            SLIDE: 'carousel/SLIDE_CAROUSEL',
         }),
     },
     // 頁面掛載後執行自動輪播
     mounted() {
         // 圖片自動輪播
         this.interval = setInterval(() => {
-            this.slide(1)
+            this.SLIDE(1)
         }, 5000)
     },
     // 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
@@ -93,7 +97,7 @@ export default {
     activated() {
         // 圖片自動輪播
         this.interval = setInterval(() => {
-            this.slide(1)
+            this.SLIDE(1)
         }, 5000)
     },
     deactivated() {
