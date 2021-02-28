@@ -190,13 +190,6 @@ input {
     padding: 2px 0;
     outline: none;
 }
-// 移除 INPUT 數字預設的增減箭頭
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
 // RWD
 @media (max-width: 960px) {
     .product_wrapper {

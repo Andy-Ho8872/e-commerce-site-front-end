@@ -101,12 +101,6 @@ input {
     padding: 2px 0;
     outline: 0;
 }
-// 移除 INPUT 數字預設的增減箭頭
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
 .quantity_field_wrapper {
     max-width: 170px !important;
 }
