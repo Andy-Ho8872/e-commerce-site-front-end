@@ -4,7 +4,6 @@
             pending...
         </div>
         <!-- 該頁產品 -->
-        <PaginationController :pageNumber="pageNumber"/>
         <v-row>
             <v-col
                 v-for="product in products.data"
@@ -24,7 +23,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { apiGetProductsWithPagination } from '../../APIs/api.js'
 
 export default {
@@ -59,8 +58,17 @@ export default {
             return Number(this.$route.params.pageNumber)
         }
     },
+    methods: {
+        ...mapActions({
+            fetchData: 'pagination/fetchPaginatedProducts',
+        }),
+    },
+    created() {
+        this.fetchData(this.page)  
+    },
     mounted() {
         this.pending = false
+        // this.fetchData(this.page) 
     }
 }
 </script>

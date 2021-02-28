@@ -37,14 +37,11 @@ export default {
             return this.products.last_page
         },
     },
+    // 暫未使用
     methods: {
         ...mapActions({
             fetchData: 'pagination/fetchPaginatedProducts',
         }),
-    },
-
-    created() {
-        this.fetchData(this.page)  
     },
 }
 </script>
