@@ -1,6 +1,6 @@
 <template>
 <!-- 倒數計時器 -->
-    <v-card color="Timer_wrapper purple lighten-2 mb-4 headline rounded-t-xl">
+    <v-card color="Timer_wrapper purple lighten-2 mb-4 headline rounded-t-xl white--text">
         <v-row>
             <!-- 日 -->
             <v-col class="days text-center">   
@@ -31,7 +31,16 @@
 
 <script>
 export default {
-    props : ['year', 'month', 'day', 'hour', 'minute', 'second', 'millisecond' ], // passed from pages/index.vue
+    // passed from pages/index.vue
+    props : {
+        'year': Number,
+        'month': Number,
+        'day': Number,
+        'hour': Number,
+        'minute': Number,
+        'second': Number,
+        'millisecond': Number,    
+    }, 
     data () {
         return {
             showDays: 0,
@@ -92,11 +101,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-    .Timer_wrapper {
-        color: #ffffff
-    }
-    
-</style>>
-
