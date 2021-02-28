@@ -18,6 +18,7 @@
 
 <script>
 export default {
+    // passed from components/Product.vue Or pages/search/title.vue
     props: {
         'product': Object,
     },
