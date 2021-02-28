@@ -148,12 +148,12 @@ export default {
                 {
                     icon: 'fa-user-plus fa-fw',
                     text: '註冊',
-                    to: '/auth/register',
+                    to: { name: 'auth-register' },
                 },
                 {
                     icon: 'fa-user-circle fa-fw',
                     text: '登入',
-                    to: '/auth/login',
+                    to: { name: 'auth-login' },
                 }
             ],
             // 觸發 class (漢堡 SideBar)
@@ -164,8 +164,8 @@ export default {
     },
     methods: {
         ...mapMutations({
-            clearCart: 'cart/CLEAR_USER_CART', // 清空購物車暫存
-            fetchAccount: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料 (從 localStorage)
+            CLEAR_CART: 'cart/CLEAR_USER_CART', // 清空購物車暫存
+            FETCH_ACCOUNT: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料 (從 localStorage)
         }),
         ...mapActions({
             logout: 'auth/logout', // 登出使用者
@@ -176,7 +176,7 @@ export default {
         async logUserOut() {
             await this.logout()
             // 等使用者登出之後則清除購物車暫存
-            this.clearCart()
+            this.CLEAR_CART()
         },
         // 搜尋功能
         search() {
@@ -201,7 +201,7 @@ export default {
             })
         }
         // 抓取使用者資料
-        await this.fetchAccount()
+        await this.FETCH_ACCOUNT()
         // 若使用者有登入 (從 localStorage 中做初步判定)
         if(this.user) {
             // 撈取使用者購物車
