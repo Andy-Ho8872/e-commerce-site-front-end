@@ -72,7 +72,7 @@
                             name="product_quantity"
                             type="number"
                             autocomplete="off"
-                            @blur="validateInput(productPayload.quantity)"
+                            @keyup="validateInput(productPayload.quantity)"
                             v-model.number="productPayload.quantity"
                         />
                         <!-- 減少按鈕 -->
