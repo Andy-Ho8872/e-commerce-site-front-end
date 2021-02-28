@@ -40,7 +40,11 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
-    props: ['product_id', 'product_quantity'],
+    // passed from pages/cart/index.vue
+    props: {
+        'product_id': Number,
+        'product_quantity': Number
+    },
     data () {  
         return {
             // 暫存數據
