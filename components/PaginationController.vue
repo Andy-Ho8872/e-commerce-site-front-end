@@ -4,7 +4,7 @@
             circle
             v-model="page"
             :length="length"
-            @input="fetchData(page)"
+            @input="CheckOrFetch"
         ></v-pagination>
     </div>
 </template>
@@ -21,6 +21,7 @@ export default {
             page: this.pageNumber || 1,
         }
     },
+    
     // test Start
     // async fetch() {
     //     // 撈取該頁資料
@@ -37,11 +38,16 @@ export default {
             return this.products.last_page
         },
     },
-    // 暫未使用
     methods: {
         ...mapActions({
             fetchData: 'pagination/fetchPaginatedProducts',
         }),
+        // 若選取頁數為同一頁則不發送 request
+        CheckOrFetch() {
+            if (this.products.current_page != this.page) {
+                this.fetchData(this.page)
+            }
+        },
     },
 }
 </script>
