@@ -23,6 +23,9 @@
 
 <script>
 export default {
-    props:['cardWidth']
+    // passed from pages/index.vue
+    props:{
+        'cardWidth': Number
+    }
 }
 </script>
