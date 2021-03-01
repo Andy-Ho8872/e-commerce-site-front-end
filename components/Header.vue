@@ -75,12 +75,19 @@
                 ref="extended"
                 class="extend_bar d-flex justify-center align-center"
             >
-                <!-- 漢堡 svg -->
-                <svg viewBox="0 0 100 100" fill="#FFF" width="24" height="24">
+                <!-- 漢堡 icon-->
+
+                <!-- <svg viewBox="0 0 100 100" fill="#FFF" width="24" height="24">
                     <rect width="100" height="15"></rect>
                     <rect y="30" width="100" height="15"></rect>
                     <rect y="60" width="100" height="15"></rect>
-                </svg>
+                </svg> -->
+
+                <div class="sidebar" :class="{ toggle: active }">
+                    <li class="line"></li>
+                    <li class="line"></li>
+                    <li class="line"></li>
+                </div>
             </div>
             <!-- 搜尋區域 -->
             <v-text-field
@@ -216,7 +223,6 @@ li {
     list-style: none;
 }
 a {
-    // for <nuxt-link>
     text-decoration: none;
     color: white;
 }
@@ -228,6 +234,27 @@ a {
 .extend_bar {
     visibility: hidden; // 預設隱藏
 }
+.line {
+    background: white;
+    width: 24px;
+    height: 4px;
+    margin-bottom: 6px;
+}
+.toggle {
+    .line {
+        margin-bottom: 0;
+        transition: 0.5s ease-in-out;
+        &:nth-child(1) {
+            transform: rotate(45deg) translateY(3px)
+        } 
+        &:nth-child(2) {
+            display: none;
+        } 
+        &:nth-child(3) {
+            transform: rotate(-45deg) translateY(-3px)
+        } 
+    } 
+}
 // 登入、登出、訊息通知... 等按鈕
 .content {
     cursor: pointer;
@@ -238,6 +265,9 @@ a {
 }
 // 以下為 RWD
 @media (max-width: 1024px) {
+    li {
+        font-size: 1rem;
+    }
     .navbar {
         padding: 1em 0em;
         width: 100%;
