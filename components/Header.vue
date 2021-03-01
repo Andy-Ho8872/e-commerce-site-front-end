@@ -239,19 +239,20 @@ a {
     width: 24px;
     height: 4px;
     margin-bottom: 6px;
+    transition: 0.5s ease-in-out;
 }
 .toggle {
     .line {
         margin-bottom: 0;
         transition: 0.5s ease-in-out;
         &:nth-child(1) {
-            transform: rotate(45deg) translateY(3px)
+            transform: rotate(50deg) translateY(6px)
         } 
         &:nth-child(2) {
-            display: none;
+            opacity: 0;
         } 
         &:nth-child(3) {
-            transform: rotate(-45deg) translateY(-3px)
+            transform: rotate(-50deg) translateY(-6px)
         } 
     } 
 }
