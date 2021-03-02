@@ -238,7 +238,7 @@ a {
         width: 90%;
         margin: auto;
     }
-    // 漢堡標籤
+    // 漢堡標籤的線條
     .line {
         background: white;
         width: 24px;
@@ -302,7 +302,7 @@ a {
     .extend_bar {
         visibility: visible;
     }
-    // 觸發後顯示
+    // 觸發後顯示 navbar_upper
     .show {
         opacity: 1 !important;
         transition: 0.5s ease-in-out;
