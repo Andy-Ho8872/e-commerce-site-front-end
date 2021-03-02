@@ -31,4 +31,4 @@ export default async function({ store, route, redirect }) {
 // 如何解決?
 // 1.使用 API 撈資料
 // 2.想辦法讓 Middleware 在 mounted() 中觸發?
-// 3.在 Vuex 中寫入 AUTH，但重新整理候就會消失..
+// 3.在 Vuex 中寫入 AUTH，但重新整理後就會消失..
