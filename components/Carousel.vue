@@ -2,13 +2,9 @@
     <!-- 可以設置 max-width 來限制輪播的寬度 -->
     <div class="carousel">
         <!-- 輪播控制按鈕(左) -->
-        <v-icon large id="prev" @click="SLIDE(-1)">
-            fa-angle-left
-        </v-icon>
+        <v-icon large id="prev" @click="SLIDE(-1)">fa-angle-left</v-icon>
         <!-- 輪播控制按鈕(右) -->
-        <v-icon large id="next" @click="SLIDE(1)">
-            fa-angle-right
-        </v-icon>
+        <v-icon large id="next" @click="SLIDE(1)">fa-angle-right</v-icon>
         <!-- 輪播圖片(圖片滑動區域) -->
         <div class="switch_photo d-flex ">
             <!-- v-card 和 v-img 預設寬度為 355 px -->
@@ -40,11 +36,13 @@
                             </v-progress-circular>
                         </v-row>
                     </template>
+                    <!-- 商品折數 -->
+                    <v-card-subtitle v-if="product.discount_rate != 1" class="discount_lable yellow pa-1 caption">
+                        <span class="red--text font-italic font-weight-medium">{{ product.discount_rate * 10 }} 折</span>
+                    </v-card-subtitle>
                 </v-img>
                 <!-- 產品名稱 -->
-                <v-card-subtitle class="text-center heading-6">
-                    {{ product.title }}
-                </v-card-subtitle>
+                <v-card-subtitle class="text-center text-subtitle-1">{{ product.title }}</v-card-subtitle>
             </v-card>
         </div>
     </div>
@@ -70,7 +68,6 @@ export default {
         // 撈取輪播資料
         await this.$store.dispatch('carousel/fetchCarouselItem')
     },
-
     computed: {
         ...mapGetters({
             products: 'carousel/getCarouselItem',
@@ -132,6 +129,13 @@ export default {
     background: rgba(0, 0, 0, 0.7);
     color: white !important;
 }
+.discount_lable {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;   
+}
+
 
 // RWD 版面設定
 @media (width: 1024px) {
