@@ -12,37 +12,41 @@
                 class="single_card"
                 v-for="product in products"
                 :key="product.id"
-                tile
                 :max-width="cardWidth"
+                tile
             >
-                <v-img
-                    class="my-auto"
-                    :src="product.imgUrl"
-                    :lazy-src="product.imgUrl"
-                    :max-width="cardWidth"
-                    :max-height="cardHeight"
+                <nuxt-link
+                    :to="{ name: 'products-id', params: { id: product.id } }"
                 >
-                    <!-- 當圖片 Loading 時 -->
-                    <template v-slot:placeholder>
-                        <v-row
-                            class="fill-height ma-0"
-                            align="center"
-                            justify="center"
-                        >
-                            <v-progress-circular
-                                indeterminate
-                                color="blue lighten-5"
+                    <v-img
+                        class="my-auto"
+                        :src="product.imgUrl"
+                        :lazy-src="product.imgUrl"
+                        :max-width="cardWidth"
+                        :max-height="cardHeight"
+                    >
+                        <!-- 當圖片 Loading 時 -->
+                        <template v-slot:placeholder>
+                            <v-row
+                                class="fill-height ma-0"
+                                align="center"
+                                justify="center"
                             >
-                            </v-progress-circular>
-                        </v-row>
-                    </template>
-                    <!-- 商品折數 -->
-                    <v-card-subtitle v-if="product.discount_rate != 1" class="discount_lable yellow pa-1 caption">
-                        <span class="red--text font-italic font-weight-medium">{{ product.discount_rate * 10 }} 折</span>
-                    </v-card-subtitle>
-                </v-img>
-                <!-- 產品名稱 -->
-                <v-card-subtitle class="text-center text-subtitle-1">{{ product.title }}</v-card-subtitle>
+                                <v-progress-circular
+                                    indeterminate
+                                    color="blue lighten-5"
+                                >
+                                </v-progress-circular>
+                            </v-row>
+                        </template>
+                        <!-- 商品折數 -->
+                        <v-card-subtitle v-if="product.discount_rate != 1" class="discount_lable yellow pa-1 caption">
+                            <span class="red--text font-italic font-weight-medium">{{ product.discount_rate * 10 }} 折</span>
+                        </v-card-subtitle>
+                    </v-img>
+                    <!-- 產品名稱 -->
+                    <v-card-subtitle class="text-center text-subtitle-1">{{ product.title }}</v-card-subtitle>
+                </nuxt-link>
             </v-card>
         </div>
     </div>
@@ -54,9 +58,9 @@ import { mapMutations, mapGetters } from 'vuex'
 export default {
     // passed form pages/index.vue
     props: {
-        'cardWidth': Number,
-        'cardHeight': Number,
-    }, 
+        cardWidth: Number,
+        cardHeight: Number,
+    },
     data() {
         return {
             // 圖片輪播
@@ -87,7 +91,8 @@ export default {
         }, 5000)
     },
     // 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
-    beforeDestroy() { // 在 Vue3 為 beforeUnmount
+    beforeDestroy() {
+        // 在 Vue3 為 beforeUnmount
         clearInterval(this.interval)
     },
     // 若有使用 Keep-Alive 的方式
@@ -133,9 +138,8 @@ export default {
     position: absolute;
     z-index: 1;
     top: 0;
-    right: 0;   
+    right: 0;
 }
-
 
 // RWD 版面設定
 @media (width: 1024px) {
