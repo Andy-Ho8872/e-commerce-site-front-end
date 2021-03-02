@@ -5,7 +5,7 @@
         <nuxt-link :to="{ name: 'products-id', params: { id: product.id }}">
             <v-card
                 class="
-                Products 
+                products 
                 rounded-t-xl
                 justify-center 
                 align-center 
@@ -19,11 +19,10 @@
                 <v-card-subtitle v-if="product.discount_rate != 1"
                     class="
                     product_discount_lable
-                    rounded-tl-lg
-                    rounded-bl-lg
-                    yellow
                     pa-1
-                    caption">
+                    yellow
+                    rounded-tl-lg
+                    rounded-bl-lg">
                     <span 
                         class="
                         red--text 
@@ -79,9 +78,9 @@
                     <v-card-subtitle 
                         class="
                         original_price
+                        px-6
                         font-weight-medium
                         text-start
-                        px-6
                         text-h6"
                         :class="[product.discount_rate == 1 ? '' : 'discounted']">
                         NT.{{ Math.floor(product.unit_price) }}
@@ -90,8 +89,8 @@
                     <v-card-subtitle v-if="product.discount_rate != 1"
                         class="
                         discount_price
-                        text-center
                         pa-0
+                        text-center
                         title
                         red--text">
                         NT.{{ Math.floor(product.unit_price * product.discount_rate) }}
