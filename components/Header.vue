@@ -43,7 +43,7 @@
                 <v-row v-else class="content">
                     <li v-for="(list, index) in userList" :key="index">
                         <nuxt-link :to="list.to">
-                            <v-icon class="icon" small color="white">{{ list.icon }}</v-icon>
+                            <v-icon class="icon" dark small>{{ list.icon }}</v-icon>
                             <span>{{ list.text }}</span>
                         </nuxt-link>
                     </li>
@@ -61,23 +61,21 @@
                 @click="active = !active"
                 :class="{ toggle: active }"
             >
-                <div class="sidebar">
-                    <li class="line"></li>
-                    <li class="line"></li>
-                    <li class="line"></li>
-                </div>
+                <li class="line"></li>
+                <li class="line"></li>
+                <li class="line"></li>
             </div>
             <!-- 搜尋區域 -->
             <v-text-field
                 class="searchBox d-flex mt-2 mx-2"
                 name="search"
                 v-model="searchText"
-                solo
-                dense
                 placeholder="相機、螢幕、服裝、折扣..."
                 append-icon="fa-search"
                 @keydown.enter="search"
                 @click:append="search"
+                solo
+                dense
             >
             </v-text-field>
             <!-- 購物車 ICON -->
@@ -198,9 +196,10 @@ export default {
 
 <style lang="scss" scoped>
 li {
-    list-style: none;
-    margin: 0 4px;
     cursor: pointer;
+    list-style: none;
+    font-size: 1rem;
+    margin: 0 4px;
 }
 a {
     text-decoration: none;
@@ -220,6 +219,7 @@ a {
 }
 .extend_bar {
     visibility: hidden; // 預設隱藏
+    flex-direction: column;
 }
 // 搜尋區域
 .searchBox {
@@ -228,11 +228,8 @@ a {
 
 // 以下為 RWD
 @media (max-width: 1024px) {
-    li {
-        font-size: 1rem;
-    }
     .navbar {
-        padding: 1em 0em;
+        padding: 1rem 0;
         width: 100%;
         top: 0;
         z-index: 10000;
