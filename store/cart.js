@@ -57,28 +57,20 @@ export const actions = {
 // 首頁 (pages/index.vue)
     // 抓取使用者的購物車
     async fetchUserCart({ commit }) {
-        if (process.browser) {
-            const token = {
-                headers: { Authorization: localStorage.getItem('Token') },
-            }
-            try {
-                const res = await apiGetCartProducts(token)
-                let payload = res.data.orders
-                // 將資料寫入
-                commit('SET_USER_CART', payload)
-            } catch (error) {
-                console.log(error)
-                console.log('抓取失敗 from vuex')
-            }
+        try {
+            const res = await apiGetCartProducts()
+            let payload = res.data.orders
+            // 將資料寫入
+            commit('SET_USER_CART', payload)
+        } catch (error) {
+            console.log(error)
+            console.log('抓取失敗 from vuex')
         }
     },
-    // 直接新增商品至購物車 (預設數量 1)
+    // 直接"新增"商品至購物車 (預設數量 1)
     async addToCart({ dispatch, commit }, productId) {
-        const token = {
-            headers: { Authorization: localStorage.getItem('Token') },
-        }
         try {
-            await apiAddToCart(productId, token)
+            await apiAddToCart(productId)
             // 重新撈取資料
             await dispatch('fetchUserCart')
             // 回傳提示訊息給使用者
@@ -100,17 +92,13 @@ export const actions = {
     },
 
 // 動態頁面  (pages/products/_id.vue)
-    // 新增商品至購物車(附帶商品數量)
+    // "新增"商品至購物車(附帶商品數量)
     async addToCartWithQuantity({ dispatch, commit }, product) {
-        const token = {
-            headers: { Authorization: localStorage.getItem('Token') },
-        }
         try {
             // 若要從表單傳遞參數要透過 Object
             await apiAddToCartWithQuantity(
                 product.id, // 產品 id
-                { product_quantity: product.quantity }, // 購買數量
-                token // 憑證
+                { product_quantity: product.quantity } // 購買數量
             )
             // 重新撈取資料
             await dispatch('fetchUserCart')
@@ -127,23 +115,21 @@ export const actions = {
         } catch (error) {
             console.log(error)
             console.log('新增失敗 from vuex')
+            // 導向至登入頁面
             this.$router.push({ name: 'auth-login' })
         }
     },
 
 // 購物車結帳頁面 (pages/cart/index.vue)
-    // 修改商品數量
+    // "修改"商品數量
     async updateQuantity({ dispatch, commit }, product) {
-        const token = {
-            headers: { Authorization: localStorage.getItem('Token') },
-        }
         try {
             // pending 狀態
             commit('SET_PENDING_STATUS', true)
-            await apiUpdateQuantity(
+            await apiUpdateQuantity
+            (
                 product.id, // 產品 id
-                { product_quantity: product.quantity }, // 變更數量
-                token // 憑證
+                { product_quantity: product.quantity } // 變更數量
             )
             // pending 狀態
             commit('SET_PENDING_STATUS', false)
@@ -164,17 +150,13 @@ export const actions = {
             console.log('更新失敗')
         }
     },
-
     // 商品數量增加 1
     async increseByOne({ dispatch, commit }, productId) {
-        const token = {
-            headers: { Authorization: localStorage.getItem('Token') },
-        }
         try {
             // pending 狀態
             commit('SET_PENDING_STATUS', true)
             // 增加數量
-            await apiIncreseQuantityByOne(productId, token)
+            await apiIncreseQuantityByOne(productId)
             // pending 狀態
             commit('SET_PENDING_STATUS', false)
             // 重新撈取資料
@@ -196,14 +178,11 @@ export const actions = {
     },
     // 商品數量減少 1
     async decreseByOne({ dispatch, commit }, productId) {
-        const token = {
-            headers: { Authorization: localStorage.getItem('Token') },
-        }
         try {
             // pending 狀態
             commit('SET_PENDING_STATUS', true)
             // 減少數量
-            await apiDecreseQuantityByOne(productId, token)
+            await apiDecreseQuantityByOne(productId)
             // pending 狀態
             commit('SET_PENDING_STATUS', false)
             // 重新撈取資料
@@ -223,13 +202,10 @@ export const actions = {
             console.log('數量增加失敗')
         }
     },
-    // 從購物車中移除商品
+    // 從購物車中"移除"商品
     async deleteFromCart({ dispatch, commit }, productId) {
-        const token = {
-            headers: { Authorization: localStorage.getItem('Token') },
-        }
         try {
-            await apiDeleteFromCart(productId, token)
+            await apiDeleteFromCart(productId)
             // 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
@@ -249,11 +225,8 @@ export const actions = {
     },
     // 清空購物車
     async deleteAllFromCart({ dispatch, commit }) {
-        const token = {
-            headers: { Authorization: localStorage.getItem('Token') },
-        }
         try {
-            await apiDeleteAllFromCart(token)
+            await apiDeleteAllFromCart()
             // 清空完之後 重新 fetch 資料
             await dispatch('fetchUserCart')
             // 提示訊息
