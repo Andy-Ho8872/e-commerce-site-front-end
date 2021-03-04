@@ -4,10 +4,25 @@ axios.defaults.withCredentials = true;
 // URL 與 設定
 let base = 'http://localhost:8000/api'; // 後端 API 的 URL
 
-// 使用者請求
+
+// 使用者請求------------------------------------------------------------------Start
 const userRequest = axios.create({
     baseURL: `${ base }/user`
 });
+// 設置攔截器 (interceptors)
+userRequest.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('Token')
+        if (token) {
+            config.headers.authorization = token
+        }
+        return config
+    }, 
+    (error) => Promise.reject(error)
+    )
+// 使用者請求------------------------------------------------------------------End
+    
+    
 
 // 購物車請求------------------------------------------------------------------Start
 const cartRequest = axios.create({
@@ -46,10 +61,11 @@ export const apiUserRegister = data => userRequest.post('/register', data);
 export const apiUserLogin = data => userRequest.post('/login', data);
     // CSRF 
 export const apiCsrfLogin = () => userCsrfRequest.get('/sanctum/csrf-cookie');
-    // 登出 (要有 Token 才能登出)
-export const apiUserLogout = token => userRequest.get('/logout', token);
-    // 取得 User 
-// export const apiGetUserInfo = (id) => userRequest.get(`/user/${id}`);
+    //----------------------------------- 以下操作必須包含Token -------------------------------------//
+    // 登出 
+export const apiUserLogout = () => userRequest.get('/logout');
+    // 取得使用者 (暫時未用到)
+export const apiGetUserInfo = (id) => userRequest.get('/user/getUser');
 //------------------------------------------- 使用者相關 API -------------------------------------------//
 
 
@@ -76,23 +92,23 @@ export const apiSearchByTag = (id) => productRequest.get(`/tag/${id}`);
 //-------------------------------------------------- 購物車相關 API --------------------------------------------------//
             //----------------------------------- 以下操作必須包含Token -------------------------------------//
 // 讀取
-// 使用者在購物車中的產品 get 順序 URL -> Headers
+    // 撈取購物車中的產品
 export const apiGetCartProducts = () => cartRequest.get('/cart');
 // 新增
-// 使用者新增商品至購物車  post 順序 URL -> BODY -> Headers
+    // 新增商品至購物車
 export const apiAddToCart = (productId) => cartRequest.get(`/cart/${productId}/create`);
-// 新增商品至購物車(包含使用者所輸入的數量)
+    // 新增商品至購物車(包含使用者所輸入的數量)
 export const apiAddToCartWithQuantity = (productId, quantity) => cartRequest.post(`/cart/${productId}/create`, quantity);
 // 刪除
-// 使用者從購物車中移除商品
+    // 購物車中移除商品
 export const apiDeleteFromCart = (productId) => cartRequest.delete(`/cart/${productId}/delete`);
-// 清空購物車
+    // 清空購物車
 export const apiDeleteAllFromCart = () => cartRequest.delete(`/cart/deleteAll`);
 // 修改
     // 直接輸入
 export const apiUpdateQuantity = (productId, quantity) => cartRequest.post(`/cart/${productId}/update`, quantity);
-// 增加 1
+    // 增加 1
 export const apiIncreseQuantityByOne = (productId) => cartRequest.get(`/cart/${productId}/increseByOne`);
-// 減少 1
+    // 減少 1
 export const apiDecreseQuantityByOne = (productId) => cartRequest.get(`/cart/${productId}/decreseByOne`);
 //-------------------------------------------------- 購物車相關 API --------------------------------------------------//

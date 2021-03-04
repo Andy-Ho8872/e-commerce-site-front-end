@@ -89,7 +89,7 @@ export const actions = {
                     localStorage.setItem('UserEmail', res.data.user.email)
                 }
                 // 重新導向至首頁
-                this.$router.push('/')
+                this.$router.push({ name: 'index' })
                 // 撈取使用者資料
                 await commit('FETCH_USER_ACCOUNT')
                 // 從 store/cart.js 撈取使用者的購物車資料
@@ -115,12 +115,9 @@ export const actions = {
     },
     // 登出流程
     async logout({ commit }) {
-        const token = {
-            headers: { Authorization: localStorage.getItem('Token') },
-        }
         try {
             // 要取得使用者的 Token 才能執行登出
-            await apiUserLogout(token)
+            await apiUserLogout()
             // 清空 LocalStorage
             await commit('CLEAR_ALL_STORAGE')
             // 重新導向
