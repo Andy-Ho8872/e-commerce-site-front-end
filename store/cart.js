@@ -59,7 +59,7 @@ export const actions = {
     async fetchUserCart({ commit }) {
         try {
             const res = await apiGetCartProducts()
-            let payload = res.data.orders
+            let payload = res.data.carts
             // 將資料寫入
             commit('SET_USER_CART', payload)
         } catch (error) {
