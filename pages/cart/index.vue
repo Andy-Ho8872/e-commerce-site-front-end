@@ -57,16 +57,7 @@
                     </div>
                     <!-- 商品總價 -->
                     <div class="total">
-                        <span>
-                            {{
-                                Math.floor
-                                (
-                                    item.unit_price *
-                                    item.product_quantity *
-                                    item.discount_rate
-                                )
-                            }}
-                        </span>
+                        <span>{{ item.Total }}</span>
                     </div>
                     <!-- 刪除按鈕(單項商品) -->
                     <v-btn
