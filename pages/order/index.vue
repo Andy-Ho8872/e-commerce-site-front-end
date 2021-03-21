@@ -48,16 +48,16 @@ export default {
     },
     methods: {
         ...mapActions({
-            fetchOrder: 'order/fetchUserOrder',
+            fetchAllOrders: 'order/fetchAllOrders',
         }),
     },
     computed: {
         ...mapGetters({
-            userOrder: 'order/getUserOrder',
+            userOrder: 'order/getAllOrders',
         }),
     },
     mounted() {
-        this.fetchOrder()
+        this.fetchAllOrders()
     },
 }
 </script>
