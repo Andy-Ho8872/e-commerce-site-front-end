@@ -57,7 +57,7 @@
                     </div>
                     <!-- 商品總價 -->
                     <div class="total">
-                        <span>{{ item.Total }}</span>
+                        <span>{{ item.total }}</span>
                     </div>
                     <!-- 刪除按鈕(單項商品) -->
                     <v-btn
@@ -119,7 +119,7 @@ export default {
             let summary = 0
             // 累加
             this.userCart.forEach(element => {
-                summary += Number(element.Total) // 將字串轉換為數字(integer)
+                summary += Number(element.total) // 將字串轉換為數字(integer)
             })
             return summary
         },

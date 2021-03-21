@@ -11,15 +11,17 @@
             </thead>
             <tbody class="grey lighten-3 blue-grey--text text--darken-4">
                 <tr v-for="order in userOrder" :key="order.id">
-                    <td data-title="訂單編號">{{ order.id }}</td>
-                    <td data-title="付款方式">{{ order.payment_id }}</td>
-                    <td data-title="出貨狀態">{{ order.status_id }}</td>
-                    <td data-title="送達地址">{{ order.address }}</td>
-                    <td data-title="訂購時間">{{ order.created_at.substring(0, 10) }}</td>
-                    <td data-title="編輯操作">
-                        <nuxt-link :to="{ name: 'order-id', params: { id: order.id } }">
-                            <v-btn color="light-blue" dark rounded>查看</v-btn>
+                    <td data-title="訂單編號" id="order_id">{{ order.id }}</td>
+                    <td data-title="付款方式" id="payment_id">{{ order.payment_id == 1 ? "貨到付款" : "刷卡付款" }}</td>
+                    <td data-title="出貨狀態" id="status_id">{{ order.status_id == 1 ? "出貨中" : "已到貨" }}</td>
+                    <td data-title="商品個數" id="items_count">{{ order.items_count }}</td>
+                    <td data-title="金額總計" id="sumSubtotal">{{ order.sumSubtotal }}</td>
+                    <td data-title="訂購時間" id="created_at">{{ order.created_at.substring(0, 10) }}</td>
+                    <td data-title="編輯操作" id="actions">
+                        <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id } }">
+                            <v-btn dark rounded color="light-blue" class="mx-1">查看</v-btn>
                         </nuxt-link>
+                        <v-btn dark rounded color="red lighten-1" class="mx-1">刪除</v-btn>
                     </td>
                 </tr>
             </tbody>
@@ -37,7 +39,8 @@ export default {
                 { title: '訂單編號' },
                 { title: '付款方式' },
                 { title: '出貨狀態' },
-                { title: '送達地址' },
+                { title: '商品個數' },
+                { title: '金額總計' },
                 { title: '訂購時間' },
                 { title: '編輯操作' },
             ],
