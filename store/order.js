@@ -23,6 +23,9 @@ export const mutations = {
     SET_SINGLE_ORDER(state, payload) {
         state.order = payload
     },
+    CLEAR_SINGLE_ORDER(state) {
+        state.order = []
+    }
 }
 
 export const actions = {
@@ -40,6 +43,9 @@ export const actions = {
     // 撈取單筆訂單
     async fetchSingleOrder({ commit }, orderId) {
         try {
+            // 換下一筆資料前清空之前訂單的資料
+            await commit('CLEAR_SINGLE_ORDER')
+            // 撈取該筆資料
             const res = await apiGetSingleOrder(orderId)
             let payload = res.data.order
             commit('SET_SINGLE_ORDER', payload)
