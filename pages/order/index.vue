@@ -90,9 +90,6 @@ export default {
             userOrder: 'order/getAllOrders',
         }),
     },
-    mounted() {
-        this.fetchAllOrders()
-    },
 }
 </script>
 

@@ -147,13 +147,19 @@ export default {
     },
     methods: {
         ...mapMutations({
-            CLEAR_CART: 'cart/CLEAR_USER_CART', // 清空購物車暫存
-            FETCH_ACCOUNT: 'auth/FETCH_USER_ACCOUNT', // 抓取使用者資料 (從 localStorage)
+            // 清空購物車暫存
+            CLEAR_CART: 'cart/CLEAR_USER_CART', 
+            // 抓取使用者資料 (從 localStorage)
+            FETCH_ACCOUNT: 'auth/FETCH_USER_ACCOUNT', 
         }),
         ...mapActions({
-            logout: 'auth/logout', // 登出使用者
-            searchProducts: 'search/searchProducts', // 搜尋商品
-            fetchUserCart: 'cart/fetchUserCart', // 撈取使用者購物車
+            // 登出使用者
+            logout: 'auth/logout', 
+            // 搜尋商品
+            searchProducts: 'search/searchProducts', 
+            // 撈取資料
+            fetchUserCart: 'cart/fetchUserCart', // 使用者購物車
+            fetchAllOrders: 'order/fetchAllOrders' // 使用者訂單 
         }),
         // 登出使用者
         async logUserOut() {
@@ -187,8 +193,9 @@ export default {
         await this.FETCH_ACCOUNT()
         // 若使用者有登入 (從 localStorage 中做初步判定)
         if (this.user) {
-            // 撈取使用者購物車
-            this.fetchUserCart()
+            // 撈取資料
+            this.fetchUserCart() // 使用者的購物車
+            this.fetchAllOrders() // 使用者的訂單
         }
     },
 }
