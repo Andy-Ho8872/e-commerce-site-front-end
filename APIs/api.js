@@ -108,9 +108,11 @@ export const apiDecreseQuantityByOne = (productId) => authRequest.get(`/cart/${p
 //-------------------------------------------------- 訂單相關 API --------------------------------------------------//
             //----------------------------------- 以下操作必須包含Token -------------------------------------//
 // 讀取
-    // 撈取使用者的所有訂單
+    // 所有訂單
     export const apiGetAllOrders = () => authRequest.get('/order');
-    // 撈取使用者的單筆訂單
+    // 單筆訂單
     export const apiGetSingleOrder = (orderId) => authRequest.get(`/order/${orderId}`);
+// 刪除
+    export const apiDeleteSingleOrder = (orderId) => authRequest.delete(`/order/${orderId}/delete`);
 //-------------------------------------------------- 訂單相關 API --------------------------------------------------//
     

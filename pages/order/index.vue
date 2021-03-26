@@ -28,11 +28,11 @@
                     </td>
                     <!-- 購買件數 -->
                     <td data-title="商品個數" id="items_count">
-                        {{ order.items_count }}
+                        {{ order.items_count }} 件商品
                     </td>
                     <!-- 金額總計 -->
                     <td data-title="金額總計" id="sumSubtotal">
-                        {{ order.sumSubtotal }}
+                        <span class="red--text text--lighten-1">{{ order.sumSubtotal }}</span>
                     </td>
                     <!-- 送達地址 -->
                     <td data-title="送達地址" id="address">
@@ -45,10 +45,14 @@
                     <!-- 訂單操作 -->
                     <td data-title="編輯操作" id="actions">
                         <!-- 刪除 -->
-                        <v-btn dark rounded color="red lighten-1" class="ma-1">刪除</v-btn>
+                        <v-btn dark rounded color="red lighten-1" class="ma-1" @click="deleteSingleOrder(order.id)">
+                            刪除
+                        </v-btn>
                         <!-- 查看 -->
                         <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
-                            <v-btn dark rounded color="light-blue" class="ma-1">查看</v-btn>
+                            <v-btn dark rounded color="light-blue" class="ma-1">
+                                查看
+                            </v-btn>
                         </nuxt-link>
                     </td>
                 </tr>
@@ -78,6 +82,7 @@ export default {
     methods: {
         ...mapActions({
             fetchAllOrders: 'order/fetchAllOrders',
+            deleteSingleOrder: 'order/deleteSingleOrder',
         }),
     },
     computed: {
