@@ -93,67 +93,67 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-$letter-spacing: 0.125rem;
-$padding: 10%;
-$td-padding: 1.5rem 0;
-// only for RWD
-$title-font-weight: 600;
+// <style lang="scss" scoped>
+// $letter-spacing: 0.125rem;
+// $padding: 10%;
+// $td-padding: 1.5rem 0;
+// // only for RWD
+// $title-font-weight: 600;
 
-a {
-    text-decoration: none;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-bottom: 4px solid;
-    box-shadow: 2px 2px 4px #eceff1;
-    th {
-        letter-spacing: $letter-spacing;
-        padding: 1rem;
-    }
-}
-tbody {
-    text-align: center;
-    td {
-        padding: $td-padding;
-        font-weight: $title-font-weight;
-        letter-spacing: $letter-spacing;
-    }
-    tr {
-        &:hover {
-            transform: scale(1.05);
-        }
-        &:nth-child(even) {
-            background: #fff;
-        }
-    }
-}
+// a {
+//     text-decoration: none;
+// }
+// table {
+//     width: 100%;
+//     border-collapse: collapse;
+//     border-bottom: 4px solid;
+//     box-shadow: 2px 2px 4px #eceff1;
+//     th {
+//         letter-spacing: $letter-spacing;
+//         padding: 1rem;
+//     }
+// }
+// tbody {
+//     text-align: center;
+//     td {
+//         padding: $td-padding;
+//         font-weight: $title-font-weight;
+//         letter-spacing: $letter-spacing;
+//     }
+//     tr {
+//         &:hover {
+//             transform: scale(1.05);
+//         }
+//         &:nth-child(even) {
+//             background: #fff;
+//         }
+//     }
+// }
 
-@media (max-width: 768px) {
-    th {
-        display: none;
-    }
-    tbody {
-        td {
-            display: block;
-            position: relative;
-            text-align: right;
-            padding-right: $padding;
-            // 除了最後一個元素之外，其餘的都要加上底線
-            &:not(:last-child) {
-                border-bottom: 1px solid #b0bec5;
-            }
-            // 表格標題
-            &::before {
-                content: attr(data-title);
-                position: absolute;
-                font-weight: $title-font-weight;
-                letter-spacing: $letter-spacing;
-                padding-left: $padding;
-                left: 0;
-            }
-        }
-    }
-}
-</style>
+// @media (max-width: 768px) {
+//     th {
+//         display: none;
+//     }
+//     tbody {
+//         td {
+//             display: block;
+//             position: relative;
+//             text-align: right;
+//             padding-right: $padding;
+//             // 除了最後一個元素之外，其餘的都要加上底線
+//             &:not(:last-child) {
+//                 border-bottom: 1px solid #b0bec5;
+//             }
+//             // 表格標題
+//             &::before {
+//                 content: attr(data-title);
+//                 position: absolute;
+//                 font-weight: $title-font-weight;
+//                 letter-spacing: $letter-spacing;
+//                 padding-left: $padding;
+//                 left: 0;
+//             }
+//         }
+//     }
+// }
+// </style>

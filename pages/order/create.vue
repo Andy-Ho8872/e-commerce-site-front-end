@@ -12,10 +12,10 @@
             <tbody class="teal lighten-4 blue-grey--text text--darken-4">
                 <tr v-for="item in userCart" :key="item.id">
                     <td data-title="商品" id="item_image">
-                        <v-col class="justify-start align-center">
+                        <div class="justify-start align-center">
                             <img :src="item.imgUrl" :alt="item.title" width="80" height="80">
                             <div>{{ item.title }}</div>
-                        </v-col>
+                        </div>
                     </td>
                     <td data-title="單價" id="item_unit_price">
                         {{ item.unit_price }}
@@ -66,67 +66,67 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
-$letter-spacing: 0.125rem;
-$padding: 10%;
-$td-padding: 1.5rem 0;
-// only for RWD
-$title-font-weight: 600;
+// <style lang="scss" scoped>
+// $letter-spacing: 0.125rem;
+// $padding: 10%;
+// $td-padding: 1.5rem 0;
+// // only for RWD
+// $title-font-weight: 600;
 
-a {
-    text-decoration: none;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-bottom: 4px solid;
-    box-shadow: 2px 2px 4px #eceff1;
-    th {
-        letter-spacing: $letter-spacing;
-        padding: 1rem;
-    }
-}
-tbody {
-    text-align: center;
-    td {
-        padding: $td-padding;
-        font-weight: $title-font-weight;
-        letter-spacing: $letter-spacing;
-    }
-    tr {
-        &:hover {
-            transform: scale(1.05);
-        }
-        &:nth-child(even) {
-            background: #fff;
-        }
-    }
-}
+// a {
+//     text-decoration: none;
+// }
+// table {
+//     width: 100%;
+//     border-collapse: collapse;
+//     border-bottom: 4px solid;
+//     box-shadow: 2px 2px 4px #eceff1;
+//     th {
+//         letter-spacing: $letter-spacing;
+//         padding: 1rem;
+//     }
+// }
+// tbody {
+//     text-align: center;
+//     td {
+//         padding: $td-padding;
+//         font-weight: $title-font-weight;
+//         letter-spacing: $letter-spacing;
+//     }
+//     tr {
+//         &:hover {
+//             transform: scale(1.05);
+//         }
+//         &:nth-child(even) {
+//             background: #fff;
+//         }
+//     }
+// }
 
-@media (max-width: 768px) {
-    th {
-        display: none;
-    }
-    tbody {
-        td {
-            display: block;
-            position: relative;
-            text-align: right;
-            padding-right: $padding;
-            // 除了最後一個元素之外，其餘的都要加上底線
-            &:not(:last-child) {
-                border-bottom: 1px solid #b0bec5;
-            }
-            // 表格標題
-            &::before {
-                content: attr(data-title);
-                position: absolute;
-                font-weight: $title-font-weight;
-                letter-spacing: $letter-spacing;
-                padding-left: $padding;
-                left: 0;
-            }
-        }
-    }
-}
+// @media (max-width: 768px) {
+//     th {
+//         display: none;
+//     }
+//     tbody {
+//         td {
+//             display: block;
+//             position: relative;
+//             text-align: right;
+//             padding-right: $padding;
+//             // 除了最後一個元素之外，其餘的都要加上底線
+//             &:not(:last-child) {
+//                 border-bottom: 1px solid #b0bec5;
+//             }
+//             // 表格標題
+//             &::before {
+//                 content: attr(data-title);
+//                 position: absolute;
+//                 font-weight: $title-font-weight;
+//                 letter-spacing: $letter-spacing;
+//                 padding-left: $padding;
+//                 left: 0;
+//             }
+//         }
+//     }
+// }
 </style>
