@@ -1,7 +1,9 @@
 <template>
     <v-container>
         <div class="text-center text-h4 mb-6">您好，User，以下為您的訂單</div>
+        <!-- 表格內容 -->
         <table class="light-blue darken-1 rounded-xl">
+            <!-- 標題 -->
             <thead class="white--text font-weight-bold">
                 <tr>
                     <th v-for="(head, index) in tableHeads" :key="index" class="text-center">
@@ -9,31 +11,42 @@
                     </th>
                 </tr>
             </thead>
+            <!-- 訂單細項 -->
             <tbody class="grey lighten-3 blue-grey--text text--darken-4">
                 <tr v-for="order in userOrder" :key="order.id">
+                    <!-- 訂單編號 -->
                     <td data-title="訂單編號" id="order_id">
                         {{ order.id }}
                     </td>
+                    <!-- 付款方式 -->
                     <td data-title="付款方式" id="payment_id">
                         {{ order.payment_id == 1 ? '貨到付款' : '刷卡付款' }}
                     </td>
+                    <!-- 出貨狀態 -->
                     <td data-title="出貨狀態" id="status_id">
                         {{ order.status_id == 1 ? '出貨中' : '已到貨' }}
                     </td>
+                    <!-- 購買件數 -->
                     <td data-title="商品個數" id="items_count">
                         {{ order.items_count }}
                     </td>
+                    <!-- 金額總計 -->
                     <td data-title="金額總計" id="sumSubtotal">
                         {{ order.sumSubtotal }}
                     </td>
+                    <!-- 送達地址 -->
                     <td data-title="送達地址" id="address">
                         {{ order.address.substring(0, 10) }}
                     </td>
+                    <!-- 訂購時間 -->
                     <td data-title="訂購時間" id="created_at">
                         {{ order.created_at.substring(0, 10) }}
                     </td>
+                    <!-- 訂單操作 -->
                     <td data-title="編輯操作" id="actions">
+                        <!-- 刪除 -->
                         <v-btn dark rounded color="red lighten-1" class="ma-1">刪除</v-btn>
+                        <!-- 查看 -->
                         <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
                             <v-btn dark rounded color="light-blue" class="ma-1">查看</v-btn>
                         </nuxt-link>
