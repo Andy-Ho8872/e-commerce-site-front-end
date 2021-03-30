@@ -114,7 +114,11 @@ export const apiDecreseQuantityByOne = (productId) => authRequest.get(`/cart/${p
     export const apiGetAllOrders = () => authRequest.get('/order');
     // 單筆訂單
     export const apiGetSingleOrder = (orderId) => authRequest.get(`/order/${orderId}`);
+// 新增
+    // 建立訂單
+    export const apiCreateOrder = (data) => authRequest.post('/order/create', data);
 // 刪除
+    // 刪除訂單
     export const apiDeleteSingleOrder = (orderId) => authRequest.delete(`/order/${orderId}/delete`);
 //-------------------------------------------------- 訂單相關 API --------------------------------------------------//
     

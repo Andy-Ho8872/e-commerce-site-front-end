@@ -45,8 +45,10 @@
                         <label class="ma-2 blue blue-grey lighten-4" v-for="payment in formData" :key="payment.id">
                             <!-- 預設選擇現金付款 -->
                             <input type="radio" name="payment_id" id="payment_id" 
-                            :value="payment.id" 
-                            :checked="payment.id == 1 ? true : false">
+                                v-model="form.payment_id"
+                                :value="payment.id" 
+                                :checked="payment.id == 1 ? true : false"
+                            >
                             <div>
                                 <v-icon dark>fa-bookmark fa-fw</v-icon>
                                 <span>{{ payment.title }}</span>
@@ -59,9 +61,10 @@
                     <v-card-title>輸入您的地址</v-card-title>
                     <v-text-field
                         class="text_field"
-                        outlined
                         name="address"
+                        v-model="form.address"
                         :rules="[rules.required]"
+                        outlined
                         label="您的地址"
                         placeholder="OO市OO區OO路OO號..."
                         hide-details="auto"
@@ -70,7 +73,11 @@
                 <!-- 按鈕與金額顯示 -->
                 <div class="d-flex align-center justify-center">
                     <!-- 送出按鈕 -->
-                    <v-btn large rounded color="primary" class="ma-4" :disabled="!valid" :loading="loading">
+                    <v-btn large rounded color="primary" class="ma-4"
+                        @click="orderCreate"
+                        :disabled="!valid" 
+                        :loading="loading"
+                    >
                         <v-icon>fa-check fa-fw</v-icon>
                         <span>建立訂單</span>
                     </v-btn>
@@ -98,6 +105,11 @@ export default {
                 { title: '數量' },
                 { title: '總價' },          
             ],
+            // 表單輸入
+            form: {
+                payment_id: null,
+                address: ''
+            },
             // 表單驗證
             loading: false,
             valid: false,
@@ -127,8 +139,14 @@ export default {
     },
     methods: {
         ...mapActions({
-            fetchFormData: 'order/fetchFormData'
-        })
+            // 撈取後端表單資料
+            fetchFormData: 'order/fetchFormData',
+            // 建立訂單
+            createOrder: 'order/createOrder'
+        }),
+        orderCreate() {
+            this.createOrder(this.form)
+        }
     },
     mounted() {
         this.fetchFormData()

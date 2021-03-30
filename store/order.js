@@ -1,5 +1,6 @@
 import {
     apiGetFormData,
+    apiCreateOrder,
     apiGetAllOrders,
     apiGetSingleOrder,
     apiDeleteSingleOrder,
@@ -85,6 +86,23 @@ export const actions = {
         } catch (error) {
             console.log(error)
             console.log('抓取失敗 from /store/order.js')
+        }
+    },
+    // 建立訂單
+    async createOrder({ dispatch, commit }, data) {
+        try {
+            await apiCreateOrder({
+                payment_id: data.payment_id,
+                address: data.address
+            })
+            // 從 store/cart.js 清空使用者的購物車資料
+            await commit('cart/CLEAR_USER_CART', null, { root: true })
+            // 撈取新的資料
+            await dispatch('fetchAllOrders')
+            // 建立後導向至訂單頁面
+            this.$router.push({ name: 'order' })
+        } catch (error) {
+            console.log('建立失敗 from /store/order.js')
         }
     },
     // 刪除訂單
