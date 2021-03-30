@@ -42,20 +42,14 @@
                 <div>
                     <v-card-title>選擇您的付款方式</v-card-title>
                     <v-card-subtitle class="mt-2">
-                        <!-- 現金 -->
-                        <label class="ma-2 blue blue-grey lighten-4">
-                            <input type="radio" name="payment_id" id="payment_id" value="1">
+                        <label class="ma-2 blue blue-grey lighten-4" v-for="payment in formData" :key="payment.id">
+                            <!-- 預設選擇現金付款 -->
+                            <input type="radio" name="payment_id" id="payment_id" 
+                            :value="payment.id" 
+                            :checked="payment.id == 1 ? true : false">
                             <div>
-                                <v-icon dark>fa-money-bill-wave-alt fa-fw</v-icon>
-                                <span>貨到付款</span>
-                            </div>
-                        </label>
-                        <!-- 刷卡 -->
-                        <label class="ma-2 blue blue-grey lighten-4">
-                            <input type="radio" name="payment_id" id="payment_id" value="2">
-                            <div>
-                                <v-icon dark>fa-credit-card fa-fw</v-icon>
-                                <span>刷卡付款</span>
+                                <v-icon dark>fa-bookmark fa-fw</v-icon>
+                                <span>{{ payment.title }}</span>
                             </div>
                         </label>
                     </v-card-subtitle>
@@ -115,7 +109,10 @@ export default {
     },
     computed: {
         ...mapGetters({
-            userCart: 'cart/getUserCart', // 使用者的購物車資料
+            // 使用者的購物車資料
+            userCart: 'cart/getUserCart', 
+            // 後端表單資料
+            formData: 'order/getFormData'
         }),
         // 價格小計
         subTotal() {
@@ -128,6 +125,14 @@ export default {
             return summary
         },
     },
+    methods: {
+        ...mapActions({
+            fetchFormData: 'order/fetchFormData'
+        })
+    },
+    mounted() {
+        this.fetchFormData()
+    }
 }
 </script>
 

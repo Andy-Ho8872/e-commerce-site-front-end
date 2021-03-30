@@ -108,6 +108,8 @@ export const apiDecreseQuantityByOne = (productId) => authRequest.get(`/cart/${p
 //-------------------------------------------------- 訂單相關 API --------------------------------------------------//
             //----------------------------------- 以下操作必須包含Token -------------------------------------//
 // 讀取
+    // 後端傳來的表單資料
+    export const apiGetFormData = () => authRequest.get('/order/getFormData');
     // 所有訂單
     export const apiGetAllOrders = () => authRequest.get('/order');
     // 單筆訂單

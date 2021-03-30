@@ -1,10 +1,13 @@
 import {
+    apiGetFormData,
     apiGetAllOrders,
     apiGetSingleOrder,
     apiDeleteSingleOrder,
 } from '../APIs/api.js'
 
 export const state = () => ({
+    // 後端回傳的表單資訊
+    formData: [],
     // 使用者的所有訂單
     orders: [],
     // 單筆訂單
@@ -14,6 +17,9 @@ export const state = () => ({
 })
 
 export const getters = {
+    getFormData(state) {
+        return state.formData
+    },
     getAllOrders(state) {
         return state.orders
     },
@@ -23,6 +29,9 @@ export const getters = {
 }
 
 export const mutations = {
+    SET_FORM_DATA(state, payload) {
+        state.formData = payload
+    },
     SET_ALL_ORDERS(state, payload) {
         state.orders = payload
     },
@@ -38,6 +47,16 @@ export const mutations = {
 }
 
 export const actions = {
+    // 撈取後端表單資料
+    async fetchFormData({ commit }) {
+        try {
+            const res = await apiGetFormData()
+            let payload = res.data.payments
+            commit('SET_FORM_DATA', payload)
+        } catch (error) {
+            console.log('抓取失敗 from /store/order.js')
+        }
+    },
     // 撈取所有訂單
     async fetchAllOrders({ commit }) {
         try {
