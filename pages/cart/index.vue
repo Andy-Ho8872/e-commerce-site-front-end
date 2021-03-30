@@ -86,12 +86,14 @@
                         清空購物車
                     </v-btn>
                     <!-- 結帳按鈕 -->
-                    <v-btn 
-                        class="white--text mx-6" 
-                        color="blue lighten-2"
-                        >
-                        結帳
-                    </v-btn>
+                    <nuxt-link :to="{ name: 'order-create' }">
+                        <v-btn 
+                            class="white--text mx-6" 
+                            color="blue lighten-2"
+                            >
+                            結帳
+                        </v-btn>
+                    </nuxt-link>
                 </div>
             </v-card>
         </v-col>
