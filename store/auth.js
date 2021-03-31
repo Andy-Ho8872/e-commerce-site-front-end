@@ -6,11 +6,15 @@ import {
 } from '~/APIs/api.js'
 
 export const state = () => ({
+    token: null,
     userAccount: null,
     message: null, // 錯誤訊息
 })
 
 export const getters = {
+    getToken(state) {
+        return state.token
+    },
     getUserAccount(state) {
         return state.userAccount
     },
@@ -20,18 +24,18 @@ export const getters = {
 }
 
 export const mutations = {
+    // 取得 Token
+    SET_TOKEN(state) {
+        if (process.browser) {
+            const token = localStorage.getItem('Token')
+            // 更新使用者狀態
+            state.token = token
+        }
+    },
     // v-model 更新 state 狀態
     SET_USER_DATA(state, { userData }) {
         state.user.email = userData.email
         state.user.password = userData.password
-    },
-    // 取得使用者資訊
-    FETCH_USER_ACCOUNT(state) {
-        if (process.browser) {
-            const user = localStorage.getItem('UserEmail')
-            // 更新使用者狀態
-            state.userAccount = user
-        }
     },
     // 取得錯誤訊息
     SET_MESSAGE(state, msg) {

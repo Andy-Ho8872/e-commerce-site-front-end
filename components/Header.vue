@@ -30,8 +30,10 @@
                 <v-row v-if="user" class="content">
                     <!-- 使用者帳號 -->
                     <li>
-                        <v-icon class="icon" dark small>fa-user fa-fw</v-icon>
-                        <span>{{ user }}</span>
+                        <nuxt-link :to="{ name: 'user' }">
+                            <v-icon class="icon" dark small>fa-user fa-fw</v-icon>
+                            <span>{{ user.email }}</span>
+                        </nuxt-link>
                     </li>
                     <!-- 登出按鈕 -->
                     <li @click="logUserOut">
@@ -145,12 +147,22 @@ export default {
             searchText: '',
         }
     },
+    computed: {
+        ...mapGetters({
+            // 使用者 Token
+            token: 'auth/getToken',
+            // 使用者資訊
+            user: 'user/getUserInfo',
+            // 使用者購物車中商品數量
+            userCart: 'cart/getUserCart',
+        }),
+    },
     methods: {
         ...mapMutations({
             // 清空購物車暫存
             CLEAR_CART: 'cart/CLEAR_USER_CART', 
-            // 抓取使用者資料 (從 localStorage)
-            FETCH_ACCOUNT: 'auth/FETCH_USER_ACCOUNT', 
+            // 抓取 Token (從 localStorage)
+            SET_TOKEN: 'auth/SET_TOKEN'
         }),
         ...mapActions({
             // 登出使用者
@@ -158,8 +170,9 @@ export default {
             // 搜尋商品
             searchProducts: 'search/searchProducts', 
             // 撈取資料
+            fetchUserInfo: 'user/fetchUserInfo', // 使用者的資料
             fetchUserCart: 'cart/fetchUserCart', // 使用者購物車
-            fetchAllOrders: 'order/fetchAllOrders' // 使用者訂單 
+            fetchAllOrders: 'order/fetchAllOrders', // 使用者訂單 
         }),
         // 登出使用者
         async logUserOut() {
@@ -172,14 +185,6 @@ export default {
             this.searchProducts(this.searchText)
         },
     },
-    computed: {
-        ...mapGetters({
-            // 使用者資訊
-            user: 'auth/getUserAccount',
-            // 使用者購物車中商品數量
-            userCart: 'cart/getUserCart',
-        }),
-    },
     async mounted() {
         // 點擊漢堡 SideBar 以外的區域則會關閉
         if (this.$refs.extended.style.visibility !== 'hidden') {
@@ -189,11 +194,12 @@ export default {
                 }
             })
         }
-        // 抓取使用者資料
-        await this.FETCH_ACCOUNT()
-        // 若使用者有登入 (從 localStorage 中做初步判定)
-        if (this.user) {
+        // 取得憑證
+        await this.SET_TOKEN()
+        // 若使用者有登入(持有 Token)，從 localStorage 中做初步判定)
+        if (this.token) {
             // 撈取資料
+            this.fetchUserInfo() // 使用者的資料
             this.fetchUserCart() // 使用者的購物車
             this.fetchAllOrders() // 使用者的訂單
         }

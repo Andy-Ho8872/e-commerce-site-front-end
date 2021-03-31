@@ -113,9 +113,6 @@ export default {
             fetchUserInfo: 'user/fetchUserInfo',
         }),
     },
-    mounted() {
-        this.fetchUserInfo()
-    },
 }
 </script>
 
