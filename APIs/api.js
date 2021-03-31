@@ -14,21 +14,21 @@ const userCsrfRequest = axios.create({
 
 // 產品請求-------------------------------------------------------------------Start
 const productRequest = axios.create({
-    baseURL: `${ base }/products`
+    baseURL: `${ base }/v1/products`
 });
 // 產品請求-------------------------------------------------------------------End
 
 
 // 使用者請求------------------------------------------------------------------Start
 const userRequest = axios.create({
-    baseURL: `${ base }/user`
+    baseURL: `${ base }/v1/user`
 });
 // 使用者請求------------------------------------------------------------------End
     
 
 // 驗證請求-------------------------------------------------------------------Start
 const authRequest = axios.create({
-    baseURL: `${ base }/auth/user`
+    baseURL: `${ base }/v1/auth/user`
 });
 // 設置攔截器 (interceptors)
 authRequest.interceptors.request.use(
