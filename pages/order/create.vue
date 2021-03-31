@@ -107,7 +107,7 @@ export default {
             ],
             // 表單輸入
             form: {
-                payment_id: null,
+                payment_id: 1,
                 address: ''
             },
             // 表單驗證
@@ -115,7 +115,6 @@ export default {
             valid: false,
             rules: {
                 required: value => !!value || '此欄位必填',
-                min: value => value.length >= 6 || '至少需要6個英文或數字',
             },
         }
     },
