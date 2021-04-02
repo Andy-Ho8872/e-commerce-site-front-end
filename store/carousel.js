@@ -26,42 +26,43 @@ export const mutations = {
     SLIDE_CAROUSEL(state, value) {
         // 滑動計數
         state.counter += value
-        //先取得使用者當前螢幕的寬度
+        // 先取得使用者當前螢幕的寬度
         const clientWidth = document.body.offsetWidth
         // 滑動區域
         const slide = document.querySelector('.switch_photo')
-
-        // i Phone 5/SE 寬度 (320px)
-        if (clientWidth === 320) {
-            state.slideValue = clientWidth - 20 // 300 px
-            state.maxSlide = 9
+        // 依寬度決定滑動量
+        switch (clientWidth) {
+            // i Phone 5/SE 寬度 (320px)
+            case 320:
+                state.slideValue = clientWidth - 20 // 300 px
+                state.maxSlide = 9
+                break;
+            // i Phone 6, 7, 8, X 寬度 (375px)
+            case 375:
+                state.slideValue = clientWidth - 20 // 355 px
+                state.maxSlide = 9
+                break;
+            // i Phone 6/7/8, plus 寬度(414px)
+            case 414:
+                state.slideValue = clientWidth - 20 // 394 px
+                state.maxSlide = 9
+                break;
+            // i pad 寬度 (768px) 一次顯示 2 張圖片
+            case 768:
+                state.slideValue = clientWidth - 20 // 748 px
+                state.maxSlide = 4
+                break;
+            // i pad pro 寬度 (1024px) 一次顯示 2 張圖片
+            case 1024: 
+                state.slideValue = clientWidth - 148 // 876 px
+                state.maxSlide = 4
+                break;
+            // 桌電瀏覽原始寬度 (355 px (v-card 寬度) )
+            default:
+                state.slideValue = state.slideValue
+                state.maxSlide = 5
+                break;
         }
-        // i Phone 6, 7, 8, X 寬度 (375px)
-        else if (clientWidth === 375) {
-            state.slideValue = clientWidth - 20 // 355 px
-            state.maxSlide = 9
-        }
-        // i Phone 6/7/8, plus 寬度(414px)
-        else if (clientWidth === 414) {
-            state.slideValue = clientWidth - 20 // 394 px
-            state.maxSlide = 9
-        }
-        // i pad 寬度 (768px) 一次顯示 2 張圖片
-        else if (clientWidth === 768) {
-            state.slideValue = clientWidth - 20 // 748 px
-            state.maxSlide = 4
-        }
-        // i pad pro 寬度 (1024px) 一次顯示 2 張圖片
-        else if (clientWidth === 1024) {
-            state.slideValue = clientWidth - 148 // 876 px
-            state.maxSlide = 4
-        }
-        // 桌電瀏覽原始寬度 (355 px (v-card 寬度) )
-        else {
-            state.slideValue = state.slideValue
-            state.maxSlide = 5
-        }
-
         // 圖片轉場、位移 (因為有使用 Keep-Alive 來 Cache 整個組件，所以要判斷 Slide 是否存在於當前頁面)
         if (slide) {
             slide.style.transition = 'transform 0.4s ease-in-out'
@@ -82,7 +83,6 @@ export const mutations = {
         }
     },
 }
-
 export const actions = {
     // 撈取輪播資料
     async fetchCarouselItem({ commit }) {
