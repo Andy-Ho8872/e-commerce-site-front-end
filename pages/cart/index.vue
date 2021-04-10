@@ -1,8 +1,14 @@
 <template>
     <v-container>
         <!-- 如果陣列內長度為 0 則顯示-->
-        <div v-if="!userCart.length">
-            <h1>您的購物車中沒有東西。</h1>
+        <div v-if="!userCart.length" class="text-center">
+            <h1 class="mb-4">您的購物車中沒有東西。</h1>
+            <nuxt-link  :to="{ name: 'pagination-pageNumber', params: { pageNumber: 1 }}">
+                <v-btn color="primary" x-large depressed>
+                    <v-icon>fa-cart-arrow-down</v-icon>
+                    <span class="mx-2">點我選購~</span> 
+                </v-btn>
+            </nuxt-link>
         </div>
         <v-col cols="12" class="cart_page_wrapper">
             <!-- 購物車標頭 -->
