@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-card class="pa-4" rounded="lg">
+        <v-card class="pa-4" rounded="lg" v-if="user">
             <div class="d-flex justify-center align-center text-center text-h6 font-weight-bold">
                 歡迎回來 {{ user.email }}
             </div>
@@ -43,10 +43,10 @@
                 </v-tab-item>
                 <!-- 我的訂單 -->
                 <v-tab-item>
-                    <v-card flat v-if="! user.orders.length" class="ma-4 pa-4">
+                    <v-card flat v-if="! userOrder.length" class="ma-4 pa-4">
                         <h2>您目前沒有任何訂單。</h2>
                     </v-card>
-                    <v-card flat v-for="order in user.orders" :key="order.id">
+                    <v-card flat v-for="order in userOrder" :key="order.id">
                         <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
                             <!-- 訂單編號 -->
                             <v-card-subtitle>
@@ -109,6 +109,8 @@ export default {
         ...mapGetters({
             // 使用者的資料
             user: 'auth/getUserInfo',
+            // 訂單資料
+            userOrder: 'order/getAllOrders'
         }),
     },
 }
