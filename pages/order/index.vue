@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div class="text-center text-h4 mb-6">您好，User，以下為您的訂單</div>
+        <div class="text-center text-h4 mb-6">您好，{{ user.email }}，以下為您的訂單</div>
         <!-- 表格內容 -->
         <table class="light-blue darken-1 rounded-xl">
             <!-- 標題 -->
@@ -87,6 +87,9 @@ export default {
     },
     computed: {
         ...mapGetters({
+            // 使用者的資料
+            user: 'auth/getUserInfo',
+            // 訂單資料
             userOrder: 'order/getAllOrders',
         }),
     },
