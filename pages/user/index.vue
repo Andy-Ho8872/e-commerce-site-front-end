@@ -43,6 +43,9 @@
                 </v-tab-item>
                 <!-- 我的訂單 -->
                 <v-tab-item>
+                    <v-card flat v-if="! user.orders.length" class="ma-4 pa-4">
+                        <h2>您目前沒有任何訂單。</h2>
+                    </v-card>
                     <v-card flat v-for="order in user.orders" :key="order.id">
                         <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
                             <!-- 訂單編號 -->
@@ -84,7 +87,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     data() {
@@ -105,15 +108,8 @@ export default {
     computed: {
         ...mapGetters({
             // 使用者的資料
-            user: 'user/getUserInfo',
-        }),
-    },
-    methods: {
-        ...mapActions({
-            fetchUserInfo: 'user/fetchUserInfo',
+            user: 'auth/getUserInfo',
         }),
     },
 }
 </script>
-
-<style lang="less" scoped></style>

@@ -1,28 +1,10 @@
 export default async function({ store, route, redirect }) {
     // // 未驗證導向登入頁面
-    let user = store.state.auth.userAccount
-        if (!user) {
-            console.log(user);
-            return redirect({ name: 'auth-login' })
-        }
-
-
-        // if (process.server) {
-        //     if()
-        // }
-    
-
-    // const user = store.state.auth.userAccount
-
-    // if (user) {
-    //     // alert("你已經登入囉")
-    //     console.log(user)
-    //     return redirect({ name: 'index' })
-    // }
-
-    // if(!user) {
-    //     return redirect({ name: 'auth-login' })
-    // }
+    let user = store.state.auth.user
+    if (!user) {
+        console.log(user)
+        return redirect({ name: 'auth-login' })
+    }
 }
 
 // middleware 觸發流程

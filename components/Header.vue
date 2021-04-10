@@ -36,7 +36,7 @@
                         </nuxt-link>
                     </li>
                     <!-- 登出按鈕 -->
-                    <li @click="logUserOut">
+                    <li @click="logout">
                         <v-icon class="icon" dark small>fa-share fa-fw</v-icon>
                         <span>登出</span>
                     </li>
@@ -152,17 +152,15 @@ export default {
             // 使用者 Token
             token: 'auth/getToken',
             // 使用者資訊
-            user: 'user/getUserInfo',
+            user: 'auth/getUserInfo',
             // 使用者購物車中商品數量
             userCart: 'cart/getUserCart',
         }),
     },
     methods: {
         ...mapMutations({
-            // 清空購物車暫存
-            CLEAR_CART: 'cart/CLEAR_USER_CART', 
             // 抓取 Token (從 localStorage)
-            SET_TOKEN: 'auth/SET_TOKEN'
+            SET_TOKEN: 'auth/SET_TOKEN',
         }),
         ...mapActions({
             // 登出使用者
@@ -170,16 +168,10 @@ export default {
             // 搜尋商品
             searchProducts: 'search/searchProducts', 
             // 撈取資料
-            fetchUserInfo: 'user/fetchUserInfo', // 使用者的資料
+            fetchUserInfo: 'auth/fetchUserInfo', // 使用者的資料
             fetchUserCart: 'cart/fetchUserCart', // 使用者購物車
             fetchAllOrders: 'order/fetchAllOrders', // 使用者訂單 
         }),
-        // 登出使用者
-        async logUserOut() {
-            await this.logout()
-            // 等使用者登出之後則清除購物車暫存
-            this.CLEAR_CART()
-        },
         // 搜尋功能
         search() {
             this.searchProducts(this.searchText)
