@@ -12,28 +12,22 @@
         </div>
         <v-col cols="12" class="cart_page_wrapper">
             <!-- 購物車標頭 -->
-            <v-card class="cart_page_header d-flex mb-5 pa-5 rounded-t-xl" elevation="2">
-                <div>
-                    <span>商品</span>
-                </div>
-                <v-spacer></v-spacer>
-                <div class="content d-flex justify-space-between">
-                    <span>單價</span>
-                    <span>數量</span>
-                    <span>總計</span>
-                    <span>動作</span>
+            <v-card class="cart_page_header justify-space-around d-flex mb-5 pa-5 rounded-t-xl" elevation="2">
+                <div v-for="(header, index) in cartHeader" :key="index">
+                    <v-icon color="blue lighten-1" class="mb-1">{{ header.icon }}</v-icon>
+                    <span class="font-weight-bold">{{ header.text }}</span>
                 </div>
             </v-card>
             <!-- 購物車詳細內容 -->
             <v-card
-                class="details d-flex justify-space-between pa-5"
+                class="details d-flex justify-space-around pa-5"
                 tile
                 v-for="item in userCart"
                 :key="item.id"
             >
                 <!-- 商品名稱與圖片 (可導覽至該商品頁面) -->
                 <nuxt-link :to="`products/${item.product_id}`">
-                    <div class="d-flex align-center">
+                    <div class="d-flex flex-column justify-center align-center">
                         <v-img
                             width="80"
                             height="80"
@@ -42,7 +36,7 @@
                         <span class="mx-2">{{ item.title }}</span>
                     </div>
                 </nuxt-link>
-                <div class="content d-flex justify-space-between align-center">
+                <div class="content d-flex justify-space-around align-center">
                     <!-- 價格區域 -->
                     <div class="price_zone d-flex flex-column ">
                         <!-- 原價 -->
@@ -63,7 +57,7 @@
                     </div>
                     <!-- 商品總價 -->
                     <div class="total">
-                        <span>{{ item.total }}</span>
+                        <span>${{ item.total }}</span>
                     </div>
                     <!-- 刪除按鈕(單項商品) -->
                     <v-btn
@@ -71,14 +65,15 @@
                         class="action white--text"
                         color="red lighten-2"
                     >
-                        刪除
+                        <v-icon small>fa-trash-alt fa-fw</v-icon>
+                        <span class="ml-2">刪除</span>
                     </v-btn>
                 </div>
             </v-card>
             <!-- 購物車結算 -->
             <v-card class="cart_page_footer d-flex mt-4 pa-4 rounded-b-xl align-center text-right" elevation="2">
                 <!-- 小計金額 -->
-                <div class="subtotal mb-2 title font-weight-bold">
+                <div class="subtotal title font-weight-bold">
                     小計: <span class="red--text">{{ subTotal }}</span>
                 </div>
                 <!-- Footer 按鈕群組 -->
@@ -89,7 +84,8 @@
                         class="white--text mx-6" 
                         color="error"
                     >
-                        清空購物車
+                        <v-icon small>fa-calendar-times fa-fw</v-icon>
+                        <span class="ml-2">清空購物車</span>
                     </v-btn>
                     <!-- 結帳按鈕 -->
                     <nuxt-link :to="{ name: 'order-create' }">
@@ -97,7 +93,8 @@
                             class="white--text mx-6" 
                             color="blue lighten-2"
                             >
-                            結帳
+                            <v-icon small>fa-shopping-basket fa-fw</v-icon>
+                            <span class="ml-2">結帳</span>
                         </v-btn>
                     </nuxt-link>
                 </div>
@@ -111,6 +108,32 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
     middleware: 'authenticated', // 要先通過驗證才能訪問此頁面
+    data() {
+        return {
+            cartHeader: [
+                {
+                    icon: 'fa-shopping-cart fa-fw',
+                    text: '商品'
+                },
+                {
+                    icon: 'fa-dollar-sign fa-fw',
+                    text: '單價'
+                },
+                {
+                    icon: 'fa-random fa-fw',
+                    text: '數量'
+                },
+                {
+                    icon: 'fa-clipboard-list fa-fw',
+                    text: '總計'
+                },
+                {
+                    icon: 'fa-exclamation-circle fa-fw',
+                    text: '動作'
+                },
+            ]
+        }
+    },
     methods: {
         ...mapActions({
             deleteFromCart: 'cart/deleteFromCart', // 點擊按鈕購物車內的商品 (單項)
@@ -137,7 +160,7 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-    width: 60%;
+    width: 75%;
 }
 .cart_page_footer .subtotal {
     width: 100%;
