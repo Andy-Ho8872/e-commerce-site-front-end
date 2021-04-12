@@ -15,6 +15,8 @@ export const state = () => ({
     order: [],
     // 點擊 id 紀錄
     lastClickedRecord: null,
+    // pending 狀態
+    pending: false
 })
 
 export const getters = {
@@ -27,6 +29,9 @@ export const getters = {
     getSingleOrder(state) {
         return state.order
     },
+    getPending(state) {
+        return state.pending
+    }
 }
 
 export const mutations = {
@@ -39,6 +44,9 @@ export const mutations = {
     SET_SINGLE_ORDER(state, payload) {
         state.order = payload
     },
+    SET_PENDING(state, payload) {
+        state.pending = payload
+    },
     CLEAR_SINGLE_ORDER(state) {
         state.order = []
     },
@@ -49,13 +57,16 @@ export const mutations = {
 
 export const actions = {
     // 撈取後端表單資料
-    async fetchFormData({ commit }) {
-        try {
-            const res = await apiGetFormData()
-            let payload = res.data.payments
-            commit('SET_FORM_DATA', payload)
-        } catch (error) {
-            console.log('抓取失敗 from /store/order.js')
+    async fetchFormData({ state, commit }) {
+        // 若 state 中沒有表單資料才和後端請求
+        if(state.formData.length == 0) {
+            try {
+                const res = await apiGetFormData()
+                let payload = res.data.payments
+                commit('SET_FORM_DATA', payload)
+            } catch (error) {
+                console.log('抓取失敗 from /store/order.js')
+            }
         }
     },
     // 撈取所有訂單
@@ -91,15 +102,19 @@ export const actions = {
     // 建立訂單
     async createOrder({ dispatch, commit }, data) {
         try {
+            // pending 狀態
+            commit('SET_PENDING', true)
+            // 向後端發送資料
             await apiCreateOrder({
                 payment_id: data.payment_id,
                 address: data.address
             })
-            // 從 store/cart.js 清空使用者的購物車資料
+            // 訂單建立後從 store/cart.js 清空使用者的購物車資料
             await commit('cart/CLEAR_USER_CART', null, { root: true })
-            // 撈取新的資料
+            // 撈取最新的訂單資料
             await dispatch('fetchAllOrders')
-            // 建立後導向至訂單頁面
+            commit('SET_PENDING', false)
+            // 最後導向至訂單頁面
             this.$router.push({ name: 'order' })
         } catch (error) {
             console.log('建立失敗 from /store/order.js')

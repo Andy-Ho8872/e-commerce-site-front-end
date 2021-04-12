@@ -44,10 +44,10 @@
                     <v-card-subtitle class="mt-2">
                         <label class="ma-2 blue blue-grey lighten-4" v-for="payment in formData" :key="payment.id">
                             <!-- 預設選擇現金付款 -->
-                            <input type="radio" name="payment_id" id="payment_id" 
+                            <input type="radio" name="payment_id" 
                                 v-model="form.payment_id"
                                 :value="payment.id" 
-                                :checked="payment.id == 1 ? true : false"
+                                :checked="payment.id == 1"
                             >
                             <div>
                                 <v-icon dark>fa-bookmark fa-fw</v-icon>
@@ -74,7 +74,7 @@
                 <div class="d-flex align-center justify-center">
                     <!-- 送出按鈕 -->
                     <v-btn large rounded color="primary" class="ma-4"
-                        @click="orderCreate"
+                        @click="createOrder(form)"
                         :disabled="!valid" 
                         :loading="loading"
                     >
@@ -107,11 +107,11 @@ export default {
             ],
             // 表單輸入
             form: {
+                // 預設為現金付款
                 payment_id: 1,
                 address: ''
             },
             // 表單驗證
-            loading: false,
             valid: false,
             rules: {
                 required: value => !!value || '此欄位必填',
@@ -123,7 +123,9 @@ export default {
             // 使用者的購物車資料
             userCart: 'cart/getUserCart', 
             // 後端表單資料
-            formData: 'order/getFormData'
+            formData: 'order/getFormData',
+            // pending 狀態
+            loading: 'order/getPending'
         }),
         // 價格小計
         subTotal() {
@@ -143,12 +145,9 @@ export default {
             // 建立訂單
             createOrder: 'order/createOrder'
         }),
-        orderCreate() {
-            this.createOrder(this.form)
-        }
     },
     mounted() {
-        this.fetchFormData()
+        this.fetchFormData()   
     }
 }
 </script>
