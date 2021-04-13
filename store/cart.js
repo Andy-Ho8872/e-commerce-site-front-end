@@ -16,6 +16,8 @@ export const state = () => ({
     message: null,
     // Pending 狀態
     pendingStatus: false,
+    // 是否合格
+    valid: false
 })
 
 export const getters = {
@@ -28,12 +30,24 @@ export const getters = {
     getPendingStatus(state) {
         return state.pendingStatus
     },
+    getValidStatus(state) {
+        return state.valid
+    }
 }
 
 export const mutations = {
     // 設置使用者購物車的資料
     SET_USER_CART(state, payload) {
         state.userCart = payload
+    },
+    // 判定購物車內是否有資料
+    CHECK_AND_SET_VALID_STATUS(state) {
+        if(state.userCart.length) {
+            state.valid = true
+        }
+        else {
+            state.valid = false
+        }
     },
     // 使用者登出時清空暫存
     CLEAR_USER_CART(state) {
@@ -56,12 +70,14 @@ export const mutations = {
 export const actions = {
 // 首頁 (pages/index.vue)
     // 抓取使用者的購物車
-    async fetchUserCart({ commit }) {
+    async fetchUserCart({ state, commit }) {
         try {
             const res = await apiGetCartProducts()
             let payload = res.data.carts
             // 將資料寫入
-            commit('SET_USER_CART', payload)
+            await commit('SET_USER_CART', payload)
+            // 確認購物車內是否有商品
+            commit('CHECK_AND_SET_VALID_STATUS')
         } catch (error) {
             console.log(error)
             console.log('抓取失敗 from vuex')
@@ -224,24 +240,27 @@ export const actions = {
         }
     },
     // 清空購物車
-    async deleteAllFromCart({ dispatch, commit }) {
-        try {
-            await apiDeleteAllFromCart()
-            // 清空完之後 重新 fetch 資料
-            await dispatch('fetchUserCart')
-            // 提示訊息
-            let message = {
-                type: 'error',
-                text: '您的購物車已經清空',
+    async deleteAllFromCart({ state, dispatch, commit }) {
+        // 購物車內有商品才發出請求
+        if(state.userCart.length) {
+            try {
+                await apiDeleteAllFromCart()
+                // 清空完之後 重新 fetch 資料
+                await dispatch('fetchUserCart')
+                // 提示訊息
+                let message = {
+                    type: 'error',
+                    text: '您的購物車已經清空',
+                }
+                commit('SET_MESSAGE', message)
+                // 清除訊息
+                setTimeout(() => {
+                    commit('CLEAR_MESSAGE')
+                }, 3000)
+            } catch (error) {
+                console.log(error)
+                console.log('刪除失敗 from vuex')
             }
-            commit('SET_MESSAGE', message)
-            // 清除訊息
-            setTimeout(() => {
-                commit('CLEAR_MESSAGE')
-            }, 3000)
-        } catch (error) {
-            console.log(error)
-            console.log('刪除失敗 from vuex')
         }
     },
 }

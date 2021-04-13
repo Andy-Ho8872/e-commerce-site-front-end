@@ -26,7 +26,7 @@
                 :key="item.id"
             >
                 <!-- 商品名稱與圖片 (可導覽至該商品頁面) -->
-                <nuxt-link :to="`products/${item.product_id}`">
+                <nuxt-link :to="{ name: 'products-id', params: { id: item.product_id }}">
                     <div class="d-flex flex-column justify-center align-center">
                         <v-img
                             width="80"
@@ -83,15 +83,18 @@
                         @click="deleteAllFromCart"
                         class="white--text mx-6" 
                         color="error"
+                        :disabled="!valid"
                     >
                         <v-icon small>fa-calendar-times fa-fw</v-icon>
                         <span class="ml-2">清空購物車</span>
                     </v-btn>
                     <!-- 結帳按鈕 -->
-                    <nuxt-link :to="{ name: 'order-create' }">
+                        <!-- 若不為 valid 則無法導向至該頁面 -->
+                    <nuxt-link :to="{ name: 'order-create' }" :event="valid ? 'click' : ''">
                         <v-btn 
                             class="white--text mx-6" 
                             color="blue lighten-2"
+                            :disabled="!valid"
                             >
                             <v-icon small>fa-shopping-basket fa-fw</v-icon>
                             <span class="ml-2">結帳</span>
@@ -143,6 +146,7 @@ export default {
     computed: {
         ...mapGetters({
             userCart: 'cart/getUserCart', // 使用者的購物車資料
+            valid: 'cart/getValidStatus' // 是否通過驗證
         }),
         // 價格小計
         subTotal() {
