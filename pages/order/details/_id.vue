@@ -1,50 +1,62 @@
 <template>
     <v-container>
-        <!-- 返回按鈕 -->
-        <div class="text-center my-6">
-            <nuxt-link :to="{ name: 'order'}">
-                <v-btn dark rounded outlined x-large color="light-blue" class="mx-1">
-                    <v-icon>fa-long-arrow-alt-left fa-fw</v-icon>
-                    返回訂單頁面
-                </v-btn>
-            </nuxt-link>
+        <!-- loading -->
+        <div class="text-center" v-if="userOrder.length == 0">
+            <v-progress-circular
+                :size="50"
+                color="primary"
+                indeterminate
+            >
+            </v-progress-circular>
         </div>
-        <!-- 表格內容 -->
-        <table class="light-blue darken-1 rounded-xl">
-            <!-- 標題 -->
-            <thead class="white--text font-weight-bold">
-                <tr>
-                    <th v-for="(head, index) in tableHeads" :key="index" class="text-center">
-                        {{ head.title }}
-                    </th>
-                </tr>
-            </thead>
-            <!-- 細項 -->
-            <tbody class="grey lighten-3 blue-grey--text text--darken-4">
-                <tr v-for="item in userOrder.items" :key="item.id">
-                    <!-- 編號 -->
-                    <td data-title="商品編號" id="items_id">
-                        {{ item.pivot.product_id }}
-                    </td>
-                    <!-- 名稱 -->
-                    <td data-title="商品名稱" id="items_title">
-                        {{ item.title }}
-                    </td>
-                    <!-- 圖片 -->
-                    <td data-title="商品圖片" id="items_image">
-                        <img :src="item.imgUrl" :alt="item.title" width="80" height="80"/>
-                    </td>
-                    <!-- 數量 -->
-                    <td data-title="購買數量" id="items_qty">
-                        {{ item.pivot.product_quantity }}
-                    </td>
-                    <!-- 金額 -->
-                    <td data-title="金額小計" id="items_subtotal">
-                        {{ item.subtotal }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- content -->
+        <div v-else>
+            <!-- 返回按鈕 -->
+            <div class="text-center my-6">
+                <nuxt-link :to="{ name: 'order'}">
+                    <v-btn dark rounded outlined x-large color="light-blue" class="mx-1">
+                        <v-icon>fa-long-arrow-alt-left fa-fw</v-icon>
+                        返回訂單頁面
+                    </v-btn>
+                </nuxt-link>
+            </div>
+            <!-- 表格內容 -->
+            <table class="light-blue darken-1 rounded-xl">
+                <!-- 標題 -->
+                <thead class="white--text font-weight-bold">
+                    <tr>
+                        <th v-for="(head, index) in tableHeads" :key="index" class="text-center">
+                            {{ head.title }}
+                        </th>
+                    </tr>
+                </thead>
+                <!-- 細項 -->
+                <tbody class="grey lighten-3 blue-grey--text text--darken-4">
+                    <tr v-for="item in userOrder.items" :key="item.id">
+                        <!-- 編號 -->
+                        <td data-title="商品編號" id="items_id">
+                            {{ item.pivot.product_id }}
+                        </td>
+                        <!-- 名稱 -->
+                        <td data-title="商品名稱" id="items_title">
+                            {{ item.title }}
+                        </td>
+                        <!-- 圖片 -->
+                        <td data-title="商品圖片" id="items_image">
+                            <img :src="item.imgUrl" :alt="item.title" width="80" height="80"/>
+                        </td>
+                        <!-- 數量 -->
+                        <td data-title="購買數量" id="items_qty">
+                            {{ item.pivot.product_quantity }}
+                        </td>
+                        <!-- 金額 -->
+                        <td data-title="金額小計" id="items_subtotal">
+                            {{ item.subtotal }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </v-container>
 </template>
 
