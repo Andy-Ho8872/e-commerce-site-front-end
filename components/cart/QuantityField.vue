@@ -106,6 +106,6 @@ input {
     outline: 0;
 }
 .quantity_field_wrapper {
-    max-width: 170px !important;
+    width: 100%;
 }
 </style>
