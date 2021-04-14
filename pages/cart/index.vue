@@ -177,7 +177,7 @@ export default {
     max-width: 170px !important;
 }
 .quantity_field {
-    width: 160px;
+    width: 170px;
 }
 // Section -------------------------------End
 
