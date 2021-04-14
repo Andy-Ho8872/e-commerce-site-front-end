@@ -10,35 +10,35 @@
                 </v-btn>
             </nuxt-link>
         </div>
-        <v-col cols="12" class="cart_page_wrapper">
-            <!-- 購物車標頭 -->
-            <v-card class="cart_page_header justify-space-around d-flex mb-5 pa-5 rounded-t-xl" elevation="2">
+        <v-col cols="12">
+            <!-- Header -->
+            <v-card class="cart_header justify-space-around d-flex mb-5 pa-5 rounded-t-xl" elevation="2">
                 <div v-for="(header, index) in cartHeader" :key="index">
                     <v-icon color="blue lighten-1" class="mb-1">{{ header.icon }}</v-icon>
                     <span class="font-weight-bold">{{ header.text }}</span>
                 </div>
             </v-card>
-            <!-- 購物車詳細內容 -->
+            <!-- Section -->
             <v-card
-                class="details d-flex justify-space-around pa-5"
+                class="cart_section_wrapper d-flex justify-space-around pa-5"
                 tile
                 v-for="item in userCart"
                 :key="item.id"
             >
-                <!-- 商品名稱與圖片 (可導覽至該商品頁面) -->
-                <nuxt-link :to="{ name: 'products-id', params: { id: item.product_id }}">
-                    <div class="d-flex flex-column justify-center align-center">
-                        <v-img
-                            width="80"
-                            height="80"
-                            :src="item.imgUrl"
-                        ></v-img>
-                        <span class="mx-2">{{ item.title }}</span>
-                    </div>
-                </nuxt-link>
-                <div class="content d-flex justify-space-around align-center">
+                <div class="cart_section d-flex justify-space-around align-center">
+                    <!-- 商品名稱與圖片 (可導覽至該商品頁面) -->
+                    <nuxt-link :to="{ name: 'products-id', params: { id: item.product_id }}">
+                        <div class="navigator d-flex flex-column justify-center align-center">
+                            <v-img
+                                width="80"
+                                height="80"
+                                :src="item.imgUrl"
+                            ></v-img>
+                            <span class="mx-2">{{ item.title }}</span>
+                        </div>
+                    </nuxt-link>
                     <!-- 價格區域 -->
-                    <div class="price_zone d-flex flex-column ">
+                    <div class="unit_price d-flex flex-column ">
                         <!-- 原價 -->
                         <span  :class="[item.discount_rate == 1 ? '' : 'discounted']">
                             ${{ Math.floor(item.unit_price) }}
@@ -49,7 +49,7 @@
                         </span>
                     </div>
                     <!-- 增加 減少數量按鈕 -->
-                    <div>
+                    <div class="quantity_field">
                         <QuantityField
                             :product_quantity="item.product_quantity"
                             :product_id="item.product_id"
@@ -62,7 +62,7 @@
                     <!-- 刪除按鈕(單項商品) -->
                     <v-btn
                         @click="deleteFromCart(item.product_id)"
-                        class="action white--text"
+                        class="cart_section_btn white--text"
                         color="red lighten-2"
                     >
                         <v-icon small>fa-trash-alt fa-fw</v-icon>
@@ -70,14 +70,14 @@
                     </v-btn>
                 </div>
             </v-card>
-            <!-- 購物車結算 -->
-            <v-card class="cart_page_footer d-flex mt-4 pa-4 rounded-b-xl align-center text-right" elevation="2">
+            <!-- Footer -->
+            <v-card class="cart_footer d-flex mt-4 pa-4 rounded-b-xl align-center text-right" elevation="2">
                 <!-- 小計金額 -->
                 <div class="subtotal title font-weight-bold">
                     小計: <span class="red--text">{{ subTotal }}</span>
                 </div>
-                <!-- Footer 按鈕群組 -->
-                <div class="d-flex">
+                <!-- 按鈕群組 -->
+                <div class="cart_footer_btn d-flex">
                     <!-- 清空物品 -->
                     <v-btn
                         @click="deleteAllFromCart"
@@ -163,14 +163,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.content {
-    width: 75%;
-}
-.cart_page_footer .subtotal {
+// Section -------------------------------Start
+.cart_section {
     width: 100%;
 }
-input {
-    width: 30%;
+.navigator {
+    width: 140px;
 }
 .discounted {
     text-decoration: line-through;
@@ -178,38 +176,55 @@ input {
 .quantity_field_wrapper {
     max-width: 170px !important;
 }
+.quantity_field {
+    width: 160px;
+}
+// Section -------------------------------End
+
+
+// Footer  -------------------------------Start
+.cart_footer .subtotal {
+    width: 100%;
+}
+// Footer  -------------------------------End
 
 
 @media (max-width: 768px) {
-    // cart page header-----------------------------Start
-    .cart_page_header {
+    // Header-----------------------------Start
+    .cart_header {
         display: none !important;
     }
-    .details {
+    // Header-----------------------------End
+
+
+    // Section -------------------------------Start
+    .cart_section_wrapper {
         flex-wrap: wrap;
     }
-    .content {
+    .cart_section {
         flex-direction: column;
         width: 100%
     }
-    // 刪除按鈕
-    .action {
-        margin-top: 20%;
+    .navigator {
+        width: 100%;
     }
-    // 價格區域 ------------------Start
-    .price_zone {
+    .unit_price {
         margin: 1rem;
+        span {
+            width: 100%;
+        }
     }
     .total {
         display: none;
     }
-    // 價格區域 ------------------End
-    
-    // cart page header-----------------------------End
+    .cart_section_btn {
+        margin-top: 15%;
+    }
+    // Section -------------------------------End
 
 
-    // cart page footer -------------Start
-    .cart_page_footer {
+    // Footer  ----------------------------------Start
+    .cart_footer {
         position: relative;
         flex-direction: column;
     }
@@ -217,6 +232,6 @@ input {
         text-align: center;
         font-size: 1.2rem;
     }  
-    // cart page footer -------------End
+    // Footer  ----------------------------------End
 }
 </style>
