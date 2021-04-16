@@ -68,6 +68,13 @@ export const mutations = {
 }
 
 export const actions = {
+    // 清除提示訊息
+    clearMessage({ commit }) {
+        setTimeout(() => {
+            commit('CLEAR_MESSAGE')
+        }, 3000)
+    },
+
 // 首頁 (pages/index.vue)
     // 抓取使用者的購物車
     async fetchUserCart({ commit }) {
@@ -96,9 +103,7 @@ export const actions = {
             }
             commit('SET_MESSAGE', message)
             // 清除訊息
-            setTimeout(() => {
-                commit('CLEAR_MESSAGE')
-            }, 3000)
+            dispatch('clearMessage')
         } catch (error) {
             console.log(error)
             console.log('新增失敗 from vuex')
@@ -125,9 +130,7 @@ export const actions = {
             }
             commit('SET_MESSAGE', message)
             // 清除訊息
-            setTimeout(() => {
-                commit('CLEAR_MESSAGE')
-            }, 3000)
+            dispatch('clearMessage')
         } catch (error) {
             console.log(error)
             console.log('新增失敗 from vuex')
@@ -158,9 +161,7 @@ export const actions = {
             }
             commit('SET_MESSAGE', message)
             // 清除訊息
-            setTimeout(() => {
-                commit('CLEAR_MESSAGE')
-            }, 3000)
+            dispatch('clearMessage')
         } catch (error) {
             console.log(error)
             console.log('更新失敗')
@@ -184,9 +185,7 @@ export const actions = {
             }
             commit('SET_MESSAGE', message)
             // 清除訊息
-            setTimeout(() => {
-                commit('CLEAR_MESSAGE')
-            }, 3000)
+            dispatch('clearMessage')
         } catch (error) {
             console.log(error)
             console.log('數量增加失敗')
@@ -210,9 +209,7 @@ export const actions = {
             }
             commit('SET_MESSAGE', message)
             // 清除訊息
-            setTimeout(() => {
-                commit('CLEAR_MESSAGE')
-            }, 3000)
+            dispatch('clearMessage')
         } catch (error) {
             console.log(error)
             console.log('數量增加失敗')
@@ -231,9 +228,7 @@ export const actions = {
             }
             commit('SET_MESSAGE', message)
             // 清除訊息
-            setTimeout(() => {
-                commit('CLEAR_MESSAGE')
-            }, 3000)
+            dispatch('clearMessage')
         } catch (error) {
             console.log(error)
             console.log('刪除失敗 from vuex')
@@ -254,9 +249,7 @@ export const actions = {
                 }
                 commit('SET_MESSAGE', message)
                 // 清除訊息
-                setTimeout(() => {
-                    commit('CLEAR_MESSAGE')
-                }, 3000)
+                dispatch('clearMessage')
             } catch (error) {
                 console.log(error)
                 console.log('刪除失敗 from vuex')
