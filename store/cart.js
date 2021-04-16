@@ -70,7 +70,7 @@ export const mutations = {
 export const actions = {
 // 首頁 (pages/index.vue)
     // 抓取使用者的購物車
-    async fetchUserCart({ state, commit }) {
+    async fetchUserCart({ commit }) {
         try {
             const res = await apiGetCartProducts()
             let payload = res.data.carts
