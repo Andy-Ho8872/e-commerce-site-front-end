@@ -2,16 +2,8 @@
     <v-app dark>
         <v-main class="main_view">
             <Header class="header" />
-            <!-- 路由頁面 -->
-            <!-- <nuxt keep-alive :keep-alive-props="{ max: 10 }"/> -->
-            <!-- <nuxt keep-alive :keep-alive-props="{ include: ['Carousel'] }"/> -->
             <nuxt />
-            <!-- 提示訊息 -->
-            <div class="alert-message">
-                <v-alert v-if="message" dark border="left" :type="message.type">
-                    {{ message.text }}
-                </v-alert>
-            </div>
+            <AlertMessage class="alert-message"/>
             <!-- 置頂按鈕 -->
             <v-btn
                 @click="scrollTop"
@@ -28,14 +20,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
-    computed: {
-        ...mapGetters({
-            message: 'cart/getMessage', // 提示訊息
-        }),
-    },
     methods: {
         scrollTop() {
             window.scrollTo({
@@ -47,3 +33,13 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+.alert-message {
+    z-index: 10000;
+    position: fixed;
+    width: fit-content;
+    left: 50%;
+    bottom: 10%;
+    transform: translateX(-50%);
+}
+</style>

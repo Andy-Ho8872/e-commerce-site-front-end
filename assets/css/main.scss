@@ -26,15 +26,6 @@ body {
     right: 0;
 }
 
-.alert-message {
-    z-index: 10000;
-    position: fixed;
-    width: fit-content;
-    left: 50%;
-    bottom: 10%;
-    transform: translateX(-50%);
-}
-
 @media (max-width: 1600px) {
     .main_view {
         padding-top: 10% !important;
