@@ -5,25 +5,12 @@ body {
     overflow-x: hidden;
 }
 
-.header {
-    position: fixed;
-    top: 0;
-    z-index: 10000;
-}
-
 .v-main_wrap {
     padding: auto 0;
 }
 
 .main_view {
     padding-top: 10% !important;
-}
-
-.to-top {
-    z-index: 10000;
-    bottom: 10%;
-    position: fixed !important;
-    right: 0;
 }
 
 @media (max-width: 1600px) {

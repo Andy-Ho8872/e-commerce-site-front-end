@@ -34,6 +34,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.header {
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+}
 .alert-message {
     z-index: 10000;
     position: fixed;
@@ -41,5 +46,11 @@ export default {
     left: 50%;
     bottom: 10%;
     transform: translateX(-50%);
+}
+.to-top {
+    z-index: 10000;
+    bottom: 10%;
+    position: fixed !important;
+    right: 0;
 }
 </style>
