@@ -29,19 +29,23 @@
                     <tr v-for="order in userOrder" :key="order.id">
                         <!-- 訂單編號 -->
                         <td data-title="訂單編號" id="order_id">
-                            {{ order.id }}
+                            <span>{{ order.id }}</span>
                         </td>
                         <!-- 付款方式 -->
                         <td data-title="付款方式" id="payment_id">
-                            {{ order.payment_id == 1 ? '貨到付款' : '刷卡付款' }}
+                            <span>
+                                {{ order.payment_id == 1 ? '貨到付款' : '刷卡付款' }}
+                            </span>
                         </td>
                         <!-- 出貨狀態 -->
                         <td data-title="出貨狀態" id="status_id">
-                            {{ order.status_id == 1 ? '出貨中' : '已到貨' }}
+                            <span>
+                                {{ order.status_id == 1 ? '出貨中' : '已到貨' }}
+                            </span>
                         </td>
                         <!-- 購買件數 -->
                         <td data-title="商品個數" id="items_count">
-                            {{ order.items_count }} 件商品
+                           <span>{{ order.items_count }} 件商品</span> 
                         </td>
                         <!-- 金額總計 -->
                         <td data-title="金額總計" id="sumSubtotal">
@@ -49,11 +53,11 @@
                         </td>
                         <!-- 送達地址 -->
                         <td data-title="送達地址" id="address">
-                            {{ order.address.substring(0, 10) }}
+                            <span>{{ order.address }}</span>
                         </td>
                         <!-- 訂購時間 -->
                         <td data-title="訂購時間" id="created_at">
-                            {{ order.created_at.substring(0, 10) }}
+                            <span>{{ order.created_at.substring(0, 10) }}</span>
                         </td>
                         <!-- 訂單操作 -->
                         <td data-title="編輯操作" id="actions">
@@ -110,67 +114,79 @@ export default {
 }
 </script>
 
-// <style lang="scss" scoped>
-// $letter-spacing: 0.125rem;
-// $padding: 10%;
-// $td-padding: 1.5rem 0;
-// // only for RWD
-// $title-font-weight: 600;
+<style lang="scss" scoped>
+$letter-spacing: 0.125rem;
+$padding: 10%;
+$td-padding: 1.5rem 0;
+// only for RWD
+$title-font-weight: 600;
 
-// a {
-//     text-decoration: none;
-// }
-// table {
-//     width: 100%;
-//     border-collapse: collapse;
-//     border-bottom: 4px solid;
-//     box-shadow: 2px 2px 4px #eceff1;
-//     th {
-//         letter-spacing: $letter-spacing;
-//         padding: 1rem;
-//     }
-// }
-// tbody {
-//     text-align: center;
-//     td {
-//         padding: $td-padding;
-//         font-weight: $title-font-weight;
-//         letter-spacing: $letter-spacing;
-//     }
-//     tr {
-//         &:hover {
-//             transform: scale(1.05);
-//         }
-//         &:nth-child(even) {
-//             background: #fff;
-//         }
-//     }
-// }
+a {
+    text-decoration: none;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 4px solid;
+    box-shadow: 2px 2px 4px #eceff1;
+    th {
+        letter-spacing: $letter-spacing;
+        padding: 1rem;
+    }
+}
+tbody {
+    text-align: center;
+    td {
+        padding: $td-padding;
+        font-weight: $title-font-weight;
+        letter-spacing: $letter-spacing;
+        max-width: 200px;
+    }
+    tr {
+        &:hover {
+            transform: scale(1.035);
+            transition: all .3s ease-out;
+        }
+        &:nth-child(even) {
+            background: #fff;
+        }
+    }
+}
 
-// @media (max-width: 768px) {
-//     th {
-//         display: none;
-//     }
-//     tbody {
-//         td {
-//             display: block;
-//             position: relative;
-//             text-align: right;
-//             padding-right: $padding;
-//             // 除了最後一個元素之外，其餘的都要加上底線
-//             &:not(:last-child) {
-//                 border-bottom: 1px solid #b0bec5;
-//             }
-//             // 表格標題
-//             &::before {
-//                 content: attr(data-title);
-//                 position: absolute;
-//                 font-weight: $title-font-weight;
-//                 letter-spacing: $letter-spacing;
-//                 padding-left: $padding;
-//                 left: 0;
-//             }
-//         }
-//     }
-// }
-// </style>
+@media (max-width: 768px) {
+    th {
+        display: none;
+    }
+    tbody {
+        td {
+            max-width: 100%;
+            display: block;
+            position: relative;
+            text-align: right;
+            padding-right: $padding;
+            // 除了最後一個元素之外，其餘的都要加上底線
+            &:not(:last-child) {
+                border-bottom: 1px solid #b0bec5;
+            }
+            // 表格標題
+            &::before {
+                content: attr(data-title);
+                position: absolute;
+                font-weight: $title-font-weight;
+                letter-spacing: $letter-spacing;
+                padding-left: $padding;
+                left: 0;
+            }
+            // 測試 span
+            span {
+                display: flex;
+                flex-wrap: wrap;
+                padding-left: 40%;
+                justify-content: flex-end;
+                align-items: center;
+                text-align: justify;
+            }
+        }
+    }
+}
+</style>

@@ -75,7 +75,7 @@ a {
   text-decoration: none;
 }
 
-table {
+/* table {
   width: 100%;
   border-collapse: collapse;
   border-bottom: 4px solid;
@@ -126,4 +126,4 @@ tbody tr:nth-child(even) {
     padding-left: 10%;
     left: 0;
   }
-}
+} */
