@@ -7,7 +7,7 @@
                     class="mx-auto pt-2"
                     max-width="100"
                     max-height="100"
-                    :src="require('~/static/form/1.png')"
+                    :src="require('~/static/auth/ToTheMoon.svg')"
                 >
                 </v-img>
             </div>
