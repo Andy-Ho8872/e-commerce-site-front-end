@@ -1,14 +1,14 @@
 <template>
     <v-container>
         <!-- 該頁產品 -->
-        <h1 v-if="pending">撈取中</h1>
+        <LoadingCircle v-if="pending"/>
         <v-row>
             <v-col
                 v-for="product in products.data"
                 :key="product.id"
                 class="my-12"
             >
-                <SkeletonCard :cardWidth="300" v-if="pending"/>
+                <SkeletonCard :cardWidth="300" v-if="pending" class="mx-auto"/>
                 <!-- 產品 Component -->
                 <Product v-show="!pending"
                     class="mx-auto"
@@ -30,7 +30,6 @@ export default {
     data() {
         return {
             page: Number(this.$route.params.pageNumber) || 1,
-            pending: true,
         }
     },
 
@@ -51,6 +50,8 @@ export default {
         ...mapGetters({
             // 取得該頁資料
             products: 'pagination/getPaginatedProducts',
+            // pending 狀態
+            pending: 'pagination/getPending'
         }),
         pageNumber() {
             return Number(this.$route.params.pageNumber)
@@ -66,13 +67,6 @@ export default {
         if (this.products.current_page != this.page) {
             this.fetchData(this.page)
         }
-    },
-    beforeRouteUpdate(to, from, next) {
-        this.pending = true
-        next()
-    },
-    mounted() {
-        this.pending = false
     },
 }
 </script>
