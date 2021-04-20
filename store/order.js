@@ -13,6 +13,10 @@ export const state = () => ({
     orders: [],
     // 單筆訂單
     order: [],
+    // 付款方式
+    payments: [],
+    // 商品狀態
+    status: [],
     // 點擊 id 紀錄
     lastClickedRecord: null,
     // pending 狀態
@@ -29,29 +33,46 @@ export const getters = {
     getSingleOrder(state) {
         return state.order
     },
+    getPayments(state) {
+        return state.payments
+    },
+    getStatus(state) {
+        return state.status
+    },
     getPending(state) {
         return state.pending
     }
 }
 
 export const mutations = {
-    SET_FORM_DATA(state, payload) {
-        state.formData = payload
+    // 表單相關
+    SET_FORM_DATA(state, data) {
+        state.formData = data
     },
-    SET_ALL_ORDERS(state, payload) {
-        state.orders = payload
+    // 訂單相關
+    SET_ALL_ORDERS(state, orders) {
+        state.orders = orders
     },
-    SET_SINGLE_ORDER(state, payload) {
-        state.order = payload
+    SET_SINGLE_ORDER(state, order) {
+        state.order = order
     },
-    SET_PENDING(state, payload) {
-        state.pending = payload
+    SET_PAYMENTS_DATA(state, payments) {
+        state.payments = payments
     },
+    SET_STATUS_DATA(state, status) {
+        state.status = status
+    },
+    // 送出訂單的狀態
+    SET_PENDING(state, pending) {
+        state.pending = pending
+    },
+    // 清除單筆訂單資料
     CLEAR_SINGLE_ORDER(state) {
         state.order = []
     },
-    SET_LAST_CLICKED_RECORD(state, payload) {
-        state.lastClickedRecord = payload
+    // 紀錄最後點擊的訂單 id
+    SET_LAST_CLICKED_RECORD(state, record) {
+        state.lastClickedRecord = record
     },
 }
 
@@ -72,9 +93,16 @@ export const actions = {
     // 撈取所有訂單
     async fetchAllOrders({ commit }) {
         try {
+            // 撈取
             const res = await apiGetAllOrders()
-            let payload = res.data.orders
-            commit('SET_ALL_ORDERS', payload)
+            // 宣告
+            let orders = res.data.orders
+            let payments = res.data.payments
+            let status = res.data.status
+            // 設置
+            commit('SET_ALL_ORDERS', orders)
+            commit('SET_PAYMENTS_DATA', payments)
+            commit('SET_STATUS_DATA', status)
         } catch (error) {
             console.log(error)
             console.log('抓取失敗 from /store/order.js')
@@ -89,8 +117,8 @@ export const actions = {
                 await commit('CLEAR_SINGLE_ORDER')
                 // 撈取該筆資料
                 const res = await apiGetSingleOrder(orderId)
-                let payload = res.data.order
-                await commit('SET_SINGLE_ORDER', payload)
+                let order = res.data.order
+                await commit('SET_SINGLE_ORDER', order)
                 // 紀錄最後點擊的訂單 ID
                 commit('SET_LAST_CLICKED_RECORD', orderId)
             }

@@ -26,22 +26,30 @@
                 </thead>
                 <!-- 訂單細項 -->
                 <tbody class="grey lighten-3 blue-grey--text text--darken-4">
-                    <tr v-for="order in userOrder" :key="order.id">
+                    <tr v-for="order in orders" :key="order.id">
                         <!-- 訂單編號 -->
                         <td data-title="訂單編號" id="order_id">
                             <span>{{ order.id }}</span>
                         </td>
                         <!-- 付款方式 -->
                         <td data-title="付款方式" id="payment_id">
-                            <span>
-                                {{ order.payment_id == 1 ? '貨到付款' : '刷卡付款' }}
-                            </span>
+                            <!-- 顯示符合付款 id 的名稱 -->
+                            <template v-for="payment in payments">
+                                <div v-if="order.payment_id == payment.id" :key="payment.id">
+                                    {{ payment.title }}
+                                </div>
+                            </template> 
+                            <!-- 寫法 二 -->
+                            <!-- <span>{{ payments.filter((p) => p.id !== order.payment_id) }}</span> -->
                         </td>
                         <!-- 出貨狀態 -->
                         <td data-title="出貨狀態" id="status_id">
-                            <span>
-                                {{ order.status_id == 1 ? '出貨中' : '已到貨' }}
-                            </span>
+                            <!-- 顯示符合出貨狀態 id 的名稱 (可在優化) -->
+                            <template v-for="status in status">
+                                <div v-if="order.status_id == status.id" :key="status.id">
+                                    {{ status.title }}
+                                </div>
+                            </template>
                         </td>
                         <!-- 購買件數 -->
                         <td data-title="商品個數" id="items_count">
@@ -107,9 +115,16 @@ export default {
         ...mapGetters({
             // 使用者的資料
             user: 'auth/getUserInfo',
-            // 訂單資料
-            userOrder: 'order/getAllOrders',
+            // 訂單相關的資料
+            orders: 'order/getAllOrders', // 所有訂單
+            payments: 'order/getPayments', // 付款方式
+            status: 'order/getStatus', // 商品狀態
         }),
+        filteredPayment() {
+            return this.payments.filter((payment) => {
+                payment.id !== order.payment_id
+            })
+        }
     },
 }
 </script>
