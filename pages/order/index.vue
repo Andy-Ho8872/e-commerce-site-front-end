@@ -1,14 +1,7 @@
 <template>
     <v-container>
         <!-- loading -->
-        <div class="text-center" v-if="!user">
-            <v-progress-circular
-                :size="50"
-                color="primary"
-                indeterminate
-            >
-            </v-progress-circular>
-        </div>
+        <LoadingCircle v-if="!user"/>
         <!-- content -->
         <div v-else>
             <div class="text-center text-h5 mb-6" >

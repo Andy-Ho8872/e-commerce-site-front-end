@@ -1,14 +1,7 @@
 <template>
     <v-container>
         <!-- loading -->
-        <div class="text-center" v-if="userOrder.length == 0">
-            <v-progress-circular
-                :size="50"
-                color="primary"
-                indeterminate
-            >
-            </v-progress-circular>
-        </div>
+        <LoadingCircle v-if="userOrder.length == 0"/>
         <!-- content -->
         <div v-else>
             <!-- 返回按鈕 -->
