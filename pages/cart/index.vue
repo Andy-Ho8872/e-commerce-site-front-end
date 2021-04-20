@@ -2,7 +2,15 @@
     <v-container>
         <!-- 如果陣列內長度為 0 則顯示-->
         <div v-if="!userCart.length" class="text-center">
-            <h1 class="mb-4">您的購物車中沒有東西。</h1>
+            <!-- 圖片 -->
+            <v-img :src="require('~/static/cart/NoData.svg')"
+                class="mx-auto mb-4" 
+                max-width="300"
+                max-height="300">
+            </v-img>
+            <!-- 提示文字 -->
+            <h2 class="mb-4">您的購物車中沒有東西。</h2>
+            <!-- 導向連結 -->
             <nuxt-link  :to="{ name: 'pagination-pageNumber', params: { pageNumber: 1 }}">
                 <v-btn color="primary" x-large depressed>
                     <v-icon>fa-cart-arrow-down</v-icon>
@@ -10,7 +18,7 @@
                 </v-btn>
             </nuxt-link>
         </div>
-        <v-col cols="12">
+        <v-col cols="12" v-else>
             <!-- Header -->
             <v-card class="cart_header justify-space-around d-flex mb-5 pa-5 rounded-t-xl" elevation="2">
                 <div v-for="(header, index) in cartHeader" :key="index">
