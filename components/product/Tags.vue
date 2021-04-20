@@ -2,13 +2,10 @@
     <!-- 產品標籤 -->
     <v-chip-group>
         <v-chip color="primary" v-for="tag in product.tags" :key="tag.id">
-            <!-- 判斷標籤的名稱是否相符，因為陣列從 0 起算，所以要減 1 -->
+            <!-- 判斷標籤的名稱是否相符 -->
             <!-- 圖案 -->
-            <v-icon
-                size="medium"
-                v-if="tag.title == productTags[tag.id - 1].title"
-            >
-                {{ productTags[tag.id - 1].icon }}
+            <v-icon size="medium">
+                {{ productTags.find(t => t.title == tag.title).icon }}
             </v-icon>
             <!-- 名稱 -->
             <span>{{ tag.title }}</span>
@@ -20,7 +17,7 @@
 export default {
     // passed from components/Product.vue Or pages/search/title.vue
     props: {
-        'product': Object,
+        product: Object,
     },
     data() {
         return {
@@ -47,4 +44,3 @@ export default {
     },
 }
 </script>
-
