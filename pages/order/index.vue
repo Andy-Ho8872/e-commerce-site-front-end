@@ -40,7 +40,7 @@
                                 </div>
                             </template> 
                             <!-- 寫法 二 -->
-                            <!-- <span>{{ payments.filter((p) => p.id !== order.payment_id) }}</span> -->
+                            <!-- <span>{{ payments.find((payment) => payment.id == order.payment_id).title }}</span> -->
                         </td>
                         <!-- 出貨狀態 -->
                         <td data-title="出貨狀態" id="status_id">
