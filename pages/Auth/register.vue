@@ -110,6 +110,7 @@ export default {
     methods: {
         ...mapActions({
             registerUser: 'auth/register',
+            checkIfUserHasLoggedIn: 'auth/checkIfUserHasLoggedIn'
         }),
         register() {
             this.registerUser(this.form) // 物件傳入 Vuex
@@ -120,6 +121,9 @@ export default {
             message: 'auth/getMessage',
         }),
     },
+    mounted() {
+        this.checkIfUserHasLoggedIn()
+    }
 }
 </script>
 
