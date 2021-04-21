@@ -63,7 +63,13 @@
                         <!-- 訂單操作 -->
                         <td data-title="編輯操作" id="actions">
                             <!-- 刪除 -->
-                            <v-btn dark rounded color="red lighten-1" class="ma-1" @click="deleteSingleOrder(order.id)">
+                            <v-btn class="ma-1"
+                            @click="deleteSingleOrder(order.id)"
+                            :loading="loading"
+                            dark 
+                            rounded 
+                            color="red lighten-1" 
+                            >
                                 刪除
                             </v-btn>
                             <!-- 查看 -->
@@ -112,6 +118,8 @@ export default {
             orders: 'order/getAllOrders', // 所有訂單
             payments: 'order/getPayments', // 付款方式
             status: 'order/getStatus', // 商品狀態
+            // loading 狀態
+            loading: 'order/getLoading'
         }),
         filteredPayment() {
             return this.payments.filter((payment) => {

@@ -150,16 +150,21 @@ export const actions = {
         commit('SET_LOADING', false)
     },
     // 刪除訂單
-    async deleteSingleOrder({ dispatch }, orderId) {
+    async deleteSingleOrder({ dispatch, commit }, orderId) {
+        // start loading
+        commit('SET_LOADING', true)
         try {
             const result = confirm('您確定要刪除該筆訂單嗎?')
             if (result === true) {
                 await apiDeleteSingleOrder(orderId)
+                // 刪除後撈取最新的資料
                 dispatch('fetchAllOrders')
             }
         } catch (error) {
             console.log(error)
             console.log('刪除失敗 from /store/order.js')
         }
+        // end loading
+        commit('SET_LOADING', false)
     },
 }
