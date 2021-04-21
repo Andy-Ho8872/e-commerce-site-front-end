@@ -68,7 +68,7 @@
                     <v-btn
                         class="title"
                         :disabled="!valid"
-                        @click.prevent="register"
+                        @click.prevent="register(form)"
                         color="pink"
                         large
                         rounded
@@ -109,12 +109,11 @@ export default {
     },
     methods: {
         ...mapActions({
-            registerUser: 'auth/register',
+            // 註冊使用者
+            register: 'auth/register',
+            // 確認使用者是否已經登入
             checkIfUserHasLoggedIn: 'auth/checkIfUserHasLoggedIn'
         }),
-        register() {
-            this.registerUser(this.form) // 物件傳入 Vuex
-        },
     },
     computed: {
         ...mapGetters({
@@ -122,7 +121,9 @@ export default {
         }),
     },
     mounted() {
-        this.checkIfUserHasLoggedIn()
+        if(this.$store.state.auth.user) {
+            this.checkIfUserHasLoggedIn()
+        }
     }
 }
 </script>
