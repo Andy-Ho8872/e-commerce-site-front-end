@@ -68,6 +68,7 @@
                     <v-btn
                         class="title"
                         :disabled="!valid"
+                        :loading="loading"
                         @click.prevent="register(form)"
                         color="pink"
                         large
@@ -117,7 +118,10 @@ export default {
     },
     computed: {
         ...mapGetters({
+            // 錯誤訊息
             message: 'auth/getMessage',
+            // loading 狀態
+            loading: 'auth/getLoading'
         }),
     },
     mounted() {

@@ -63,11 +63,12 @@
                     <!-- 忘記密碼 -->
                     <h4>忘記密碼</h4>
                 </v-row>
-                <!-- 註冊按鈕 -->
+                <!-- 登入按鈕 -->
                 <div class="text-center mt-10">
                     <v-btn
                         class="title"
                         :disabled="!valid"
+                        :loading="loading"
                         @click.prevent="login(form)"
                         color="pink"
                         large
@@ -117,7 +118,10 @@ export default {
     },
     computed: {
         ...mapGetters({
+            // 錯誤訊息
             message: 'auth/getMessage',
+            // loading 狀態
+            loading: 'auth/getLoading'
         }),
     },
     mounted() {

@@ -10,6 +10,7 @@ export const state = () => ({
     token: null,
     user: null,
     message: null, // 錯誤訊息
+    loading: false,
 })
 
 export const getters = {
@@ -22,6 +23,9 @@ export const getters = {
     getMessage(state) {
         return state.message
     },
+    getLoading(state) {
+        return state.loading
+    },
 }
 
 export const mutations = {
@@ -33,9 +37,13 @@ export const mutations = {
             state.token = token
         }
     },
-    // 取得錯誤訊息
+    // 設置錯誤訊息
     SET_MESSAGE(state, msg) {
         state.message = msg
+    },
+    // 設置 Loading 狀態
+    SET_LOADING(state, loading) {
+        state.loading = loading
     },
     // 設置使用者資料
     SET_USER_INFO(state, user) {
@@ -62,6 +70,7 @@ export const mutations = {
 export const actions = {
     // 註冊流程
     async register({ commit }, user) {
+        commit('SET_LOADING', true)
         try {
             await apiUserRegister({
                 email: user.email,
@@ -72,6 +81,7 @@ export const actions = {
             // 註冊成功後跳轉
             this.$router.push({ name: 'auth-login' })
         } catch (error) {
+            commit('SET_LOADING', false)
             // 錯誤訊息
             let msg = error.response.data.errors
             commit('SET_MESSAGE', msg)
@@ -93,46 +103,35 @@ export const actions = {
         }
     },
     // 確認使用者是否已經登入
-    async checkIfUserHasLoggedIn({state }) {
+    async checkIfUserHasLoggedIn({ state }) {
         setTimeout(() => {
-            if(state.user) {
-                this.$router.push({ name:'index' })
-                console.log("您目前已經登入，將導向至首頁");
+            if (state.user) {
+                this.$router.push({ name: 'index' })
+                console.log('您目前已經登入，將導向至首頁')
             }
         }, 2000)
     },
     // 登入流程
     async login({ commit, dispatch }, user) {
+        // loading
+        commit('SET_LOADING', true)
         try {
-            // 初次登入要先取得 CSRF
+            // 先取得 CSRF Cookie
             await apiCsrfLogin()
-            // 登入使用者
-            try {
-                const res = await apiUserLogin({
-                    // 從 login 頁面 抓取資料
-                    email: user.email,
-                    password: user.password,
-                })
-                // 若帳密正確，則給予 Token 並儲存在 localStorage
-                if (process.browser) {
-                    localStorage.setItem('Token', 'Bearer ' + res.data.token)
-                    localStorage.setItem('UserEmail', res.data.user.email)
-                }
-                // 撈取使用者資料
-                await dispatch('fetchUserInfo')
-                // 從 store/cart.js 撈取使用者的購物車資料
-                dispatch('cart/fetchUserCart', null, { root: true })
-                // 重新導向至首頁
-                this.$router.push({ name: 'index' })
-            } catch (error) {
-                // 錯誤訊息
-                let msg = error.response.data.errors
-                commit('SET_MESSAGE', msg)
-                // 清除錯誤訊息
-                setTimeout(() => {
-                    commit('CLEAR_MESSAGE')
-                }, 3000)
-            }
+            // 從 login 頁面 抓取資料
+            const res = await apiUserLogin({
+                email: user.email,
+                password: user.password,
+            })
+            // 若帳密正確，則給予 Token 並儲存在 localStorage
+            localStorage.setItem('Token', `Bearer ${res.data.token}`  )
+            localStorage.setItem('UserEmail', res.data.user.email)
+            // 撈取使用者資料
+            await dispatch('fetchUserInfo')
+            // 從 store/cart.js 撈取使用者的購物車資料
+            dispatch('cart/fetchUserCart', null, { root: true })
+            // 重新導向至首頁
+            this.$router.push({ name: 'index' })
         } catch (error) {
             // 錯誤訊息
             let msg = error.response.data.errors
@@ -142,6 +141,8 @@ export const actions = {
                 commit('CLEAR_MESSAGE')
             }, 3000)
         }
+        // end loading
+        commit('SET_LOADING', false)
     },
     // 登出流程
     async logout({ commit }) {
