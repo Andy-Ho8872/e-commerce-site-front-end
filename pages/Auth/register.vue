@@ -121,9 +121,7 @@ export default {
         }),
     },
     mounted() {
-        if(this.$store.state.auth.user) {
-            this.checkIfUserHasLoggedIn()
-        }
+        this.checkIfUserHasLoggedIn()  
     }
 }
 </script>

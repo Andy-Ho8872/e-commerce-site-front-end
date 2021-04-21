@@ -121,7 +121,7 @@ export default {
         }),
     },
     mounted() {
-        this.checkIfUserHasLoggedIn()
+       this.checkIfUserHasLoggedIn()
     }
 }
 </script>

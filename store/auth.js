@@ -93,11 +93,13 @@ export const actions = {
         }
     },
     // 確認使用者是否已經登入
-    async checkIfUserHasLoggedIn({ dispatch, state }) {
-        await dispatch('fetchUserInfo')
-        if(state.user) {
-            this.$router.push({ name:'index' })
-        }
+    async checkIfUserHasLoggedIn({state }) {
+        setTimeout(() => {
+            if(state.user) {
+                this.$router.push({ name:'index' })
+                console.log("您目前已經登入，將導向至首頁");
+            }
+        }, 2000)
     },
     // 登入流程
     async login({ commit, dispatch }, user) {
