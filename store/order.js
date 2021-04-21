@@ -19,8 +19,8 @@ export const state = () => ({
     status: [],
     // 點擊 id 紀錄
     lastClickedRecord: null,
-    // pending 狀態
-    pending: false
+    // loading 狀態
+    loading: false
 })
 
 export const getters = {
@@ -39,8 +39,8 @@ export const getters = {
     getStatus(state) {
         return state.status
     },
-    getPending(state) {
-        return state.pending
+    getLoading(state) {
+        return state.loading
     }
 }
 
@@ -63,8 +63,8 @@ export const mutations = {
         state.status = status
     },
     // 送出訂單的狀態
-    SET_PENDING(state, pending) {
-        state.pending = pending
+    SET_LOADING(state, loading) {
+        state.loading = loading
     },
     // 清除單筆訂單資料
     CLEAR_SINGLE_ORDER(state) {
@@ -128,25 +128,26 @@ export const actions = {
         }
     },
     // 建立訂單
-    async createOrder({ dispatch, commit }, data) {
+    async createOrder({ dispatch, commit }, order) {
+        // start loading
+        commit('SET_LOADING', true)
         try {
-            // pending 狀態
-            commit('SET_PENDING', true)
             // 向後端發送資料
             await apiCreateOrder({
-                payment_id: data.payment_id,
-                address: data.address
+                payment_id: order.payment_id,
+                address: order.address
             })
             // 訂單建立後從 store/cart.js 清空使用者的購物車資料
             await commit('cart/CLEAR_USER_CART', null, { root: true })
             // 撈取最新的訂單資料
             await dispatch('fetchAllOrders')
-            commit('SET_PENDING', false)
             // 最後導向至訂單頁面
             this.$router.push({ name: 'order' })
         } catch (error) {
             console.log('建立失敗 from /store/order.js')
         }
+        // end loading
+        commit('SET_LOADING', false)
     },
     // 刪除訂單
     async deleteSingleOrder({ dispatch }, orderId) {

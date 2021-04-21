@@ -125,7 +125,7 @@ export default {
             // 後端表單資料
             formData: 'order/getFormData',
             // pending 狀態
-            loading: 'order/getPending'
+            loading: 'order/getLoading'
         }),
         // 價格小計
         subTotal() {
