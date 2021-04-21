@@ -70,6 +70,7 @@ export const mutations = {
 export const actions = {
     // 註冊流程
     async register({ commit }, user) {
+        // start loading
         commit('SET_LOADING', true)
         try {
             await apiUserRegister({
@@ -81,7 +82,6 @@ export const actions = {
             // 註冊成功後跳轉
             this.$router.push({ name: 'auth-login' })
         } catch (error) {
-            commit('SET_LOADING', false)
             // 錯誤訊息
             let msg = error.response.data.errors
             commit('SET_MESSAGE', msg)
@@ -90,6 +90,8 @@ export const actions = {
                 commit('CLEAR_MESSAGE')
             }, 3000)
         }
+        // end loading
+        commit('SET_LOADING', false)
     },
     // 撈取使用者資料
     async fetchUserInfo({ commit }) {
@@ -113,7 +115,7 @@ export const actions = {
     },
     // 登入流程
     async login({ commit, dispatch }, user) {
-        // loading
+        // start loading
         commit('SET_LOADING', true)
         try {
             // 先取得 CSRF Cookie
