@@ -92,6 +92,13 @@ export const actions = {
             console.log('抓取失敗 from store/auth.js')
         }
     },
+    // 確認使用者是否已經登入
+    async checkIfUserHasLoggedIn({ dispatch, state }) {
+        await dispatch('fetchUserInfo')
+        if(state.user) {
+            this.$router.push({ name:'index' })
+        }
+    },
     // 登入流程
     async login({ commit, dispatch }, user) {
         try {
