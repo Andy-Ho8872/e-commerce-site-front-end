@@ -1,6 +1,7 @@
 <template>
     <v-container>
-        <v-card class="pa-4" rounded="lg" v-if="user">
+        <LoadingCircle v-if="!user"/>
+        <v-card class="pa-4" rounded="lg" v-else>
             <div class="d-flex justify-center align-center text-center text-h6 font-weight-bold">
                 歡迎回來 {{ user.email }}
             </div>
