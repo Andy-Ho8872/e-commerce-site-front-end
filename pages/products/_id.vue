@@ -111,7 +111,7 @@ import { mapActions } from 'vuex'
 import { apiGetProduct } from '~/APIs/api.js'
 
 export default {
-    // 測試用
+    //todo 測試用
     async asyncData({ params }) {
         const res = await apiGetProduct(params.id)
         return {
@@ -120,42 +120,43 @@ export default {
     },
     data() {
         return {
-            // 暫存資料
+            //* 暫存資料
             productPayload: {
                 id: this.$route.params.id,
-                // 產品當前數量 預設 1 個
+                //* 產品當前數量 預設 1 個
                 quantity: 1,
             },
-            // 讀取狀態
+            //* 讀取狀態
             loading: true,
         }
     },
     methods: {
         ...mapActions({
+            //* 新增至購物車(包含數量)
             addToCartWithQuantity: 'cart/addToCartWithQuantity',
         }),
-        // 點擊按鈕變更購買數量
+        //* 點擊按鈕變更購買數量
         changeCount(value) {
             this.productPayload.quantity += value
-            // 判斷以下數字
+            //* 判斷以下數字
             let inputVal = this.productPayload.quantity
-            // 數字將不會小於 1
+            //* 數字將不會小於 1
             if( inputVal < 1) {
                 this.productPayload.quantity = 1
             }
-            // 數字將不大於 99
+            //* 數字將不大於 99
             else if(inputVal > 99) {
                 this.productPayload.quantity = 99
             }
         },
-        // 購買數量輸入驗證
+        //* 購買數量輸入驗證
         validateInput(value) {
-            // 正則表達式的結果
+            //* 正則表達式的結果
             const pattern = /^[1-9]\d{0,}/gi
             let result = pattern.test(value) 
-            // 使用者輸入的值
+            //* 使用者輸入的值
             let inputVal = this.productPayload.quantity
-            // 如果第一個數字不為 0 則回傳 false
+            //* 如果第一個數字不為 0 則回傳 false
             if(result == false || inputVal < 1) {
                 this.productPayload.quantity = 1
             }
@@ -165,7 +166,7 @@ export default {
         }
     },
     mounted() {
-        // 讀取完畢
+        //* 讀取完畢
         this.loading = false
     },
 }
@@ -181,7 +182,7 @@ export default {
 .img_wrapper {
     width: 50%;
 }
-// 購買按鈕
+//? 購買按鈕
 .purchase_btn span {
     width: 6rem;
 }
@@ -190,7 +191,7 @@ input {
     padding: 2px 0;
     outline: none;
 }
-// RWD
+//? RWD
 @media (max-width: 960px) {
     .product_wrapper {
         flex-wrap: wrap;
