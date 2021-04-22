@@ -117,7 +117,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
     data() {
         return {
-            // 訊息通知
+            //* 訊息通知
             noteList: [
                 {
                     icon: 'fa-envelope fa-fw',
@@ -128,7 +128,7 @@ export default {
                     text: '幫助中心',
                 },
             ],
-            // 帳戶操作
+            //* 帳戶操作
             userList: [
                 {
                     icon: 'fa-user-tie fa-fw',
@@ -141,44 +141,44 @@ export default {
                     to: { name: 'auth-login' },
                 },
             ],
-            // 觸發 class (漢堡 SideBar)
+            //* 觸發 class (漢堡 SideBar)
             active: false,
-            // 搜尋欄文字
+            //* 搜尋欄文字
             searchText: '',
         }
     },
     computed: {
         ...mapGetters({
-            // 使用者 Token
+            //* 使用者 Token
             token: 'auth/getToken',
-            // 使用者資訊
+            //* 使用者資訊
             user: 'auth/getUserInfo',
-            // 使用者購物車中商品數量
+            //* 使用者購物車中商品數量
             userCart: 'cart/getUserCart',
         }),
     },
     methods: {
         ...mapMutations({
-            // 抓取 Token (從 localStorage)
+            //* 抓取 Token (從 localStorage)
             SET_TOKEN: 'auth/SET_TOKEN',
         }),
         ...mapActions({
-            // 登出使用者
+            //* 登出使用者
             logout: 'auth/logout', 
-            // 搜尋商品
+            //* 搜尋商品
             searchProducts: 'search/searchProducts', 
-            // 撈取資料
-            fetchUserInfo: 'auth/fetchUserInfo', // 使用者的資料
-            fetchUserCart: 'cart/fetchUserCart', // 使用者購物車
-            fetchAllOrders: 'order/fetchAllOrders', // 使用者訂單 
+            //* 撈取資料
+            fetchUserInfo: 'auth/fetchUserInfo', //? 使用者的資料
+            fetchUserCart: 'cart/fetchUserCart', //? 使用者購物車
+            fetchAllOrders: 'order/fetchAllOrders', //? 使用者訂單 
         }),
-        // 搜尋功能
+        //* 搜尋功能
         search() {
             this.searchProducts(this.searchText)
         },
     },
     async mounted() {
-        // 點擊漢堡 SideBar 以外的區域則會關閉
+        //* 點擊漢堡 SideBar 以外的區域則會關閉
         if (this.$refs.extended.style.visibility !== 'hidden') {
             document.addEventListener('click', e => {
                 if (!this.$refs.extended.contains(e.target)) {
@@ -186,14 +186,14 @@ export default {
                 }
             })
         }
-        // 取得憑證
+        //* 取得憑證
         await this.SET_TOKEN()
-        // 若使用者有登入(持有 Token)，從 localStorage 中做初步判定)
+        //* 若使用者有登入(持有 Token)，從 localStorage 中做初步判定)
         if (this.token) {
-            // 撈取資料
-            this.fetchUserInfo() // 使用者的資料
-            this.fetchUserCart() // 使用者的購物車
-            this.fetchAllOrders() // 使用者的訂單
+            //* 撈取資料
+            this.fetchUserInfo() //? 使用者的資料
+            this.fetchUserCart() //? 使用者的購物車
+            this.fetchAllOrders() //? 使用者的訂單
         }
     },
 }
@@ -223,15 +223,15 @@ a {
     margin-bottom: 4px;
 }
 .extend_bar {
-    visibility: hidden; // 預設隱藏
+    visibility: hidden; //? 預設隱藏
     flex-direction: column;
 }
-// 搜尋區域
+//* 搜尋區域
 .searchBox {
     transform: translateY(10%);
 }
 
-// 以下為 RWD
+//? 以下為 RWD
 @media (max-width: 1024px) {
     .navbar {
         padding: 1rem 0;
@@ -243,7 +243,7 @@ a {
         width: 90%;
         margin: auto;
     }
-    // 漢堡標籤的線條
+    //* 漢堡標籤的線條
     .line {
         background: white;
         width: 24px;
@@ -271,7 +271,7 @@ a {
     li {
         width: 100%;
     }
-    // navbar 上層 -------------------------------------------------------------- Start
+    //* navbar 上層 -------------------------------------------------------------- Start
     .navbar_upper {
         flex-direction: column;
         align-content: flex-start;
@@ -280,8 +280,7 @@ a {
         top: 100%;
         margin: 0 !important;
         background: rgba($color: #000000, $alpha: 0.8);
-        // 預設不顯示，等點擊 extend bar 後才顯示
-        opacity: 0;
+        opacity: 0; //? 預設不顯示，等點擊 extend bar 後才顯示
         transition: 0.5s ease-in-out;
         transform: translateX(-100%);
     }
@@ -293,7 +292,7 @@ a {
             margin: 10% 0;
         }
     }
-    // 使用者帳號、登出
+    //? 使用者帳號、登出
     .content {
         flex-direction: column;
         margin: 0 5%;
@@ -301,18 +300,18 @@ a {
             border-bottom: 1px solid white;
         }
     }
-    // navbar 上層 -------------------------------------------------------------- End
+    //* navbar 上層 -------------------------------------------------------------- End
 
-    // 漢堡標籤 ----------------------------------------------------- Start
+    //* 漢堡標籤 ----------------------------------------------------- Start
     .extend_bar {
         visibility: visible;
     }
-    // 觸發後顯示 navbar_upper
+    //? 觸發後顯示 navbar_upper
     .show {
         opacity: 1 !important;
         transition: 0.5s ease-in-out;
         transform: translateX(0%);
     }
-    // 漢堡標籤 ----------------------------------------------------- End
+    //* 漢堡標籤 ----------------------------------------------------- End
 }
 </style>
