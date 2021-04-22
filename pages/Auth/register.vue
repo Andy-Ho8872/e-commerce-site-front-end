@@ -12,7 +12,7 @@
                 </v-img>
             </div>
             <!-- 註冊表單 -->
-            <v-form class="form pa-8" ref="form" v-model="valid">
+            <v-form class="pa-8" ref="form" v-model="valid">
                 <!-- 註冊帳戶文字 -->
                 <h1 class="text-center my-10">註冊</h1>
                 <!-- 電子郵件(帳號) -->
@@ -47,12 +47,6 @@
                     >
                     </v-text-field>
                 </div>
-                <!-- 顯示錯誤訊息(隱藏) -->
-                <div class="error_msg text-center red--text">
-                    <h4 v-for="(msg, index) in message" :key="index">
-                        {{ msg[0] }}
-                    </h4>
-                </div>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
                     <span>已經註冊?</span>
@@ -80,6 +74,14 @@
                     </v-btn>
                 </div>
             </v-form>
+            <!-- 顯示錯誤訊息(隱藏) -->
+            <div class="error_msg text-center">
+                <v-scroll-y-transition>
+                    <v-alert class="mx-4" type="error" v-for="(msg, index) in message" :key="index">
+                        {{ msg[0] }}
+                    </v-alert>
+                </v-scroll-y-transition>
+            </div>
         </div>
     </v-container>
 </template>
@@ -138,8 +140,12 @@ export default {
     max-width: 600px;
     height: 600px;
 }
-.form {
-    margin: 0 0;
+.error_msg {
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    transform: translateX(-50%);
+    width: fit-content;
 }
 // 圖片
 .img_wrapper {
