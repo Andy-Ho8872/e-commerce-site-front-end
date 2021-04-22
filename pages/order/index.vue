@@ -106,26 +106,23 @@ export default {
     },
     methods: {
         ...mapActions({
+            //* 撈取所有的訂單
             fetchAllOrders: 'order/fetchAllOrders',
+            //* 刪除訂單
             deleteSingleOrder: 'order/deleteSingleOrder',
         }),
     },
     computed: {
         ...mapGetters({
-            // 使用者的資料
+            //* 使用者的資料
             user: 'auth/getUserInfo',
-            // 訂單相關的資料
-            orders: 'order/getAllOrders', // 所有訂單
-            payments: 'order/getPayments', // 付款方式
-            status: 'order/getStatus', // 商品狀態
-            // loading 狀態
+            //* 訂單相關的資料
+            orders: 'order/getAllOrders', //* 所有訂單
+            payments: 'order/getPayments', //* 付款方式
+            status: 'order/getStatus', //* 商品狀態
+            //* loading 狀態
             loading: 'order/getLoading'
         }),
-        filteredPayment() {
-            return this.payments.filter((payment) => {
-                payment.id !== order.payment_id
-            })
-        }
     },
 }
 </script>
@@ -134,7 +131,7 @@ export default {
 $letter-spacing: 0.125rem;
 $padding: 10%;
 $td-padding: 1.5rem 0;
-// only for RWD
+//? only for RWD
 $title-font-weight: 600;
 
 a {
@@ -180,11 +177,11 @@ tbody {
             position: relative;
             text-align: right;
             padding-right: $padding;
-            // 除了最後一個元素之外，其餘的都要加上底線
+            //* 除了最後一個元素之外，其餘的都要加上底線
             &:not(:last-child) {
                 border-bottom: 1px solid #b0bec5;
             }
-            // 表格標題
+            //* 表格標題
             &::before {
                 content: attr(data-title);
                 position: absolute;
@@ -193,7 +190,6 @@ tbody {
                 padding-left: $padding;
                 left: 0;
             }
-            // 測試 span
             span {
                 display: flex;
                 flex-wrap: wrap;
