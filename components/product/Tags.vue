@@ -15,13 +15,13 @@
 
 <script>
 export default {
-    // passed from components/Product.vue Or pages/search/title.vue
+    //? passed from components/Product.vue Or pages/search/title.vue
     props: {
         product: Object,
     },
     data() {
         return {
-            // 產品標籤
+            //* 產品標籤
             productTags: [
                 {
                     title: '3C產品',

@@ -16,12 +16,12 @@
 
 <script>
 export default {
-    // passed from components/Product.vue Or pages/search/title.vue
+    //? passed from components/Product.vue Or pages/search/title.vue
     props: {
         'product': Object,
     },
     computed: {
-        // 要轉換為 Number 才能使用
+        //* 要轉換為 Number 才能使用
         rating() {
             return Number(this.product.rating)
         }
