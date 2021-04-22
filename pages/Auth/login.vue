@@ -92,14 +92,14 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     data() {
         return {
-            // 表單中的值
+            //* 表單中的值
             form: {
                 email: '',
                 password: '',
             },
-            // 表單驗證規則
-            valid: null, // 是否合格
-            show: false, // 顯示 or 不顯示 密碼
+            //* 表單驗證規則
+            valid: null, //* 是否合格
+            show: false, //* 顯示 or 不顯示 密碼
             rules: {
                 required: value => !!value || '此欄位必填',
                 min: value => value.length >= 6 || '至少需要6個英文或數字',
@@ -112,17 +112,17 @@ export default {
     },
     methods: {
         ...mapActions({
-            // 登入使用者
+            //* 登入使用者
             login: 'auth/login',
-            // 確認使用者是否已經登入
+            //* 確認使用者是否已經登入
             checkIfUserHasLoggedIn: 'auth/checkIfUserHasLoggedIn'
         }),
     },
     computed: {
         ...mapGetters({
-            // 錯誤訊息
+            //* 錯誤訊息
             message: 'auth/getMessage',
-            // loading 狀態
+            //* loading 狀態
             loading: 'auth/getLoading'
         }),
     },
