@@ -42,6 +42,7 @@
                         :append-icon="show ? 'fa-eye' : 'fa-eye-slash'"
                         minlength="6"
                         prepend-icon="fa-lock"
+                        color="blue"
                         label="密碼"
                         placeholder="Password"
                     >
@@ -51,7 +52,7 @@
                 <v-row class="has_account font-italic">
                     <span>已經註冊?</span>
                     <nuxt-link :to="{ name: 'auth-login' }">
-                        <div class="mx-2 blue--text ligten-2">登入</div>
+                        <span class="mx-2">登入</span>
                     </nuxt-link>
                     <v-spacer></v-spacer>
                     <!-- 忘記密碼 -->
@@ -68,7 +69,6 @@
                         large
                         rounded
                         outlined
-                        type="submit"
                     >
                         註冊
                     </v-btn>
