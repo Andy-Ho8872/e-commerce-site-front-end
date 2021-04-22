@@ -142,7 +142,7 @@ export const actions = {
 // 購物車結帳頁面 (pages/cart/index.vue)
     //* "修改"商品數量
     async updateQuantity({ dispatch, commit }, product) {
-        // start loading
+        //? start loading
         commit('SET_LOADING', true)
         try {
             await apiUpdateQuantity
@@ -164,12 +164,12 @@ export const actions = {
             console.log(error)
             console.log('更新失敗')
         }
-        // end loading
+        //? end loading
         commit('SET_LOADING', false)
     },
     //* 商品數量增加 1
     async increseByOne({ dispatch, commit }, productId) {
-        // start loading
+        //? start loading
         commit('SET_LOADING', true)
         try {
             //* 增加數量
@@ -188,12 +188,12 @@ export const actions = {
             console.log(error)
             console.log('數量增加失敗')
         }
-        // end loading
+        //? end loading
         commit('SET_LOADING', false)
     },
     //* 商品數量減少 1
     async decreseByOne({ dispatch, commit }, productId) {
-        // start loading
+        //? start loading
         commit('SET_LOADING', true)
         try {
             //* 減少數量
@@ -212,7 +212,7 @@ export const actions = {
             console.log(error)
             console.log('數量增加失敗')
         }
-        // end loading
+        //? end loading
         commit('SET_LOADING', false)
     },
     //* 從購物車中"移除"商品

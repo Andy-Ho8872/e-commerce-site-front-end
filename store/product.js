@@ -1,3 +1,4 @@
+//! 目前此頁面暫不使用
 import { apiGetProducts, apiGetProduct } from '~/APIs/api.js'
 
 export const state = () => ({
