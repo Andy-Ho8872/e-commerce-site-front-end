@@ -118,7 +118,7 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
-    middleware: 'authenticated', // 要先通過驗證才能訪問此頁面
+    middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
     data() {
         return {
             cartHeader: [
@@ -147,22 +147,26 @@ export default {
     },
     methods: {
         ...mapActions({
-            deleteFromCart: 'cart/deleteFromCart', // 點擊按鈕購物車內的商品 (單項)
-            deleteAllFromCart: 'cart/deleteAllFromCart', // 刪除購物車中的所有商品 (全品項)
+            //* 點擊按鈕購物車內的商品 (單項)
+            deleteFromCart: 'cart/deleteFromCart', 
+            //* 刪除購物車中的所有商品 (全品項)
+            deleteAllFromCart: 'cart/deleteAllFromCart',
         }),
     },
     computed: {
         ...mapGetters({
-            userCart: 'cart/getUserCart', // 使用者的購物車資料
-            valid: 'cart/getValidStatus' // 是否通過驗證
+            //* 使用者的購物車資料
+            userCart: 'cart/getUserCart', 
+            //* 是否通過驗證
+            valid: 'cart/getValidStatus' 
         }),
-        // 價格小計
+        //* 價格小計
         subTotal() {
-            // 初始為0
+            //* 初始為0
             let summary = 0
             // 累加
             this.userCart.forEach(element => {
-                summary += Number(element.total) // 將字串轉換為數字(integer)
+                summary += Number(element.total) //* 將字串轉換為數字(integer)
             })
             return summary
         },
@@ -171,7 +175,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// Section -------------------------------Start
+//? Section -------------------------------Start
 .cart_section {
     width: 100%;
 }
@@ -187,25 +191,25 @@ export default {
 .quantity_field {
     width: 170px;
 }
-// Section -------------------------------End
+//? Section -------------------------------End
 
 
-// Footer  -------------------------------Start
+//? Footer  -------------------------------Start
 .cart_footer .subtotal {
     width: 100%;
 }
-// Footer  -------------------------------End
+//? Footer  -------------------------------End
 
 
 @media (max-width: 768px) {
-    // Header-----------------------------Start
+    //? Header-----------------------------Start
     .cart_header {
         display: none !important;
     }
-    // Header-----------------------------End
+    //? Header-----------------------------End
 
 
-    // Section -------------------------------Start
+    //? Section -------------------------------Start
     .cart_section_wrapper {
         flex-wrap: wrap;
     }
@@ -228,10 +232,10 @@ export default {
     .cart_section_btn {
         margin-top: 15%;
     }
-    // Section -------------------------------End
+    //? Section -------------------------------End
 
 
-    // Footer  ----------------------------------Start
+    //? Footer  ----------------------------------Start
     .cart_footer {
         position: relative;
         flex-direction: column;
@@ -240,6 +244,6 @@ export default {
         text-align: center;
         font-size: 1.2rem;
     }  
-    // Footer  ----------------------------------End
+    //? Footer  ----------------------------------End
 }
 </style>
