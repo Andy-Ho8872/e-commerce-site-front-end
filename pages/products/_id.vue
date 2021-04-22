@@ -182,7 +182,7 @@ export default {
 .img_wrapper {
     width: 50%;
 }
-//? 購買按鈕
+//* 購買按鈕
 .purchase_btn span {
     width: 6rem;
 }

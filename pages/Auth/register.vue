@@ -146,12 +146,10 @@ export default {
     transform: translateX(-50%);
     width: fit-content;
 }
-// 圖片
 .img_wrapper {
     position: relative;
     top: 30px;
 }
-// 已有帳戶?
 .has_account {
     margin: 0 10%;
 }

@@ -155,7 +155,7 @@ export default {
 
 <style lang="scss" scoped>
 $border-radius: 50px;
-// 標籤
+//* 標籤
 label {
     display: inline-flex;
     align-items: center;
@@ -165,16 +165,16 @@ label {
     text-align: center;
     transition: all 0.5s ease-in-out;
     cursor: pointer;
-    // 文字內容
+    //? 文字內容
     div {
         padding: 12px;
         letter-spacing: 4px;
         font-weight: bold;
     }
-    // radio 按鈕
+    //? radio 按鈕
     input[type="radio"] {
         display: none;
-        // check 後改變 label 的背景色
+        //? check 後改變 label 的背景色
         &:checked + div {
             background: #1E88E5;
             color: #FFF;

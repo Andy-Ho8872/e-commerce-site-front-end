@@ -87,10 +87,10 @@
 import { mapGetters } from 'vuex'
 
 export default {
-    // 此處的 search function 在 Components/Header.vue 裡
+    //* 此處的 search function 在 Components/Header.vue 裡
     computed: {
         ...mapGetters({
-            // 搜尋結果
+            //* 搜尋結果
             result: 'search/getResult',
         }),
     },
@@ -101,14 +101,14 @@ export default {
 a {
     text-decoration: none;
 }
-// 價格區域--------------------------Start
+//* 價格區域--------------------------Start
 .price_zone {
     position: relative;
 }
 .discounted {
     text-decoration: line-through;
 }
-// 折扣後的價格
+//? 折扣後的價格
 .discounted_price {
     position: absolute;
     top: 1rem;
@@ -117,5 +117,5 @@ a {
     transform: rotate(-5deg);
     font-size: 1.2rem;
 }
-// 價格區域--------------------------End
+//* 價格區域--------------------------End
 </style>

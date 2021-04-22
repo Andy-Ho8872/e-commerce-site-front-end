@@ -27,6 +27,7 @@
 </template>
 
 <script>
+// ! 此元件目前暫不使用
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
