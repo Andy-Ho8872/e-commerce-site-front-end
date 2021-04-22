@@ -10,13 +10,13 @@ import {
 } from '../APIs/api.js'
 
 export const state = () => ({
-    // 購物車中的內容
+    //* 購物車中的內容
     userCart: [],
-    // 提示訊息
+    //* 提示訊息
     message: null,
-    // Pending 狀態
-    pendingStatus: false,
-    // 是否合格
+    //* loading 狀態
+    loading: false,
+    //* 是否合格
     valid: false
 })
 
@@ -27,8 +27,8 @@ export const getters = {
     getMessage(state) {
         return state.message
     },
-    getPendingStatus(state) {
-        return state.pendingStatus
+    getLoading(state) {
+        return state.loading
     },
     getValidStatus(state) {
         return state.valid
@@ -36,11 +36,11 @@ export const getters = {
 }
 
 export const mutations = {
-    // 設置使用者購物車的資料
+    //* 設置使用者購物車的資料
     SET_USER_CART(state, payload) {
         state.userCart = payload
     },
-    // 判定購物車內是否有資料
+    //* 判定購物車內是否有資料
     CHECK_AND_SET_VALID_STATUS(state) {
         if(state.userCart.length) {
             state.valid = true
@@ -49,26 +49,26 @@ export const mutations = {
             state.valid = false
         }
     },
-    // 使用者登出時清空暫存
+    //* 使用者登出時清空暫存
     CLEAR_USER_CART(state) {
         state.userCart = []
     },
-    // 設置提示訊息
+    //* 設置提示訊息
     SET_MESSAGE(state, message) {
         state.message = message
     },
-    // ajax request pending 狀態
-    SET_PENDING_STATUS(state, status) {
-        state.pendingStatus = status
+    //* 設置 loading 狀態
+    SET_LOADING(state, loading) {
+        state.loading = loading
     },
-    // 清除提示訊息
+    //* 清除提示訊息
     CLEAR_MESSAGE(state) {
         state.message = null
     },
 }
 
 export const actions = {
-    // 清除提示訊息
+    //? 清除提示訊息
     clearMessage({ commit }) {
         setTimeout(() => {
             commit('CLEAR_MESSAGE')
@@ -76,27 +76,27 @@ export const actions = {
     },
 
 // 首頁 (pages/index.vue)
-    // 抓取使用者的購物車
+    //* 抓取使用者的購物車
     async fetchUserCart({ commit }) {
         try {
             const res = await apiGetCartProducts()
             let payload = res.data.carts
-            // 將資料寫入
+            //* 將資料寫入
             await commit('SET_USER_CART', payload)
-            // 確認購物車內是否有商品
+            //* 確認購物車內是否有商品
             commit('CHECK_AND_SET_VALID_STATUS')
         } catch (error) {
             console.log(error)
             console.log('抓取失敗 from vuex')
         }
     },
-    // 直接"新增"商品至購物車 (預設數量 1)
+    //* 直接"新增"商品至購物車 (預設數量 1)
     async addToCart({ dispatch, commit }, productId) {
         try {
             await apiAddToCart(productId)
-            // 重新撈取資料
+            //* 重新撈取資料
             await dispatch('fetchUserCart')
-            // 回傳提示訊息給使用者
+            //? 回傳提示訊息給使用者
             let message = {
                 type: 'success',
                 text: '已經新增至購物車',
@@ -107,23 +107,23 @@ export const actions = {
         } catch (error) {
             console.log(error)
             console.log('新增失敗 from vuex')
-            // 若使用者未登入則重新導向
+            //* 若使用者未登入則重新導向
             this.$router.push({ name: 'auth-login' })
         }
     },
 
 // 動態頁面  (pages/products/_id.vue)
-    // "新增"商品至購物車(附帶商品數量)
+    //* "新增"商品至購物車(附帶商品數量)
     async addToCartWithQuantity({ dispatch, commit }, product) {
         try {
-            // 若要從表單傳遞參數要透過 Object
+            //* 若要從表單傳遞參數要透過 Object
             await apiAddToCartWithQuantity(
-                product.id, // 產品 id
-                { product_quantity: product.quantity } // 購買數量
+                product.id, //* 產品 id
+                { product_quantity: product.quantity } //* 購買數量
             )
-            // 重新撈取資料
+            //* 重新撈取資料
             await dispatch('fetchUserCart')
-            // 回傳提示訊息給使用者
+            //? 回傳提示訊息給使用者
             let message = {
                 type: 'success',
                 text: '已經新增至購物車',
@@ -134,25 +134,23 @@ export const actions = {
         } catch (error) {
             console.log(error)
             console.log('新增失敗 from vuex')
-            // 導向至登入頁面
+            //* 導向至登入頁面
             this.$router.push({ name: 'auth-login' })
         }
     },
 
 // 購物車結帳頁面 (pages/cart/index.vue)
-    // "修改"商品數量
+    //* "修改"商品數量
     async updateQuantity({ dispatch, commit }, product) {
+        // start loading
+        commit('SET_LOADING', true)
         try {
-            // pending 狀態
-            commit('SET_PENDING_STATUS', true)
             await apiUpdateQuantity
             (
-                product.id, // 產品 id
-                { product_quantity: product.quantity } // 變更數量
+                product.id, //* 產品 id
+                { product_quantity: product.quantity } //* 變更數量
             )
-            // pending 狀態
-            commit('SET_PENDING_STATUS', false)
-            // 重新撈取資料
+            //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
             let message = {
@@ -166,17 +164,17 @@ export const actions = {
             console.log(error)
             console.log('更新失敗')
         }
+        // end loading
+        commit('SET_LOADING', false)
     },
-    // 商品數量增加 1
+    //* 商品數量增加 1
     async increseByOne({ dispatch, commit }, productId) {
+        // start loading
+        commit('SET_LOADING', true)
         try {
-            // pending 狀態
-            commit('SET_PENDING_STATUS', true)
-            // 增加數量
+            //* 增加數量
             await apiIncreseQuantityByOne(productId)
-            // pending 狀態
-            commit('SET_PENDING_STATUS', false)
-            // 重新撈取資料
+            //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
             let message = {
@@ -190,17 +188,17 @@ export const actions = {
             console.log(error)
             console.log('數量增加失敗')
         }
+        // end loading
+        commit('SET_LOADING', false)
     },
-    // 商品數量減少 1
+    //* 商品數量減少 1
     async decreseByOne({ dispatch, commit }, productId) {
+        // start loading
+        commit('SET_LOADING', true)
         try {
-            // pending 狀態
-            commit('SET_PENDING_STATUS', true)
-            // 減少數量
+            //* 減少數量
             await apiDecreseQuantityByOne(productId)
-            // pending 狀態
-            commit('SET_PENDING_STATUS', false)
-            // 重新撈取資料
+            //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
             let message = {
@@ -214,12 +212,14 @@ export const actions = {
             console.log(error)
             console.log('數量增加失敗')
         }
+        // end loading
+        commit('SET_LOADING', false)
     },
-    // 從購物車中"移除"商品
+    //* 從購物車中"移除"商品
     async deleteFromCart({ dispatch, commit }, productId) {
         try {
             await apiDeleteFromCart(productId)
-            // 重新撈取資料
+            //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
             let message = {
@@ -234,13 +234,13 @@ export const actions = {
             console.log('刪除失敗 from vuex')
         }
     },
-    // 清空購物車
+    //* 清空購物車
     async deleteAllFromCart({ state, dispatch, commit }) {
-        // 購物車內有商品才發出請求
+        //* 購物車內有商品才發出請求
         if(state.userCart.length) {
             try {
                 await apiDeleteAllFromCart()
-                // 清空完之後 重新 fetch 資料
+                //* 清空完之後 重新 fetch 資料
                 await dispatch('fetchUserCart')
                 // 提示訊息
                 let message = {

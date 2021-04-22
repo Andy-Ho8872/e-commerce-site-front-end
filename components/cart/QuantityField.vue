@@ -3,7 +3,7 @@
         <!-- 減少數量 -->
         <v-btn
             @click="decrement(product_id)"
-            :disabled='status'
+            :disabled='loading'
             tile 
             small 
             depressed 
@@ -16,7 +16,7 @@
             @keyup="validateInput(productPayload.quantity)"
             @change="updateQuantity(productPayload)"
             autocomplete="off" 
-            :disabled='status'
+            :disabled='loading'
             class="grey lighten-2 text-center"
             name="product_quantity"
             type="number" 
@@ -24,7 +24,7 @@
         <!-- 增加數量 -->
         <v-btn 
             @click="increment(product_id)"
-            :disabled='status'
+            :disabled='loading'
             tile
             small 
             depressed 
@@ -57,7 +57,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            status: 'cart/getPendingStatus', // pending 的狀態
+            loading: 'cart/getLoading', // loading 的狀態
         })
     },
     methods: {
