@@ -76,11 +76,13 @@ export default {
     },
     methods: {
         ...mapActions({
+            //* 撈取單筆訂單 
             fetchSingleOrder: 'order/fetchSingleOrder',
         }),
     },
     computed: {
         ...mapGetters({
+            //* 訂單資料 
             userOrder: 'order/getSingleOrder',
         }),
     },
