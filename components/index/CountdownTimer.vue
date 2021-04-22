@@ -31,7 +31,7 @@
 
 <script>
 export default {
-    // passed from pages/index.vue
+    //? passed from pages/index.vue
     props : {
         'year': Number,
         'month': Number,
@@ -50,11 +50,11 @@ export default {
         }
     },
     computed : {
-        seconds () { // 1 秒為 1000 毫秒
+        seconds () { //* 1 = 1000 毫秒
             return 1000
         },
         minutes () {
-            return this.seconds * 60 // 一分鐘 60 秒
+            return this.seconds * 60 //* 一分鐘 60 秒
         },
         hours () {
             return this.minutes * 60
@@ -62,32 +62,33 @@ export default {
         days () {
             return this.hours * 24
         },
-        // 計時結束的時間
+        //* 計時結束的時間
         end () {
-            // 月份是從 0 開始計算
+            //* 月份是從 0 開始計算
             return new Date(this.year, this.month, this.day, this.hour, this.minute, this.second, this.millisecond)
         }
     },
     methods: {
         format (number) {
-            // 判定數字是否小於 10，若小於 10，則數字顯示 ' 09、08、07、06....、00'
+            //* 判定數字是否小於 10，若小於 10，則數字顯示 ' 09、08、07、06....、00'
             return number < 10 ? '0' + number : number
         },
         showLeftTime () {
             const timer = setInterval(() => {
-                const now = new Date() // 取得當前時間
-                // 剩下的時間 = 結束時間 - 起始時間
-                const distance = this.end.getTime() - now.getTime() // 使用 get 方法獲取特定時間
-                // 若倒數結束 ，則清除事件
+                //* 取得當前時間
+                const now = new Date() 
+                //* 剩下的時間 = 結束時間 - 起始時間
+                const distance = this.end.getTime() - now.getTime() //* 使用 get 方法獲取特定時間
+                //* 若倒數結束 ，則清除事件
                 if(distance < 0) {
                     clearInterval(timer)
                 }
-                // 分別取得 日、時、分、秒 等資訊
+                //* 分別取得 日、時、分、秒 等資訊
                 const days = Math.floor(distance / this.days)
                 const hours = Math.floor((distance % this.days) / this.hours)
                 const minutes = Math.floor((distance % this.hours) / this.minutes)
                 const seconds = Math.floor((distance % this.minutes) / this.seconds)
-                // 使用 format() 方法，解析所得到的數值
+                //* 使用 format() 方法，解析所得到的數值
                 this.showDays = this.format(days)
                 this.showHours = this.format(hours)
                 this.showMinutes = this.format(minutes)
@@ -95,7 +96,6 @@ export default {
             })
         }
     },
-    // 等頁面都掛載後才執行
     mounted () {
         this.showLeftTime()
     }

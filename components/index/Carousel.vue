@@ -56,20 +56,20 @@
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
-    // passed form pages/index.vue
+    //? passed form pages/index.vue
     props: {
         cardWidth: Number,
         cardHeight: Number,
     },
     data() {
         return {
-            // 圖片輪播
+            //* 圖片輪播
             interval: '',
         }
     },
-    // 測試
+    //todo 測試
     async fetch() {
-        // 撈取輪播資料
+        //* 撈取輪播資料
         await this.$store.dispatch('carousel/fetchCarouselItem')
     },
     computed: {
@@ -78,26 +78,26 @@ export default {
         }),
     },
     methods: {
-        // 滑動圖片
+        //* 滑動圖片
         ...mapMutations({
             SLIDE: 'carousel/SLIDE_CAROUSEL',
         }),
     },
-    // 頁面掛載後執行自動輪播
+    //* 頁面掛載後執行自動輪播
     mounted() {
-        // 圖片自動輪播
+        //* 圖片自動輪播
         this.interval = setInterval(() => {
             this.SLIDE(1)
         }, 5000)
     },
-    // 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
+    //* 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
     beforeDestroy() {
         // 在 Vue3 為 beforeUnmount
         clearInterval(this.interval)
     },
-    // 若有使用 Keep-Alive 的方式
+    //* 若有使用 Keep-Alive 的方式
     activated() {
-        // 圖片自動輪播
+        //* 圖片自動輪播
         this.interval = setInterval(() => {
             this.SLIDE(1)
         }, 5000)
@@ -110,9 +110,9 @@ export default {
 
 <style lang="scss" scoped>
 .carousel {
-    overflow-x: hidden; // 必要
+    overflow-x: hidden; //* 必要
     position: relative;
-    // 輪播控制按鈕 ( 左 右 )
+    //* 輪播控制按鈕 ( 左 右 )
     #prev {
         left: 5%;
     }
@@ -141,7 +141,7 @@ export default {
     right: 0;
 }
 
-// RWD 版面設定
+//? RWD 版面設定
 @media (width: 1024px) {
     .v-card {
         max-width: 438px !important;

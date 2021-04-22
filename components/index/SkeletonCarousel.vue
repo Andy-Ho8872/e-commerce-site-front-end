@@ -21,7 +21,7 @@
 
 <script>
 export default {
-    // passed from index.vue
+    //? passed from index.vue
     props: {
         'cardHeight': Number
     }
@@ -29,12 +29,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// 變數 Start
+//? 變數 Start
     $size: 1.5rem;
     $bouncing-duration: 1s;
     $glowing: 0 0 16px;
     $glowing-duration: 2s;
-// 變數 End
+//? 變數 End
     .bg {
         background-image: linear-gradient(to right, #434343 0%, black 100%);
         font-family: 'Poppins', sans-serif;
@@ -50,7 +50,7 @@ export default {
         height: $size;
         width: $size;
         animation: bouncing $bouncing-duration ease-in-out infinite;
-        // 動畫延遲撥放
+        //* 動畫延遲撥放
         &:nth-child(1) {
             animation-delay: $bouncing-duration / 4;
         }
@@ -61,7 +61,7 @@ export default {
             animation-delay: $bouncing-duration / 2;
         }
     }
-    // 螢光效果 Start
+    //* 螢光效果 Start
     .star {
         color: yellow;
         text-shadow: $glowing;
@@ -74,8 +74,8 @@ export default {
         text-shadow: $glowing;
         animation: glowing $glowing-duration ease-in infinite
     }
-    // 螢光效果 End
-    // 動畫 Start
+    //* 螢光效果 End
+    //* 動畫 Start
     @keyframes bouncing {
         0% {
             transform: translateY(0);
@@ -98,9 +98,9 @@ export default {
             filter: brightness(0.3);
         }
     }
-    // 動畫 End
+    //* 動畫 End
 
-    // RWD
+    //? RWD
     @media (max-width: 768px) {
         .bg {
             letter-spacing: 0.75rem;
