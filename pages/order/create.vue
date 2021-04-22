@@ -98,20 +98,20 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     data() {
         return {
-            // 表格標頭
+            //* 表格標頭
             tableHeads: [
                 { title: '商品' },
                 { title: '單價' },
                 { title: '數量' },
                 { title: '總價' },          
             ],
-            // 表單輸入
+            //* 表單輸入
             form: {
-                // 預設為現金付款
+                //* 預設為現金付款
                 payment_id: 1,
                 address: ''
             },
-            // 表單驗證
+            //* 表單驗證
             valid: false,
             rules: {
                 required: value => !!value || '此欄位必填',
@@ -120,29 +120,29 @@ export default {
     },
     computed: {
         ...mapGetters({
-            // 使用者的購物車資料
+            //* 使用者的購物車資料
             userCart: 'cart/getUserCart', 
-            // 後端表單資料
+            //* 後端表單資料
             formData: 'order/getFormData',
-            // pending 狀態
+            //* loading 狀態
             loading: 'order/getLoading'
         }),
-        // 價格小計
+        //* 價格小計
         subTotal() {
-            // 初始為0
+            //* 初始為0
             let summary = 0
             // 累加
             this.userCart.forEach(element => {
-                summary += Number(element.total) // 將字串轉換為數字(integer)
+                summary += Number(element.total) //* 將字串轉換為數字(integer)
             })
             return summary
         },
     },
     methods: {
         ...mapActions({
-            // 撈取後端表單資料
+            //* 撈取後端表單資料
             fetchFormData: 'order/fetchFormData',
-            // 建立訂單
+            //* 建立訂單
             createOrder: 'order/createOrder'
         }),
     },
