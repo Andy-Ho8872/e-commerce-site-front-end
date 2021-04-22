@@ -37,6 +37,11 @@ export const mutations = {
             state.token = token
         }
     },
+    //* 將資料設置在 LocalStorage 
+    SET_LOCAL_STORAGE(state, res) { //! 第一個 state 參數(必須存在)並未使用到，因為 payload 要放在第二個參數才能使用。
+        localStorage.setItem('Token', `Bearer ${res.data.token}`)
+        localStorage.setItem('UserEmail', res.data.user.email)
+    },
     //* 設置錯誤訊息
     SET_MESSAGE(state, msg) {
         state.message = msg
@@ -124,9 +129,8 @@ export const actions = {
                 email: user.email,
                 password: user.password,
             })
-            //* 若帳密正確，則給予 Token 並儲存在 localStorage
-            localStorage.setItem('Token', `Bearer ${res.data.token}`)
-            localStorage.setItem('UserEmail', res.data.user.email)
+            //* 若帳密正確，則將資料儲存在 localStorage
+            await commit('SET_LOCAL_STORAGE', res)
             //* 撈取使用者資料
             await dispatch('fetchUserInfo')
             //* 從 store/cart.js 撈取使用者的購物車資料
@@ -145,10 +149,9 @@ export const actions = {
         //? end loading
         commit('SET_LOADING', false)
     },
-    // 登出流程
+    //* 登出流程
     async logout({ commit }) {
         try {
-            // 要取得使用者的 Token 才能執行登出
             await apiUserLogout()
             //* 清空 LocalStorage 與暫存
             await commit('CLEAR_ALL_STORAGE')
