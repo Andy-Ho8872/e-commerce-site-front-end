@@ -1,16 +1,17 @@
 <template>
     <v-container>
-        <!-- 該頁產品 -->
-        <LoadingCircle v-if="pending"/>
+        <!-- loading -->
+        <LoadingCircle v-if="loading"/>
+        <!-- content -->
         <v-row>
             <v-col
                 v-for="product in products.data"
                 :key="product.id"
                 class="my-12"
             >
-                <SkeletonCard :cardWidth="300" v-if="pending" class="mx-auto"/>
+                <SkeletonCard :cardWidth="300" v-if="loading" class="mx-auto"/>
                 <!-- 產品 Component -->
-                <Product v-show="!pending"
+                <Product v-show="!loading"
                     class="mx-auto"
                     :product="product"
                     :cardWidth="300"
@@ -33,25 +34,22 @@ export default {
         }
     },
 
-    // test Start
-
+    // todo: test Start
     // async asyncData({ params }) {
     //     const res = await apiGetProductsWithPagination(params.pageNumber)
     //     return { products: res.data.products }
     // },
     // async fetch() {
-    //     // 撈取該頁資料
     //     await this.$store.dispatch('pagination/fetchPaginatedProducts', this.page)
     // },
-
-    // test End
+    // todo: test End
 
     computed: {
         ...mapGetters({
-            // 取得該頁資料
+            //* 該頁資料
             products: 'pagination/getPaginatedProducts',
-            // pending 狀態
-            pending: 'pagination/getPending'
+            //* loading 狀態
+            loading: 'pagination/getLoading'
         }),
         pageNumber() {
             return Number(this.$route.params.pageNumber)
@@ -59,10 +57,11 @@ export default {
     },
     methods: {
         ...mapActions({
+            //* 撈取資料 
             fetchData: 'pagination/fetchPaginatedProducts',
         }),
     },
-    // 避免重複發送相同的 request
+    //* 避免重複發送相同的 request
     created() {
         if (this.products.current_page != this.page) {
             this.fetchData(this.page)
