@@ -65,6 +65,19 @@ export const mutations = {
     CLEAR_MESSAGE(state) {
         state.message = null
     },
+    //***** 處理購物車的暫存 *****//
+    //* 清除資料 
+    REMOVE_SINGLE_PRODUCT_FROM_CART(state, productId) { //? 單筆資料
+        const index = state.userCart.findIndex((item) => {
+            return item.product_id == productId
+        })
+        if(index !== -1) {
+            state.userCart.splice(index, 1)
+        }   
+    },
+    REMOVE_ALL_FROM_CART(state) { //? 所有資料
+        state.userCart = []
+    }
 }
 
 export const actions = {
@@ -219,8 +232,8 @@ export const actions = {
     async deleteFromCart({ dispatch, commit }, productId) {
         try {
             await apiDeleteFromCart(productId)
-            //* 重新撈取資料
-            await dispatch('fetchUserCart')
+            //* 刪除該商品的暫存數據(可以減少向後端發送撈取的 request)
+            commit('REMOVE_SINGLE_PRODUCT_FROM_CART', productId)
             // 提示訊息
             let message = {
                 type: 'error',
@@ -240,8 +253,8 @@ export const actions = {
         if(state.userCart.length) {
             try {
                 await apiDeleteAllFromCart()
-                //* 清空完之後 重新 fetch 資料
-                await dispatch('fetchUserCart')
+                //* 刪除所有商品的暫存數據
+                commit('REMOVE_ALL_FROM_CART')
                 // 提示訊息
                 let message = {
                     type: 'error',
