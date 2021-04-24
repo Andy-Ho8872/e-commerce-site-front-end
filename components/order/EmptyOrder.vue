@@ -7,7 +7,7 @@
             max-height="300">
         </v-img>
         <!-- 文字 -->
-        <h2 class="my-4">您目前沒有任何訂單。</h2>
+        <h2 class="my-8">您目前沒有任何訂單。</h2>
         <!-- 導向連結 -->
         <nuxt-link  :to="{ name: 'pagination-pageNumber', params: { pageNumber: 1 }}">
             <v-btn color="primary" x-large depressed>
