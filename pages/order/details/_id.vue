@@ -9,7 +9,7 @@
                 <nuxt-link :to="{ name: 'order'}">
                     <v-btn dark rounded outlined x-large color="light-blue" class="mx-1">
                         <v-icon>fa-long-arrow-alt-left fa-fw</v-icon>
-                        返回訂單頁面
+                        訂單總覽
                     </v-btn>
                 </nuxt-link>
             </div>
