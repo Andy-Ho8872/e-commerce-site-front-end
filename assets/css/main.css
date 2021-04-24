@@ -1,3 +1,13 @@
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.3s;
+}
+
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
+
 html,
 body {
   overflow-x: hidden;
@@ -75,7 +85,7 @@ a {
   text-decoration: none;
 }
 
-/* table {
+table {
   width: 100%;
   border-collapse: collapse;
   border-bottom: 4px solid;
@@ -126,4 +136,4 @@ tbody tr:nth-child(even) {
     padding-left: 10%;
     left: 0;
   }
-} */
+}

@@ -1,4 +1,15 @@
-// layouts-------------------------------- Start
+//* Page Transition -------------------- Start
+.page-enter-active,
+.page-leave-active {
+    transition: opacity 0.3s;
+}
+.page-enter,
+.page-leave-active {
+    opacity: 0;
+}
+//* Page Transition -------------------- End
+
+//* layouts-------------------------------- Start
 // dafault.vue & paginate.vue
 html,
 body {
@@ -66,22 +77,20 @@ body {
         padding-top: 33% !important;
     }
 }
-// layouts-------------------------------- End
+//* layouts-------------------------------- End
 
-// 移除 INPUT 數字預設的增減箭頭
+//* 移除 INPUT 數字預設的增減箭頭
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-
-
-// pages/order ----------------------------------------------- Start
+//* pages/order ----------------------------------------------- Start
 $letter-spacing: 0.125rem;
 $padding: 10%;
 $td-padding: 1.5rem 0;
-// only for RWD
+//? only for RWD
 $title-font-weight: 600;
 
 a {
@@ -124,11 +133,11 @@ tbody {
             position: relative;
             text-align: right;
             padding-right: $padding;
-            // 除了最後一個元素之外，其餘的都要加上底線
+            //* 除了最後一個元素之外，其餘的都要加上底線
             &:not(:last-child) {
                 border-bottom: 1px solid #b0bec5;
             }
-            // 表格標題
+            //* 表格標題
             &::before {
                 content: attr(data-title);
                 position: absolute;
@@ -140,4 +149,4 @@ tbody {
         }
     }
 }
-// pages/order ----------------------------------------------- End
+//* pages/order ----------------------------------------------- End

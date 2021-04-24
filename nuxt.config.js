@@ -1,51 +1,41 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-    // Global page headers (https://go.nuxtjs.dev/config-head)
+    //* Global page headers (https://go.nuxtjs.dev/config-head)
     head: {
         titleTemplate: '%s - OO購物',
         title: 'ShoppingSite-Clone',
         meta: [
             { charset: 'utf-8' },
-            {
-                name: 'viewport',
-                content: 'width=device-width, initial-scale=1',
-            },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
             { hid: 'description', name: 'description', content: '' },
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-            // Font-AwesomeIcon (CDN)
+            //* Font-AwesomeIcon (CDN)
             {
-                // href: 'https://cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css',
+                rel: 'stylesheet',
                 href: 'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
-                rel: 'stylesheet',
+                //! 舊版本，暫不使用 href: 'https://cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css',
             },
-            // 字型
+            //* 字型
             {
-                rel: 'preconnect',
                 rel: 'stylesheet',
-                href: 'https://fonts.gstatic.com',
                 href: 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,600;1,700&display=swap',
             },
         ],
     },
 
-    // Modules (https://go.nuxtjs.dev/config-modules)
+    //*  Modules (https://go.nuxtjs.dev/config-modules)
     modules: ['@nuxtjs/axios'],
 
-    // Global CSS (https://go.nuxtjs.dev/config-css)
-    css: [
-        // CSS 
-        '@/assets/css/main.css',
-        // SCSS 
-        '@/assets/css/main.scss'
-    ],
+    //* Global CSS (https://go.nuxtjs.dev/config-css)
+    css: ['@/assets/css/main.css', '@/assets/css/main.scss'],
 
-    // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
+    //* Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
     plugins: ['~/plugins/axios.js'],
 
-    // Auto import components (https://go.nuxtjs.dev/config-components)
+    //* Auto import components (https://go.nuxtjs.dev/config-components)
     components: true,
 
     // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
@@ -75,4 +65,10 @@ export default {
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {},
+
+    //* transition
+    pageTransition: {
+        name: 'page',
+        mode: 'out-in',
+    },
 }
