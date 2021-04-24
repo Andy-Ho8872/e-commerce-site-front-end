@@ -3,7 +3,7 @@
         <!-- 如果陣列內長度為 0 則顯示-->
         <div v-if="!userCart.length" class="text-center">
             <!-- 圖片 -->
-            <v-img :src="require('~/static/cart/NoData.svg')"
+            <v-img :src="require('~/static/cart/EmptyCart.svg')"
                 class="mx-auto mb-4" 
                 max-width="300"
                 max-height="300">

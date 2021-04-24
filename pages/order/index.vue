@@ -2,10 +2,21 @@
     <v-container>
         <!-- loading -->
         <LoadingCircle v-if="!user"/>
-        <!-- content -->
+        <!-- 若無訂單 -->
+        <div v-else-if="!orders.length" class="text-center">
+            <!-- 圖片 -->
+            <v-img :src="require('~/static/order/NoDataLeft.svg')"
+                class="mx-auto mb-4" 
+                max-width="300"
+                max-height="300">
+            </v-img>
+            <!-- 文字 -->
+            <h2>您目前沒有任何訂單。</h2>
+        </div>
+        <!-- 若有訂單 -->
         <div v-else>
-            <div class="text-center text-h5 mb-6" >
-                您好，{{ user.email }}，以下為您的訂單
+            <div class="text-center text-h5 mb-6">
+                您好，<span class="font-weight-bold">{{ user.email }}</span>，以下為您的訂單
             </div>
             <!-- 表格內容 -->
             <table class="light-blue darken-1 rounded-xl">
