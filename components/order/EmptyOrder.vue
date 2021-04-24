@@ -1,7 +1,7 @@
 <template>
     <div class="text-center">
         <!-- 圖片 -->
-        <v-img :src="require('~/static/order/NoDataLeft.svg')"
+        <v-img :src="require('~/static/order/EmptyOrder.svg')"
             class="mx-auto mb-4" 
             max-width="300"
             max-height="300">
