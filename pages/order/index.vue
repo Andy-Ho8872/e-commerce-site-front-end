@@ -65,10 +65,10 @@
                         <!-- 訂單操作 -->
                         <td data-title="編輯操作" id="actions">
                             <!-- 刪除 -->
-                            <v-btn class="ma-1"
+                            <v-btn class="ma-1 white--text"
                             @click="deleteSingleOrder(order.id)"
                             :loading="loading"
-                            dark 
+                            :disabled="loading"
                             rounded 
                             color="red lighten-1" 
                             >
@@ -76,7 +76,7 @@
                             </v-btn>
                             <!-- 查看 -->
                             <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
-                                <v-btn dark rounded color="light-blue" class="ma-1">
+                                <v-btn rounded color="light-blue" class="ma-1 white--text">
                                     查看
                                 </v-btn>
                             </nuxt-link>
