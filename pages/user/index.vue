@@ -46,10 +46,14 @@
                 </v-tab-item>
                 <!-- 我的訂單 -->
                 <v-tab-item>
+                    <!-- 若無訂單 -->
                     <v-card flat v-if="! userOrder.length" class="ma-4">
                         <EmptyOrder />
                     </v-card>
+                    <!-- 若有訂單 -->
                     <v-card flat v-for="order in userOrder" :key="order.id">
+                        <!-- 子標題 -->
+                        <v-subheader inset>點擊以查看細項</v-subheader>
                         <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
                             <!-- 訂單編號 -->
                             <v-card-subtitle>
@@ -65,12 +69,25 @@
                                     {{ order.address }}
                                 </span>
                             </v-card-subtitle>
-                            <!-- 付款狀態 -->
+                            <!-- 貨物狀態 -->
                             <v-card-subtitle>
                                 貨物狀態: 
-                                <span class="font-weight-bold black--text">
-                                    {{ order.status_id }}
-                                </span>
+                                <!-- 顯示符合出貨狀態 id 的名稱 -->
+                                <template v-for="status in status">
+                                    <span v-if="order.status_id == status.id" :key="status.id" class="font-weight-bold black--text">
+                                        {{ status.title }}
+                                    </span>
+                                </template>
+                            </v-card-subtitle>
+                            <!-- 付款方式 -->
+                            <v-card-subtitle>
+                                付款方式: 
+                                <!-- 顯示符合付款方式 id 的名稱 -->
+                                <template v-for="payment in payments">
+                                    <span v-if="order.payment_id == payment.id" :key="payment.id" class="font-weight-bold black--text">
+                                        {{ payment.title }}
+                                    </span>
+                                </template>
                             </v-card-subtitle>
                             <!-- 訂購時間 -->
                             <v-card-subtitle>
@@ -110,10 +127,12 @@ export default {
     },
     computed: {
         ...mapGetters({
-            // 使用者的資料
+            //* 使用者的資料
             user: 'auth/getUserInfo',
-            // 訂單資料
-            userOrder: 'order/getAllOrders'
+            //* 訂單資料
+            userOrder: 'order/getAllOrders', //* 所有訂單
+            status: 'order/getStatus', //* 商品狀態
+            payments: 'order/getPayments', //* 付款方式
         }),
     },
 }
