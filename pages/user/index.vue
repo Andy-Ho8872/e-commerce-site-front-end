@@ -52,53 +52,53 @@
                     </v-card>
                     <!-- 若有訂單 -->
                     <v-card flat v-for="order in userOrder" :key="order.id">
-                        <!-- 子標題 -->
-                        <v-subheader inset>點擊以查看細項</v-subheader>
+                        <!-- 子標題 (訂單導覽連結) -->
                         <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
-                            <!-- 訂單編號 -->
-                            <v-card-subtitle>
-                                訂單編號: 
-                                <span class="font-weight-bold black--text">
-                                    {{ order.id }}
-                                </span>
-                            </v-card-subtitle>
-                            <!-- 送達地址 -->
-                            <v-card-subtitle>
-                                送達地址: 
-                                <span class="font-weight-bold black--text">
-                                    {{ order.address }}
-                                </span>
-                            </v-card-subtitle>
-                            <!-- 貨物狀態 -->
-                            <v-card-subtitle>
-                                貨物狀態: 
-                                <!-- 顯示符合出貨狀態 id 的名稱 -->
-                                <template v-for="status in status">
-                                    <span v-if="order.status_id == status.id" :key="status.id" class="font-weight-bold black--text">
-                                        {{ status.title }}
-                                    </span>
-                                </template>
-                            </v-card-subtitle>
-                            <!-- 付款方式 -->
-                            <v-card-subtitle>
-                                付款方式: 
-                                <!-- 顯示符合付款方式 id 的名稱 -->
-                                <template v-for="payment in payments">
-                                    <span v-if="order.payment_id == payment.id" :key="payment.id" class="font-weight-bold black--text">
-                                        {{ payment.title }}
-                                    </span>
-                                </template>
-                            </v-card-subtitle>
-                            <!-- 訂購時間 -->
-                            <v-card-subtitle>
-                                訂購時間: 
-                                <span class="font-weight-bold black--text">
-                                    {{ order.created_at.substring(0, 10) }}
-                                </span>
-                            </v-card-subtitle>
-                            <!-- 分隔線 -->
-                            <v-divider></v-divider>
+                            <v-subheader inset class="blue--text">點我查看細項</v-subheader>
                         </nuxt-link>
+                        <!-- 訂單編號 -->
+                        <v-card-subtitle>
+                            訂單編號: 
+                            <span class="font-weight-bold black--text">
+                                {{ order.id }}
+                            </span>
+                        </v-card-subtitle>
+                        <!-- 送達地址 -->
+                        <v-card-subtitle>
+                            送達地址: 
+                            <span class="font-weight-bold black--text">
+                                {{ order.address }}
+                            </span>
+                        </v-card-subtitle>
+                        <!-- 貨物狀態 -->
+                        <v-card-subtitle>
+                            貨物狀態: 
+                            <!-- 顯示符合出貨狀態 id 的名稱 -->
+                            <template v-for="status in status">
+                                <span v-if="order.status_id == status.id" :key="status.id" class="font-weight-bold black--text">
+                                    {{ status.title }}
+                                </span>
+                            </template>
+                        </v-card-subtitle>
+                        <!-- 付款方式 -->
+                        <v-card-subtitle>
+                            付款方式: 
+                            <!-- 顯示符合付款方式 id 的名稱 -->
+                            <template v-for="payment in payments">
+                                <span v-if="order.payment_id == payment.id" :key="payment.id" class="font-weight-bold black--text">
+                                    {{ payment.title }}
+                                </span>
+                            </template>
+                        </v-card-subtitle>
+                        <!-- 訂購時間 -->
+                        <v-card-subtitle>
+                            訂購時間: 
+                            <span class="font-weight-bold black--text">
+                                {{ order.created_at.substring(0, 10) }}
+                            </span>
+                        </v-card-subtitle>
+                        <!-- 分隔線 -->
+                        <v-divider></v-divider>
                     </v-card>
                 </v-tab-item>
             </v-tabs-items>
