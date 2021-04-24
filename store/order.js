@@ -56,6 +56,17 @@ export const mutations = {
     SET_SINGLE_ORDER(state, order) {
         state.order = order
     },
+    //* 刪除暫存陣列中的資料(不必向後端在發送撈取資料的 request)
+    REMOVE_SINGLE_ORDER(state, orderId) {
+        const index = state.orders.findIndex((item) => {
+            console.log(item);
+            return item.id == orderId
+        })
+        if(index !== -1) {
+            state.orders.splice(index, 1)
+        }     
+    },
+    // todo 測試
     SET_PAYMENTS_DATA(state, payments) {
         state.payments = payments
     },
@@ -157,8 +168,8 @@ export const actions = {
             const result = confirm('您確定要刪除該筆訂單嗎?')
             if (result === true) {
                 await apiDeleteSingleOrder(orderId)
-                //* 刪除後撈取最新的資料
-                dispatch('fetchAllOrders')
+                //* 刪除暫存中的訂單數據(可以減少撈取訂單 request 的次數) 
+                commit('REMOVE_SINGLE_ORDER', orderId)
             }
         } catch (error) {
             console.log(error)
