@@ -170,9 +170,6 @@ export default {
 .discounted {
     text-decoration: line-through;
 }
-.quantity_field_wrapper {
-    max-width: 170px !important;
-}
 .quantity_field {
     width: 170px;
 }

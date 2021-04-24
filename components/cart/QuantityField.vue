@@ -1,5 +1,5 @@
 <template>
-    <v-row class="quantity_field_wrapper align-center justify-center">
+    <v-row class="align-center justify-center">
         <!-- 減少數量 -->
         <v-btn
             @click="decrement(product_id)"
@@ -105,8 +105,5 @@ input {
     width: 30%;
     padding: 2px 0;
     outline: 0;
-}
-.quantity_field_wrapper {
-    width: 100%;
 }
 </style>
