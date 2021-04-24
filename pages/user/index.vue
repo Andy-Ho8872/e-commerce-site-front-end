@@ -46,15 +46,8 @@
                 </v-tab-item>
                 <!-- 我的訂單 -->
                 <v-tab-item>
-                    <v-card flat v-if="! userOrder.length" class="ma-4 pa-4 text-center">
-                        <!-- 圖片 -->
-                        <v-img :src="require('~/static/order/NoDataLeft.svg')"
-                            class="mx-auto mb-4" 
-                            max-width="300"
-                            max-height="300">
-                        </v-img>
-                        <!-- 文字 -->
-                        <h2>您目前沒有任何訂單。</h2>
+                    <v-card flat v-if="! userOrder.length" class="ma-4">
+                        <EmptyOrder />
                     </v-card>
                     <v-card flat v-for="order in userOrder" :key="order.id">
                         <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">

@@ -3,16 +3,7 @@
         <!-- loading -->
         <LoadingCircle v-if="!user"/>
         <!-- 若無訂單 -->
-        <div v-else-if="!orders.length" class="text-center">
-            <!-- 圖片 -->
-            <v-img :src="require('~/static/order/NoDataLeft.svg')"
-                class="mx-auto mb-4" 
-                max-width="300"
-                max-height="300">
-            </v-img>
-            <!-- 文字 -->
-            <h2>您目前沒有任何訂單。</h2>
-        </div>
+        <EmptyOrder v-else-if="!orders.length"/>
         <!-- 若有訂單 -->
         <div v-else>
             <div class="text-center text-h5 mb-6">
