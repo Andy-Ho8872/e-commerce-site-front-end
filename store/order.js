@@ -1,5 +1,5 @@
 import {
-    apiGetFormData,
+    apiGetTableColumns,
     apiCreateOrder,
     apiGetAllOrders,
     apiGetSingleOrder,
@@ -7,8 +7,6 @@ import {
 } from '../APIs/api.js'
 
 export const state = () => ({
-    //* 後端回傳的表單資訊
-    formData: [],
     //* 所有訂單
     orders: [],
     //* 單筆訂單
@@ -20,13 +18,10 @@ export const state = () => ({
     //* 點擊 id 紀錄
     lastClickedRecord: null,
     //* loading 狀態
-    loading: false
+    loading: false,
 })
 
 export const getters = {
-    getFormData(state) {
-        return state.formData
-    },
     getAllOrders(state) {
         return state.orders
     },
@@ -41,14 +36,10 @@ export const getters = {
     },
     getLoading(state) {
         return state.loading
-    }
+    },
 }
 
 export const mutations = {
-    //* 表單相關
-    SET_FORM_DATA(state, data) {
-        state.formData = data
-    },
     //* 訂單相關
     SET_ALL_ORDERS(state, orders) {
         state.orders = orders
@@ -56,17 +47,6 @@ export const mutations = {
     SET_SINGLE_ORDER(state, order) {
         state.order = order
     },
-    //* 刪除暫存陣列中的資料(不必向後端在發送撈取資料的 request)
-    REMOVE_SINGLE_ORDER(state, orderId) {
-        const index = state.orders.findIndex((item) => {
-            console.log(item);
-            return item.id == orderId
-        })
-        if(index !== -1) {
-            state.orders.splice(index, 1)
-        }     
-    },
-    // todo 測試
     SET_PAYMENTS_DATA(state, payments) {
         state.payments = payments
     },
@@ -77,28 +57,39 @@ export const mutations = {
     SET_LOADING(state, loading) {
         state.loading = loading
     },
-    //* 清除單筆訂單資料
-    CLEAR_SINGLE_ORDER(state) {
-        state.order = []
-    },
     //* 紀錄最後點擊的訂單 id
     SET_LAST_CLICKED_RECORD(state, record) {
         state.lastClickedRecord = record
+    },
+    //* 刪除暫存陣列中的資料(不必向後端在發送撈取資料的 request)
+    REMOVE_SINGLE_ORDER(state, orderId) {
+        const index = state.orders.findIndex(item => {
+            console.log(item)
+            return item.id == orderId
+        })
+        if (index !== -1) {
+            state.orders.splice(index, 1)
+        }
+    },
+    //* 清除單筆訂單資料
+    CLEAR_SINGLE_ORDER(state) {
+        state.order = []
     },
 }
 
 export const actions = {
     //* 撈取後端表單資料
-    async fetchFormData({ state, commit }) {
-        //* 若 state 中沒有表單資料才和後端請求
-        if(state.formData.length == 0) {
-            try {
-                const res = await apiGetFormData()
-                let payload = res.data.payments
-                commit('SET_FORM_DATA', payload)
-            } catch (error) {
-                console.log('抓取失敗 from /store/order.js')
-            }
+    async fetchTableColumns({ commit }) {
+        try {
+            const res = await apiGetTableColumns()
+            //* 付款方式與貨物狀態
+            let payments = res.data.payments
+            let status = res.data.status
+            //* 設置到 state 中
+            commit('SET_PAYMENTS_DATA', payments)
+            commit('SET_STATUS_DATA', status)
+        } catch (error) {
+            console.log('抓取失敗 from /store/order.js')
         }
     },
     //* 撈取所有訂單
@@ -106,14 +97,8 @@ export const actions = {
         try {
             //* 撈取
             const res = await apiGetAllOrders()
-            //* 宣告
             let orders = res.data.orders
-            let payments = res.data.payments
-            let status = res.data.status
-            //* 設置
             commit('SET_ALL_ORDERS', orders)
-            commit('SET_PAYMENTS_DATA', payments)
-            commit('SET_STATUS_DATA', status)
         } catch (error) {
             console.log(error)
             console.log('抓取失敗 from /store/order.js')
@@ -146,7 +131,7 @@ export const actions = {
             //* 向後端發送資料
             await apiCreateOrder({
                 payment_id: order.payment_id,
-                address: order.address
+                address: order.address,
             })
             //* 訂單建立後從 store/cart.js 清空使用者的購物車資料
             await commit('cart/CLEAR_USER_CART', null, { root: true })
@@ -161,14 +146,14 @@ export const actions = {
         commit('SET_LOADING', false)
     },
     //* 刪除訂單
-    async deleteSingleOrder({ dispatch, commit }, orderId) {
+    async deleteSingleOrder({ commit }, orderId) {
         //? start loading
         commit('SET_LOADING', true)
         try {
             const result = confirm('您確定要刪除該筆訂單嗎?')
             if (result === true) {
                 await apiDeleteSingleOrder(orderId)
-                //* 刪除暫存中的訂單數據(可以減少撈取訂單 request 的次數) 
+                //* 刪除暫存中的訂單數據(可以減少撈取訂單 request 的次數)
                 commit('REMOVE_SINGLE_ORDER', orderId)
             }
         } catch (error) {

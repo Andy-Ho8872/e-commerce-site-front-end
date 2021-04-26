@@ -42,7 +42,7 @@
                 <div>
                     <v-card-title>選擇您的付款方式</v-card-title>
                     <v-card-subtitle class="mt-2">
-                        <label class="ma-2 blue blue-grey lighten-4" v-for="payment in formData" :key="payment.id">
+                        <label class="ma-2 blue blue-grey lighten-4" v-for="payment in payments" :key="payment.id">
                             <!-- 預設選擇現金付款 -->
                             <input type="radio" name="payment_id" 
                                 v-model="form.payment_id"
@@ -123,7 +123,7 @@ export default {
             //* 使用者的購物車資料
             userCart: 'cart/getUserCart', 
             //* 後端表單資料
-            formData: 'order/getFormData',
+            payments: 'order/getPayments',
             //* loading 狀態
             loading: 'order/getLoading'
         }),
@@ -140,15 +140,10 @@ export default {
     },
     methods: {
         ...mapActions({
-            //* 撈取後端表單資料
-            fetchFormData: 'order/fetchFormData',
             //* 建立訂單
             createOrder: 'order/createOrder'
         }),
     },
-    mounted() {
-        this.fetchFormData()   
-    }
 }
 </script>
 
