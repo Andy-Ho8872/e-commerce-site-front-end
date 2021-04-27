@@ -1,5 +1,5 @@
 <template>
-    <v-container >
+    <v-container>
         <div class="form-wrapper ma-auto">
             <!--註冊(登入) Icon -->
             <div class="img_wrapper">
@@ -11,7 +11,7 @@
                 >
                 </v-img>
             </div>
-            <!-- 註冊表單 -->
+            <!-- 表單 -->
             <v-form class="pa-8" ref="form" v-model="valid">
                 <!-- 帳戶文字 -->
                 <h1 class="text-center my-10">登入</h1>
@@ -62,9 +62,9 @@
                 <div class="text-center mt-10">
                     <v-btn
                         class="title"
+                        @click.prevent="login(form)"
                         :disabled="!valid"
                         :loading="loading"
-                        @click.prevent="login(form)"
                         color="purple"
                         large
                         rounded
@@ -74,7 +74,7 @@
                     </v-btn>
                 </div>
             </v-form>
-            <!-- 顯示錯誤訊息(隱藏) -->
+            <!-- 顯示錯誤訊息(預設隱藏) -->
             <div class="error_msg text-center">
                 <v-scroll-y-transition>
                     <v-alert class="mx-4" type="error" v-for="(msg, index) in message" :key="index">
