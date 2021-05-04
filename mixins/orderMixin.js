@@ -1,3 +1,4 @@
+//* 使用在 pages/user/index.vue 和 pages/order/index.vue
 import { mapActions, mapGetters } from 'vuex'
 
 export default {

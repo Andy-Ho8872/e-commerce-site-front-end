@@ -1,3 +1,4 @@
+//* 使用在 pages/auth/register.vue 和 pages/auth/login.vue
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
