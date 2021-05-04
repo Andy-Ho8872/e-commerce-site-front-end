@@ -116,9 +116,26 @@ export const apiDecreseQuantityByOne = (productId) => authRequest.get(`/cart/${p
     export const apiGetSingleOrder = (orderId) => authRequest.get(`/order/${orderId}`);
 //* 新增
     //? 建立訂單
-    export const apiCreateOrder = (data) => authRequest.post('/order/create', data);
+    export const apiCreateOrder = (order) => authRequest.post('/order/create', order);
 //* 刪除
     //? 刪除訂單
     export const apiDeleteSingleOrder = (orderId) => authRequest.delete(`/order/${orderId}/delete`);
 //-------------------------------------------------- 訂單相關 API --------------------------------------------------//
-    
+
+
+//-------------------------------------------------- 通知相關 API --------------------------------------------------//
+            //----------------------------------- 以下操作必須包含Token -------------------------------------//
+//* 讀取
+    //? 所有通知 
+    export const apiGetAllNotifications = () => authRequest.get('/notifications');
+    //? 未讀的通知 
+    export const apiGetUnReadNotifications = () => authRequest.get('/notifications/unread');
+//* 標示為已讀
+    //? 單筆通知
+    export const apiMarkNotification = (notification) => authRequest.post('/notifications/markAsRead', notification);
+    //? 所有通知
+    export const apiMarkAllNotifications = () => authRequest.get('/notifications/markAllAsRead');
+//* 刪除
+    //? 所有通知 
+    export const apiDeleteAllNotifications = () => authRequest.delete('/notifications/deleteAll');
+//-------------------------------------------------- 通知相關 API --------------------------------------------------//
