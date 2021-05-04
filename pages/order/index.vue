@@ -89,9 +89,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import orderMixin from '~/mixins/orderMixin'
 
 export default {
+    mixins:[orderMixin],
     data() {
         return {
             tableHeads: [
@@ -105,26 +106,6 @@ export default {
                 { title: '編輯操作' },
             ],
         }
-    },
-    methods: {
-        ...mapActions({
-            //* 撈取所有的訂單
-            fetchAllOrders: 'order/fetchAllOrders',
-            //* 刪除訂單
-            deleteSingleOrder: 'order/deleteSingleOrder',
-        }),
-    },
-    computed: {
-        ...mapGetters({
-            //* 使用者的資料
-            user: 'auth/getUserInfo',
-            //* 訂單相關的資料
-            orders: 'order/getAllOrders', //* 所有訂單
-            payments: 'order/getPayments', //* 付款方式
-            status: 'order/getStatus', //* 商品狀態
-            //* loading 狀態
-            loading: 'order/getLoading'
-        }),
     },
 }
 </script>

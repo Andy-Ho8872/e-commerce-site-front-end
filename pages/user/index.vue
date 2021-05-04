@@ -47,11 +47,11 @@
                 <!-- 我的訂單 -->
                 <v-tab-item>
                     <!-- 若無訂單 -->
-                    <v-card flat v-if="! userOrder.length" class="ma-4">
+                    <v-card flat v-if="! orders.length" class="ma-4">
                         <EmptyOrder />
                     </v-card>
                     <!-- 若有訂單 -->
-                    <v-card flat v-for="order in userOrder" :key="order.id">
+                    <v-card flat v-for="order in orders" :key="order.id">
                         <!-- 子標題 (訂單導覽連結) -->
                         <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
                             <v-subheader inset class="blue--text">點我查看細項</v-subheader>
@@ -94,9 +94,17 @@
                         <v-card-subtitle>
                             訂購時間: 
                             <span class="font-weight-bold black--text">
-                                {{ order.created_at.substring(0, 10) }}
+                                {{ order.created_at }}
                             </span>
                         </v-card-subtitle>
+                        <v-btn class="ma-4" 
+                        @click="deleteSingleOrder(order.id)"
+                        :loading="loading"
+                        color="red" 
+                        dark 
+                        >
+                            <span>刪除這筆訂單</span>
+                        </v-btn>
                         <!-- 分隔線 -->
                         <v-divider></v-divider>
                     </v-card>
@@ -107,9 +115,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import orderMixin from '~/mixins/orderMixin'
 
 export default {
+    mixins:[orderMixin],
     data() {
         return {
             tab: null,
@@ -124,16 +133,6 @@ export default {
                 },
             ],
         }
-    },
-    computed: {
-        ...mapGetters({
-            //* 使用者的資料
-            user: 'auth/getUserInfo',
-            //* 訂單資料
-            userOrder: 'order/getAllOrders', //* 所有訂單
-            status: 'order/getStatus', //* 商品狀態
-            payments: 'order/getPayments', //* 付款方式
-        }),
     },
 }
 </script>
