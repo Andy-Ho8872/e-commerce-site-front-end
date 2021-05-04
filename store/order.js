@@ -139,6 +139,13 @@ export const actions = {
             await dispatch('fetchAllOrders')
             //* 最後導向至訂單頁面
             this.$router.push({ name: 'order' })
+            //* 提示訊息
+            let message = {
+                type: 'success',
+                text: '您建立了一筆訂單，請查閱。'
+            }
+            await commit('globalMessage/SET_MESSAGE', message, { root:true })
+            dispatch('globalMessage/clearMessage', null, { root: true })
         } catch (error) {
             console.log('建立失敗 from /store/order.js')
         }
@@ -146,7 +153,7 @@ export const actions = {
         commit('SET_LOADING', false)
     },
     //* 刪除訂單
-    async deleteSingleOrder({ commit }, orderId) {
+    async deleteSingleOrder({ dispatch, commit }, orderId) {
         //? start loading
         commit('SET_LOADING', true)
         try {
@@ -155,6 +162,12 @@ export const actions = {
                 await apiDeleteSingleOrder(orderId)
                 //* 刪除暫存中的訂單數據(可以減少撈取訂單 request 的次數)
                 commit('REMOVE_SINGLE_ORDER', orderId)
+                let message = {
+                    type: 'error',
+                    text: '您刪除了一筆訂單，請查閱。'
+                }
+                await commit('globalMessage/SET_MESSAGE', message, { root:true })
+                dispatch('globalMessage/clearMessage', null, { root: true })
             }
         } catch (error) {
             console.log(error)

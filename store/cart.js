@@ -12,8 +12,6 @@ import {
 export const state = () => ({
     //* 購物車中的內容
     userCart: [],
-    //* 提示訊息
-    message: null,
     //* loading 狀態
     loading: false,
     //* 是否合格
@@ -23,9 +21,6 @@ export const state = () => ({
 export const getters = {
     getUserCart(state) {
         return state.userCart
-    },
-    getMessage(state) {
-        return state.message
     },
     getLoading(state) {
         return state.loading
@@ -53,17 +48,9 @@ export const mutations = {
     CLEAR_USER_CART(state) {
         state.userCart = []
     },
-    //* 設置提示訊息
-    SET_MESSAGE(state, message) {
-        state.message = message
-    },
     //* 設置 loading 狀態
     SET_LOADING(state, loading) {
         state.loading = loading
-    },
-    //* 清除提示訊息
-    CLEAR_MESSAGE(state) {
-        state.message = null
     },
     //***** 處理購物車的暫存 *****//
     //* 清除資料 
@@ -81,13 +68,6 @@ export const mutations = {
 }
 
 export const actions = {
-    //? 清除提示訊息
-    clearMessage({ commit }) {
-        setTimeout(() => {
-            commit('CLEAR_MESSAGE')
-        }, 3000)
-    },
-
 // 首頁 (pages/index.vue)
     //* 抓取使用者的購物車
     async fetchUserCart({ commit }) {
@@ -114,9 +94,8 @@ export const actions = {
                 type: 'success',
                 text: '已經新增至購物車',
             }
-            commit('SET_MESSAGE', message)
-            // 清除訊息
-            dispatch('clearMessage')
+            await commit('globalMessage/SET_MESSAGE', message, { root:true })
+            dispatch('globalMessage/clearMessage', null, { root: true })
         } catch (error) {
             console.log(error)
             console.log('新增失敗 from vuex')
@@ -141,9 +120,8 @@ export const actions = {
                 type: 'success',
                 text: '已經新增至購物車',
             }
-            commit('SET_MESSAGE', message)
-            // 清除訊息
-            dispatch('clearMessage')
+            await commit('globalMessage/SET_MESSAGE', message, { root:true })
+            dispatch('globalMessage/clearMessage', null, { root: true })
         } catch (error) {
             console.log(error)
             console.log('新增失敗 from vuex')
@@ -170,9 +148,8 @@ export const actions = {
                 type: 'warning',
                 text: '您修改了商品數量，請查看',
             }
-            commit('SET_MESSAGE', message)
-            // 清除訊息
-            dispatch('clearMessage')
+            await commit('globalMessage/SET_MESSAGE', message, { root:true })
+            dispatch('globalMessage/clearMessage', null, { root: true })
         } catch (error) {
             console.log(error)
             console.log('更新失敗')
@@ -194,9 +171,8 @@ export const actions = {
                 type: 'warning',
                 text: '您增加了商品數量，請查看',
             }
-            commit('SET_MESSAGE', message)
-            // 清除訊息
-            dispatch('clearMessage')
+            await commit('globalMessage/SET_MESSAGE', message, { root:true })
+            dispatch('globalMessage/clearMessage', null, { root: true })
         } catch (error) {
             console.log(error)
             console.log('數量增加失敗')
@@ -218,9 +194,8 @@ export const actions = {
                 type: 'warning',
                 text: '您減少了商品數量，請查看',
             }
-            commit('SET_MESSAGE', message)
-            // 清除訊息
-            dispatch('clearMessage')
+            await commit('globalMessage/SET_MESSAGE', message, { root:true })
+            dispatch('globalMessage/clearMessage', null, { root: true })
         } catch (error) {
             console.log(error)
             console.log('數量增加失敗')
@@ -239,9 +214,8 @@ export const actions = {
                 type: 'error',
                 text: '您刪除了一項商品',
             }
-            commit('SET_MESSAGE', message)
-            // 清除訊息
-            dispatch('clearMessage')
+            await commit('globalMessage/SET_MESSAGE', message, { root:true })
+            dispatch('globalMessage/clearMessage', null, { root: true })
         } catch (error) {
             console.log(error)
             console.log('刪除失敗 from vuex')
@@ -260,9 +234,8 @@ export const actions = {
                     type: 'error',
                     text: '您的購物車已經清空',
                 }
-                commit('SET_MESSAGE', message)
-                // 清除訊息
-                dispatch('clearMessage')
+                await commit('globalMessage/SET_MESSAGE', message, { root:true })
+                dispatch('globalMessage/clearMessage', null, { root: true })
             } catch (error) {
                 console.log(error)
                 console.log('刪除失敗 from vuex')
