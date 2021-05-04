@@ -30,9 +30,9 @@
                         <td data-title="付款方式" id="payment_id">
                             <!-- 顯示符合付款 id 的名稱 -->
                             <template v-for="payment in payments">
-                                <div v-if="order.payment_id == payment.id" :key="payment.id">
+                                <span v-if="order.payment_id == payment.id" :key="payment.id">
                                     {{ payment.title }}
-                                </div>
+                                </span>
                             </template> 
                             <!-- 寫法 二 -->
                             <!-- <span>{{ payments.find((payment) => payment.id == order.payment_id).title }}</span> -->
@@ -41,9 +41,9 @@
                         <td data-title="出貨狀態" id="status_id">
                             <!-- 顯示符合出貨狀態 id 的名稱 (可在優化) -->
                             <template v-for="status in status">
-                                <div v-if="order.status_id == status.id" :key="status.id">
+                                <span v-if="order.status_id == status.id" :key="status.id">
                                     {{ status.title }}
-                                </div>
+                                </span>
                             </template>
                         </td>
                         <!-- 購買件數 -->
@@ -60,7 +60,7 @@
                         </td>
                         <!-- 訂購時間 -->
                         <td data-title="訂購時間" id="created_at">
-                            <span>{{ order.created_at.substring(0, 10) }}</span>
+                            <span>{{ order.created_at }}</span>
                         </td>
                         <!-- 訂單操作 -->
                         <td data-title="編輯操作" id="actions">
@@ -198,7 +198,8 @@ tbody {
                 padding-left: 40%;
                 justify-content: flex-end;
                 align-items: center;
-                text-align: justify;
+                // text-align: justify; //! default
+                text-align: end; 
             }
         }
     }
