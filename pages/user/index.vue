@@ -43,7 +43,7 @@
                             </span>
                         </v-card-subtitle>
                     </v-card>
-                </v-tab-item>
+                </v-tab-item>    
                 <!-- 我的訂單 -->
                 <v-tab-item>
                     <!-- 若無訂單 -->
@@ -51,63 +51,54 @@
                         <EmptyOrder />
                     </v-card>
                     <!-- 若有訂單 -->
-                    <v-card flat v-for="order in orders" :key="order.id">
-                        <!-- 子標題 (訂單導覽連結) -->
-                        <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
-                            <v-subheader inset class="blue--text">點我查看細項</v-subheader>
-                        </nuxt-link>
-                        <!-- 訂單編號 -->
-                        <v-card-subtitle>
-                            訂單編號: 
-                            <span class="font-weight-bold black--text">
-                                {{ order.id }}
-                            </span>
-                        </v-card-subtitle>
-                        <!-- 送達地址 -->
-                        <v-card-subtitle>
-                            送達地址: 
-                            <span class="font-weight-bold black--text">
-                                {{ order.address }}
-                            </span>
-                        </v-card-subtitle>
-                        <!-- 貨物狀態 -->
-                        <v-card-subtitle>
-                            貨物狀態: 
-                            <!-- 顯示符合出貨狀態 id 的名稱 -->
-                            <template v-for="status in status">
-                                <span v-if="order.status_id == status.id" :key="status.id" class="font-weight-bold black--text">
-                                    {{ status.title }}
-                                </span>
-                            </template>
-                        </v-card-subtitle>
-                        <!-- 付款方式 -->
-                        <v-card-subtitle>
-                            付款方式: 
-                            <!-- 顯示符合付款方式 id 的名稱 -->
-                            <template v-for="payment in payments">
-                                <span v-if="order.payment_id == payment.id" :key="payment.id" class="font-weight-bold black--text">
-                                    {{ payment.title }}
-                                </span>
-                            </template>
-                        </v-card-subtitle>
-                        <!-- 訂購時間 -->
-                        <v-card-subtitle>
-                            訂購時間: 
-                            <span class="font-weight-bold black--text">
-                                {{ order.created_at }}
-                            </span>
-                        </v-card-subtitle>
-                        <v-btn class="ma-4" 
-                        @click="deleteSingleOrder(order.id)"
-                        :loading="loading"
-                        color="red" 
-                        dark 
-                        >
-                            <span>刪除這筆訂單</span>
-                        </v-btn>
-                        <!-- 分隔線 -->
-                        <v-divider></v-divider>
-                    </v-card>
+                    <v-list max-height="500" class="overflow-y-auto">
+                        <v-list-item v-for="order in orders" :key="order.id">
+                            <v-list-item-content>
+                                <!-- 子標題(導覽連結) -->
+                                <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
+                                    <v-subheader inset class="blue--text">點我查看細項</v-subheader>
+                                </nuxt-link>
+                                <!-- 編號 -->
+                                <v-card-subtitle>
+                                    訂單編號: <span class="font-weight-bold black--text">{{ order.id }}</span>
+                                </v-card-subtitle>
+                                <!-- 地址 -->
+                                <v-card-subtitle>
+                                    送達地址: <span class="font-weight-bold black--text">{{ order.address }}</span>
+                                </v-card-subtitle>
+                                <!-- 付款方式 -->
+                                <template v-for="(payment, index) in payments" >
+                                    <v-card-subtitle v-if="order.payment_id == payment.id" :key="index">
+                                        付款方式: <span class="font-weight-bold black--text">{{ payment.title }}</span>
+                                    </v-card-subtitle>
+                                </template>
+                                <!-- 商品狀態 -->
+                                <template v-for="(status, index) in status" >
+                                    <v-card-subtitle v-if="order.status_id == status.id" :key="index" >
+                                        商品狀態: <span class="font-weight-bold black--text">{{ status.title }}</span>
+                                    </v-card-subtitle>
+                                </template>
+                                <!-- 訂購時間 -->
+                                <v-card-subtitle>
+                                    訂購時間: <span class="font-weight-bold black--text">{{ order.created_at }}</span>
+                                </v-card-subtitle>
+                                <!-- 刪除按鈕 -->
+                                <div class="btn_container">
+                                    <v-btn 
+                                    @click="deleteSingleOrder(order.id)" 
+                                    class="ma-4 pa-4" 
+                                    :loading="loading" 
+                                    color="red" 
+                                    dark 
+                                    >
+                                        刪除這筆訂單
+                                    </v-btn>
+                                </div>
+                                <!-- 分隔線 -->
+                                <v-divider></v-divider>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-list>
                 </v-tab-item>
             </v-tabs-items>
         </v-card>
@@ -131,8 +122,20 @@ export default {
                     icon: 'fa-list-alt fa-fw',
                     title: '我的訂單',
                 },
+                {
+                    icon: 'fa-bell fa-fw',
+                    title: '通知總覽',
+                },
             ],
         }
     },
 }
 </script>
+
+<style lang="scss" scoped>
+@media (max-width: 768px) {
+    .btn_container {
+        text-align: center;
+    }
+}
+</style>
