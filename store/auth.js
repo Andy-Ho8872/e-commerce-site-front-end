@@ -73,6 +73,12 @@ export const mutations = {
 }
 
 export const actions = {
+    //? 清除提示訊息
+    clearMessage({ commit }) {
+        setTimeout(() => {
+            commit('CLEAR_MESSAGE')
+        }, 3000)
+    },
     //* 註冊流程
     async register({ commit }, user) {
         //? start loading
@@ -90,9 +96,7 @@ export const actions = {
             let msg = error.response.data.errors
             commit('SET_MESSAGE', msg)
             //* 清除錯誤訊息
-            setTimeout(() => {
-                commit('CLEAR_MESSAGE')
-            }, 3000)
+            dispatch('clearMessage')
         }
         //? end loading
         commit('SET_LOADING', false)
@@ -142,9 +146,7 @@ export const actions = {
             let msg = error.response.data.errors
             commit('SET_MESSAGE', msg)
             //* 清除錯誤訊息
-            setTimeout(() => {
-                commit('CLEAR_MESSAGE')
-            }, 3000)
+            dispatch('clearMessage')
         }
         //? end loading
         commit('SET_LOADING', false)
