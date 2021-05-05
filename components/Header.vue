@@ -172,6 +172,7 @@ export default {
             fetchUserInfo: 'auth/fetchUserInfo', //? 使用者的資料
             fetchUserCart: 'cart/fetchUserCart', //? 使用者購物車
             fetchAllOrders: 'order/fetchAllOrders', //? 使用者訂單 
+            fetchAllNotifications: 'notification/fetchAllNotifications' //? 使用者的通知
         }),
         //* 搜尋功能
         search() {
@@ -196,6 +197,7 @@ export default {
             this.fetchUserInfo() //? 使用者的資料
             this.fetchUserCart() //? 使用者的購物車
             this.fetchAllOrders() //? 使用者的訂單
+            this.fetchAllNotifications()
         }
     },
 }

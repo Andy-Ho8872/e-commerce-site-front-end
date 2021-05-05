@@ -100,6 +100,29 @@
                         </v-list-item>
                     </v-list>
                 </v-tab-item>
+                <!-- 通知總覽 -->
+                <v-tab-item>
+                    <v-list max-height="500" class="overflow-y-auto">
+                        <template v-for="notification in notifications" >
+                            <v-list-item two-line :key="notification.id">
+                                <v-list-item-avatar tile size="100">
+                                    <v-img :src="require('~/static/order/OrderConfirmed.svg')"></v-img>
+                                </v-list-item-avatar>
+                                <v-list-item-content>
+                                    <v-list-item-title class="py-1 font-weight-bold">
+                                        訂購成功，商品出貨中。
+                                    </v-list-item-title>
+                                    <v-list-item-subtitle class="my-2">
+                                        訂單編號 - <span class="font-weight-bold">{{ notification.data.order_id }}</span>
+                                    </v-list-item-subtitle>
+                                    <v-list-item-subtitle>訂購時間 - 
+                                        <span class="font-weight-bold">{{ notification.data.created_at }}</span>
+                                    </v-list-item-subtitle>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </template>
+                    </v-list>
+                </v-tab-item>
             </v-tabs-items>
         </v-card>
     </v-container>
@@ -107,6 +130,7 @@
 
 <script>
 import orderMixin from '~/mixins/orderMixin'
+import { mapGetters } from 'vuex'
 
 export default {
     mixins:[orderMixin],
@@ -129,6 +153,11 @@ export default {
             ],
         }
     },
+    computed: {
+        ...mapGetters({
+            notifications: 'notification/getNotifications'
+        })
+    }
 }
 </script>
 
