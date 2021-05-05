@@ -47,11 +47,11 @@
                 <!-- 我的訂單 -->
                 <v-tab-item>
                     <!-- 若無訂單 -->
-                    <v-card flat v-if="! orders.length" class="ma-4">
+                    <div v-if="! orders.length" class="ma-4">
                         <EmptyOrder />
-                    </v-card>
+                    </div>
                     <!-- 若有訂單 -->
-                    <v-list max-height="500" class="overflow-y-auto">
+                    <v-list v-else max-height="500" class="overflow-y-auto">
                         <v-list-item v-for="order in orders" :key="order.id">
                             <v-list-item-content>
                                 <!-- 子標題(導覽連結) -->
@@ -86,10 +86,10 @@
                                 <div class="btn_container">
                                     <v-btn 
                                     @click="deleteSingleOrder(order.id)" 
-                                    class="ma-4 pa-4" 
+                                    class="ma-4 pa-4 white--text" 
                                     :loading="loading" 
+                                    :disabled="loading"
                                     color="red" 
-                                    dark 
                                     >
                                         刪除這筆訂單
                                     </v-btn>
@@ -102,22 +102,66 @@
                 </v-tab-item>
                 <!-- 通知總覽 -->
                 <v-tab-item>
-                    <v-list max-height="500" class="overflow-y-auto">
+                    <!-- 若無通知 -->
+                    <div v-if="!notifications.length" class="ma-4">
+                        <EmptyNotification />
+                    </div>
+                    <!-- 若有通知 -->
+                    <v-list v-else max-height="500" class="overflow-y-auto">
+                        <!-- 刪除按鈕 -->
+                        <div class="btn_container">
+                            <v-btn 
+                            @click="deleteAllNotifications"
+                            class="ma-4 pa-4 white--text" 
+                            :loading="notificationLoading" 
+                            :disabled="notificationLoading"
+                            color="red" 
+                            >
+                                刪除所有通知
+                            </v-btn>
+                            <!-- 已讀按鈕 -->
+                            <v-btn 
+                            @click="markAllNotifications"
+                            class="ma-4 pa-4 white--text" 
+                            :loading="notificationLoading" 
+                            :disabled="notificationLoading"
+                            color="blue" 
+                            >
+                                全部設為已讀
+                            </v-btn>
+                        </div>
                         <template v-for="notification in notifications" >
                             <v-list-item two-line :key="notification.id">
-                                <v-list-item-avatar tile size="100">
+                                <!-- 通知圖片 -->
+                                <v-list-item-avatar tile size="80">
                                     <v-img :src="require('~/static/order/OrderConfirmed.svg')"></v-img>
                                 </v-list-item-avatar>
                                 <v-list-item-content>
+                                    <!-- 標題 -->
                                     <v-list-item-title class="py-1 font-weight-bold">
                                         訂購成功，商品出貨中。
                                     </v-list-item-title>
+                                    <!-- 訂單編號 -->
                                     <v-list-item-subtitle class="my-2">
                                         訂單編號 - <span class="font-weight-bold">{{ notification.data.order_id }}</span>
                                     </v-list-item-subtitle>
+                                    <!-- 訂購時間 -->
                                     <v-list-item-subtitle>訂購時間 - 
                                         <span class="font-weight-bold">{{ notification.data.created_at }}</span>
                                     </v-list-item-subtitle>
+                                    <!-- 已讀按鈕 -->
+                                    <div class="btn_container">
+                                        <v-btn 
+                                        @click="markNotification(notification)"
+                                        class="ma-4 pa-4 white--text" 
+                                        :loading="notificationLoading"
+                                        :disabled="notification.read_at !== null" 
+                                        color="blue" 
+                                        >
+                                            設為已讀
+                                        </v-btn>
+                                    </div>
+                                    <v-divider class="my-2"></v-divider>
                                 </v-list-item-content>
                             </v-list-item>
                         </template>
@@ -130,7 +174,7 @@
 
 <script>
 import orderMixin from '~/mixins/orderMixin'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     mixins:[orderMixin],
@@ -155,7 +199,15 @@ export default {
     },
     computed: {
         ...mapGetters({
-            notifications: 'notification/getNotifications'
+            notifications: 'notification/getNotifications',
+            notificationLoading: 'notification/getLoading'
+        })
+    },
+    methods: {
+        ...mapActions({
+            markNotification: 'notification/markNotification',
+            markAllNotifications: 'notification/markAllNotifications',
+            deleteAllNotifications: 'notification/deleteAllNotifications'
         })
     }
 }
