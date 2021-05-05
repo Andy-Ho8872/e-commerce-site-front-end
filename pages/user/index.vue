@@ -198,15 +198,17 @@ export default {
     },
     computed: {
         ...mapGetters({
-            notifications: 'notification/getNotifications',
-            unReadNotifications: 'notification/getUnreadNotifications',
-            notificationLoading: 'notification/getLoading'
+            notifications: 'notification/getNotifications', //* 所有通知
+            unReadNotifications: 'notification/getUnreadNotifications', //* 未讀取的通知 
+            notificationLoading: 'notification/getLoading' //* loading 狀態
         })
     },
     methods: {
         ...mapActions({
-            markNotification: 'notification/markNotification',
-            markAllNotifications: 'notification/markAllNotifications',
+            //* 標示為已讀 
+            markNotification: 'notification/markNotification', //? 單筆通知
+            markAllNotifications: 'notification/markAllNotifications', //? 所有通知 
+            //* 刪除通知 
             deleteAllNotifications: 'notification/deleteAllNotifications'
         })
     }
