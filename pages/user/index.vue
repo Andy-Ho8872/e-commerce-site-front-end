@@ -67,8 +67,8 @@
                                     送達地址: <span class="font-weight-bold black--text">{{ order.address }}</span>
                                 </v-card-subtitle>
                                 <!-- 付款方式 -->
-                                <template v-for="(payment, index) in payments" >
-                                    <v-card-subtitle v-if="order.payment_id == payment.id" :key="index">
+                                <template v-for="payment in payments" >
+                                    <v-card-subtitle v-if="order.payment_id == payment.id" :key="payment.id">
                                         付款方式: <span class="font-weight-bold black--text">{{ payment.title }}</span>
                                     </v-card-subtitle>
                                 </template>
