@@ -18,7 +18,9 @@ export const getters = {
         return state.notifications
     },
     getUnreadNotifications(state) {
-        return state.unReadNotifications
+        return state.notifications.filter((notification) => {
+            return notification.read_at == null
+        })
     },
     getLoading(state) {
         return state.loading
@@ -51,7 +53,7 @@ export const actions = {
             console.log('抓取失敗 from /store/notification');
         }
     },
-    //? 未讀取通知 
+    //! 未讀取通知 (暫時不用)
     async fetchUnreadNotifications({ commit }) {
         try {
             const res = await apiGetUnReadNotifications()

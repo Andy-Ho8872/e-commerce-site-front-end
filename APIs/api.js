@@ -128,7 +128,7 @@ export const apiDecreseQuantityByOne = (productId) => authRequest.get(`/cart/${p
 //* 讀取
     //? 所有通知 
     export const apiGetAllNotifications = () => authRequest.get('/notifications');
-    //? 未讀的通知 
+    //! 未讀的通知 (暫時不用)
     export const apiGetUnReadNotifications = () => authRequest.get('/notifications/unread');
 //* 標示為已讀
     //? 單筆通知
