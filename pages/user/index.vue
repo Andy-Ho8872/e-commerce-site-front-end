@@ -209,7 +209,7 @@ export default {
             markNotification: 'notification/markNotification', //? 單筆通知
             markAllNotifications: 'notification/markAllNotifications', //? 所有通知 
             //* 刪除通知 
-            deleteAllNotifications: 'notification/deleteAllNotifications'
+            deleteAllNotifications: 'notification/deleteAllNotifications' //? 所有通知
         })
     }
 }
