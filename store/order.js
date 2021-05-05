@@ -139,12 +139,14 @@ export const actions = {
             await dispatch('fetchAllOrders')
             //* 最後導向至訂單頁面
             this.$router.push({ name: 'order' })
+            //* 重新撈取通知
+            await dispatch('notification/fetchAllNotifications', null, { root: true }) 
             //* 提示訊息
             let message = {
                 type: 'success',
                 text: '您建立了一筆訂單，請查閱。'
             }
-            await commit('globalMessage/SET_MESSAGE', message, { root:true })
+            await commit('globalMessage/SET_MESSAGE', message, { root: true })
             dispatch('globalMessage/clearMessage', null, { root: true })
         } catch (error) {
             console.log('建立失敗 from /store/order.js')
