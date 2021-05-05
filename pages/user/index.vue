@@ -114,7 +114,6 @@
                             @click="deleteAllNotifications"
                             class="ma-4 pa-4 white--text" 
                             :loading="notificationLoading" 
-                            :disabled="notificationLoading"
                             color="red" 
                             >
                                 刪除所有通知
@@ -124,7 +123,7 @@
                             @click="markAllNotifications"
                             class="ma-4 pa-4 white--text" 
                             :loading="notificationLoading" 
-                            :disabled="notificationLoading"
+                            :disabled="unReadNotifications.length == 0"
                             color="blue" 
                             >
                                 全部設為已讀
@@ -200,6 +199,7 @@ export default {
     computed: {
         ...mapGetters({
             notifications: 'notification/getNotifications',
+            unReadNotifications: 'notification/getUnreadNotifications',
             notificationLoading: 'notification/getLoading'
         })
     },
