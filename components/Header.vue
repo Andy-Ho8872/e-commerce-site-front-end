@@ -22,15 +22,17 @@
                 <!-- 通知總覽, 幫助中心(文字) -->
                 <v-row class="content">
                     <li v-for="(list, index) in noteList" :key="index">
-                        <v-icon class="icon" dark small>{{ list.icon }}</v-icon>
-                        <span>{{ list.text }}</span>
+                        <nuxt-link :to="list.to">
+                            <v-icon class="icon" dark small>{{ list.icon }}</v-icon>
+                            <span>{{ list.text }}</span>
+                        </nuxt-link>
                     </li>
                 </v-row>
                 <!-- 如果有使用者登入，則顯示他的帳號(電子郵件)以及登出按鈕 -->
                 <v-row v-if="user" class="content">
                     <!-- 使用者帳號 -->
                     <li>
-                        <nuxt-link :to="{ name: 'user' }">
+                        <nuxt-link :to="{ name: 'user-account' }">
                             <v-icon class="icon" dark small>fa-user fa-fw</v-icon>
                             <span>{{ user.email }}</span>
                         </nuxt-link>
@@ -122,10 +124,12 @@ export default {
                 {
                     icon: 'fa-envelope fa-fw',
                     text: '通知總覽',
+                    to: { name: 'user-notification' },
                 },
                 {
                     icon: 'fa-question-circle fa-fw',
                     text: '幫助中心',
+                    to: { name: 'help' },
                 },
             ],
             //* 帳戶操作
