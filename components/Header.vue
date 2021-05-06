@@ -76,8 +76,8 @@
                 v-model="searchText"
                 placeholder="相機、螢幕、服裝、折扣..."
                 append-icon="fa-search"
-                @keydown.enter="search"
-                @click:append="search"
+                @keydown.enter="search(searchText)"
+                @click:append="search(searchText)"
                 solo
                 dense
             >
@@ -122,7 +122,7 @@ export default {
             //* 訊息通知
             noteList: [
                 {
-                    icon: 'fa-envelope fa-fw',
+                    icon: 'fa-bell fa-fw',
                     text: '通知總覽',
                     to: { name: 'user-notification' },
                 },
@@ -170,7 +170,7 @@ export default {
             //* 登出使用者
             logout: 'auth/logout', 
             //* 搜尋商品
-            searchProducts: 'search/searchProducts', 
+            search: 'search/searchProducts', 
             //* 撈取資料
             fetchTableColumns: 'order/fetchTableColumns', //? 其他資料表中的欄位
             fetchUserInfo: 'auth/fetchUserInfo', //? 使用者的資料
@@ -178,10 +178,6 @@ export default {
             fetchAllOrders: 'order/fetchAllOrders', //? 使用者訂單 
             fetchAllNotifications: 'notification/fetchAllNotifications' //? 使用者的通知
         }),
-        //* 搜尋功能
-        search() {
-            this.searchProducts(this.searchText)
-        },
     },
     async mounted() {
         //* 點擊漢堡 SideBar 以外的區域則會關閉
