@@ -9,7 +9,7 @@
             </div>
             <!-- tabs -->
             <v-tabs centered v-model="tab">
-                <v-tab v-for="(item, index) in items" :key="index">
+                <v-tab v-for="(item, index) in items" :key="index" >
                     <v-icon>{{ item.icon }}</v-icon>
                     <span>{{ item.title }}</span>
                 </v-tab>
@@ -138,7 +138,7 @@
                                 <v-list-item-content>
                                     <!-- 標題 -->
                                     <v-list-item-title class="py-1 font-weight-bold">
-                                        訂購成功，商品出貨中。
+                                        {{ notification.data.title }}
                                     </v-list-item-title>
                                     <!-- 訂單編號 -->
                                     <v-list-item-subtitle class="my-2">
