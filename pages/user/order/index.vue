@@ -1,12 +1,6 @@
 <template>
     <v-container>
-        <!-- loading -->
-        <LoadingCircle v-if="!user"/>
-        <!-- content -->
-        <v-card class="pa-4" rounded="lg" v-else>
-            <UserTabs />
-            <!-- 分隔線 -->
-            <v-divider class="mt-4"></v-divider>
+        <v-card class="pa-4" rounded="lg" >
             <!-- 若無訂單 -->
             <div v-if="! orders.length" class="ma-4">
                 <EmptyOrder />
@@ -68,7 +62,14 @@
 import orderMixin from '~/mixins/orderMixin'
 
 export default {
-    transition: 'none',
     mixins:[orderMixin]
 }
 </script>
+
+<style lang="scss"scoped>
+@media (max-width: 768px) {
+    .btn_container {
+        text-align: center;
+    }
+}
+</style>

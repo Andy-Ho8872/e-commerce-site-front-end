@@ -1,12 +1,6 @@
 <template>
     <v-container>
-        <!-- loading -->
-        <LoadingCircle v-if="!user"/>
-        <!-- content -->
-        <v-card class="pa-4" rounded="lg" v-else>
-            <UserTabs />
-            <!-- 分隔線 -->
-            <v-divider class="mt-4"></v-divider>
+        <v-card class="pa-4" rounded="lg" >
             <!-- 若無通知 -->
             <div v-if="!notifications.length" class="ma-4">
                 <EmptyNotification />
@@ -17,7 +11,7 @@
                 <div class="btn_container">
                     <v-btn 
                     @click="deleteAllNotifications"
-                    class="ma-4 pa-4 white--text" 
+                    class="ma-2 white--text" 
                     :loading="notificationLoading" 
                     color="red" 
                     >
@@ -26,7 +20,7 @@
                     <!-- 已讀按鈕 -->
                     <v-btn 
                     @click="markAllNotifications"
-                    class="ma-4 pa-4 white--text" 
+                    class="ma-2 white--text" 
                     :loading="notificationLoading" 
                     :disabled="unReadNotifications.length == 0"
                     color="blue" 
@@ -79,7 +73,14 @@ import notificationMixin from '~/mixins/notificationMixin'
 import userMixin from '~/mixins/userMixin'
 
 export default {
-    transition: 'none',
     mixins: [notificationMixin, userMixin]
 }
 </script>
+
+<style lang="scss"scoped>
+@media (max-width: 768px) {
+    .btn_container {
+        text-align: center;
+    }
+}
+</style>

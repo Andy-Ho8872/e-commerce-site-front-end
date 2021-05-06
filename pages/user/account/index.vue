@@ -1,11 +1,6 @@
 <template>
     <v-container>
-        <!-- loading -->
-        <LoadingCircle v-if="!user"/>
-        <!-- content -->
-        <v-card class="pa-4" rounded="lg" v-else>
-            <UserTabs />
-            <v-divider class="mt-4"></v-divider>
+        <v-card class="pa-4" rounded="lg" >
             <!-- 用戶編號 -->
             <v-card-subtitle>
                 用戶編號:
@@ -35,7 +30,6 @@
 import userMixin from '~/mixins/userMixin'
 
 export default {
-    transition: 'none',
     mixins: [userMixin]
 }
 </script>
