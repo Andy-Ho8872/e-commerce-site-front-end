@@ -45,7 +45,9 @@
 </template>
 
 <script>
-export default {
+import notificationMixin from '~/mixins/notificationMixin'
 
+export default {
+    mixins: [notificationMixin]
 }
 </script>
