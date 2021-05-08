@@ -29,7 +29,7 @@
                     </v-btn>
                 </div>
                 <template v-for="notification in notifications" >
-                    <v-list-item two-line :key="notification.id">
+                    <v-list-item  :key="notification.id">
                         <!-- 通知圖片 -->
                         <v-list-item-avatar tile size="80">
                             <v-img :src="require('~/static/order/OrderConfirmed.svg')"></v-img>
@@ -79,6 +79,10 @@ export default {
 
 <style lang="scss"scoped>
 @media (max-width: 768px) {
+    .v-list-item {
+        min-height: 0;
+        flex-direction: column;
+    }
     .btn_container {
         text-align: center;
     }
