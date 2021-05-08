@@ -1,10 +1,7 @@
 <template>
     <div class="navbar blue darken-1 white--text">
         <!-- Navbar 上層 -->
-        <v-row
-            class="navbar_upper d-md-flex align-center justify-center ma-3"
-            :class="{ show: active }"
-        >
+        <v-row class="navbar_upper d-md-flex align-center justify-center ma-3" :class="{ show: active }">
             <div class="content_wrapper d-flex caption">
                 <!-- 回到首頁 -->
                 <v-row class="content">
@@ -19,12 +16,24 @@
             <v-spacer></v-spacer>
             <!-- 以上勿動 -->
             <div class="content_wrapper d-flex caption">
-                <!-- 通知總覽, 幫助中心(文字) -->
+                <!-- 通知總覽-->
                 <v-row class="content">
-                    <li v-for="(list, index) in noteList" :key="index">
-                        <nuxt-link :to="list.to">
-                            <v-icon class="icon" dark small>{{ list.icon }}</v-icon>
-                            <span>{{ list.text }}</span>
+                    <li class="notification" @mouseenter="appear = true" @mouseleave="appear = false">
+                        <nuxt-link :to="{ name: 'user-notification' }">
+                            <!-- 通知的數量 -->
+                            <v-badge color="orange" left overlap :content="unReadNotifications.length" :value="unReadNotifications.length">
+                                <v-icon class="icon" dark small>fa-bell fa-fw</v-icon>
+                                <span>通知總覽</span>
+                            </v-badge>
+                        </nuxt-link>
+                        <!-- 通知列 -->
+                        <MiniNotification class="content_box" :class="{ show: appear }"/>   
+                    </li>
+                    <!-- 幫助中心-->
+                    <li>
+                        <nuxt-link :to="{ name: 'help' }">
+                            <v-icon class="icon" dark small>fa-question-circle fa-fw</v-icon>
+                            <span>幫助中心</span>
                         </nuxt-link>
                     </li>
                 </v-row>
@@ -59,9 +68,7 @@
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
             <v-spacer class="hidden-md-and-down"></v-spacer>
             <!--  (Extend bar) 只有在 600 px 以下才顯示 -->
-            <div
-                class="extend_bar d-flex justify-center align-center"
-                ref="extended"
+            <div class="extend_bar d-flex justify-center align-center" ref="extended"
                 @click="active = !active"
                 :class="{ toggle: active }"
             >
@@ -83,28 +90,11 @@
             >
             </v-text-field>
             <!-- 購物車 ICON -->
-            <nuxt-link
-                class="cart_logo d-flex justify-center align-center"
-                :to="{ name: 'cart' }"
-            >
+            <nuxt-link class="cart_logo d-flex justify-center align-center" :to="{ name: 'cart' }">
                 <!-- 如果購物車內有商品才顯示 -->
-                <v-badge
-                    :content="userCart.length"
-                    :value="userCart.length"
-                    color="orange"
-                >
+                <v-badge color="orange" :content="userCart.length" :value="userCart.length">
                     <!-- 購物車 svg -->
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="#FFF"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            d="M24 3l-.743 2h-1.929l-3.474 12h-13.239l-4.615-11h16.812l-.564 2h-13.24l2.937 7h10.428l3.432-12h4.195zm-15.5 15c-.828 0-1.5.672-1.5 1.5 0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm6.9-7-1.9 7c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5z"
-                        />
-                    </svg>
+                    <v-img :src="require('~/static/cart/ShoppingCart.svg')"></v-img>
                 </v-badge>
             </nuxt-link>
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
@@ -119,19 +109,6 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
     data() {
         return {
-            //* 訊息通知
-            noteList: [
-                {
-                    icon: 'fa-bell fa-fw',
-                    text: '通知總覽',
-                    to: { name: 'user-notification' },
-                },
-                {
-                    icon: 'fa-question-circle fa-fw',
-                    text: '幫助中心',
-                    to: { name: 'help' },
-                },
-            ],
             //* 帳戶操作
             userList: [
                 {
@@ -145,8 +122,9 @@ export default {
                     to: { name: 'auth-login' },
                 },
             ],
-            //* 觸發 class (漢堡 SideBar)
-            active: false,
+            //* 觸發 class 
+            active: false, //* 漢堡 sidebar
+            appear: false, //* 通知列表
             //* 搜尋欄文字
             searchText: '',
         }
@@ -159,6 +137,8 @@ export default {
             user: 'auth/getUserInfo',
             //* 使用者購物車中商品數量
             userCart: 'cart/getUserCart',
+            //* 未讀取的通知 
+            unReadNotifications: 'notification/getUnreadNotifications', 
         }),
     },
     methods: {
@@ -221,6 +201,18 @@ a {
 }
 .content {
     margin: 0 4px;
+    position: relative;
+}
+.notification {
+    .content_box {
+        display: none;
+        position: absolute;
+        z-index: 10;
+        width: 350px;
+    }
+    .show {
+        display: block;
+    }
 }
 .icon {
     margin: 0 4px;
