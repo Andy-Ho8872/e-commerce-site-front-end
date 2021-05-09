@@ -57,10 +57,6 @@ export default {
 .v-card {
     position: relative;
 }
-//* 隱藏 scroll bar 
-.v-list::-webkit-scrollbar {
-    display: none;
-}
 .bottom_text {
     position: absolute;
     width: 90%;

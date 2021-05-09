@@ -85,6 +85,23 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+//* 客製 scroll bar
+::-webkit-scrollbar {
+    width: 6px;
+}
+//* width
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+//* handle
+::-webkit-scrollbar-thumb {
+    background: #42A5F5;
+    border-radius: 12px;
+}
+//* handle on hover
+::-webkit-scrollbar-thumb:hover {
+    background: #1e88e5;
+}
 
 //* pages/order ----------------------------------------------- Start
 $letter-spacing: 0.125rem;
