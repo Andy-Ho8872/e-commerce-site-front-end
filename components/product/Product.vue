@@ -110,9 +110,18 @@ import { mapActions } from 'vuex';
 export default {
     //? passed from pages/index.vue
     props: {
-        'product': Object,
-        'cardWidth': Number,
-        'cardHeight': Number 
+        'product': {
+            type: Object,
+            require: true
+        },
+        'cardWidth': {
+            type: Number,
+            require: true
+        },
+        'cardHeight': {
+            type: Number,
+            require: true
+        } 
     },
     computed: {
         //* 商品折數
