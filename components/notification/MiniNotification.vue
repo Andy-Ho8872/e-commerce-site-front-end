@@ -46,10 +46,14 @@
 </template>
 
 <script>
-import notificationMixin from '~/mixins/notificationMixin'
+import { mapGetters } from 'vuex'
 
 export default {
-    mixins: [notificationMixin]
+    computed: {
+        ...mapGetters({
+            'unReadNotifications': 'notification/getUnreadNotifications'
+        })
+    }
 }
 </script>
 
