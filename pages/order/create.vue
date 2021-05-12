@@ -96,6 +96,7 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+    middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
     data() {
         return {
             //* 表格標頭

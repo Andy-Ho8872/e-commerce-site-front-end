@@ -72,6 +72,7 @@
 import notificationMixin from '~/mixins/notificationMixin'
 
 export default {
+    middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
     mixins: [notificationMixin]
 }
 </script>

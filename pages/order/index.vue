@@ -92,6 +92,7 @@
 import orderMixin from '~/mixins/orderMixin'
 
 export default {
+    middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
     mixins:[orderMixin],
     data() {
         return {

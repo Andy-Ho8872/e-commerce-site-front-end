@@ -58,6 +58,7 @@ import { mapGetters, mapActions } from 'vuex'
 // import { apiGetSingleOrder } from '../../../APIs/api'
 
 export default {
+    middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
     // asyncData 的方法，因為要使用 localStorage 取得 User 的 Token，所以如果直接在網址上輸入 order/order_id 的話會報錯。
     // async asyncData({ params }) {
     //     const res = await apiGetSingleOrder(params.id)
