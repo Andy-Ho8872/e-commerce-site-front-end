@@ -42,8 +42,14 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     //? passed from pages/cart/index.vue
     props: {
-        'product_id': Number,
-        'product_quantity': Number
+        'product_id': {
+            type: Number,
+            require: true
+        },
+        'product_quantity': {
+            type: Number,
+            require: true
+        }
     },
     data () {  
         return {

@@ -23,7 +23,10 @@
 export default {
     //? passed from index.vue
     props: {
-        'cardHeight': Number
+        'cardHeight': {
+            type: Number,
+            require: true
+        }
     }
 }
 </script>

@@ -58,8 +58,14 @@ import { mapMutations, mapGetters } from 'vuex'
 export default {
     //? passed form pages/index.vue
     props: {
-        cardWidth: Number,
-        cardHeight: Number,
+        cardWidth: {
+            type: Number,
+            require: true
+        },
+        cardHeight: {
+            type: Number,
+            require: true
+        },
     },
     data() {
         return {

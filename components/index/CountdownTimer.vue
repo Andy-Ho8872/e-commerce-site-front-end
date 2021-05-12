@@ -33,13 +33,34 @@
 export default {
     //? passed from pages/index.vue
     props : {
-        'year': Number,
-        'month': Number,
-        'day': Number,
-        'hour': Number,
-        'minute': Number,
-        'second': Number,
-        'millisecond': Number,    
+        'year': {
+            type: Number,
+            require: true
+        },
+        'month': {
+            type: Number,
+            require: true
+        },
+        'day': {
+            type: Number,
+            require: true
+        },
+        'hour': {
+            type: Number,
+            require: true
+        },
+        'minute': {
+            type: Number,
+            require: true
+        },
+        'second': {
+            type: Number,
+            require: true
+        },
+        'millisecond': {
+            type: Number,
+            require: true
+        },    
     }, 
     data () {
         return {
