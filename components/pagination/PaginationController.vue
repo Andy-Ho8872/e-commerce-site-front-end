@@ -14,7 +14,10 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
     props: {
-        pageNumber: [String, Number],
+        pageNumber: {
+            type: [ String, Number ],
+            require: true
+        },
     },
     data() {
         return {
