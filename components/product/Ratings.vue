@@ -18,7 +18,10 @@
 export default {
     //? passed from components/Product.vue Or pages/search/title.vue
     props: {
-        'product': Object,
+        'product': {
+            type: Object,
+            require: true
+        },
     },
     computed: {
         //* 要轉換為 Number 才能使用
