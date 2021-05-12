@@ -3,13 +3,7 @@
     <div class="product_wrapper">
         <!-- 產品連結  -->
         <nuxt-link :to="{ name: 'products-id', params: { id: product.id }}">
-            <v-card
-                class="
-                products 
-                rounded-t-xl
-                justify-center 
-                align-center 
-                flex-wrap"
+            <v-card class="rounded-t-xl"
                 tile
                 color="grey lighten-5"
                 :width="cardWidth" 
@@ -34,7 +28,7 @@
                 </v-card-subtitle>
                 <!-- 產品圖片 -->
                 <v-img 
-                    class="product_image ma-auto rounded-t-xl"
+                    class="ma-auto rounded-t-xl"
                     :src="product.imgUrl"
                     :lazy-src="product.imgUrl">
                     <!-- 當圖片 Loading 時 -->
@@ -62,7 +56,6 @@
                 <!-- 產品敘述 -->
                 <v-card-subtitle 
                     class="
-                    product_description
                     px-8 py-4
                     text-justify">
                     <!-- 縮減字數後的商品敘述 -->
@@ -80,7 +73,6 @@
                         original_price
                         px-6
                         font-weight-medium
-                        text-start
                         text-h6"
                         :class="[product.discount_rate == 1 ? '' : 'discounted']">
                         NT.{{ Math.floor(product.unit_price) }}
@@ -181,10 +173,4 @@ export default {
         width: inherit;
         letter-spacing: $btn_letter_sapcing;
     } 
-    //? RWD 
-    @media (max-width: 768px) {
-        .Products {
-            margin: 0 auto;
-        }
-    }
 </style>
