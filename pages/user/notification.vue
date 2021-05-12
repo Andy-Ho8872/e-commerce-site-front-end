@@ -70,10 +70,9 @@
 
 <script>
 import notificationMixin from '~/mixins/notificationMixin'
-import userMixin from '~/mixins/userMixin'
 
 export default {
-    mixins: [notificationMixin, userMixin]
+    mixins: [notificationMixin]
 }
 </script>
 
