@@ -27,17 +27,12 @@
             </li>
         </div>
         <!-- 觀看更多商品 -->
-        <div class="check_more text-center">
+        <div class="text-center">
             <!-- 預設點擊後到第一頁 -->
-            <nuxt-link
-                :to="{
-                    name: 'pagination-pageNumber',
-                    params: { pageNumber: 1 },
-                }"
-            >
+            <nuxt-link :to="{ name: 'pagination-pageNumber', params: { pageNumber: 1 } }">
                 <v-btn class="my-16" color="primary" dark x-large>
-                    查看更多
-                    <v-icon>fa-shopping-cart</v-icon>
+                    <span>查看更多</span>
+                    <v-icon>fa-shopping-cart fa-fw</v-icon>
                 </v-btn>
             </nuxt-link>
         </div>
