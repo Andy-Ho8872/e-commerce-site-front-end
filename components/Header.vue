@@ -29,11 +29,11 @@
                         <!-- 通知列 -->
                         <MiniNotification class="content_box" :class="{ show: appear }"/>   
                     </li>
-                    <!-- 幫助中心-->
+                    <!-- 我的訂單-->
                     <li>
-                        <nuxt-link :to="{ name: 'help' }">
-                            <v-icon class="icon" dark small>fa-question-circle fa-fw</v-icon>
-                            <span>幫助中心</span>
+                        <nuxt-link :to="{ name: 'user-order' }">
+                            <v-icon class="icon" dark small>fa-list-alt fa-fw</v-icon>
+                            <span>我的訂單</span>
                         </nuxt-link>
                     </li>
                 </v-row>
