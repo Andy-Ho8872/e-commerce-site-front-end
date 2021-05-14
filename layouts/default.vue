@@ -1,7 +1,7 @@
 <template>
     <v-app dark>
-        <v-main class="main_view">
-            <Header class="header" />
+        <v-main>
+            <Header class="header"/>
             <!-- <HeaderV2 class="header"/> -->
             <nuxt class="content"/>
             <AlertMessage class="alert-message"/>
@@ -12,7 +12,6 @@
                 color="primary"
                 fab
                 dark
-                large
             >
                 <v-icon>fa-chevron-up</v-icon>
             </v-btn>
@@ -36,10 +35,21 @@ export default {
 
 <style lang="scss" scoped>
 $z-index-top : 10000;
+$header-v2-padding-bottom: 20%; //! 若使用 HeaderV2 則必須使用此屬性
+$padding-top-xl: 10%; //*   4k and ultra-wide or large desktop...  > 1904px 
+$padding-top-lg: 15%; //*   desktop... 1264px > < 1904px
+$padding-top-md: 20%; //*   Large tablet to laptop... 960px > < 1264px
+$padding-top-xs: 30%; //*   mobile... <600px
+$padding-top-xss: 35%; //*   mobile... <375px
+
 .header {
     position: fixed;
     top: 0;
     z-index: $z-index-top;
+}
+.content {
+    padding-top: $padding-top-xl;
+    // padding-bottom: $header-v2-padding-bottom; //! 若使用 HeaderV2 則必須使用此屬性
 }
 .alert-message {
     z-index: $z-index-top;
@@ -51,15 +61,29 @@ $z-index-top : 10000;
 }
 .to-top {
     z-index: $z-index-top;
-    bottom: 10%;
+    bottom: 15%;
     position: fixed !important;
     right: 0;
 }
 
-@media (max-width: 768px) {
-    //! 此樣式只套用在 有使用 HeaderV2 的時候 
+@media (max-width: 1260px) {
     .content {
-        padding-bottom: 20%;
+        padding-top: $padding-top-lg;
+    }
+}
+@media (max-width: 960px) {
+    .content {
+        padding-top: $padding-top-md;
+    }
+}
+@media (max-width: 600px) {
+    .content {
+        padding-top: $padding-top-xs;
+    }
+}
+@media (max-width: 375px) {
+    .content {
+        padding-top: $padding-top-xss;
     }
 }
 </style>
