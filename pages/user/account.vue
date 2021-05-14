@@ -1,6 +1,13 @@
 <template>
     <v-container>
-        <v-card class="pa-4" rounded="lg" >
+        <!-- 已登入 -->
+        <v-card class="pa-4" rounded="lg">
+            <div class="btn_container ma-4">
+                <v-btn dark color="red lighten-1" @click="logout" :loading="loading">
+                    <v-icon>fa-share fa-fw</v-icon>
+                    <span>登出</span>
+                </v-btn>
+            </div>
             <!-- 用戶編號 -->
             <v-card-subtitle>
                 用戶編號:
@@ -28,8 +35,31 @@
 
 <script>
 import userMixin from '~/mixins/userMixin'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-    mixins: [userMixin]
+    middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
+    mixins: [userMixin],
+    methods: {
+        ...mapActions(({
+            logout: 'auth/logout',
+        }))
+    },
+    computed: {
+        ...mapGetters({
+            loading: 'auth/getLoading'
+        })
+    }
 }
 </script>
+
+<style lang="scss" scoped>
+    .btn_container {
+        text-align: start;
+    }
+    @media (max-width: 768px) {
+        .btn_container {
+            text-align: center;
+        }
+    }
+</style>
