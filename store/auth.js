@@ -139,8 +139,8 @@ export const actions = {
             await dispatch('fetchUserInfo')
             //* 從 store/cart.js 撈取使用者的購物車資料
             await dispatch('cart/fetchUserCart', null, { root: true })
-            //* 重新導向至首頁
-            this.$router.push({ name: 'index' })
+            //* 重新導向
+            this.$router.push({ name: 'user-account' })
         } catch (error) {
             //* 錯誤訊息
             let msg = error.response.data.errors
