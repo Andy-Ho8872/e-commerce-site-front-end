@@ -19,64 +19,6 @@ body {
 .v-main_wrap {
     padding: auto 0;
 }
-
-.main_view {
-    padding-top: 10% !important;
-}
-
-@media (max-width: 1600px) {
-    .main_view {
-        padding-top: 10% !important;
-    }
-}
-
-@media (max-width: 1400px) {
-    .main_view {
-        padding-top: 15% !important;
-    }
-}
-
-@media (max-width: 950px) {
-    .main_view {
-        padding-top: 18% !important;
-    }
-}
-
-@media (max-width: 768px) {
-    .main_view {
-        padding-top: 20% !important;
-    }
-}
-
-@media (max-width: 700px) {
-    .main_view {
-        padding-top: 25% !important;
-    }
-}
-
-@media (max-width: 580px) {
-    .main_view {
-        padding-top: 27% !important;
-    }
-}
-
-@media (max-width: 375px) {
-    .main_view {
-        padding-top: 28% !important;
-    }
-}
-
-@media (width: 414px) {
-    .main_view {
-        padding-top: 25% !important;
-    }
-}
-
-@media (width: 320px) {
-    .main_view {
-        padding-top: 33% !important;
-    }
-}
 //* layouts-------------------------------- End
 
 //* 移除 INPUT 數字預設的增減箭頭
