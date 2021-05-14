@@ -153,6 +153,8 @@ export const actions = {
     },
     //* 登出流程
     async logout({ commit }) {
+        //? start loading
+        commit('SET_LOADING', true)
         try {
             await apiUserLogout()
             //* 清空 LocalStorage 與暫存
@@ -167,5 +169,7 @@ export const actions = {
         } catch (error) {
             console.log('erroe from store/auth.js')
         }
+         //? end loading
+         commit('SET_LOADING', false)
     },
 }
