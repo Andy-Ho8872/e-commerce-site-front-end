@@ -2,7 +2,8 @@
     <v-app dark>
         <v-main class="main_view">
             <Header class="header" />
-            <nuxt />
+            <!-- <HeaderV2 class="header"/> -->
+            <nuxt class="content"/>
             <AlertMessage class="alert-message"/>
             <!-- 置頂按鈕 -->
             <v-btn
@@ -34,13 +35,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$z-index-top : 10000;
 .header {
     position: fixed;
     top: 0;
-    z-index: 10000;
+    z-index: $z-index-top;
 }
 .alert-message {
-    z-index: 10000;
+    z-index: $z-index-top;
     position: fixed;
     width: fit-content;
     left: 50%;
@@ -48,9 +50,16 @@ export default {
     transform: translateX(-50%);
 }
 .to-top {
-    z-index: 10000;
+    z-index: $z-index-top;
     bottom: 10%;
     position: fixed !important;
     right: 0;
+}
+
+@media (max-width: 768px) {
+    //! 此樣式只套用在 有使用 HeaderV2 的時候 
+    .content {
+        padding-bottom: 20%;
+    }
 }
 </style>
