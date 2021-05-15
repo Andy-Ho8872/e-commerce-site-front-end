@@ -2,6 +2,7 @@
     <div class="d-flex align-center">
         <v-rating
             v-model="rating"
+            dense
             background-color="yellow darken-2"
             color="yellow darken-3"
             length="5"
