@@ -5,7 +5,7 @@
         <!-- 優惠計時 (月份從 0 開始計算， 例如: 數字5 == 6月)-->
         <CountdownTimer
             :year="2021"
-            :month="2"
+            :month="9"
             :day="5"
             :hour="8"
             :minute="7"
@@ -18,23 +18,21 @@
             <!-- 輪播張數為 10 張 -->
         <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading"/>
         <!-- 商品陳列 -->
-        <div class="products d-flex flex-wrap justify-space-around">
-            <li v-for="product in products" :key="product.id" class="my-10">
+        <v-row justify="space-around">
+            <v-col  v-for="product in products" class="my-10" :key="product.id">
                 <!-- 骨架屏 -->
                 <SkeletonCard :cardWidth="300" v-if="loading"/>
-                <!-- 產品標題 、 圖片網址 、 價格 、 ID... -->
-                <Product :product="product" :cardWidth="300" :cardHeight="600" v-show="!loading"/>
-            </li>
-        </div>
+                <!-- 商品卡片 -->
+                <Product :product="product" :cardWidth="300" :cardHeight="600" v-show="!loading"/>        
+            </v-col>
+        </v-row>
         <!-- 觀看更多商品 -->
         <div class="text-center">
             <!-- 預設點擊後到第一頁 -->
-            <nuxt-link :to="{ name: 'pagination-pageNumber', params: { pageNumber: 1 } }">
-                <v-btn class="my-16" color="primary" dark x-large>
-                    <span>查看更多</span>
-                    <v-icon>fa-shopping-cart fa-fw</v-icon>
-                </v-btn>
-            </nuxt-link>
+            <v-btn class="my-16" color="primary" dark x-large nuxt :to="{ name: 'pagination-pageNumber', params: { pageNumber: 1 } }">
+                <span>查看更多</span>
+                <v-icon>fa-shopping-cart fa-fw</v-icon>
+            </v-btn> 
         </div>
     </v-container>
 </template>
@@ -62,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-li {
-    list-style-type: none;
-}
+// li {
+//     list-style-type: none;
+// }
 </style>
