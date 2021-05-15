@@ -40,17 +40,7 @@
                     ${{ Math.floor(product.unit_price * product.discount_rate) }}
                 </v-card-text>
                 <!-- 標籤 -->
-                <v-chip-group class="ma-4">
-                    <v-chip
-                        class="mx-1"
-                        color="primary"
-                        v-for="tag in product.tags"
-                        :key="tag.id"
-                    >
-                        <v-icon size="medium">fa-check-circle fa-fw</v-icon>
-                        <span>{{ tag.title }}</span>
-                    </v-chip>
-                </v-chip-group>
+                <Tags :product="product" class="ma-4"/>
                 <!-- 輸入數量 -->
                 <v-form>
                     <v-row class="input_field align-center ma-3 pa-3">
