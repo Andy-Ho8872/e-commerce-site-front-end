@@ -15,7 +15,8 @@
                     :loading="notificationLoading" 
                     color="red" 
                     >
-                        刪除所有通知
+                        <v-icon>fa-trash-alt fa-fw</v-icon>
+                        <span>刪除所有通知</span>
                     </v-btn>
                     <!-- 已讀按鈕 -->
                     <v-btn 
@@ -25,7 +26,8 @@
                     :disabled="unReadNotifications.length == 0"
                     color="blue" 
                     >
-                        全部設為已讀
+                        <v-icon>fa-check fa-fw</v-icon>
+                        <span>全部設為已讀</span>
                     </v-btn>
                 </div>
                 <template v-for="notification in notifications" >
@@ -56,7 +58,8 @@
                                 :disabled="notification.read_at !== null" 
                                 color="blue" 
                                 >
-                                    設為已讀
+                                    <v-icon>fa-check fa-fw</v-icon>
+                                    <span>設為已讀</span>
                                 </v-btn>
                             </div>
                             <v-divider class="my-2"></v-divider>

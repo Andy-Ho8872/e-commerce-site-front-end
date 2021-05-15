@@ -46,7 +46,8 @@
                             :disabled="loading"
                             color="red" 
                             >
-                                刪除這筆訂單
+                                <v-icon>fa-trash-alt fa-fw</v-icon>
+                                <span>刪除這筆訂單</span>
                             </v-btn>
                         </div>
                         <!-- 分隔線 -->
