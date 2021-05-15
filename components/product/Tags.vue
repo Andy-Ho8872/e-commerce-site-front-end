@@ -1,7 +1,7 @@
 <template>
     <!-- 產品標籤 -->
     <v-chip-group>
-        <v-chip color="primary" v-for="tag in product.tags" :key="tag.id">
+        <v-chip label color="primary" v-for="tag in product.tags" :key="tag.id">
             <!-- 判斷標籤的名稱是否相符 -->
             <!-- 圖案 -->
             <v-icon size="medium">
