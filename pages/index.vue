@@ -18,7 +18,7 @@
             <!-- 輪播張數為 10 張 -->
         <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading"/>
         <!-- 商品陳列 -->
-        <div class="products d-flex flex-wrap justify-space-between">
+        <div class="products d-flex flex-wrap justify-space-around">
             <li v-for="product in products" :key="product.id" class="my-10">
                 <!-- 骨架屏 -->
                 <SkeletonCard :cardWidth="300" v-if="loading"/>
@@ -64,12 +64,5 @@ export default {
 <style lang="scss" scoped>
 li {
     list-style-type: none;
-}
-
-// RWD
-@media (max-width: 650px) {
-    .products {
-        justify-content: space-around !important;
-    }
 }
 </style>
