@@ -1,95 +1,93 @@
 <template>
 <!-- 商品卡片 -->
-    <div class="product_wrapper">
+    <div class="product_wrapper mx-auto">
         <!-- 產品連結  -->
-        <nuxt-link :to="{ name: 'products-id', params: { id: product.id }}">
-            <v-card class="rounded-t-xl"
-                tile
-                color="grey lighten-5"
-                :width="cardWidth" 
-                :height="cardHeight">
-                <!-- 產品折扣 -->
-                    <!-- 產品原始 折扣倍率為 1.00 即原價-->
-                <v-card-subtitle v-if="product.discount_rate != 1"
+        <v-card class="rounded-t-xl" nuxt :to="{ name: 'products-id', params: { id: product.id }}"
+            tile
+            color="grey lighten-5"
+            :width="cardWidth" 
+            :height="cardHeight">
+            <!-- 產品折扣 -->
+                <!-- 產品原始 折扣倍率為 1.00 即原價-->
+            <v-card-subtitle v-if="product.discount_rate != 1"
+                class="
+                product_discount_lable
+                pa-1
+                yellow
+                rounded-tl-lg
+                rounded-bl-lg">
+                <span 
                     class="
-                    product_discount_lable
-                    pa-1
-                    yellow
-                    rounded-tl-lg
-                    rounded-bl-lg">
-                    <span 
-                        class="
-                        red--text 
-                        font-italic
-                        font-weight-medium
-                        overline">
-                        {{ formatLabel }} 折
-                    </span>
-                </v-card-subtitle>
-                <!-- 產品圖片 -->
-                <v-img 
-                    class="ma-auto rounded-t-xl"
-                    :src="product.imgUrl"
-                    :lazy-src="product.imgUrl">
-                    <!-- 當圖片 Loading 時 -->
-                    <template v-slot:placeholder>
-                        <v-row
-                            class="fill-height ma-0"
-                            align="center"
-                            justify="center">
-                            <v-progress-circular
-                                indeterminate
-                                color="blue lighten-5">
-                            </v-progress-circular>
-                        </v-row>
-                    </template>
-                </v-img>
-                <!-- 產品名稱 -->
-                <v-card-title 
-                    class="
-                    product_title
-                    mt-2 pa-3
-                    font-weight-black
-                    justify-center">
-                    {{ product.title }}
-                </v-card-title>
-                <!-- 產品敘述 -->
+                    red--text 
+                    font-italic
+                    font-weight-medium
+                    overline">
+                    {{ formatLabel }} 折
+                </span>
+            </v-card-subtitle>
+            <!-- 產品圖片 -->
+            <v-img 
+                class="ma-auto rounded-t-xl"
+                :src="product.imgUrl"
+                :lazy-src="product.imgUrl">
+                <!-- 當圖片 Loading 時 -->
+                <template v-slot:placeholder>
+                    <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center">
+                        <v-progress-circular
+                            indeterminate
+                            color="blue lighten-5">
+                        </v-progress-circular>
+                    </v-row>
+                </template>
+            </v-img>
+            <!-- 產品名稱 -->
+            <v-card-title 
+                class="
+                product_title
+                mt-2 pa-3
+                font-weight-black
+                justify-center">
+                {{ product.title }}
+            </v-card-title>
+            <!-- 產品敘述 -->
+            <v-card-subtitle 
+                class="
+                px-6 py-2
+                text-justify">
+                <!-- 縮減字數後的商品敘述 -->
+                {{ subString }}
+            </v-card-subtitle>
+            <!-- 星星數量 -->
+            <Ratings :product="product" class="px-4 py-2"/>
+            <!-- 產品標籤 -->
+            <Tags :product="product" class="px-4 py-2"/>
+            <!-- 產品價格 -->
+            <div class="mt-2">
+                <!-- 原價 -->
                 <v-card-subtitle 
                     class="
-                    px-6 py-2
-                    text-justify">
-                    <!-- 縮減字數後的商品敘述 -->
-                    {{ subString }}
+                    original_price
+                    px-6
+                    font-weight-medium
+                    text-h6"
+                    :class="[product.discount_rate == 1 ? '' : 'discounted']">
+                    NT.{{ Math.floor(product.unit_price) }}
                 </v-card-subtitle>
-                <!-- 星星數量 -->
-                <Ratings :product="product" class="px-4 py-2"/>
-                <!-- 產品標籤 -->
-                <Tags :product="product" class="px-4 py-2"/>
-                <!-- 產品價格 -->
-                <div class="mt-2">
-                    <!-- 原價 -->
-                    <v-card-subtitle 
-                        class="
-                        original_price
-                        px-6
-                        font-weight-medium
-                        text-h6"
-                        :class="[product.discount_rate == 1 ? '' : 'discounted']">
-                        NT.{{ Math.floor(product.unit_price) }}
-                    </v-card-subtitle>
-                    <!-- 打折後 -->
-                    <v-card-subtitle v-if="product.discount_rate != 1"
-                        class="
-                        discount_price
-                        pa-0
-                        text-center
-                        title
-                        red--text">
-                        NT.{{ Math.floor(product.unit_price * product.discount_rate) }}
-                    </v-card-subtitle>
-                </div>      
-            </v-card>
-        </nuxt-link>      
+                <!-- 打折後 -->
+                <v-card-subtitle v-if="product.discount_rate != 1"
+                    class="
+                    discount_price
+                    pa-0
+                    text-center
+                    title
+                    red--text">
+                    NT.{{ Math.floor(product.unit_price * product.discount_rate) }}
+                </v-card-subtitle>
+            </div>      
+        </v-card>     
         <!-- 放入購物車按鈕 -->
         <v-btn 
             @click="addToCart(product.id)"
