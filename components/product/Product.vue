@@ -56,15 +56,15 @@
                 <!-- 產品敘述 -->
                 <v-card-subtitle 
                     class="
-                    px-8 py-4
+                    px-6 py-2
                     text-justify">
                     <!-- 縮減字數後的商品敘述 -->
                     {{ subString }}
                 </v-card-subtitle>
                 <!-- 星星數量 -->
-                <Ratings :product="product" class="px-5"/>
+                <Ratings :product="product" class="px-4 py-2"/>
                 <!-- 產品標籤 -->
-                <Tags :product="product" class="px-5"/>
+                <Tags :product="product" class="px-4 py-2"/>
                 <!-- 產品價格 -->
                 <div class="mt-2">
                     <!-- 原價 -->
