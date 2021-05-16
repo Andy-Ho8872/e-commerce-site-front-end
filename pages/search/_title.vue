@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     //* 此處的 search function 在 Components/Header.vue 裡
@@ -73,6 +73,18 @@ export default {
             result: 'search/getResult',
         }),
     },
+    methods: {
+        ...mapActions({
+            //* 搜尋商品
+            search: 'search/searchProducts', 
+        }),
+    },
+    created() {
+        //* 避免再重新整理頁面的時候發送相同的 request 
+        if(! this.result.length) {
+            this.search(this.$route.params.title)
+        }
+    }
 }
 </script>
 
