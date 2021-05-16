@@ -1,6 +1,6 @@
 <template>
     <v-container class="my-auto">
-        <div v-if="loading" class="text-center">
+        <div v-if="!product" class="text-center">
             <v-progress-circular
                 :size="50"
                 color="primary"
@@ -8,7 +8,7 @@
             ></v-progress-circular>
         </div>
         <!-- 商品 -->
-        <v-row v-else>
+        <v-row v-if="product">
             <v-col>
                 <v-card
                     class="d-flex flex-wrap justify-space-between rounded-xl ma-auto"
@@ -103,33 +103,32 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import { apiGetProduct } from '~/APIs/api.js'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-    //todo 測試用
-    async asyncData({ params }) {
-        const res = await apiGetProduct(params.id)
-        return {
-            product: res.data.product,
-        }
-    },
     data() {
         return {
             //* 暫存資料
             productPayload: {
                 id: this.$route.params.id,
-                //* 產品當前數量 預設 1 個
-                quantity: 1,
+                quantity: 1, //* 產品當前數量 預設 1 個
             },
-            //* 讀取狀態
-            loading: true,
+        }
+    },
+    computed: {
+        ...mapGetters({
+            products: 'product/getAllProducts',
+        }),
+        product() {
+            return this.products.find(p => p.id == this.$route.params.id)
         }
     },
     methods: {
         ...mapActions({
             //* 新增至購物車(包含數量)
             addToCartWithQuantity: 'cart/addToCartWithQuantity',
+            //* 撈取商品 
+            fetchSingleProduct: 'product/fetchSingleProduct'
         }),
         //* 點擊按鈕變更購買數量
         changeCount(value) {
@@ -161,9 +160,8 @@ export default {
             }
         }
     },
-    mounted() {
-        //* 讀取完畢
-        this.loading = false
+    created() {
+        this.fetchSingleProduct(this.$route.params.id) 
     },
 }
 </script>
