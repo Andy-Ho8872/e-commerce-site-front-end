@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex'
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 
 export default {
     //? passed form pages/index.vue
@@ -73,11 +73,6 @@ export default {
             interval: '',
         }
     },
-    //todo 測試
-    async fetch() {
-        //* 撈取輪播資料
-        await this.$store.dispatch('carousel/fetchCarouselItem')
-    },
     computed: {
         ...mapGetters({
             products: 'carousel/getCarouselItem',
@@ -88,6 +83,15 @@ export default {
         ...mapMutations({
             SLIDE: 'carousel/SLIDE_CAROUSEL',
         }),
+        ...mapActions({
+            fetchCarouselItem: 'carousel/fetchCarouselItem'
+        })
+    },
+    //* 避免重複發送相同的 request
+    created() {
+        if(!this.products.length) {
+            this.fetchCarouselItem()
+        }
     },
     //* 頁面掛載後執行自動輪播
     mounted() {
@@ -98,19 +102,19 @@ export default {
     },
     //* 在使用者點及其他頁面後，終止 interval 在背景的執行(為了減少效能損耗)
     beforeDestroy() {
-        // 在 Vue3 為 beforeUnmount
+        //? 在 Vue3 為 beforeUnmount
         clearInterval(this.interval)
     },
-    //* 若有使用 Keep-Alive 的方式
-    activated() {
-        //* 圖片自動輪播
-        this.interval = setInterval(() => {
-            this.SLIDE(1)
-        }, 5000)
-    },
-    deactivated() {
-        clearInterval(this.interval)
-    },
+    // //* 若有使用 Keep-Alive 的方式
+    // activated() {
+    //     //* 圖片自動輪播
+    //     this.interval = setInterval(() => {
+    //         this.SLIDE(1)
+    //     }, 5000)
+    // },
+    // deactivated() {
+    //     clearInterval(this.interval)
+    // },
 }
 </script>
 
