@@ -8,91 +8,97 @@
             ></v-progress-circular>
         </div>
         <!-- 商品 -->
-        <v-card
-            v-else
-            class="product_wrapper d-flex justify-space-between rounded-xl"
-            elevation="4"
-            color="grey lighten-4"
-        >
-            <!-- 圖片 -->
-            <div class="img_wrapper">
-                <v-img
-                    :src="product.imgUrl"
-                    class="rounded-xl"
-                    max-width="inherit"
-                    max-height="inherit"
+        <v-row v-else>
+            <v-col>
+                <v-card
+                    class="d-flex flex-wrap justify-space-between rounded-xl ma-auto"
+                    elevation="4"
+                    color="grey lighten-4"
+                    width="900"
                 >
-                </v-img>
-            </div>
-            <!-- 詳細資訊 -->
-            <div class="card_info_wrapper">
-                <!-- 名稱 -->
-                <v-card-title class="justify-center">
-                    {{ product.title }}
-                </v-card-title>
-                <!-- 敘述 -->
-                <v-card-text class="text-justify">
-                    {{ product.description }}
-                </v-card-text>
-                <!-- 價格 -->
-                <v-card-text class="headline">
-                    <!-- 包含折扣 -->
-                    ${{ Math.floor(product.unit_price * product.discount_rate) }}
-                </v-card-text>
-                <!-- 標籤 -->
-                <Tags :product="product" class="ma-4"/>
-                <!-- 輸入數量 -->
-                <v-form>
-                    <v-row class="input_field align-center ma-3 pa-3">
-                        <span class="px-2">購買數量</span>
-                        <!-- 增加按鈕 -->
-                        <v-btn
-                            @click="changeCount(-1)"
-                            tile
-                            small
-                            depressed
-                            outlined
-                            color="error"
-                        >
-                            <v-icon>fa-minus fa-fw</v-icon>
-                        </v-btn>
-                        <!-- 輸入數量 -->
-                        <input
-                            class="grey lighten-2 text-center"
-                            name="product_quantity"
-                            type="number"
-                            autocomplete="off"
-                            @keyup="validateInput(productPayload.quantity)"
-                            v-model.number="productPayload.quantity"
-                        />
-                        <!-- 減少按鈕 -->
-                        <v-btn
-                            @click="changeCount(1)"
-                            tile
-                            small
-                            depressed
-                            outlined
-                            color="indigo"
-                        >
-                            <v-icon>fa-plus fa-fw</v-icon>
-                        </v-btn>
-                    </v-row>
-                    <!-- 購買按鈕-->
-                    <div class="purchase_btn text-center">
-                        <v-btn
-                            @click="addToCartWithQuantity(productPayload)"
-                            class="ma-3 rounded-lg"
-                            tile
-                            x-large
-                            depressed
-                            color="primary"
-                        >
-                            <span>放入購物車</span>
-                        </v-btn>
+                    <!-- 圖片 -->
+                    <div class="half">
+                        <v-img :src="product.imgUrl" class="rounded-t-xl"></v-img>
                     </div>
-                </v-form>
-            </div>
-        </v-card>
+                    <!-- 詳細資訊 -->
+                    <div class="half">
+                        <!-- 名稱 -->
+                        <v-card-title class="justify-center">
+                            {{ product.title }}
+                        </v-card-title>
+                        <!-- 敘述 -->
+                        <v-card-text class="text-justify">
+                            {{ product.description }}
+                        </v-card-text>
+                        <!-- 價格 -->
+                        <v-card-text class="title">
+                            <!-- 原價 -->
+                            <span :class="[product.discount_rate == 1 ? '' : 'discounted']">
+                                $ {{ Math.floor(product.unit_price) }}
+                            </span>
+                            <!-- 折價後 -->
+                            <span class="mx-2 discount_price title red--text" v-if="product.discount_rate != 1">
+                                $ {{ Math.floor(product.unit_price * product.discount_rate) }}
+                            </span>
+                        </v-card-text>
+                        <!-- 評級 -->
+                        <Ratings :product="product" class="mx-4 my-6"/>
+                        <!-- 標籤 -->
+                        <Tags :product="product" class="mx-4 my-6"/>
+                        <!-- 輸入數量 -->
+                        <v-form>
+                            <v-row class="input_field ma-3 py-4">
+                                <span class="px-2">購買數量</span>
+                                <!-- 增加按鈕 -->
+                                <v-btn
+                                    @click="changeCount(-1)"
+                                    tile
+                                    small
+                                    depressed
+                                    outlined
+                                    color="error"
+                                >
+                                    <v-icon>fa-minus fa-fw</v-icon>
+                                </v-btn>
+                                <!-- 輸入數量 -->
+                                <input
+                                    class="grey lighten-2 text-center"
+                                    name="product_quantity"
+                                    type="number"
+                                    autocomplete="off"
+                                    @keyup="validateInput(productPayload.quantity)"
+                                    v-model.number="productPayload.quantity"
+                                />
+                                <!-- 減少按鈕 -->
+                                <v-btn
+                                    @click="changeCount(1)"
+                                    tile
+                                    small
+                                    depressed
+                                    outlined
+                                    color="indigo"
+                                >
+                                    <v-icon>fa-plus fa-fw</v-icon>
+                                </v-btn>
+                            </v-row>
+                            <!-- 購買按鈕-->
+                            <div class="purchase_btn text-center">
+                                <v-btn
+                                    @click="addToCartWithQuantity(productPayload)"
+                                    class="ma-3 rounded-lg"
+                                    tile
+                                    x-large
+                                    depressed
+                                    color="primary"
+                                >
+                                    <span>放入購物車</span>
+                                </v-btn>
+                            </div>
+                        </v-form>
+                    </div>
+                </v-card>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
@@ -163,14 +169,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.product_wrapper {
-    margin: 0% 10%;
-}
-.card_info_wrapper {
+.half {
     width: 50%;
 }
-.img_wrapper {
-    width: 50%;
+.discounted {
+    text-decoration: line-through;
 }
 //* 購買按鈕
 .purchase_btn span {
@@ -182,15 +185,8 @@ input {
     outline: none;
 }
 //? RWD
-@media (max-width: 960px) {
-    .product_wrapper {
-        flex-wrap: wrap;
-        margin: 0;
-    }
-    .img_wrapper {
-        width: 100%;
-    }
-    .card_info_wrapper {
+@media (max-width: 768px) {
+    .half {
         width: 100%;
     }
 }
