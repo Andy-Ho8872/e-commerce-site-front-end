@@ -9,13 +9,13 @@ import {
 export const state = () => ({
     //* 所有訂單
     orders: [],
-    //* 單筆訂單
+    //! 單筆訂單 (暫不使用)
     order: [],
     //* 付款方式
     payments: [],
     //* 商品狀態
     status: [],
-    //* 點擊 id 紀錄
+    //! 點擊 id 紀錄 (暫不使用)
     lastClickedRecord: null,
     //* loading 狀態
     loading: false,
@@ -25,6 +25,7 @@ export const getters = {
     getAllOrders(state) {
         return state.orders
     },
+    //! 暫不使用 
     getSingleOrder(state) {
         return state.order
     },
@@ -44,6 +45,7 @@ export const mutations = {
     SET_ALL_ORDERS(state, orders) {
         state.orders = orders
     },
+    //! 暫不使用 
     SET_SINGLE_ORDER(state, order) {
         state.order = order
     },
@@ -57,7 +59,7 @@ export const mutations = {
     SET_LOADING(state, loading) {
         state.loading = loading
     },
-    //* 紀錄最後點擊的訂單 id
+    //! 紀錄最後點擊的訂單 id (暫不使用)
     SET_LAST_CLICKED_RECORD(state, record) {
         state.lastClickedRecord = record
     },
@@ -104,7 +106,7 @@ export const actions = {
             console.log('抓取失敗 from /store/order.js')
         }
     },
-    //* 撈取單筆訂單
+    //! 撈取單筆訂單 (暫不使用)
     async fetchSingleOrder({ commit, state }, orderId) {
         try {
             //* 如果和最後一次點擊的 ID 不同則撈取

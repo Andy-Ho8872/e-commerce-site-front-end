@@ -3,7 +3,7 @@
         <!-- loading -->
         <LoadingCircle v-if="userOrder.length == 0"/>
         <!-- content -->
-        <div v-else>
+        <div v-if="order">
             <!-- 返回按鈕 -->
             <div class="text-center my-6">
                 <nuxt-link :to="{ name: 'order'}">
@@ -25,7 +25,7 @@
                 </thead>
                 <!-- 細項 -->
                 <tbody class="grey lighten-3 blue-grey--text text--darken-4">
-                    <tr v-for="item in userOrder.items" :key="item.id">
+                    <tr v-for="item in order.items" :key="item.id">
                         <!-- 編號 -->
                         <td data-title="商品編號" id="items_id">
                             {{ item.pivot.product_id }}
@@ -55,15 +55,10 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-// import { apiGetSingleOrder } from '../../../APIs/api'
 
 export default {
     middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
-    // asyncData 的方法，因為要使用 localStorage 取得 User 的 Token，所以如果直接在網址上輸入 order/order_id 的話會報錯。
-    // async asyncData({ params }) {
-    //     const res = await apiGetSingleOrder(params.id)
-    //     return { order: res.data.order }
-    // },
+    
     data() {
         return {
             tableHeads: [
@@ -84,11 +79,12 @@ export default {
     computed: {
         ...mapGetters({
             //* 訂單資料 
-            userOrder: 'order/getSingleOrder',
+            userOrder: 'order/getAllOrders',
         }),
-    },
-    mounted() {
-        this.fetchSingleOrder(this.$route.params.id)
+        //* 單筆訂單的暫存資料(為避免重複撈取資料) 
+        order() {
+            return this.userOrder.find(o => o.id == this.$route.params.id)
+        }
     },
 }
 </script>
