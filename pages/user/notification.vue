@@ -9,15 +9,33 @@
             <v-list v-else max-height="500" class="overflow-y-auto">
                 <!-- 刪除按鈕 -->
                 <div class="btn_container">
-                    <v-btn 
-                    @click="deleteAllNotifications"
-                    class="ma-2 white--text" 
-                    :loading="notificationLoading" 
-                    color="red" 
-                    >
-                        <v-icon>fa-trash-alt fa-fw</v-icon>
-                        <span>刪除所有通知</span>
-                    </v-btn>
+                    <!-- 對話框 -->
+                    <v-dialog v-model="dialog" persistent max-width="290">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn color="red" dark v-bind="attrs" v-on="on">
+                                <v-icon>fa-trash-alt fa-fw</v-icon>
+                                <span>刪除所有通知</span>
+                            </v-btn>
+                        </template>
+                        <v-card>
+                            <!-- 標題 -->
+                            <v-card-title class="headline">刪除所有通知?</v-card-title>
+                            <!-- 內容 -->
+                            <v-card-text>您確定要刪除所有的通知嗎? 此動作將無法復原。</v-card-text>
+                            <!-- 按鈕群組 -->
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="green darken-1" text @click="dialog = false">
+                                    <v-icon>fa-long-arrow-alt-left fa-fw</v-icon>
+                                    <span class="font-weight-bold">返回</span>
+                                </v-btn>
+                                <v-btn color="red darken-1" text @click="[dialog = false, deleteAllNotifications()]">
+                                    <v-icon>fa-trash-alt fa-fw</v-icon>
+                                    <span class="font-weight-bold">刪除</span>
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
                     <!-- 已讀按鈕 -->
                     <v-btn 
                     @click="markAllNotifications"
@@ -76,7 +94,12 @@ import notificationMixin from '~/mixins/notificationMixin'
 
 export default {
     middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
-    mixins: [notificationMixin]
+    mixins: [notificationMixin],
+    data() {
+        return {
+            dialog: false
+        }
+    }
 }
 </script>
 
