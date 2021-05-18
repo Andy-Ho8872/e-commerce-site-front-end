@@ -1,12 +1,7 @@
 <template>
     <!-- 提示訊息 -->
     <v-scroll-y-transition>
-        <v-alert
-            v-if="message"
-            dark
-            border="left"
-            :type="message.type"
-        >
+        <v-alert v-if="message" dark border="left" :type="message.type">
             {{ message.text }}
         </v-alert>
     </v-scroll-y-transition>
