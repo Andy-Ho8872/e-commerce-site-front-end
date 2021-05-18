@@ -3,7 +3,7 @@
         <template v-slot:activator="{ on, attrs }">
             <v-btn color="red" dark v-bind="attrs" v-on="on">
                 <v-icon>fa-trash-alt fa-fw</v-icon>
-                <span>刪除這筆訂單</span>
+                <span>刪除</span>
             </v-btn>
         </template>
         <v-card>
