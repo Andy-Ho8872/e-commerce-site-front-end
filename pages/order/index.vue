@@ -64,22 +64,15 @@
                         </td>
                         <!-- 訂單操作 -->
                         <td data-title="編輯操作" id="actions">
-                            <!-- 刪除 -->
-                            <v-btn class="ma-1 white--text"
-                            @click="deleteSingleOrder(order.id)"
-                            :loading="loading"
-                            :disabled="loading"
-                            rounded 
-                            color="red lighten-1" 
-                            >
-                                刪除
-                            </v-btn>
-                            <!-- 查看 -->
-                            <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
-                                <v-btn rounded color="light-blue" class="ma-1 white--text">
+                            <div class="btn_container">
+                                <!-- 按鈕群組 -->
+                                <DeleteDialog :order="order" />
+                                <!-- 查看 --> 
+                                <v-btn color="light-blue" dark nuxt :to="{ name: 'order-details-id', params: { id: order.id }}">
+                                    <v-icon>fa-hand-point-right fa-fw</v-icon>
                                     查看
-                                </v-btn>
-                            </nuxt-link>
+                                </v-btn>   
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -113,7 +106,7 @@ export default {
 
 <style lang="scss" scoped>
 $letter-spacing: 0.125rem;
-$padding: 10%;
+$tbody-td-padding: 10%;
 $td-padding: 1.5rem 0;
 //? only for RWD
 $title-font-weight: 600;
@@ -160,7 +153,7 @@ tbody {
             display: block;
             position: relative;
             text-align: right;
-            padding-right: $padding;
+            padding-right: $tbody-td-padding;
             //* 除了最後一個元素之外，其餘的都要加上底線
             &:not(:last-child) {
                 border-bottom: 1px solid #b0bec5;
@@ -171,7 +164,7 @@ tbody {
                 position: absolute;
                 font-weight: $title-font-weight;
                 letter-spacing: $letter-spacing;
-                padding-left: $padding;
+                padding-left: $tbody-td-padding;
                 left: 0;
             }
             span {
@@ -184,6 +177,13 @@ tbody {
                 text-align: end; 
             }
         }
+    }
+}
+//* i phone 5 SE 
+@media (max-width: 320px) {
+    //* 按鈕群組的 padding 為 0
+    td:last-child {
+        padding-right: 0;
     }
 }
 </style>
