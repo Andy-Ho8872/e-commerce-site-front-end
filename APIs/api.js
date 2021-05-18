@@ -41,6 +41,23 @@ authRequest.interceptors.request.use(
     }, 
     (error) => Promise.reject(error)
 )
+//* 異常(錯誤)處理 
+authRequest.interceptors.response.use(
+    (response) => {
+        return response
+    }, 
+    (error) => {
+        if(error && error.response) {
+            switch (error.response.status) {
+                case 401:
+                    console.log("目前沒有權限");
+                    break; 
+                default:
+                    console.log("axios 錯誤。");
+            }
+        }
+    }
+)
 //* 驗證請求-------------------------------------------------------------------End
 
 
