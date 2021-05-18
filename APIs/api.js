@@ -2,7 +2,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 //* URL 與 設定
-let base = 'http://localhost:8000/api'; //? 後端 API 的 URL
+let base = 'http://localhost:8000/api/v1'; //? 後端 API 的 URL
 
 
 //* CSRF請求------------------------------------------------------------------Start
@@ -14,21 +14,21 @@ const userCsrfRequest = axios.create({
 
 //* 產品請求-------------------------------------------------------------------Start
 const productRequest = axios.create({
-    baseURL: `${ base }/v1/products`
+    baseURL: `${ base }/products`
 });
 //* 產品請求-------------------------------------------------------------------End
 
 
 //* 使用者請求------------------------------------------------------------------Start
 const userRequest = axios.create({
-    baseURL: `${ base }/v1/user`
+    baseURL: `${ base }/user`
 });
 //* 使用者請求------------------------------------------------------------------End
     
 
 //* 驗證請求-------------------------------------------------------------------Start
 const authRequest = axios.create({
-    baseURL: `${ base }/v1/auth/user`
+    baseURL: `${ base }/auth/user`
 });
 //? 設置攔截器 (interceptors)
 authRequest.interceptors.request.use(
