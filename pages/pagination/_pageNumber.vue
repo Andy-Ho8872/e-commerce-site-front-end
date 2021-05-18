@@ -4,19 +4,10 @@
         <LoadingCircle v-if="loading"/>
         <!-- content -->
         <v-row>
-            <v-col
-                v-for="product in products.data"
-                :key="product.id"
-                class="my-12"
-            >
+            <v-col v-for="product in products.data" :key="product.id" class="mt-10 mb-12">
                 <SkeletonCard :cardWidth="300" v-if="loading" class="mx-auto"/>
                 <!-- 產品 Component -->
-                <Product v-show="!loading"
-                    class="mx-auto"
-                    :product="product"
-                    :cardWidth="300"
-                    :cardHeight="600"
-                />
+                <Product v-show="!loading" class="mx-auto" :product="product" :cardWidth="300" :cardHeight="600"/>
             </v-col>
         </v-row>
         <PaginationController :pageNumber="pageNumber" />
