@@ -6,15 +6,11 @@
             <nuxt class="content"/>
             <AlertMessage class="alert-message"/>
             <!-- 置頂按鈕 -->
-            <v-btn
-                @click="scrollTop"
-                class="to-top mx-2"
-                color="primary"
-                fab
-                dark
-            >
-                <v-icon>fa-chevron-up</v-icon>
-            </v-btn>
+            <v-fab-transition>
+                <v-btn class="to-top mx-2" v-show="!hidden" @click="scrollToTop" color="primary" fab dark>
+                    <v-icon>fa-chevron-up</v-icon>
+                </v-btn>
+            </v-fab-transition>
         </v-main>
     </v-app>
 </template>
@@ -22,14 +18,30 @@
 <script>
 
 export default {
+    data() {
+        return {
+            hidden: true
+        }
+    },
     methods: {
-        scrollTop() {
+        scrollToTop() {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth',
             })
         },
+        scrollToShow() {
+            const scrollTop = document.documentElement.scrollTop
+            const innerHeight = window.innerHeight / 2.5
+            //* 判定是否大於 innerHeight
+            scrollTop > innerHeight ? this.hidden = false : this.hidden = true
+        }
     },
+    created() {
+        if(process.client) {
+            window.addEventListener('scroll', this.scrollToShow)
+        }
+    }
 }
 </script>
 
