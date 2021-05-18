@@ -38,17 +38,8 @@
                             訂購時間: <span class="font-weight-bold black--text">{{ order.created_at }}</span>
                         </v-card-subtitle>
                         <!-- 刪除按鈕 -->
-                        <div class="btn_container">
-                            <v-btn 
-                            @click="deleteSingleOrder(order.id)" 
-                            class="ma-4 pa-4 white--text" 
-                            :loading="loading" 
-                            :disabled="loading"
-                            color="red" 
-                            >
-                                <v-icon>fa-trash-alt fa-fw</v-icon>
-                                <span>刪除這筆訂單</span>
-                            </v-btn>
+                        <div class="btn_container ma-2 pa-2">
+                            <DeleteDialog :order="order"/>
                         </div>
                         <!-- 分隔線 -->
                         <v-divider></v-divider>

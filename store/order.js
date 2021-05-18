@@ -161,18 +161,15 @@ export const actions = {
         //? start loading
         commit('SET_LOADING', true)
         try {
-            const result = confirm('您確定要刪除該筆訂單嗎?')
-            if (result === true) {
-                await apiDeleteSingleOrder(orderId)
-                //* 刪除暫存中的訂單數據(可以減少撈取訂單 request 的次數)
-                commit('REMOVE_SINGLE_ORDER', orderId)
-                let message = {
-                    type: 'error',
-                    text: '您刪除了一筆訂單，請查閱。'
-                }
-                await commit('globalMessage/SET_MESSAGE', message, { root:true })
-                dispatch('globalMessage/clearMessage', null, { root: true })
+            await apiDeleteSingleOrder(orderId)
+            //* 刪除暫存中的訂單數據(可以減少撈取訂單 request 的次數)
+            commit('REMOVE_SINGLE_ORDER', orderId)
+            let message = {
+                type: 'error',
+                text: '您刪除了一筆訂單，請查閱。'
             }
+            await commit('globalMessage/SET_MESSAGE', message, { root:true })
+            dispatch('globalMessage/clearMessage', null, { root: true })
         } catch (error) {
             console.log(error)
             console.log('刪除失敗 from /store/order.js')
