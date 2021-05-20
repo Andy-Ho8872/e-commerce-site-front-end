@@ -26,25 +26,32 @@ export default {
         ],
     },
 
-    //*  Modules (https://go.nuxtjs.dev/config-modules)
+    //! 暫時不用 
+    // axios: {
+    //     baseURL: 'http://localhost:8000/api/v1',
+    //     credentials: true
+    // },
+    // api: {
+    //     baseURL: 'http://localhost:8000/api/v1',
+    //     credentials: true
+    // },
+
     modules: ['@nuxtjs/axios'],
 
-    //* Global CSS (https://go.nuxtjs.dev/config-css)
     css: ['@/assets/css/main.css', '@/assets/css/main.scss'],
 
-    //* Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-    plugins: ['~/plugins/axios.js'],
+    //! 暫時不用 
+    // plugins: [
+    //     '~/plugins/axios.js',
+    //     '~/plugins/api.js',
+    // ],
 
-    //* Auto import components (https://go.nuxtjs.dev/config-components)
     components: true,
 
-    // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
     buildModules: [
-        // https://go.nuxtjs.dev/vuetify
         '@nuxtjs/vuetify',
     ],
 
-    // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
     vuetify: {
         customVariables: ['~/assets/variables.scss'],
         theme: {
@@ -63,7 +70,6 @@ export default {
         },
     },
 
-    // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {},
 
     //* transition
