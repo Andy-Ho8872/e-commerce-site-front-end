@@ -86,21 +86,30 @@ export const actions = {
     //* 直接"新增"商品至購物車 (預設數量 1)
     async addToCart({ dispatch, commit }, productId) {
         try {
-            await apiAddToCart(productId)
-            //* 重新撈取資料
-            await dispatch('fetchUserCart')
-            //? 回傳提示訊息給使用者
-            let message = {
-                type: 'success',
-                text: '已經新增至購物車',
+            // const res = await this.$axios.apiAddToCart(productId) //! 測試用
+            // const res = await this.$api.apiAddToCart(productId) //! 測試用
+            const res = await apiAddToCart(productId)
+            if(res.status == 200 || 201) {
+                //? 回傳提示訊息給使用者
+                const message = {
+                    type: 'success',
+                    text: '已經新增至購物車',
+                }
+                //* 重新撈取資料
+                await dispatch('fetchUserCart')
+                await commit('globalMessage/SET_MESSAGE', message, { root:true })
+                dispatch('globalMessage/clearMessage', null, { root: true })
             }
-            await commit('globalMessage/SET_MESSAGE', message, { root:true })
-            dispatch('globalMessage/clearMessage', null, { root: true })
         } catch (error) {
-            console.log(error)
-            console.log('新增失敗 from vuex')
-            //* 若使用者未登入則重新導向
-            this.$router.push({ name: 'auth-login' })
+            //* 提示訊息
+            if(error || error.response.status == 401) {
+                const message = {
+                    type: 'error',
+                    text: '請先登入'
+                }
+                await commit('globalMessage/SET_MESSAGE', message, { root:true })
+                dispatch('globalMessage/clearMessage', null, { root: true })
+            }
         }
     },
 
@@ -109,24 +118,31 @@ export const actions = {
     async addToCartWithQuantity({ dispatch, commit }, product) {
         try {
             //* 若要從表單傳遞參數要透過 Object
-            await apiAddToCartWithQuantity(
+            const res = await apiAddToCartWithQuantity(
                 product.id, //* 產品 id
                 { product_quantity: product.quantity } //* 購買數量
             )
-            //* 重新撈取資料
-            await dispatch('fetchUserCart')
-            //? 回傳提示訊息給使用者
-            let message = {
-                type: 'success',
-                text: '已經新增至購物車',
+            if(res.status == 201) {
+                //* 重新撈取資料
+                await dispatch('fetchUserCart')
+                //? 回傳提示訊息給使用者
+                let message = {
+                    type: 'success',
+                    text: '已經新增至購物車',
+                }
+                await commit('globalMessage/SET_MESSAGE', message, { root:true })
+                dispatch('globalMessage/clearMessage', null, { root: true })
             }
-            await commit('globalMessage/SET_MESSAGE', message, { root:true })
-            dispatch('globalMessage/clearMessage', null, { root: true })
         } catch (error) {
-            console.log(error)
-            console.log('新增失敗 from vuex')
-            //* 導向至登入頁面
-            this.$router.push({ name: 'auth-login' })
+            if(error || error.response.status == 401) {
+                //* 提示訊息
+                const message = {
+                    type: 'error',
+                    text: '請先登入'
+                }
+                await commit('globalMessage/SET_MESSAGE', message, { root:true })
+                dispatch('globalMessage/clearMessage', null, { root: true })
+            }
         }
     },
 
