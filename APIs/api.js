@@ -50,7 +50,8 @@ authRequest.interceptors.response.use(
         if(error && error.response) {
             switch (error.response.status) {
                 case 401:
-                    console.log("目前沒有權限");
+                    //* 重新導向
+                    $nuxt._router.push({ name: 'auth-login' })
                     break; 
                 default:
                     console.log("axios 錯誤。");
