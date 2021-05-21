@@ -37,12 +37,7 @@ export const mutations = {
     },
     //* 判定購物車內是否有資料
     CHECK_AND_SET_VALID_STATUS(state) {
-        if(state.userCart.length) {
-            state.valid = true
-        }
-        else {
-            state.valid = false
-        }
+        state.userCart.length ? state.valid = true : state.valid = false
     },
     //* 使用者登出時清空暫存
     CLEAR_USER_CART(state) {
@@ -76,7 +71,7 @@ export const actions = {
             let payload = res.data.carts
             //* 將資料寫入
             await commit('SET_USER_CART', payload)
-            //* 確認購物車內是否有商品
+            //* 確認購物車內是否還有商品
             commit('CHECK_AND_SET_VALID_STATUS')
         } catch (error) {
             console.log(error)
@@ -225,6 +220,8 @@ export const actions = {
             await apiDeleteFromCart(productId)
             //* 刪除該商品的暫存數據(可以減少向後端發送撈取的 request)
             commit('REMOVE_SINGLE_PRODUCT_FROM_CART', productId)
+            //* 確認購物車內是否還有商品
+            await commit('CHECK_AND_SET_VALID_STATUS')
             // 提示訊息
             let message = {
                 type: 'error',
@@ -245,6 +242,8 @@ export const actions = {
                 await apiDeleteAllFromCart()
                 //* 刪除所有商品的暫存數據
                 commit('REMOVE_ALL_FROM_CART')
+                //* 確認購物車內是否還有商品
+                await commit('CHECK_AND_SET_VALID_STATUS')
                 // 提示訊息
                 let message = {
                     type: 'error',
