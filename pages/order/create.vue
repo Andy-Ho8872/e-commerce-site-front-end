@@ -74,7 +74,7 @@
                 <div class="d-flex align-center justify-center">
                     <!-- 送出按鈕 -->
                     <v-btn large rounded color="primary" class="ma-4"
-                        @click="createOrder(form)"
+                        @click="checkAndCreateOrder"
                         :disabled="!valid" 
                         :loading="loading"
                     >
@@ -123,6 +123,7 @@ export default {
         ...mapGetters({
             //* 使用者的購物車資料
             userCart: 'cart/getUserCart', 
+            cartValidStatus: 'cart/getValidStatus', //? 確認購物車內是否有商品
             //* 後端表單資料
             payments: 'order/getPayments',
             //* loading 狀態
@@ -144,6 +145,11 @@ export default {
             //* 建立訂單
             createOrder: 'order/createOrder'
         }),
+        checkAndCreateOrder() {
+            if(this.userCart.length && this.cartValidStatus) {
+                this.createOrder(this.form)
+            }
+        }
     },
 }
 </script>
