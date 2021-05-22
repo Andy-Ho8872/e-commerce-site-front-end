@@ -151,18 +151,23 @@ export const actions = {
         //? end loading
         commit('SET_LOADING', false)
     },
+    //* 清除所有的 state 
+    clearAllVuexStates({ commit }) {
+        commit('CLEAR_USER_INFO')
+        commit('CLEAR_TOKEN')
+        commit('cart/CLEAR_USER_CART', null, { root: true }) //* store/cart.js
+        commit('notification/CLEAR_ALL_NOTIFICATIONS', null, { root: true }) //* store/notification.js
+    } ,
     //* 登出流程
-    async logout({ commit }) {
+    async logout({ commit, dispatch }) {
         //? start loading
         commit('SET_LOADING', true)
         try {
             await apiUserLogout()
-            //* 清空 LocalStorage 與暫存
+            //* 清空 LocalStorage
             await commit('CLEAR_ALL_STORAGE')
-            await commit('CLEAR_USER_INFO')
-            await commit('CLEAR_TOKEN')
-            //* 清空購物車暫存
-            commit('cart/CLEAR_USER_CART', null, { root: true })
+            //* 清空 Vuex 暫存 
+            await dispatch('clearAllVuexStates')
             //* 重新導向
             this.$router.push({ name: 'index' })
             alert('您已經登出')
