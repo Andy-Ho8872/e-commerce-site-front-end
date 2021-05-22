@@ -33,7 +33,7 @@ export const mutations = {
     SET_UNREAD_NOTIFICATIONS(state, unReadNotifications) {
         state.unReadNotifications = unReadNotifications
     },
-    DELETE_ALL_NOTIFICATIONS(state) {
+    CLEAR_ALL_NOTIFICATIONS(state) {
         state.notifications = []
     },
     SET_LOADING(state, loading) {
@@ -112,7 +112,7 @@ export const actions = {
         try {
             await apiDeleteAllNotifications()
             //* 刪除所有通知(暫存)
-            await commit('DELETE_ALL_NOTIFICATIONS')
+            await commit('CLEAR_ALL_NOTIFICATIONS')
             //* 提示訊息
             let message = {
                 type: 'error',
