@@ -5,8 +5,8 @@ import {
     apiDeleteFromCart,
     apiDeleteAllFromCart,
     apiUpdateQuantity,
-    apiIncreseQuantityByOne,
-    apiDecreseQuantityByOne,
+    apiIncreaseQuantityByOne,
+    apiDecreaseQuantityByOne,
 } from '../APIs/api.js'
 
 export const state = () => ({
@@ -169,12 +169,12 @@ export const actions = {
         commit('SET_LOADING', false)
     },
     //* 商品數量增加 1
-    async increseByOne({ dispatch, commit }, productId) {
+    async increaseByOne({ dispatch, commit }, productId) {
         //? start loading
         commit('SET_LOADING', true)
         try {
             //* 增加數量
-            await apiIncreseQuantityByOne(productId)
+            await apiIncreaseQuantityByOne(productId)
             //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
@@ -192,12 +192,12 @@ export const actions = {
         commit('SET_LOADING', false)
     },
     //* 商品數量減少 1
-    async decreseByOne({ dispatch, commit }, productId) {
+    async decreaseByOne({ dispatch, commit }, productId) {
         //? start loading
         commit('SET_LOADING', true)
         try {
             //* 減少數量
-            await apiDecreseQuantityByOne(productId)
+            await apiDecreaseQuantityByOne(productId)
             //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息

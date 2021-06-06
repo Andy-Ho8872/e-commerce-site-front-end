@@ -172,7 +172,7 @@ export const actions = {
             this.$router.push({ name: 'index' })
             alert('您已經登出')
         } catch (error) {
-            console.log('erroe from store/auth.js')
+            console.log('error from store/auth.js')
         }
          //? end loading
          commit('SET_LOADING', false)

@@ -68,8 +68,8 @@ export default {
     },
     methods: {
         ...mapActions({
-            increseByOne: 'cart/increseByOne', //* 減 一
-            decreseByOne: 'cart/decreseByOne', //* 加 一
+            increaseByOne: 'cart/increaseByOne', //* 減 一
+            decreaseByOne: 'cart/decreaseByOne', //* 加 一
             updateQuantity: 'cart/updateQuantity' //* 修改數量
         }),
         //* 購買數量輸入驗證
@@ -89,13 +89,13 @@ export default {
         },
         //* 增加數量
         async increment (productId) {
-            await this.increseByOne(productId)
+            await this.increaseByOne(productId)
             this.productPayload.quantity++ //* 暫存數據 
             
         },
         //* 減少數量
         async decrement (productId) {
-            await this.decreseByOne(productId)
+            await this.decreaseByOne(productId)
             this.productPayload.quantity-- //* 暫存數據
             //* 最小值為 1
             if(this.productPayload.quantity < 1) {

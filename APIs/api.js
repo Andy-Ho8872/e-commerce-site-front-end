@@ -117,9 +117,9 @@ export const apiDeleteAllFromCart = () => authRequest.delete(`/cart/deleteAll`);
     //? 直接輸入
 export const apiUpdateQuantity = (productId, quantity) => authRequest.post(`/cart/${productId}/update`, quantity);
     //? 增加 1
-export const apiIncreseQuantityByOne = (productId) => authRequest.get(`/cart/${productId}/increseByOne`);
+export const apiIncreaseQuantityByOne = (productId) => authRequest.get(`/cart/${productId}/increaseByOne`);
     //? 減少 1
-export const apiDecreseQuantityByOne = (productId) => authRequest.get(`/cart/${productId}/decreseByOne`);
+export const apiDecreaseQuantityByOne = (productId) => authRequest.get(`/cart/${productId}/decreaseByOne`);
 //-------------------------------------------------- 購物車相關 API --------------------------------------------------//
 
 
