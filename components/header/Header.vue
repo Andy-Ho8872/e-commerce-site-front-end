@@ -77,18 +77,7 @@
                 <li class="line"></li>
             </div>
             <!-- 搜尋區域 -->
-            <v-text-field
-                class="searchBox d-flex mt-2 mx-2"
-                name="search"
-                v-model="searchText"
-                placeholder="相機、螢幕、服裝、折扣..."
-                append-icon="fa-search"
-                @keydown.enter="search(searchText)"
-                @click:append="search(searchText)"
-                solo
-                dense
-            >
-            </v-text-field>
+            <AutoComplete class="searchBox d-flex mt-2 mx-2"/>
             <!-- 購物車 ICON -->
             <nuxt-link class="cart_logo d-flex justify-center align-center" :to="{ name: 'cart' }">
                 <!-- 如果購物車內有商品才顯示 -->
@@ -125,8 +114,6 @@ export default {
             //* 觸發 class 
             active: false, //* 漢堡 sidebar
             appear: false, //* 通知列表
-            //* 搜尋欄文字
-            searchText: '',
         }
     },
     computed: {
@@ -148,9 +135,7 @@ export default {
         }),
         ...mapActions({
             //* 登出使用者
-            logout: 'auth/logout', 
-            //* 搜尋商品
-            search: 'search/searchProducts', 
+            logout: 'auth/logout',  
             //* 撈取資料
             fetchTableColumns: 'order/fetchTableColumns', //? 其他資料表中的欄位
             fetchUserInfo: 'auth/fetchUserInfo', //? 使用者的資料
@@ -160,14 +145,12 @@ export default {
         }),
     },
     async mounted() {
-        //* 點擊漢堡 SideBar 以外的區域則會關閉
-        if (this.$refs.extended.style.visibility !== 'hidden') {
-            document.addEventListener('click', e => {
-                if (!this.$refs.extended.contains(e.target)) {
-                    this.active = false
-                }
-            })
-        }
+        //* 點擊漢堡 SideBar 以外的區域則會關閉  
+        document.addEventListener('click', e => {
+            if (!this.$refs.extended.contains(e.target)) {
+                this.active = false
+            }
+        })
         //* 取得憑證
         await this.SET_TOKEN()
         //* 若使用者有登入(持有 Token)，從 localStorage 中做初步判定)
