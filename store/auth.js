@@ -119,7 +119,7 @@ export const actions = {
                 this.$router.push({ name: 'index' })
                 console.log('您目前已經登入，將導向至首頁')
             }
-        }, 2000)
+        }, 3000)
     },
     //* 登入流程
     async login({ commit, dispatch }, user) {
