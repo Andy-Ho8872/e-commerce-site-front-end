@@ -6,25 +6,30 @@
             v-model="searchText"
             placeholder="相機、螢幕、服裝、折扣..."
             append-icon="fa-search"
-            @input="autoComplete(searchText)"
+            @keyup="handleAutoComplete"
             @click:append="search(searchText)"
             solo
             dense
         >
         </v-text-field>
-        <!-- @click:append="search(searchText)" -->
         <ul
             class="auto_complete rounded-b-lg"
             id="auto_complete"
             @click="toggleShowModal"
             v-show="showModal"
         >
+        <!-- Loading -->
+            <v-progress-linear v-show="loading"
+                indeterminate
+                color="blue darken-2"
+            ></v-progress-linear>
+            <!-- results -->
             <li
                 class="text-center blue--text text-button font-weight-bold"
                 ref="auto_complete_results"
                 v-for="(item, index) in autoCompleteItems"
                 :key="item.id"
-                @click=";[setSearchText(index), switchRoute()]"
+                @click="[setInitialState(index), switchRoute()]"
             >
                 {{ item.title }}
             </li>
@@ -55,6 +60,12 @@ export default {
             search: 'search/searchProducts',
             autoComplete: 'search/fetchAutoComplete',
         }),
+        handleAutoComplete(e) {
+            //* 如果按鍵為 backsapce 時不執行
+            if (e.keyCode !== 8) {
+                this.autoComplete(this.searchText)
+            }
+        },
         toggleShowModal(e) {
             e.target.id == 'auto_complete'
                 ? (this.showModal = true)
@@ -66,14 +77,14 @@ export default {
                 params: { title: this.selected },
             })
         },
-        setSearchText(index) {
+        setInitialState(index) {
             this.searchText = this.$refs.auto_complete_results[index].innerText
             this.selected = this.$refs.auto_complete_results[index].innerText
         },
     },
     computed: {
         ...mapGetters({
-            loading: 'search/getLoading',
+            loading: 'search/getAutoCompleteLoading',
             autoCompleteItems: 'search/getAutoCompleteItems',
         }),
     },
@@ -88,8 +99,9 @@ export default {
         },
     },
     mounted() {
+        //* 點擊區域外關閉
         document.addEventListener('click', e => {
-            if (e.target.id !== "auto_complete") {
+            if (e.target.id !== 'auto_complete') {
                 this.showModal = false
             }
         })
