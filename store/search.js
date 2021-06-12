@@ -4,7 +4,8 @@ export const state = () => ({
     //* 搜尋結果
     searchResult: [],
     //* loading 狀態
-    loading: false,
+    pageLoading: false,
+    autoCompleteLoading: false,
     //* autocomplete result
     autoCompleteItems: [],
 })
@@ -13,8 +14,11 @@ export const getters = {
     getResult(state) {
         return state.searchResult
     },
-    getLoading(state) {
-        return state.loading
+    getPageLoading(state) {
+        return state.pageLoading
+    },
+    getAutoCompleteLoading(state) {
+        return state.autoCompleteLoading
     },
     getAutoCompleteItems(state) {
         return state.autoCompleteItems
@@ -25,8 +29,11 @@ export const mutations = {
     SET_SEARCH_RESULT(state, result) {
         state.searchResult = result
     },
-    SET_LOADING(state, loading) {
-        state.loading = loading
+    SET_PAGE_LOADING(state, loading) {
+        state.pageLoading = loading
+    },
+    SET_AUTO_COMPLETE_LOADING(state, loading) {
+        state.autoCompleteLoading = loading
     },
     SET_AUTO_COMPLETE_ITEMS(state, items) {
         state.autoCompleteItems = items
@@ -41,7 +48,7 @@ export const mutations = {
 
 export const actions = {
     async fetchAutoComplete({ commit }, title) {
-        commit('SET_LOADING', true)
+        commit('SET_AUTO_COMPLETE_LOADING', true)
         try {
             if (title) {
                 const res = await apiSearchByTitle(title)
@@ -53,13 +60,12 @@ export const actions = {
         } catch (error) {
             console.log(error)
         }
-        commit('SET_LOADING', false)
+        commit('SET_AUTO_COMPLETE_LOADING', false)
     },
     //* 搜尋功能
     async searchProducts({ commit }, title) {
-        commit('SET_LOADING', true)
+        commit('SET_PAGE_LOADING', true)
         try {
-            // commit('RESET_SEARCH_RESULT')
             //* 若有輸入字符才向後端發送請求
             if (title) {
                 const res = await apiSearchByTitle(title)
@@ -79,6 +85,6 @@ export const actions = {
             console.log(error)
             console.log('搜尋失敗 from /store/search.js')
         }
-        commit('SET_LOADING', false)
+        commit('SET_PAGE_LOADING', false)
     },
 }
