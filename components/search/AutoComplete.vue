@@ -1,6 +1,7 @@
 <template>
     <div class="search_container d-flex flex-column">
         <v-text-field
+            id="search"
             autocomplete="off"
             name="search"
             v-model="searchText"
@@ -14,28 +15,26 @@
         </v-text-field>
         <ul
             class="auto_complete rounded-b-lg"
-            id="auto_complete"
-            @click="toggleShowModal"
             v-show="showModal"
         >
-        <!-- Loading -->
-            <v-progress-linear v-show="loading"
+            <!-- Loading -->
+            <v-progress-linear
+                v-show="loading"
                 indeterminate
                 color="blue darken-2"
             ></v-progress-linear>
             <!-- results -->
             <li
                 class="text-center blue--text text-button font-weight-bold"
-                ref="auto_complete_results"
-                v-for="(item, index) in autoCompleteItems"
+                v-for="item in autoCompleteItems"
                 :key="item.id"
-                @click="[setInitialState(index), switchRoute()]"
+                @click="[setInitialState(item.title), switchRoute()]"
             >
                 {{ item.title }}
             </li>
             <p
                 class="text-center blue--text caption font-weight-bold pt-4"
-                v-if="!autoCompleteItems.length"
+                v-show="!autoCompleteItems.length"
             >
                 找不到相關的結果
             </p>
@@ -61,15 +60,23 @@ export default {
             autoComplete: 'search/fetchAutoComplete',
         }),
         handleAutoComplete(e) {
-            //* 如果按鍵為 backsapce 時不執行
-            if (e.keyCode !== 8) {
-                this.autoComplete(this.searchText)
+            const code = e.keyCode
+            //* 如果按鍵為 backsapce(8)、左(37)、上(38)、右(39)、下(40) 時不執行
+            switch (code) {
+                case 8:
+                    break
+                case 37:
+                    break
+                case 38:
+                    break
+                case 39:
+                    break
+                case 40:
+                    break
+                default:
+                    this.autoComplete(this.searchText)
+                    break
             }
-        },
-        toggleShowModal(e) {
-            e.target.id == 'auto_complete'
-                ? (this.showModal = true)
-                : (this.showModal = false)
         },
         switchRoute() {
             this.$router.push({
@@ -77,9 +84,10 @@ export default {
                 params: { title: this.selected },
             })
         },
-        setInitialState(index) {
-            this.searchText = this.$refs.auto_complete_results[index].innerText
-            this.selected = this.$refs.auto_complete_results[index].innerText
+        setInitialState(title) {
+            this.searchText = title
+            this.selected = title
+            this.showModal = false
         },
     },
     computed: {
@@ -101,9 +109,9 @@ export default {
     mounted() {
         //* 點擊區域外關閉
         document.addEventListener('click', e => {
-            if (e.target.id !== 'auto_complete') {
-                this.showModal = false
-            }
+            e.target.id === 'search'
+                ? (this.showModal = true)
+                : (this.showModal = false)
         })
     },
 }
