@@ -4,6 +4,7 @@
         <Popups />
         <!-- 優惠計時 (月份從 0 開始計算， 例如: 數字5 == 6月)-->
         <CountdownTimer
+            background="blue darken-1"
             :year="2021"
             :month="9"
             :day="5"
@@ -12,14 +13,18 @@
             :second="6"
             :millisecond="4"
         />
+        <!-- 標語 -->
+        <Banner text="人氣商品 TOP 10 限時特賣" background="light-blue lighten-5"/>
         <!-- 圖片輪播 -->
             <!-- 骨架屏 -->
         <SkeletonCarousel :cardHeight="355" v-if="loading"/>
             <!-- 輪播張數為 10 張 -->
-        <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading"/>
+        <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading" class="mb-16"/>
+        <!-- 標語 -->
+        <Banner text="本月熱門商品 TOP 5" background="#ffebcd"/>
         <!-- 商品陳列 -->
         <v-row justify="space-around">
-            <v-col  v-for="product in products" class="my-10" :key="product.id">
+            <v-col v-for="product in products" class="mt-2 mb-16" :key="product.id">
                 <!-- 骨架屏 -->
                 <SkeletonCard :cardWidth="300" v-if="loading"/>
                 <!-- 商品卡片 -->
