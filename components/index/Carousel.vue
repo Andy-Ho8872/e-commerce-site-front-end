@@ -2,22 +2,20 @@
     <!-- 可以設置 max-width 來限制輪播的寬度 -->
     <div class="carousel">
         <!-- 輪播控制按鈕(左) -->
-        <v-icon large id="prev" @click="SLIDE(-1)">fa-angle-left</v-icon>
+        <v-icon class="slide_btn" id="prev" @click="SLIDE(-1)">fa-angle-left</v-icon>
         <!-- 輪播控制按鈕(右) -->
-        <v-icon large id="next" @click="SLIDE(1)">fa-angle-right</v-icon>
+        <v-icon class="slide_btn" id="next" @click="SLIDE(1)">fa-angle-right</v-icon>
         <!-- 輪播圖片(圖片滑動區域) -->
         <div class="switch_photo d-flex ">
             <!-- v-card 和 v-img 預設寬度為 355 px -->
             <v-card
-                class="single_card"
                 v-for="product in products"
                 :key="product.id"
                 :max-width="cardWidth"
+                nuxt
+                :to="{ name: 'products-id', params: { id: product.id } }"
                 tile
             >
-                <nuxt-link
-                    :to="{ name: 'products-id', params: { id: product.id } }"
-                >
                     <v-img
                         class="my-auto"
                         :src="product.imgUrl"
@@ -46,7 +44,6 @@
                     </v-img>
                     <!-- 產品名稱 -->
                     <v-card-subtitle class="text-center text-subtitle-1">{{ product.title }}</v-card-subtitle>
-                </nuxt-link>
             </v-card>
         </div>
     </div>
@@ -133,12 +130,19 @@ export default {
 .switch_photo {
     max-width: 800px;
 }
-.v-icon {
+.slide_btn {
+    font-size: 40px;
+    width: 40px;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
     position: absolute;
     top: 50%;
     z-index: 10;
-    color: red;
     cursor: pointer;
+    &:hover {
+        color: #1976D2;
+        background: rgba(255, 255, 255, 0.7);
+    }
 }
 .v-card__subtitle {
     background: rgba(0, 0, 0, 0.7);
