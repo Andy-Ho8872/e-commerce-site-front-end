@@ -54,6 +54,10 @@ $padding-top-md: 20%; //*   Large tablet to laptop... 960px > < 1264px
 $padding-top-xs: 30%; //*   mobile... <600px
 $padding-top-xss: 35%; //*   mobile... <375px
 
+.v-main {
+    background-color: #FAFAFA;
+}
+
 .header {
     position: fixed;
     top: 0;
