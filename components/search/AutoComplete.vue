@@ -9,6 +9,7 @@
             append-icon="fa-search"
             @keyup="handleAutoComplete"
             @click:append="search(searchText)"
+            @keydown.enter="search(searchText)"
             solo
             dense
         >
@@ -61,17 +62,27 @@ export default {
         }),
         handleAutoComplete(e) {
             const code = e.keyCode
-            //* 如果按鍵為 backsapce(8)、左(37)、上(38)、右(39)、下(40) 時不執行
+            //* 如果為以下按鍵時不執行
             switch (code) {
-                case 8:
+                case 8:   //* BackSpace
                     break
-                case 37:
+                case 9:   //* Tab
                     break
-                case 38:
+                case 16:  //* Shift 
                     break
-                case 39:
+                case 17:  //* Ctrl
                     break
-                case 40:
+                case 18:  //* Alt
+                    break
+                case 20:  //* Caps
+                    break
+                case 37:  //* 方向鍵左
+                    break
+                case 38:  //* 方向鍵左
+                    break
+                case 39:  //* 方向鍵左
+                    break
+                case 40:  //* 方向鍵左
                     break
                 default:
                     this.autoComplete(this.searchText)
