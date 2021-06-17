@@ -1,6 +1,6 @@
 <template>
 <!-- 倒數計時器 -->
-    <v-card color="Timer_wrapper purple lighten-2 mb-4 headline rounded-t-xl white--text">
+    <v-card class="mb-4 headline rounded-t-xl white--text" :color="background">
         <v-row>
             <!-- 日 -->
             <v-col class="days text-center">   
@@ -33,6 +33,9 @@
 export default {
     //? passed from pages/index.vue
     props : {
+        'background': {
+            type: String
+        },
         'year': {
             type: Number,
             require: true
