@@ -18,6 +18,7 @@
             >
                     <v-img
                         class="my-auto"
+                        :alt="product.title"
                         :src="product.imgUrl"
                         :lazy-src="product.imgUrl"
                         :max-width="cardWidth"
@@ -43,7 +44,7 @@
                         </v-card-subtitle>
                     </v-img>
                     <!-- 產品名稱 -->
-                    <v-card-subtitle class="text-center text-subtitle-1">{{ product.title }}</v-card-subtitle>
+                    <v-card-subtitle class="carousel_item_title white--text text-center text-subtitle-1">{{ product.title }}</v-card-subtitle>
             </v-card>
         </div>
     </div>
@@ -102,20 +103,12 @@ export default {
         //? 在 Vue3 為 beforeUnmount
         clearInterval(this.interval)
     },
-    // //* 若有使用 Keep-Alive 的方式
-    // activated() {
-    //     //* 圖片自動輪播
-    //     this.interval = setInterval(() => {
-    //         this.SLIDE(1)
-    //     }, 5000)
-    // },
-    // deactivated() {
-    //     clearInterval(this.interval)
-    // },
 }
 </script>
 
 <style lang="scss" scoped>
+$icon-size: 48px;
+
 .carousel {
     overflow-x: hidden; //* 必要
     position: relative;
@@ -131,12 +124,12 @@ export default {
     max-width: 800px;
 }
 .slide_btn {
-    font-size: 40px;
-    width: 40px;
+    font-size: $icon-size;
+    width: $icon-size;
     background: rgba(255, 255, 255, 0.35);
     border-radius: 50%;
     position: absolute;
-    top: 50%;
+    top: 45%;
     z-index: 10;
     cursor: pointer;
     &:hover {
@@ -144,9 +137,8 @@ export default {
         background: rgba(255, 255, 255, 0.7);
     }
 }
-.v-card__subtitle {
+.carousel_item_title {
     background: rgba(0, 0, 0, 0.7);
-    color: white !important;
 }
 .discount_lable {
     position: absolute;
@@ -160,46 +152,25 @@ export default {
     .v-card {
         max-width: 438px !important;
     }
-    .v-image {
-        max-width: 438px !important;
-        max-height: 438px !important;
-    }
 }
 @media (width: 768px) {
     .v-card {
         max-width: 374px !important;
     }
-    .v-image {
-        max-width: 374px !important;
-        max-height: 374px !important;
-    }
 }
-
 @media (width: 375px) {
     .v-card {
         max-width: 355px !important;
-    }
-    .v-image {
-        max-width: 355px !important;
-        max-height: 355px !important;
     }
 }
 @media (width: 414px) {
     .v-card {
         max-width: 394px !important;
     }
-    .v-image {
-        max-width: 394px !important;
-        max-height: 394px !important;
-    }
 }
 @media (width: 320px) {
     .v-card {
         max-width: 300px !important;
-    }
-    .v-image {
-        max-width: 300px !important;
-        max-height: 300px !important;
     }
 }
 </style>
