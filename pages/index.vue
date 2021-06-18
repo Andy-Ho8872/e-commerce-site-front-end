@@ -19,9 +19,10 @@
             <!-- 骨架屏 -->
         <SkeletonCarousel :cardHeight="355" v-if="loading"/>
             <!-- 輪播張數為 10 張 -->
-        <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading" class="mb-16"/>
+        <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading"/>
+        <!-- <CarouselV2/> -->
         <!-- 標語 -->
-        <Banner text="本月熱門商品 TOP 5" background="#ffebcd"/>
+        <Banner text="本月熱門商品 TOP 5" background="#ffebcd" class="mt-16"/>
         <!-- 商品陳列 -->
         <v-row justify="space-around">
             <v-col v-for="product in products" class="mt-2 mb-16" :key="product.id">
@@ -58,8 +59,8 @@ export default {
         return { products: res.data.products }
     },
     // 掛載時結束 loading 狀態
-    mounted() {
-        this.loading = false
+    mounted() { 
+        this.loading = false    
     },
 }
 </script>
