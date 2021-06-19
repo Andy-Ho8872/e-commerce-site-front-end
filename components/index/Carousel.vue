@@ -39,7 +39,7 @@
                             </v-row>
                         </template>
                         <!-- 商品折數 -->
-                        <v-card-subtitle v-if="product.discount_rate != 1" class="discount_lable yellow pa-1 caption">
+                        <v-card-subtitle v-if="product.discount_rate != 1" class="discount_label yellow pa-1 caption">
                             <span class="red--text font-italic font-weight-medium">{{ product.discount_rate * 10 }} 折</span>
                         </v-card-subtitle>
                     </v-img>
@@ -140,7 +140,7 @@ $icon-size: 48px;
 .carousel_item_title {
     background: rgba(0, 0, 0, 0.7);
 }
-.discount_lable {
+.discount_label {
     position: absolute;
     z-index: 1;
     top: 0;
