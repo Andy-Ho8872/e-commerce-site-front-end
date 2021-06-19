@@ -36,31 +36,31 @@ export default {
         'background': {
             type: String
         },
-        'year': {
+        year: {
             type: Number,
             require: true
         },
-        'month': {
+        month: {
             type: Number,
             require: true
         },
-        'day': {
+        day: {
             type: Number,
             require: true
         },
-        'hour': {
+        hour: {
             type: Number,
             require: true
         },
-        'minute': {
+        minute: {
             type: Number,
             require: true
         },
-        'second': {
+        second: {
             type: Number,
             require: true
         },
-        'millisecond': {
+        millisecond: {
             type: Number,
             require: true
         },    
