@@ -1,5 +1,5 @@
 <template>
-    <v-card class="my-6 d-flex" :color="background">
+    <v-card class="d-flex" :color="background">
         <v-img
             :src="require('~/static/index/Fire.svg')"
             max-width="24"
@@ -13,11 +13,11 @@
 <script>
 export default {
     props: {
-        'text': {
+        text: {
             type: String,
             require: true
         },
-        'background': {
+        background: {
             type: String,
         }
     },
