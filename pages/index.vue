@@ -14,24 +14,26 @@
             :millisecond="4"
         />
         <!-- 標語 -->
-        <Banner text="人氣商品 TOP 10 限時特賣" background="light-blue lighten-5"/>
+        <Banner text="人氣商品 TOP 10 限時特賣" class="mt-6"/>
         <!-- 圖片輪播 -->
             <!-- 骨架屏 -->
         <SkeletonCarousel :cardHeight="355" v-if="loading"/>
             <!-- 輪播張數為 10 張 -->
-        <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading"/>
-        <!-- <CarouselV2/> -->
+        <!-- <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading"/> -->
+        <CarouselV2 :cardWidth="340" :cardHeight="340" />
         <!-- 標語 -->
-        <Banner text="本月熱門商品 TOP 5" background="#ffebcd" class="mt-16"/>
+        <Banner text="本月熱門商品 TOP 5" class="mt-16"/>
         <!-- 商品陳列 -->
-        <v-row justify="space-around">
-            <v-col v-for="product in products" class="mt-2 mb-16" :key="product.id">
-                <!-- 骨架屏 -->
-                <SkeletonCard :cardWidth="300" v-if="loading"/>
-                <!-- 商品卡片 -->
-                <Product :product="product" :cardWidth="300" :cardHeight="600" v-show="!loading"/>        
-            </v-col>
-        </v-row>
+        <v-sheet elevation="6" rounded="lg" class="px-6">
+            <v-row justify="space-around">
+                <v-col v-for="product in products" class="mt-2 mb-16" :key="product.id">
+                    <!-- 骨架屏 -->
+                    <SkeletonCard :cardWidth="300" v-if="loading"/>
+                    <!-- 商品卡片 -->
+                    <Product :product="product" :cardWidth="300" :cardHeight="600" v-show="!loading"/>        
+                </v-col>
+            </v-row>
+        </v-sheet>
         <!-- 觀看更多商品 -->
         <div class="text-center">
             <!-- 預設點擊後到第一頁 -->
@@ -66,7 +68,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// li {
-//     list-style-type: none;
-// }
+
 </style>
