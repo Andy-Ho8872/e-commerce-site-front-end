@@ -26,12 +26,16 @@
         <!-- 商品陳列 -->
         <v-sheet elevation="6" rounded="lg" class="px-6">
             <v-row justify="space-around">
-                <v-col v-for="product in products" class="mt-2 mb-16" :key="product.id">
+                <div v-for="product in products" class="mt-8 mb-16" :key="product.id">
+                    <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-6" />
+                </div>
+                <!-- <v-col v-for="product in products" class="mt-2 mb-16" :key="product.id"> -->
                     <!-- 骨架屏 -->
-                    <SkeletonCard :cardWidth="300" v-if="loading"/>
+                    <!-- <SkeletonCard :cardWidth="300" v-if="loading"/> -->
                     <!-- 商品卡片 -->
-                    <Product :product="product" :cardWidth="300" :cardHeight="600" v-show="!loading"/>        
-                </v-col>
+                    <!-- <Product :product="product" :cardWidth="300" :cardHeight="600" v-show="!loading"/>         -->
+                    <!-- <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" v-show="!loading"/>         -->
+                <!-- </v-col> -->
             </v-row>
         </v-sheet>
         <!-- 觀看更多商品 -->
