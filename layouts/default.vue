@@ -64,6 +64,7 @@ $padding-top-xss: 35%; //*   mobile... <375px
     z-index: $z-index-top;
 }
 .content {
+    padding: 0;
     padding-top: $padding-top-xl;
     // padding-bottom: $header-v2-padding-bottom; //! 若使用 HeaderV2 則必須使用此屬性
 }
