@@ -6,7 +6,7 @@
             background-color="yellow darken-2"
             color="yellow darken-3"
             length="5"
-            size="16"
+            :size="size"
             half-increments
             readonly
         >
@@ -19,10 +19,13 @@
 export default {
     //? passed from components/Product.vue Or pages/search/title.vue
     props: {
-        'product': {
+        product: {
             type: Object,
             require: true
         },
+        size : {
+            type: Number,
+        }
     },
     computed: {
         //* 要轉換為 Number 才能使用
