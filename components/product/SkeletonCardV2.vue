@@ -1,0 +1,27 @@
+<template>
+    <!-- 骨架屏 -->
+    <v-sheet elevation="2"  :width="cardWidth" :height="cardHeight">
+        <!-- 圖片和標題 -->
+        <v-skeleton-loader type="card"></v-skeleton-loader>
+        <!-- 文字敘述 -->
+        <v-skeleton-loader type="text" class="mx-4"></v-skeleton-loader>
+    </v-sheet>
+</template>
+
+<script>
+export default {
+    //? passed from pages/index.vue
+    props:{
+        cardWidth: {
+            type: Number,
+            require: true
+        },
+        cardHeight: {
+            type: Number,
+            require: true
+        }
+    }
+}
+</script>
+
+<style></style>
