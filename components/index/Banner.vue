@@ -1,25 +1,37 @@
 <template>
-    <v-card class="d-flex" :color="background">
-        <v-img
-            :src="require('~/static/index/Fire.svg')"
-            max-width="24"
-            max-height="24"
-            class="my-auto mx-2"
-        ></v-img>
-        <v-card-title>{{ text }}</v-card-title>
-    </v-card>
+    <v-banner two-line :color="backgroundColor" :elevation="elevation">
+        <v-avatar slot="icon" size="40">
+            <v-icon :icon="icon" :color="iconColor">{{ icon }}</v-icon>
+        </v-avatar>
+        <span class="banner_text grey--text text--darken-1">{{ text }}</span>
+    </v-banner>
 </template>
 
 <script>
 export default {
     props: {
+        elevation: {
+            type: [String, Number]
+        },
+        icon: {
+            type: String,
+        },
+        iconColor: {
+            type: String,
+        },
         text: {
             type: String,
-            require: true
+            require: true,
         },
-        background: {
+        backgroundColor: {
             type: String,
-        }
+        },
     },
 }
 </script>
+
+<style lang="scss" scoped>
+.banner_text {
+    font-size: 1.25em;
+}
+</style>
