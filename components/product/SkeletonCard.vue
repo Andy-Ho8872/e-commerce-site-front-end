@@ -17,7 +17,7 @@
 export default {
     //? passed from pages/index.vue
     props:{
-        'cardWidth': {
+        cardWidth: {
             type: Number,
             require: true
         }
