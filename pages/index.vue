@@ -14,19 +14,20 @@
             :millisecond="4"
         />
         <!-- 標語 -->
-        <Banner text="人氣商品 TOP 10 限時特賣" class="mt-6"/>
+        <Banner elevation="2" icon="fa-clock" iconColor="blue lighten-1" text="限時特賣" backgroundColor="white" class="mt-6"/>
         <!-- 圖片輪播 -->
             <!-- 骨架屏 -->
         <SkeletonCarousel :cardHeight="355" v-if="loading"/>
             <!-- 輪播張數為 10 張 -->
         <!-- <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading"/> -->
-        <CarouselV2 :cardWidth="340" :cardHeight="340" />
+        <CarouselV2 :cardWidth="340" :cardHeight="340" v-show="!loading"/>
         <!-- 標語 -->
-        <Banner text="本月熱門商品 TOP 5" class="mt-16"/>
+        <Banner elevation="2" icon="fa-burn" iconColor="red lighten-1" text="熱門商品" backgroundColor="white" class="mt-16"/>
         <!-- 商品陳列 -->
         <v-sheet elevation="6" rounded="lg" class="px-6">
             <v-row justify="space-around">
                 <div v-for="product in products" class="mt-8 mb-16" :key="product.id">
+                    <SkeletonCardV2 :cardWidth="200" :cardHeight="290" v-if="loading"/>
                     <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-6" />
                 </div>
                 <!-- <v-col v-for="product in products" class="mt-2 mb-16" :key="product.id"> -->
