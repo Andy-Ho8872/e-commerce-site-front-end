@@ -2,21 +2,23 @@
     <v-container>
         <!-- loading -->
         <LoadingCircle v-if="loading"/>
+        <!-- banner -->
+        <Banner elevation="2" icon="fa-bookmark" iconColor="blue lighten-1" :text="`第 ${page} / ${pageLength} 頁`" backgroundColor="white" class="mt-6"/>
         <!-- content -->
-        <v-row>
-            <v-col v-for="product in products.data" :key="product.id" class="mt-10 mb-12">
-                <SkeletonCard :cardWidth="300" v-if="loading" class="mx-auto"/>
-                <!-- 產品 Component -->
-                <Product v-show="!loading" class="mx-auto" :product="product" :cardWidth="300" :cardHeight="600"/>
-            </v-col>
-        </v-row>
-        <PaginationController :pageNumber="pageNumber" />
+        <v-sheet elevation="6" rounded="lg" class="px-6">
+            <v-row justify="space-around">
+                <div v-for="product in products.data" :key="product.id" class="mt-8 mb-16" >
+                    <SkeletonCardV2 :cardWidth="200" :cardHeight="290" v-if="loading" class="mx-8"/>
+                    <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-8"/>
+                </div>
+            </v-row>
+        </v-sheet>
+        <PaginationController :pageNumber="pageNumber" class="my-6"/>
     </v-container>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-// import { apiGetProductsWithPagination } from '../../APIs/api.js'
 
 export default {
     data() {
@@ -24,17 +26,6 @@ export default {
             page: Number(this.$route.params.pageNumber) || 1,
         }
     },
-
-    // todo: test Start
-    // async asyncData({ params }) {
-    //     const res = await apiGetProductsWithPagination(params.pageNumber)
-    //     return { products: res.data.products }
-    // },
-    // async fetch() {
-    //     await this.$store.dispatch('pagination/fetchPaginatedProducts', this.page)
-    // },
-    // todo: test End
-
     computed: {
         ...mapGetters({
             //* 該頁資料
@@ -45,6 +36,9 @@ export default {
         pageNumber() {
             return Number(this.$route.params.pageNumber)
         },
+        pageLength() {
+            return this.products.last_page
+        }
     },
     methods: {
         ...mapActions({
