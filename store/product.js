@@ -1,11 +1,13 @@
 //! 目前此頁面暫不使用
-import { apiGetProducts, apiGetProduct } from '~/APIs/api.js'
+import { apiGetProducts, apiGetProduct, apiGetProductTags } from '~/APIs/api.js'
 
 export const state = () => ({
     //* 所有產品
     products: [],
     //* 單一產品(由 id 進行篩選)
     product: {}, // 起始為空的 Object
+    //* 產品標籤
+    productTags:[]
 })
 
 export const getters = {
@@ -16,6 +18,9 @@ export const getters = {
     getSingleProduct(state) {
         return state.product
     },
+    getAllProductTags(state) {
+        return state.tags
+    }
 }
 
 export const mutations = {
@@ -36,6 +41,9 @@ export const mutations = {
     RESET_PRODUCT(state) {
         state.product = {}
     },  
+    SET_PRODUCT_TAGS(state, tags) {
+        state.productTags = tags
+    }
 }
 
 export const actions = {
@@ -66,4 +74,13 @@ export const actions = {
             }
         }
     },
+    async fetchAllProductTags({ commit }) {
+        try {
+            const res = await apiGetProductTags()
+            const tags = res.data.tags
+            commit('SET_PRODUCT_TAGS', tags)
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
