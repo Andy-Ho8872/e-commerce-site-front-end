@@ -88,12 +88,14 @@ export const apiGetIndexPageProducts = () => productRequest.get('/indexPage');
 export const apiGetCarouselProducts = () => productRequest.get('/carousel');
     //* 撈取單一產品
 export const apiGetProduct = (id) => productRequest.get(`/${id}`);
+    //* 撈取商品標籤
+export const apiGetProductTags = () => productRequest.get(`/tags/getTags`);
     //* 商品換頁(Pagination) 
 export const apiGetProductsWithPagination = (page) => productRequest.get(`/pagination?page=${page}`);
     //* 搜尋商品(名稱)
 export const apiSearchByTitle = (title) => productRequest.get(`/search/${title}`);
     //! 搜尋商品(標籤)  暫時未用到
-export const apiSearchByTag = (id) => productRequest.get(`/tag/${id}`);
+export const apiSearchByTag = (id) => productRequest.get(`/tags/${id}`);
 //------------------------------------------- 商品相關的 API -------------------------------------------//
 
 
