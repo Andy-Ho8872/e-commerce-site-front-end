@@ -10,43 +10,9 @@
                 </span>
                 的搜尋結果
             </h2>
-            <v-row>
-                <v-col v-for="product in result" :key="product.id" cols="12" lg="2" md="3" sm="6">
-                    <!-- 點擊後導覽至該商品 -->
-                    <nuxt-link :to="{ name: 'products-id', params: { id: product.id }}">
-                        <v-card color="grey lighten-5" width="200" height="450" class="mx-auto my-2 rounded-xl">
-                            <!-- 圖片 -->
-                            <v-img :src="product.imgUrl" :lazy-src="product.imgUrl" :alt="product.title"></v-img>
-                            <!-- 名稱 -->
-                                <!-- 有縮減 -->
-                            <v-card-title v-if="product.title.substring(0, 13).length == 13" class="subtitle-1 font-weight-bold my-1">
-                                {{ product.title.substring(0, 13) }} ...
-                            </v-card-title>
-                                <!-- 沒縮減 -->
-                            <v-card-title v-else class="subtitle-1 font-weight-bold my-1">
-                                {{ product.title }}
-                            </v-card-title>
-                            <!-- 敘述 (縮減後)-->
-                            <v-card-subtitle class="text-truncate">
-                                {{ product.description }}
-                            </v-card-subtitle>
-                            <!-- 評級 -->
-                            <Ratings :product="product" class="ma-2"/>
-                            <!-- 標籤 -->
-                            <Tags :product="product" class="ma-2"/>
-                            <!-- 價格區域 -->
-                            <div class="price_zone">
-                                <!-- 原價格 -->
-                                <v-card-text class="text-subtitle-1" :class="[product.discount_rate == 1 ? '' : 'discounted']">
-                                    $ {{ Math.floor(product.unit_price) }}
-                                </v-card-text>
-                                <!-- 折扣後價格 -->
-                                <v-card-text v-if="product.discount_rate != 1" class="discounted_price blue--text text--darken-1">
-                                    $ {{ Math.floor(product.unit_price * product.discount_rate) }}
-                                </v-card-text>
-                            </div>
-                        </v-card>
-                    </nuxt-link>
+            <v-row >
+                <v-col v-for="product in result" :key="product.id" cols="12" lg="2" md="3" sm="4">
+                    <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-auto my-12"/>
                 </v-col>
             </v-row>
         </div>
@@ -83,9 +49,7 @@ export default {
     },
     created() {
         //* 避免再重新整理頁面的時候發送相同的 request 
-        if(! this.result.length) {
-            this.search(this.$route.params.title)
-        }
+        this.search(this.$route.params.title)
     }
 }
 </script>
