@@ -1,5 +1,5 @@
 <template>
-    <div class="card_wrapper mx-auto" :style="{ width: `${cardWidth}px`}">
+    <div class="card_wrapper" :style="{ width: `${cardWidth}px`}">
         <v-card rounded="t-lg"
             :elevation="elevation"
             :width="cardWidth"
