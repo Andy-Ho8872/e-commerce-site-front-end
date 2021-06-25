@@ -22,6 +22,18 @@
         <!-- <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading"/> -->
         <CarouselV2 :cardWidth="340" :cardHeight="340" v-show="!loading"/>
         <!-- 標語 -->
+        <Banner elevation="2" icon="fa-tags" iconColor="teal lighten-1" text="標籤搜尋" backgroundColor="white" class="mt-16"/>
+        <!-- 標籤搜尋 -->
+        <v-sheet elevation="6" rounded="lg" class="pa-6">
+            <v-row>
+                <v-chip-group column>
+                    <v-chip v-for="tag in tags" :key="tag.id" color="primary" nuxt :to="{ name: 'search-title', params: { title: tag.title } }">
+                        {{ tag.title }}
+                    </v-chip>
+                </v-chip-group>
+            </v-row>
+        </v-sheet>
+        <!-- 標語 -->
         <Banner elevation="2" icon="fa-burn" iconColor="red lighten-1" text="熱門商品" backgroundColor="white" class="mt-16"/>
         <!-- 商品陳列 -->
         <v-sheet elevation="6" rounded="lg" class="px-6">
@@ -51,7 +63,8 @@
 </template>
 
 <script>
-import { apiGetIndexPageProducts } from '~/APIs/api.js'
+// import { apiGetIndexPageProducts, apiGetProductTags } from '~/APIs/api.js'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     data() {
@@ -59,14 +72,31 @@ export default {
             loading: true, // 骨架屏狀態
         }
     },
-    // 從外部 API 讀取產品的資料
-    async asyncData() {
-        const res = await apiGetIndexPageProducts()
-        // 回傳產品資料
-        return { products: res.data.products }
+    // 從外部 API 讀取產品的資料 //! 暫時不用
+    // async asyncData() {
+    //     const res = await apiGetIndexPageProducts()
+    //     const tagResponse = await apiGetProductTags()
+    //     return { 
+    //         products: res.data.products,
+    //         tags: tagResponse.data.tags
+    //     }
+    // },
+    methods: {
+        ...mapActions({
+            fetchIndexPageProducts: 'product/fetchIndexPageProducts', //? 首頁的商品
+            fetchAllProductTags: 'product/fetchAllProductTags' //? 商品的標籤
+        })
+    },
+    computed: {
+        ...mapGetters({
+            products: 'product/getIndexPageProducts',
+            tags: 'product/getAllProductTags'
+        })
     },
     // 掛載時結束 loading 狀態
-    mounted() { 
+    async mounted() { 
+        await this.fetchIndexPageProducts()
+        await this.fetchAllProductTags()
         this.loading = false    
     },
 }
