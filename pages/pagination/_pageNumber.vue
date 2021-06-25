@@ -37,7 +37,7 @@ export default {
             return Number(this.$route.params.pageNumber)
         },
         pageLength() {
-            return this.products.last_page
+            return this.products.last_page || 'Loading...'
         }
     },
     methods: {
