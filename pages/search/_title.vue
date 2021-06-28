@@ -6,22 +6,26 @@
             <h2 class="text-center">
                 關於
                 <span class="blue--text lighten-5">
-                    "{{ this.$route.params.title }}"
+                    "{{ searchQuery }}"
                 </span>
                 的搜尋結果
             </h2>
-            <v-row >
-                <v-col v-for="product in result" :key="product.id" cols="12" lg="2" md="3" sm="4">
-                    <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-auto my-12"/>
-                </v-col>
-            </v-row>
+            <!-- 商品陳列 -->
+            <v-sheet elevation="6" rounded="lg" class="my-12 px-6">
+                    <v-row justify="space-around">
+                        <div v-for="product in result" class="mt-8 mb-16" :key="product.id">
+                            <SkeletonCardV2 :cardWidth="200" :cardHeight="290" v-if="loading"/>
+                            <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-6"/>
+                        </div>
+                    </v-row>
+            </v-sheet>
         </div>
         <!-- 搜尋失敗 -->
         <v-row v-else>
             <h2 class="ma-auto">
                 找不到關於
                 <span class="blue--text lighten-5">
-                    "{{ this.$route.params.title }}"
+                    "{{ searchQuery }}"
                 </span>
                 的搜尋結果
             </h2>
@@ -40,6 +44,9 @@ export default {
             result: 'search/getResult',
             loading: 'search/getPageLoading'
         }),
+        searchQuery() {
+            return this.$route.params.title
+        }
     },
     methods: {
         ...mapActions({
@@ -49,7 +56,7 @@ export default {
     },
     created() {
         //* 避免再重新整理頁面的時候發送相同的 request 
-        this.search(this.$route.params.title)
+        this.search(this.searchQuery)
     }
 }
 </script>
