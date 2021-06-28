@@ -39,8 +39,8 @@
         <v-sheet elevation="6" rounded="lg" class="px-6">
             <v-row justify="space-around">
                 <div v-for="product in products" class="mt-8 mb-16" :key="product.id">
-                    <SkeletonCardV2 :cardWidth="200" :cardHeight="290" v-if="loading"/>
-                    <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-6" />
+                    <SkeletonCardV2 :cardWidth="200" :cardHeight="290" v-if="loading" class="mx-6"/>
+                    <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-6"/>
                 </div>
                 <!-- <v-col v-for="product in products" class="mt-2 mb-16" :key="product.id"> -->
                     <!-- 骨架屏 -->
