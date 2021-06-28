@@ -37,7 +37,7 @@
         </table>
         <!-- 表單 -->
         <v-form ref="form" v-model="valid">
-            <v-card class="checkout_warpper mt-12 ma-auto" elevation="4">
+            <v-card class="checkout_warpper my-12 ma-auto" elevation="4">
                 <!-- 選擇付款方式 -->
                 <div>
                     <v-card-title>選擇您的付款方式</v-card-title>
