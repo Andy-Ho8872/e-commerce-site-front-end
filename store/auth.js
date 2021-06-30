@@ -1,7 +1,7 @@
 import {
     apiUserRegister,
     apiUserLogin,
-    apiCsrfLogin,
+    // apiCsrfLogin, //! 暫時不用
     apiGetUserInfo,
     apiUserLogout,
 } from '~/APIs/api.js'
@@ -127,7 +127,7 @@ export const actions = {
         commit('SET_LOADING', true)
         try {
             //* 先取得 CSRF Cookie
-            await apiCsrfLogin()
+            // await apiCsrfLogin() //! 暫時不用
             //* 從 login 頁面 抓取資料
             const res = await apiUserLogin({
                 email: user.email,
@@ -175,6 +175,6 @@ export const actions = {
             console.log('error from store/auth.js')
         }
          //? end loading
-         commit('SET_LOADING', false)
+        commit('SET_LOADING', false)
     },
 }
