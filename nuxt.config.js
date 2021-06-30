@@ -26,25 +26,13 @@ export default {
         ],
     },
 
-    //! 暫時不用 
-    // axios: {
-    //     baseURL: 'http://localhost:8000/api/v1',
-    //     credentials: true
-    // },
-    // api: {
-    //     baseURL: 'http://localhost:8000/api/v1',
-    //     credentials: true
-    // },
-
     modules: ['@nuxtjs/axios'],
 
     css: ['@/assets/css/main.css', '@/assets/css/main.scss'],
 
-    //! 暫時不用 
-    // plugins: [
-    //     '~/plugins/axios.js',
-    //     '~/plugins/api.js',
-    // ],
+    env: {
+        apiUrl: process.env.API_URL || 'http://localhost:8000/api/v1'
+    },
 
     components: true,
 
