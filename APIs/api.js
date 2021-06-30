@@ -2,13 +2,14 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 //* URL 與 設定
-let base = 'http://localhost:8000/api/v1'; //? 後端 API 的 URL
+let base = process.env.apiUrl; //? 從 nuxt.config.js 獲取後端 API 的 URL 
 
 
 //* CSRF請求------------------------------------------------------------------Start
-const userCsrfRequest = axios.create({
-    baseURL: 'http://localhost:8000'
-});
+//! 暫時不用
+// const userCsrfRequest = axios.create({
+//     baseURL: 'http://localhost:8000'
+// });
 //* CSRF請求------------------------------------------------------------------End
 
 
@@ -69,11 +70,11 @@ export const apiUserRegister = data => userRequest.post('/register', data);
     //* 登入 (取得 Token)
 export const apiUserLogin = data => userRequest.post('/login', data);
     //* CSRF 
-export const apiCsrfLogin = () => userCsrfRequest.get('/sanctum/csrf-cookie');
+// export const apiCsrfLogin = () => userCsrfRequest.get('/sanctum/csrf-cookie'); //! 暫時不用
     //----------------------------------- 以下操作必須包含Token -------------------------------------//
     //* 登出 
 export const apiUserLogout = () => authRequest.get('/logout');
-    //* 取得使用者 (暫時未用到)
+    //* 取得使用者
 export const apiGetUserInfo = () => authRequest.get('/getUser');
 //------------------------------------------- 使用者相關 API -------------------------------------------//
 
