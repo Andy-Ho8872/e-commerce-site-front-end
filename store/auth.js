@@ -74,8 +74,11 @@ export const mutations = {
 }
 
 export const actions = {
-    //? 清除提示訊息
-    clearMessage({ commit }) {
+    //* 提示訊息
+    async setFlashMessage({ commit }, message) {
+        //* 設置訊息 
+        commit('SET_MESSAGE', message)
+        //* 3秒後清除訊息 
         setTimeout(() => {
             commit('CLEAR_MESSAGE')
         }, 3000)
@@ -95,9 +98,7 @@ export const actions = {
         } catch (error) {
             //* 錯誤訊息
             const msg = error.response.data.errors
-            commit('SET_MESSAGE', msg)
-            //* 清除錯誤訊息
-            dispatch('clearMessage')
+            dispatch('setFlashMessage', msg)
         }
         //? end loading
         commit('SET_LOADING', false)
@@ -154,9 +155,7 @@ export const actions = {
         } catch (error) {
             //* 錯誤訊息
             const msg = error.response.data.errors
-            commit('SET_MESSAGE', msg)
-            //* 清除錯誤訊息
-            dispatch('clearMessage')
+            dispatch('setFlashMessage', msg)
         }
         //? end loading
         commit('SET_LOADING', false)
