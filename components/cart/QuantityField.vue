@@ -42,11 +42,11 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     //? passed from pages/cart/index.vue
     props: {
-        'product_id': {
+        product_id: {
             type: Number,
             require: true
         },
-        'product_quantity': {
+        product_quantity: {
             type: Number,
             require: true
         }
@@ -74,17 +74,18 @@ export default {
         }),
         //* 購買數量輸入驗證
         validateInput(value) {
-            //* 正則表達式的結果
+            //* 只接受數字且第一個數不可為 0
             const pattern = /^[1-9]\d{0,}/gi
-            let result = pattern.test(value) 
+            //* 正則表達式的結果
+            const valid = pattern.test(value) 
             //* 使用者輸入的值
-            let inputVal = this.productPayload.quantity
-            //* 如果第一個數字不為 0 則回傳 false
-            if(result == false || inputVal < 1) {
-                this.productPayload.quantity = 1
-            }
-            else if(inputVal > 99) {
-                this.productPayload.quantity = 99         
+            const inputVal = this.productPayload.quantity
+            switch (true) {
+                case !valid || inputVal < 1: //* 如果第一個數字為 0 或是小於 1
+                    this.productPayload.quantity = 1
+                    break;
+                case inputVal > 99:
+                    this.productPayload.quantity = 99
             }
         },
         //* 增加數量

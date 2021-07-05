@@ -66,7 +66,7 @@
                                     name="product_quantity"
                                     type="number"
                                     autocomplete="off"
-                                    @keyup="validateInput(productPayload.quantity)"
+                                    @blur="validateInput(productPayload.quantity)"
                                     v-model.number="productPayload.quantity"
                                 />
                                 <!-- 減少按鈕 -->
@@ -136,30 +136,32 @@ export default {
         //* 點擊按鈕變更購買數量
         changeCount(value) {
             this.productPayload.quantity += value
-            //* 判斷以下數字
-            let inputVal = this.productPayload.quantity
-            //* 數字將不會小於 1
-            if( inputVal < 1) {
-                this.productPayload.quantity = 1
-            }
-            //* 數字將不大於 99
-            else if(inputVal > 99) {
-                this.productPayload.quantity = 99
+            //* 當前購買數量
+            const inputVal = this.productPayload.quantity
+            //* 數量驗證 
+            switch (true) {
+                case inputVal < 1: //* 數字將不會小於 1
+                    this.productPayload.quantity = 1
+                    break;
+                case inputVal > 99: //* 數字將不大於 99
+                    this.productPayload.quantity = 99
+                    break;
             }
         },
         //* 購買數量輸入驗證
         validateInput(value) {
-            //* 正則表達式的結果
+            //* 只接受數字且第一個數不可為 0
             const pattern = /^[1-9]\d{0,}/gi
-            let result = pattern.test(value) 
+            //* 正則表達式的結果
+            const valid = pattern.test(value)
             //* 使用者輸入的值
-            let inputVal = this.productPayload.quantity
-            //* 如果第一個數字不為 0 則回傳 false
-            if(result == false || inputVal < 1) {
-                this.productPayload.quantity = 1
-            }
-            else if(inputVal > 99) {
-                this.productPayload.quantity = 99         
+            const inputVal = this.productPayload.quantity
+            switch (true) {
+                case !valid || inputVal < 1:
+                    this.productPayload.quantity = 1
+                    break;
+                case inputVal > 99:
+                    this.productPayload.quantity = 99
             }
         }
     },
