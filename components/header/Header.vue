@@ -137,11 +137,7 @@ export default {
             //* 登出使用者
             logout: 'auth/logout',  
             //* 撈取資料
-            fetchTableColumns: 'order/fetchTableColumns', //? 其他資料表中的欄位
-            fetchUserInfo: 'auth/fetchUserInfo', //? 使用者的資料
-            fetchUserCart: 'cart/fetchUserCart', //? 使用者購物車
-            fetchAllOrders: 'order/fetchAllOrders', //? 使用者訂單 
-            fetchAllNotifications: 'notification/fetchAllNotifications', //? 使用者的通知
+            fetchRequiredData: 'auth/fetchRequiredData'
         }),
     },
     async mounted() {
@@ -156,11 +152,7 @@ export default {
         //* 若使用者有登入(持有 Token)，從 localStorage 中做初步判定)
         if (this.token) {
             //* 撈取資料
-            this.fetchTableColumns() //? 其他資料表中的欄位
-            this.fetchUserInfo() //? 使用者的資料
-            this.fetchUserCart() //? 使用者的購物車
-            this.fetchAllOrders() //? 使用者的訂單
-            this.fetchAllNotifications() //? 使用者的通知
+            this.fetchRequiredData()
         }
     },
 }

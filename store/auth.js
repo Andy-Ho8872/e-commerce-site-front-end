@@ -37,8 +37,9 @@ export const mutations = {
             state.token = token
         }
     },
-    //* 將資料設置在 LocalStorage 
-    SET_LOCAL_STORAGE(state, res) { //! 第一個 state 參數(必須存在)並未使用到，因為 payload 要放在第二個參數才能使用。
+    //* 將資料設置在 LocalStorage
+    SET_LOCAL_STORAGE(state, res) {
+        //! 第一個 state 參數(必須存在)並未使用到，因為 payload 要放在第二個參數才能使用。
         localStorage.setItem('Token', `Bearer ${res.data.token}`)
         localStorage.setItem('UserEmail', res.data.user.email)
     },
@@ -80,7 +81,7 @@ export const actions = {
         }, 3000)
     },
     //* 註冊流程
-    async register({ commit }, user) {
+    async register({ dispatch, commit }, user) {
         //? start loading
         commit('SET_LOADING', true)
         try {
@@ -93,7 +94,7 @@ export const actions = {
             this.$router.push({ name: 'auth-login' })
         } catch (error) {
             //* 錯誤訊息
-            let msg = error.response.data.errors
+            const msg = error.response.data.errors
             commit('SET_MESSAGE', msg)
             //* 清除錯誤訊息
             dispatch('clearMessage')
@@ -105,12 +106,23 @@ export const actions = {
     async fetchUserInfo({ commit }) {
         try {
             const res = await apiGetUserInfo()
-            let user = res.data.user
+            const user = res.data.user
             commit('SET_USER_INFO', user)
         } catch (error) {
             console.log(error)
             console.log('抓取失敗 from store/auth.js')
         }
+    },
+    async fetchRequiredData({ dispatch }) {
+        //* 撈取使用者資料
+        await dispatch('fetchUserInfo')
+        //* 從 store/cart.js 撈取
+        await dispatch('cart/fetchUserCart', null, { root: true }) //? 使用者的購物車
+        //* 從 store/order.js 撈取
+        await dispatch('order/fetchAllOrders', null, { root: true }) //? 使用者的訂單
+        await dispatch('order/fetchTableColumns', null, { root: true }) //? 付款方式欄位
+        //* 從 store/notification.js 撈取
+        await dispatch('notification/fetchAllNotifications', null, { root: true }) //? 使用者的通知
     },
     //* 確認使用者是否已經登入
     async checkIfUserHasLoggedIn({ state }) {
@@ -135,19 +147,13 @@ export const actions = {
             })
             //* 若帳密正確，則將資料儲存在 localStorage
             await commit('SET_LOCAL_STORAGE', res)
-            //* 撈取使用者資料
-            await dispatch('fetchUserInfo')
-            //* 從 store/cart.js 撈取使用者的購物車
-            await dispatch('cart/fetchUserCart', null, { root: true })
-            //* 從 store/order.js 撈取使用者的訂單
-            await dispatch('order/fetchAllOrders', null, { root: true })
-            //* 從 store/notification.js 撈取使用者的通知
-            await dispatch('notification/fetchAllNotifications', null, { root: true })
+            //* 撈取必要的資料 
+            await dispatch('fetchRequiredData')
             //* 重新導向
             this.$router.push({ name: 'user-account' })
         } catch (error) {
             //* 錯誤訊息
-            let msg = error.response.data.errors
+            const msg = error.response.data.errors
             commit('SET_MESSAGE', msg)
             //* 清除錯誤訊息
             dispatch('clearMessage')
@@ -155,14 +161,14 @@ export const actions = {
         //? end loading
         commit('SET_LOADING', false)
     },
-    //* 清除所有的 state 
+    //* 清除所有的 state
     clearAllVuexStates({ commit }) {
         commit('CLEAR_USER_INFO')
         commit('CLEAR_TOKEN')
         commit('cart/CLEAR_USER_CART', null, { root: true }) //* store/cart.js
         commit('order/CLEAR_USER_ORDERS', null, { root: true }) //* store/order.js
         commit('notification/CLEAR_ALL_NOTIFICATIONS', null, { root: true }) //* store/notification.js
-    } ,
+    },
     //* 登出流程
     async logout({ commit, dispatch }) {
         //? start loading
@@ -171,7 +177,7 @@ export const actions = {
             await apiUserLogout()
             //* 清空 LocalStorage
             await commit('CLEAR_ALL_STORAGE')
-            //* 清空 Vuex 暫存 
+            //* 清空 Vuex 暫存
             await dispatch('clearAllVuexStates')
             //* 重新導向
             this.$router.push({ name: 'index' })
@@ -179,7 +185,7 @@ export const actions = {
         } catch (error) {
             console.log('error from store/auth.js')
         }
-         //? end loading
+        //? end loading
         commit('SET_LOADING', false)
     },
 }
