@@ -76,7 +76,7 @@
             </v-form>
             <!-- 顯示錯誤訊息(預設隱藏) -->
             <div class="error_msg text-center">
-                <v-scroll-y-transition>
+                <v-scroll-y-transition group>
                     <v-alert class="mx-4" type="error" v-for="(msg, index) in message" :key="index">
                         {{ msg[0] }}
                     </v-alert>
