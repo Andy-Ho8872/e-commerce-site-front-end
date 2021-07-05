@@ -137,8 +137,12 @@ export const actions = {
             await commit('SET_LOCAL_STORAGE', res)
             //* 撈取使用者資料
             await dispatch('fetchUserInfo')
-            //* 從 store/cart.js 撈取使用者的購物車資料
+            //* 從 store/cart.js 撈取使用者的購物車
             await dispatch('cart/fetchUserCart', null, { root: true })
+            //* 從 store/order.js 撈取使用者的訂單
+            await dispatch('order/fetchAllOrders', null, { root: true })
+            //* 從 store/notification.js 撈取使用者的通知
+            await dispatch('notification/fetchAllNotifications', null, { root: true })
             //* 重新導向
             this.$router.push({ name: 'user-account' })
         } catch (error) {
@@ -156,6 +160,7 @@ export const actions = {
         commit('CLEAR_USER_INFO')
         commit('CLEAR_TOKEN')
         commit('cart/CLEAR_USER_CART', null, { root: true }) //* store/cart.js
+        commit('order/CLEAR_USER_ORDERS', null, { root: true }) //* store/order.js
         commit('notification/CLEAR_ALL_NOTIFICATIONS', null, { root: true }) //* store/notification.js
     } ,
     //* 登出流程
