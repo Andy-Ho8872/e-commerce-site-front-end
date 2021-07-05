@@ -24,14 +24,6 @@ export default {
             page: this.pageNumber || 1,
         }
     },
-    
-    //todo test Start
-    // async fetch() {
-    //     撈取該頁資料
-    //     await this.$store.dispatch('pagination/fetchPaginatedProducts', this.page)
-    // },
-    //todo test End
-
     computed: {
         ...mapGetters({
             products: 'pagination/getPaginatedProducts',
