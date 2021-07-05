@@ -42,7 +42,7 @@
         <!-- 觀看更多商品 -->
         <div class="text-center">
             <!-- 預設點擊後到第一頁 -->
-            <v-btn class="my-16" color="primary" dark x-large nuxt :to="{ name: 'pagination-pageNumber', params: { pageNumber: 1 } }">
+            <v-btn class="my-16" color="primary" dark x-large nuxt :to="{ name: 'products-pagination-pageNumber', params: { pageNumber: 1 } }">
                 <span>查看更多</span>
                 <v-icon>fa-shopping-cart fa-fw</v-icon>
             </v-btn> 

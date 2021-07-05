@@ -34,7 +34,7 @@ export const actions = {
             await commit('SET_PAGINATED_PRODUCTS', products)
             //* 最後導向至該頁
             this.$router.push({
-                name: 'pagination-pageNumber',
+                name: 'products-pagination-pageNumber',
                 params: { pageNumber: pageNumber },
             })
         } 
