@@ -142,7 +142,6 @@ export default {
             fetchUserCart: 'cart/fetchUserCart', //? 使用者購物車
             fetchAllOrders: 'order/fetchAllOrders', //? 使用者訂單 
             fetchAllNotifications: 'notification/fetchAllNotifications', //? 使用者的通知
-            // fetchAllProductTags: 'product/fetchAllProductTags' //? 商品的標籤
         }),
     },
     async mounted() {
@@ -162,7 +161,6 @@ export default {
             this.fetchUserCart() //? 使用者的購物車
             this.fetchAllOrders() //? 使用者的訂單
             this.fetchAllNotifications() //? 使用者的通知
-            // this.fetchAllProductTags() //? 產品的標籤
         }
     },
 }
