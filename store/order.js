@@ -66,7 +66,6 @@ export const mutations = {
     //* 刪除暫存陣列中的資料(不必向後端在發送撈取資料的 request)
     REMOVE_SINGLE_ORDER(state, orderId) {
         const index = state.orders.findIndex(item => {
-            console.log(item)
             return item.id == orderId
         })
         if (index !== -1) {
@@ -89,8 +88,8 @@ export const actions = {
         try {
             const res = await apiGetTableColumns()
             //* 付款方式與貨物狀態
-            let payments = res.data.payments
-            let status = res.data.status
+            const payments = res.data.payments
+            const status = res.data.status
             //* 設置到 state 中
             commit('SET_PAYMENTS_DATA', payments)
             commit('SET_STATUS_DATA', status)
@@ -103,7 +102,7 @@ export const actions = {
         try {
             //* 撈取
             const res = await apiGetAllOrders()
-            let orders = res.data.orders
+            const orders = res.data.orders
             commit('SET_ALL_ORDERS', orders)
         } catch (error) {
             console.log(error)
@@ -119,7 +118,7 @@ export const actions = {
                 await commit('CLEAR_SINGLE_ORDER')
                 //* 撈取該筆資料
                 const res = await apiGetSingleOrder(orderId)
-                let order = res.data.order
+                const order = res.data.order
                 await commit('SET_SINGLE_ORDER', order)
                 //* 紀錄最後點擊的訂單 ID
                 commit('SET_LAST_CLICKED_RECORD', orderId)
@@ -148,12 +147,11 @@ export const actions = {
             //* 重新撈取通知
             await dispatch('notification/fetchAllNotifications', null, { root: true }) 
             //* 提示訊息
-            let message = {
+            const message = {
                 type: 'success',
                 text: '您建立了一筆訂單，請查閱。'
             }
-            await commit('globalMessage/SET_MESSAGE', message, { root: true })
-            dispatch('globalMessage/clearMessage', null, { root: true })
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log('建立失敗 from /store/order.js')
         }
@@ -168,12 +166,11 @@ export const actions = {
             await apiDeleteSingleOrder(orderId)
             //* 刪除暫存中的訂單數據(可以減少撈取訂單 request 的次數)
             commit('REMOVE_SINGLE_ORDER', orderId)
-            let message = {
+            const message = {
                 type: 'error',
                 text: '您刪除了一筆訂單，請查閱。'
             }
-            await commit('globalMessage/SET_MESSAGE', message, { root:true })
-            dispatch('globalMessage/clearMessage', null, { root: true })
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log(error)
             console.log('刪除失敗 from /store/order.js')

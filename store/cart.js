@@ -68,7 +68,7 @@ export const actions = {
     async fetchUserCart({ commit }) {
         try {
             const res = await apiGetCartProducts()
-            let payload = res.data.carts
+            const payload = res.data.carts
             //* 將資料寫入
             await commit('SET_USER_CART', payload)
             //* 確認購物車內是否還有商品
@@ -81,8 +81,6 @@ export const actions = {
     //* 直接"新增"商品至購物車 (預設數量 1)
     async addToCart({ dispatch, commit }, productId) {
         try {
-            // const res = await this.$axios.apiAddToCart(productId) //! 測試用
-            // const res = await this.$api.apiAddToCart(productId) //! 測試用
             const res = await apiAddToCart(productId)
             if(res.status == 200 || 201) {
                 //? 回傳提示訊息給使用者
@@ -92,8 +90,8 @@ export const actions = {
                 }
                 //* 重新撈取資料
                 await dispatch('fetchUserCart')
-                await commit('globalMessage/SET_MESSAGE', message, { root:true })
-                dispatch('globalMessage/clearMessage', null, { root: true })
+                //* 提示訊息
+                dispatch('globalMessage/setFlashMessage', message, { root: true })
             }
         } catch (error) {
             //* 提示訊息
@@ -102,8 +100,7 @@ export const actions = {
                     type: 'error',
                     text: '請先登入'
                 }
-                await commit('globalMessage/SET_MESSAGE', message, { root:true })
-                dispatch('globalMessage/clearMessage', null, { root: true })
+                dispatch('globalMessage/setFlashMessage', message, { root: true })
             }
         }
     },
@@ -121,12 +118,11 @@ export const actions = {
                 //* 重新撈取資料
                 await dispatch('fetchUserCart')
                 //? 回傳提示訊息給使用者
-                let message = {
+                const message = {
                     type: 'success',
                     text: '已經新增至購物車',
                 }
-                await commit('globalMessage/SET_MESSAGE', message, { root:true })
-                dispatch('globalMessage/clearMessage', null, { root: true })
+                dispatch('globalMessage/setFlashMessage', message, { root: true })
             }
         } catch (error) {
             if(error || error.response.status == 401) {
@@ -135,8 +131,7 @@ export const actions = {
                     type: 'error',
                     text: '請先登入'
                 }
-                await commit('globalMessage/SET_MESSAGE', message, { root:true })
-                dispatch('globalMessage/clearMessage', null, { root: true })
+                dispatch('globalMessage/setFlashMessage', message, { root: true })
             }
         }
     },
@@ -155,12 +150,11 @@ export const actions = {
             //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
-            let message = {
+            const message = {
                 type: 'warning',
                 text: '您修改了商品數量，請查看',
             }
-            await commit('globalMessage/SET_MESSAGE', message, { root:true })
-            dispatch('globalMessage/clearMessage', null, { root: true })
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log(error)
             console.log('更新失敗')
@@ -178,12 +172,11 @@ export const actions = {
             //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
-            let message = {
+            const message = {
                 type: 'warning',
                 text: '您增加了商品數量，請查看',
             }
-            await commit('globalMessage/SET_MESSAGE', message, { root:true })
-            dispatch('globalMessage/clearMessage', null, { root: true })
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log(error)
             console.log('數量增加失敗')
@@ -201,12 +194,11 @@ export const actions = {
             //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
-            let message = {
+            const message = {
                 type: 'warning',
                 text: '您減少了商品數量，請查看',
             }
-            await commit('globalMessage/SET_MESSAGE', message, { root:true })
-            dispatch('globalMessage/clearMessage', null, { root: true })
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log(error)
             console.log('數量增加失敗')
@@ -219,16 +211,15 @@ export const actions = {
         try {
             await apiDeleteFromCart(productId)
             //* 刪除該商品的暫存數據(可以減少向後端發送撈取的 request)
-            commit('REMOVE_SINGLE_PRODUCT_FROM_CART', productId)
+            await commit('REMOVE_SINGLE_PRODUCT_FROM_CART', productId)
             //* 確認購物車內是否還有商品
             await commit('CHECK_AND_SET_VALID_STATUS')
             // 提示訊息
-            let message = {
+            const message = {
                 type: 'error',
                 text: '您刪除了一項商品',
             }
-            await commit('globalMessage/SET_MESSAGE', message, { root:true })
-            dispatch('globalMessage/clearMessage', null, { root: true })
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log(error)
             console.log('刪除失敗 from vuex')
@@ -241,16 +232,15 @@ export const actions = {
             try {
                 await apiDeleteAllFromCart()
                 //* 刪除所有商品的暫存數據
-                commit('REMOVE_ALL_FROM_CART')
+                await commit('REMOVE_ALL_FROM_CART')
                 //* 確認購物車內是否還有商品
                 await commit('CHECK_AND_SET_VALID_STATUS')
                 // 提示訊息
-                let message = {
+                const message = {
                     type: 'error',
                     text: '您的購物車已經清空',
                 }
-                await commit('globalMessage/SET_MESSAGE', message, { root:true })
-                dispatch('globalMessage/clearMessage', null, { root: true })
+                dispatch('globalMessage/setFlashMessage', message, { root: true })
             } catch (error) {
                 console.log(error)
                 console.log('刪除失敗 from vuex')

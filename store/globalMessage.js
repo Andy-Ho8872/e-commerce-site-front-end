@@ -18,10 +18,12 @@ export const mutations = {
     },
 }
 export const actions = {
-    //? 清除提示訊息
-    clearMessage({ commit }) {
+    async setFlashMessage({ commit }, message) {
+        //* 設置訊息 
+        commit('SET_MESSAGE', message)
+        //* 3秒後清除訊息 
         setTimeout(() => {
             commit('CLEAR_MESSAGE')
         }, 3000)
-    },
+    }
 }
