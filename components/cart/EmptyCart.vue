@@ -9,7 +9,7 @@
         <!-- 提示文字 -->
         <h2 class="mb-4">您的購物車中沒有東西。</h2>
         <!-- 導向連結 -->
-        <nuxt-link  :to="{ name: 'pagination-pageNumber', params: { pageNumber: 1 }}">
+        <nuxt-link  :to="{ name: 'products-pagination-pageNumber', params: { pageNumber: 1 }}">
             <v-btn color="primary" x-large depressed>
                 <v-icon>fa-cart-arrow-down</v-icon>
                 <span class="mx-2">點我選購~</span> 
