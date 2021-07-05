@@ -73,10 +73,14 @@ export const mutations = {
             state.orders.splice(index, 1)
         }
     },
-    //* 清除單筆訂單資料
+    //! 清除單筆訂單資料 (暫不使用)
     CLEAR_SINGLE_ORDER(state) {
         state.order = []
     },
+    //* 使用者登出時清空暫存 
+    CLEAR_USER_ORDERS(state) {
+        state.orders = []
+    }
 }
 
 export const actions = {
