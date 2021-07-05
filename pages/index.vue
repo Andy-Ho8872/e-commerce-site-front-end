@@ -19,36 +19,24 @@
             <!-- 骨架屏 -->
         <SkeletonCarousel :cardHeight="355" v-if="loading"/>
             <!-- 輪播張數為 10 張 -->
-        <!-- <Carousel :cardWidth="355" :cardHeight="355" v-show="!loading"/> -->
         <CarouselV2 :cardWidth="340" :cardHeight="340" v-show="!loading"/>
         <!-- 標語 -->
         <Banner elevation="2" icon="fa-tags" iconColor="teal lighten-1" text="標籤搜尋" backgroundColor="white" class="mt-16"/>
-        <!-- 標籤搜尋 -->
-        <v-sheet elevation="6" rounded="lg" class="pa-6">
-            <v-row>
-                <v-chip-group column>
-                    <v-chip v-for="tag in tags" :key="tag.id" color="primary" nuxt :to="{ name: 'search-title', params: { title: tag.title } }">
-                        {{ tag.title }}
-                    </v-chip>
-                </v-chip-group>
-            </v-row>
-        </v-sheet>
+        <!-- 標籤搜尋(包含骨架屏) -->
+        <SearchTag elevation="6" class="pa-6"/>
         <!-- 標語 -->
         <Banner elevation="2" icon="fa-burn" iconColor="red lighten-1" text="熱門商品" backgroundColor="white" class="mt-16"/>
         <!-- 商品陳列 -->
         <v-sheet elevation="6" rounded="lg" class="px-6">
             <v-row justify="space-around">
-                <div v-for="product in products" class="mt-8 mb-16" :key="product.id">
-                    <SkeletonCardV2 :cardWidth="200" :cardHeight="290" v-if="loading" class="mx-6"/>
-                    <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-6"/>
-                </div>
-                <!-- <v-col v-for="product in products" class="mt-2 mb-16" :key="product.id"> -->
-                    <!-- 骨架屏 -->
-                    <!-- <SkeletonCard :cardWidth="300" v-if="loading"/> -->
-                    <!-- 商品卡片 -->
-                    <!-- <Product :product="product" :cardWidth="300" :cardHeight="600" v-show="!loading"/>         -->
-                    <!-- <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" v-show="!loading"/>         -->
-                <!-- </v-col> -->
+                <!-- 骨架屏 -->
+                <template v-for="(n,index) in 6"> 
+                    <SkeletonCardV2 :cardWidth="200" :cardHeight="290" :key="index" v-if="loading" class="mx-6 mt-8 mb-16"/>
+                </template>
+                <!-- 商品卡片 -->
+                <template v-for="product in products">
+                    <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" :key="product.id" v-if="!loading" class="mx-6 mt-8 mb-16"/>
+                </template>
             </v-row>
         </v-sheet>
         <!-- 觀看更多商品 -->
@@ -63,7 +51,6 @@
 </template>
 
 <script>
-// import { apiGetIndexPageProducts, apiGetProductTags } from '~/APIs/api.js'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -72,31 +59,19 @@ export default {
             loading: true, // 骨架屏狀態
         }
     },
-    // 從外部 API 讀取產品的資料 //! 暫時不用
-    // async asyncData() {
-    //     const res = await apiGetIndexPageProducts()
-    //     const tagResponse = await apiGetProductTags()
-    //     return { 
-    //         products: res.data.products,
-    //         tags: tagResponse.data.tags
-    //     }
-    // },
     methods: {
         ...mapActions({
             fetchIndexPageProducts: 'product/fetchIndexPageProducts', //? 首頁的商品
-            fetchAllProductTags: 'product/fetchAllProductTags' //? 商品的標籤
         })
     },
     computed: {
         ...mapGetters({
             products: 'product/getIndexPageProducts',
-            tags: 'product/getAllProductTags'
         })
     },
     // 掛載時結束 loading 狀態
     async mounted() { 
         await this.fetchIndexPageProducts()
-        await this.fetchAllProductTags()
         this.loading = false    
     },
 }
