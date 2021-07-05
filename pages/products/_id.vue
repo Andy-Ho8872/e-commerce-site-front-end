@@ -106,6 +106,9 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+    validate({ params }) {
+        return /^\d+$/.test(params.id)
+    },
     data() {
         return {
             //* 暫存資料

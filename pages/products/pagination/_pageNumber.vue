@@ -21,6 +21,9 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    validate({ params }) {
+        return /^\d+$/.test(params.pageNumber)
+    },
     data() {
         return {
             page: Number(this.$route.params.pageNumber) || 1,
