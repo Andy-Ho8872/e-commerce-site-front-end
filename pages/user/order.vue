@@ -10,7 +10,7 @@
                 <v-list-item v-for="order in orders" :key="order.id">
                     <v-list-item-content>
                         <!-- 子標題(導覽連結) -->
-                        <nuxt-link :to="{ name: 'order-details-id', params: { id: order.id }}">
+                        <nuxt-link :to="{ name: 'order-id-details', params: { id: order.id }}">
                             <v-subheader inset class="blue--text">點我查看細項</v-subheader>
                         </nuxt-link>
                         <!-- 編號 -->

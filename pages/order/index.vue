@@ -48,7 +48,7 @@
                         </td>
                         <!-- 購買件數 -->
                         <td data-title="商品個數" id="items_count">
-                           <span>{{ order.items_count }} 件商品</span> 
+                            <span>{{ order.items_count }} 件商品</span> 
                         </td>
                         <!-- 金額總計 -->
                         <td data-title="金額總計" id="sumSubtotal">
@@ -68,7 +68,7 @@
                                 <!-- 按鈕群組 -->
                                 <DeleteDialog :order="order" />
                                 <!-- 查看 --> 
-                                <v-btn color="light-blue" dark nuxt :to="{ name: 'order-details-id', params: { id: order.id }}">
+                                <v-btn color="light-blue" dark nuxt :to="{ name: 'order-id-details', params: { id: order.id }}">
                                     <v-icon>fa-hand-point-right fa-fw</v-icon>
                                     查看
                                 </v-btn>   
