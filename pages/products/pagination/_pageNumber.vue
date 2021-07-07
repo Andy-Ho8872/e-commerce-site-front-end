@@ -3,7 +3,7 @@
         <!-- loading -->
         <LoadingCircle v-if="loading"/>
         <!-- banner -->
-        <Banner elevation="2" icon="fa-bookmark" iconColor="blue lighten-1" :text="`第 ${page} / ${pageLength} 頁`" backgroundColor="white" class="mt-6"/>
+        <Banner elevation="2" icon="fa-bookmark" iconColor="blue lighten-1" :text="`第 ${pageNumber} / ${lastPage} 頁`" backgroundColor="white" class="mt-6"/>
         <!-- content -->
         <v-sheet elevation="6" rounded="lg" class="px-6">
             <v-row justify="space-around">
@@ -26,7 +26,7 @@ export default {
     },
     data() {
         return {
-            page: Number(this.$route.params.pageNumber) || 1,
+            pageNumber: Number(this.$route.params.pageNumber) || 1,
         }
     },
     computed: {
@@ -36,10 +36,8 @@ export default {
             //* loading 狀態
             loading: 'pagination/getLoading'
         }),
-        pageNumber() {
-            return Number(this.$route.params.pageNumber)
-        },
-        pageLength() {
+        //* 分頁的總長度 
+        lastPage() {
             return this.products.last_page || 'Loading...'
         }
     },
@@ -51,8 +49,8 @@ export default {
     },
     //* 避免重複發送相同的 request
     created() {
-        if (this.products.current_page != this.page) {
-            this.fetchData(this.page)
+        if (this.products.current_page != this.pageNumber) {
+            this.fetchData(this.pageNumber)
         }
     },
 }
