@@ -46,7 +46,7 @@ export const actions = {
     async fetchAllNotifications({ commit }) {
         try {
             const res = await apiGetAllNotifications()
-            let notifications = res.data.notifications
+            const notifications = res.data.notifications
             commit('SET_NOTIFICATIONS', notifications) 
         } catch (error) {
             console.log(error);
@@ -57,7 +57,7 @@ export const actions = {
     async fetchUnreadNotifications({ commit }) {
         try {
             const res = await apiGetUnReadNotifications()
-            let unReadNotifications = res.data.notifications
+            const unReadNotifications = res.data.notifications
             commit('SET_UNREAD_NOTIFICATIONS', unReadNotifications)
         } catch (error) {
             console.log(error);
@@ -73,12 +73,11 @@ export const actions = {
             //* 重新撈取通知 
             await dispatch('fetchAllNotifications')
             //* 提示訊息
-            let message = {
+            const message = {
                 type: 'success',
                 text: '已將通知變為已讀',
             } 
-            await commit('globalMessage/SET_MESSAGE', message, { root:true })
-            dispatch('globalMessage/clearMessage', null, { root: true })
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log(error);
             console.log('抓取失敗 from /store/notification');
@@ -93,12 +92,11 @@ export const actions = {
             //* 重新撈取通知 
             await dispatch('fetchAllNotifications')
             //* 提示訊息
-            let message = {
+            const message = {
                 type: 'success',
                 text: '已將所有通知變為已讀',
             }
-            await commit('globalMessage/SET_MESSAGE', message, { root:true })
-            dispatch('globalMessage/clearMessage', null, { root: true })
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log(error);
             console.log('抓取失敗 from /store/notification');
@@ -114,12 +112,11 @@ export const actions = {
             //* 刪除所有通知(暫存)
             await commit('CLEAR_ALL_NOTIFICATIONS')
             //* 提示訊息
-            let message = {
+            const message = {
                 type: 'error',
                 text: '已刪除所有通知',
             }
-            await commit('globalMessage/SET_MESSAGE', message, { root:true })
-            dispatch('globalMessage/clearMessage', null, { root: true })
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log(error);
             console.log('抓取失敗 from /store/notification');
