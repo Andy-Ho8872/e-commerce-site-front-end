@@ -12,20 +12,23 @@ export default {
     props: {
         elevation: {
             type: [String, Number],
-            default: 2
+            default: 2,
         },
         icon: {
             type: String,
+            default: 'fa-icons'
         },
         iconColor: {
             type: String,
+            default: 'teal lighten-1'
         },
         text: {
             type: String,
-            require: true,
+            default: "Banner Text"
         },
         backgroundColor: {
             type: String,
+            default: 'white',
         },
     },
 }

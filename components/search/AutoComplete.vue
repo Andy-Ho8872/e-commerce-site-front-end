@@ -33,11 +33,12 @@
             >
                 {{ item.title }}
             </li>
+            <!-- no result text -->
             <p
                 class="text-center blue--text caption font-weight-bold pt-4"
                 v-show="!autoCompleteItems.length"
             >
-                找不到相關的結果
+                {{ no_result_text }}
             </p>
         </ul>
     </div>
@@ -47,6 +48,12 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    props: {
+        no_result_text: {
+            type: String,
+            default: '找不到相關的結果'
+        }
+    },
     data() {
         return {
             searchText: '',
