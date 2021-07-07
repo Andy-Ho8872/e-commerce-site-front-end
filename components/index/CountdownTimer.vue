@@ -33,7 +33,7 @@
 export default {
     //? passed from pages/index.vue
     props : {
-        'background': {
+        background: {
             type: String
         },
         year: {
