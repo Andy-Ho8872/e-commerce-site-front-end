@@ -12,9 +12,6 @@
 export default {
     //? passed from components/Product.vue Or pages/search/title.vue
     props: {
-        size : {
-            type: String,
-        },
         product: {
             type: Object,
             require: true
