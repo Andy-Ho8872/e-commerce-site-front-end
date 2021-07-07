@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <!-- 僅顯示未已讀的通知 -->
-        <v-card class="pa-4" rounded="lg" width="350" height="500">
+        <v-card class="pa-4" rounded="lg" :width="cardWidth" :height="cardHeight">
             <p class="text-center text-subtitle-1 font-weight-bold px-2">尚未讀取的通知</p>
             <v-divider></v-divider>
             <!-- 若無通知 -->
@@ -49,6 +49,16 @@
 import { mapGetters } from 'vuex'
 
 export default {
+    props: {
+        cardWidth: {
+            type: [String, Number],
+            default: 350
+        },
+        cardHeight: {
+            type: [String, Number],
+            default: 500
+        },
+    },
     computed: {
         ...mapGetters({
             'unReadNotifications': 'notification/getUnreadNotifications'
