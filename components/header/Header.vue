@@ -27,7 +27,9 @@
                             </v-badge>
                         </nuxt-link>
                         <!-- 通知列 -->
-                        <MiniNotification class="content_box" :class="{ show: appear }"/>   
+                        <v-scale-transition origin="top left">
+                            <MiniNotification :cardWidth="350" :cardHeight="500" class="content_box" v-show="appear"/>
+                        </v-scale-transition>
                     </li>
                     <!-- 我的訂單-->
                     <li>
@@ -180,13 +182,9 @@ a {
 }
 .notification {
     .content_box {
-        display: none;
         position: absolute;
         z-index: 10;
-        width: 350px;
-    }
-    .show {
-        display: block;
+        width: 100vw;
     }
 }
 .icon {
