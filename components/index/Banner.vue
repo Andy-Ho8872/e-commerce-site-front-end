@@ -11,7 +11,8 @@
 export default {
     props: {
         elevation: {
-            type: [String, Number]
+            type: [String, Number],
+            default: 2
         },
         icon: {
             type: String,

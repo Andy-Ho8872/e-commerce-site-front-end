@@ -26,7 +26,8 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     props: {
         elevation: {
-            type: [String, Number]
+            type: [String, Number],
+            default: 2
         }
     },
     methods: {

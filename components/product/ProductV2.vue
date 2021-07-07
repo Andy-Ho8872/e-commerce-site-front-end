@@ -62,16 +62,17 @@ export default {
             require: true,
         },
         cardWidth: {
-            type: Number,
-            require: true,
+            type: [Number, String],
+            default: 200
         },
         cardHeight: {
-            type: Number,
-            require: true,
+            type: [Number, String],
+            default: 290
         },
         //* 卡片陰影 (box-shadow)
         elevation: {
-            type: [Number, String]
+            type: [Number, String],
+            default: 2
         }
     },
     computed: {

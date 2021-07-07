@@ -42,11 +42,11 @@ export default {
         },
         cardWidth: {
             type: Number,
-            require: true,
+            default: 340,
         },
         cardHeight: {
             type: Number,
-            require: true,
+            default: 340,
         },
     },
     computed: {

@@ -24,7 +24,8 @@ export default {
             require: true
         },
         size : {
-            type: Number,
+            type: [Number, String],
+            default: 12
         }
     },
     computed: {

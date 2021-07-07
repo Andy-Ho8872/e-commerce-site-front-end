@@ -3,11 +3,11 @@
         <!-- 圖片 -->
         <v-img :src="require('~/static/cart/EmptyCart.svg')"
             class="mx-auto mb-4" 
-            max-width="300"
-            max-height="300">
+            :max-width="width"
+            :max-height="height">
         </v-img>
         <!-- 提示文字 -->
-        <h2 class="mb-4">您的購物車中沒有東西。</h2>
+        <h2 class="mb-4">{{ text }}</h2>
         <!-- 導向連結 -->
         <nuxt-link  :to="{ name: 'products-pagination-pageNumber', params: { pageNumber: 1 }}">
             <v-btn color="primary" x-large depressed>
@@ -19,5 +19,20 @@
 </template>
 
 <script>
-export default {}
+export default {
+    props: {
+        width: {
+            type: [String, Number],
+            default: 300
+        },
+        height: {
+            type: [String, Number],
+            default: 300
+        },
+        text: {
+            type: String,
+            default: "您的購物車中沒有東西"
+        }
+    }
+}
 </script>

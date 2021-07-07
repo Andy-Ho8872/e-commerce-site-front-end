@@ -1,5 +1,5 @@
 <template>
-  <!-- 骨架屏 -->
+<!-- 骨架屏 -->
     <v-sheet tile elevation="4" :height="cardHeight" class="bg d-flex justify-center align-center">
         <div>
             <div class="bouncing d-flex justify-space-around text-center">
@@ -23,9 +23,9 @@
 export default {
     //? passed from index.vue
     props: {
-        'cardHeight': {
-            type: Number,
-            require: true
+        cardHeight: {
+            type: [Number, String],
+            default: 355,
         }
     }
 }

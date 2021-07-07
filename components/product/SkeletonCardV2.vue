@@ -14,11 +14,11 @@ export default {
     props:{
         cardWidth: {
             type: Number,
-            require: true
+            default: 200
         },
         cardHeight: {
             type: Number,
-            require: true
+            default: 290
         }
     }
 }
