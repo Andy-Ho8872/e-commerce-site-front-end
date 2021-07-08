@@ -17,6 +17,21 @@ let base = process.env.apiUrl; //? 從 nuxt.config.js 獲取後端 API 的 URL
 const productRequest = axios.create({
     baseURL: `${ base }/products`
 });
+productRequest.interceptors.response.use(
+    (response) => {
+        return response
+    }, 
+    (error) => {
+        if(error && error.response) {
+            switch (error.response.status) {
+                case 404:
+                    $nuxt._router.push({ name: 'error' })
+                default:
+                    console.log("axios 錯誤。");
+            }
+        }
+    }
+)
 //* 產品請求-------------------------------------------------------------------End
 
 
