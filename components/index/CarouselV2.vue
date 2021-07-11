@@ -13,12 +13,11 @@
                 <v-card
                     elevation="8"
                     :max-width="cardWidth"
-                    :min-width="cardHeight"
-                    class="mx-4 my-6"
+                    class="carousel_item_container mx-4 my-6"
                     nuxt
                     :to="{ name: 'products-id', params: { id: item.id } }"
                 >
-                    <v-img :src="item.imgUrl" :alt="item.title" :lazy-src="item.imgUrl">
+                    <v-img :src="item.imgUrl" :alt="item.title" :lazy-src="item.imgUrl" :max-height="cardHeight">
                         <!-- 商品折數 -->
                         <v-card-subtitle v-if="item.discount_rate != 1" class="discount_label yellow pa-1 caption">
                             <span class="red--text font-italic font-weight-medium">{{ item.discount_rate * 10 }} 折</span>
@@ -39,6 +38,7 @@ export default {
     props: {
         background: {
             type: String,
+            default: "white"
         },
         cardWidth: {
             type: Number,
@@ -92,5 +92,17 @@ $icon-offset: -0.5em;
 }
 .title_background {
     background: rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+    .carousel_item_container {
+        width: 200px;
+        height: 254px; 
+    }
+    .title_background {
+        position: absolute;
+        bottom: 0;
+        width: 100%
+    }
 }
 </style>
