@@ -66,10 +66,10 @@
             </div>
         </v-row>
         <!-- Navbar 下層 -->
-        <v-row class="navbar_lower d-flex flex-nowrap justify-center">
+        <v-row class="navbar_lower d-flex flex-nowrap justify-center" v-click-outside="onClickOutside">
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
             <v-spacer class="hidden-md-and-down"></v-spacer>
-            <!--  (Extend bar) 只有在 600 px 以下才顯示 -->
+            <!--  (漢堡icon) 只有在 600 px 以下才顯示 -->
             <div class="extend_bar d-flex justify-center align-center" ref="extended"
                 @click="active = !active"
                 :class="{ toggle: active }"
@@ -141,14 +141,12 @@ export default {
             //* 撈取資料
             fetchRequiredData: 'auth/fetchRequiredData'
         }),
+        //* 點擊 Header 以外的區域則會關閉 
+        onClickOutside () {
+            this.active = false
+        },
     },
     async mounted() {
-        //* 點擊漢堡 SideBar 以外的區域則會關閉  
-        document.addEventListener('click', e => {
-            if (!this.$refs.extended.contains(e.target)) {
-                this.active = false
-            }
-        })
         //* 取得憑證
         await this.SET_TOKEN()
         //* 若使用者有登入(持有 Token)，從 localStorage 中做初步判定)
@@ -220,6 +218,7 @@ a {
         margin-bottom: 6px;
         transition: 0.5s ease-in-out;
     }
+    // 漢堡 icon 外觀的變換
     .toggle {
         .line {
             margin-bottom: 0;
