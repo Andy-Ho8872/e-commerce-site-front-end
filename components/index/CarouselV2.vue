@@ -97,12 +97,12 @@ $icon-offset: -0.5em;
 @media (max-width: 768px) {
     .carousel_item_container {
         width: 200px;
-        height: 254px; 
+        height: 254px;
     }
     .title_background {
         position: absolute;
         bottom: 0;
-        width: 100%
+        width: 100%;
     }
 }
 </style>
