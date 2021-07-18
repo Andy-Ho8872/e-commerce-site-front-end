@@ -19,7 +19,8 @@
             <!-- 骨架屏 -->
         <SkeletonCarousel :cardHeight="355" v-if="loading"/>
             <!-- 輪播張數為 10 張 -->
-        <CarouselV2 :cardWidth="340" :cardHeight="340" v-show="!loading"/>
+        <!-- <CarouselV2 :cardWidth="340" :cardHeight="340" v-show="!loading"/> -->
+        <CarouselV3 :cardWidth="340" :cardHeight="340" v-show="!loading"/>
         <!-- 標語 -->
         <Banner elevation="2" icon="fa-tags" iconColor="teal lighten-1" text="標籤搜尋" backgroundColor="white" class="mt-16"/>
         <!-- 標籤搜尋(包含骨架屏) -->
