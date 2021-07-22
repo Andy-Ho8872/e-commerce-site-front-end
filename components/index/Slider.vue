@@ -8,7 +8,9 @@
             <div class="slide_group_items__wrapper" ref="slide_wrapper">
                 <div class="slide_group_items__content" ref="slide_content" @touchstart="touchStart" @touchmove.prevent="touchMove" @touchend="touchEnd">
                     <!-- slider items here -->
-                    <slot></slot>
+                    <div class="slide_group_items__items" ref="slide_items">
+                        <slot></slot>
+                    </div>
                 </div>
             </div>
             <!-- next-icon -->
@@ -159,8 +161,8 @@ export default {
         //* 判斷 slider 內容是否有溢出
         checkContentOverflowing() {
             const outer = this.$refs.slide_wrapper.clientWidth // slider 容器
-            const inner = this.$refs.slide_content.clientWidth // slider 內容
-            inner < outer ? this.isOverFlowing = false : this.isOverFlowing = true
+            const itemWidth = this.$refs.slide_items.clientWidth
+            itemWidth < outer ? this.isOverFlowing = false : this.isOverFlowing = true
             //* 沒溢出的話則不顯示 icon
             this.isOverFlowing ? this.showIcons() : this.hideIcons()
         },
@@ -172,7 +174,7 @@ export default {
         }  
     },
     async mounted() {
-        await this.checkContentOverflowing()  
+        this.checkContentOverflowing()  
         await this.checkDeviceSize()
         if(!this.isMobileDevice) {
             // 預設載入時使 prev icon 失效
@@ -184,6 +186,9 @@ export default {
 
 <style lang="scss" scoped>
 .slide_group {
+    display: flex;
+}
+.slide_group_items__items {
     display: flex;
 }
 // icon area
