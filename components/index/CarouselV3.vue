@@ -1,5 +1,5 @@
 <template>
-    <Slider>
+    <SlideGroup>
         <!-- slider items here -->
         <v-card
             v-for="item in items"
@@ -22,7 +22,7 @@
             </v-img>
             <v-card-subtitle class="title_background white--text text-center">{{ item.title }}</v-card-subtitle>
         </v-card>
-    </Slider>
+    </SlideGroup>
 </template>
 
 <script>

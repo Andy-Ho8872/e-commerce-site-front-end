@@ -52,7 +52,7 @@ export default {
         nextIcon: {
             type: String,
             default: 'fa-chevron-circle-right'
-        }
+        },
     },
     methods: {
         startSliding() {
