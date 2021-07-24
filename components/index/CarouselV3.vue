@@ -2,7 +2,7 @@
     <SlideGroup>
         <!-- slider items here -->
         <v-card
-            v-for="item in items"
+            v-for="item in data"
             :key="item.id"
             elevation="8"
             :max-width="cardWidth"
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
 
 export default {
     props: {
@@ -38,22 +37,9 @@ export default {
             type: Number,
             default: 340,
         },
-    },
-    computed: {
-        ...mapGetters({
-            items: 'carousel/getCarouselItem',
-        }),
-    },
-    methods: {
-        ...mapActions({
-            fetchCarouselItem: 'carousel/fetchCarouselItem',
-        }),
-    },
-    created() {
-        //* 避免重複發送相同的 request
-        if (!this.items.length) {
-            //* 撈取 slider 資料
-            this.fetchCarouselItem()
+        data: {
+            type: Array,
+            require: true
         }
     },
 }
