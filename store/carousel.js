@@ -3,11 +3,12 @@ import { apiGetCarouselProducts } from '../APIs/api.js'
 export const state = () => ({
     //* 圖片輪播的檔案
     carouselItem: [],
-    //* 計數器從 0 開始
+    fetchedStatus: false, //* 是否已經撈取到資料
+    //! 計數器從 0 開始 (目前未使用)
     counter: 0,
-    //* 圖片移動量  預設為 355px (v-card 寬度)
+    //! 圖片移動量  預設為 355px (v-card 寬度) (目前未使用)
     slideValue: 355,
-    //* 最大滑動次數 (會依照使用者當前螢幕寬度來取值)
+    //! 最大滑動次數 (會依照使用者當前螢幕寬度來取值) (目前未使用)
     maxSlide: null,
 })
 
@@ -21,8 +22,11 @@ export const mutations = {
     SET_CAROUSEL_ITEM(state, items) {
         state.carouselItem = items
     },
+    SET_FETCHED_STATUS(state, status) {
+        state.fetchedStatus = status
+    },
 
-    //* 圖片滑動
+    //! 圖片滑動 (目前未用到)
     SLIDE_CAROUSEL(state, value) {
         //* 滑動計數
         state.counter += value
@@ -85,13 +89,17 @@ export const mutations = {
 }
 export const actions = {
     //* 撈取輪播資料
-    async fetchCarouselItem({ commit }) {
-        try {
-            const res = await apiGetCarouselProducts()
-            let items = res.data.products
-            commit('SET_CAROUSEL_ITEM', items)
-        } catch (error) {
-            console.log(error)
+    async fetchCarouselItem({ state, commit }) {
+        if(!state.fetchedStatus) {
+            try {
+                const res = await apiGetCarouselProducts()
+                const items = res.data
+                await commit('SET_CAROUSEL_ITEM', items)
+                commit('SET_FETCHED_STATUS', true)
+            } catch (error) {
+                commit('SET_FETCHED_STATUS', false)
+                console.log(error)
+            }
         }
     },
 }
