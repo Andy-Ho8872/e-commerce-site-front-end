@@ -1,5 +1,5 @@
 <template>
-    <v-sheet :elevation="elevation" rounded="lg">
+    <v-sheet :elevation="elevation">
         <v-row>
             <v-chip-group column v-if="tags.length">
                 <v-chip
