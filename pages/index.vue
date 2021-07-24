@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <!-- 彈出式提醒 -->
-        <Popups />
+        <Popups class="mb-6"/>
         <!-- 優惠計時 (月份從 0 開始計算， 例如: 數字5 == 6月)-->
         <CountdownTimer
             background="blue darken-1"
@@ -13,21 +13,19 @@
             :second="6"
             :millisecond="4"
         />
-        <!-- 標語 -->
+        <!-- 限時特賣 -->
         <Banner elevation="2" icon="fa-clock" iconColor="blue lighten-1" text="限時特賣" backgroundColor="white" class="mt-6"/>
-        <!-- 圖片輪播 -->
-            <!-- 骨架屏 -->
         <SkeletonCarousel :cardHeight="355" v-if="loading"/>
-            <!-- 輪播張數為 10 張 -->
-        <!-- <CarouselV2 :cardWidth="340" :cardHeight="340" v-show="!loading"/> -->
-        <CarouselV3 :cardWidth="340" :cardHeight="340" v-show="!loading"/>
-        <!-- 標語 -->
+        <CarouselV3 :cardWidth="340" :cardHeight="340" :data="items.flash_sale_products" v-show="!loading"/>
+        <!-- 標籤搜尋 (包含骨架屏)-->
         <Banner elevation="2" icon="fa-tags" iconColor="teal lighten-1" text="標籤搜尋" backgroundColor="white" class="mt-16"/>
-        <!-- 標籤搜尋(包含骨架屏) -->
-        <SearchTag elevation="6" class="pa-6"/>
-        <!-- 標語 -->
+        <SearchTag elevation="6" class="pa-6 mb-16"/>
+        <!-- 最新上架 -->
+        <Banner elevation="2" icon="fa-bullhorn" iconColor="blue lighten-1" text="最新上架" backgroundColor="white" class="mt-6"/>
+        <SkeletonCarousel :cardHeight="355" v-if="loading"/>
+        <CarouselV3 :cardWidth="340" :cardHeight="340" :data="items.latest_products" v-show="!loading"/>
+        <!-- 熱門商品 -->
         <Banner elevation="2" icon="fa-burn" iconColor="red lighten-1" text="熱門商品" backgroundColor="white" class="mt-16"/>
-        <!-- 商品陳列 -->
         <v-sheet elevation="6" rounded="lg" class="px-6">
             <v-row justify="space-around">
                 <!-- 骨架屏 -->
@@ -62,17 +60,20 @@ export default {
     },
     methods: {
         ...mapActions({
+            fetchCarouselItem: 'carousel/fetchCarouselItem', //? 輪播的商品
             fetchIndexPageProducts: 'product/fetchIndexPageProducts', //? 首頁的商品
         })
     },
     computed: {
         ...mapGetters({
+            items: 'carousel/getCarouselItem',
             products: 'product/getIndexPageProducts',
         })
     },
     // 掛載時結束 loading 狀態
     async mounted() { 
         await this.fetchIndexPageProducts()
+        await this.fetchCarouselItem()
         this.loading = false    
     },
 }
