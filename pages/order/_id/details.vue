@@ -95,6 +95,7 @@ $padding: 10%;
 $td-padding: 1.5rem 0;
 //? only for RWD
 $title-font-weight: 600;
+$tbody-tr-border-color: #039BE5;
 
 a {
     text-decoration: none;
@@ -115,7 +116,7 @@ tbody {
         padding: $td-padding;
         font-weight: $title-font-weight;
         letter-spacing: $letter-spacing;
-        max-width: 200px;
+        // max-width: 200px;
     }
     tr {
         &:hover {
@@ -133,6 +134,9 @@ tbody {
         display: none;
     }
     tbody {
+        tr {
+            border-top: 4px solid $tbody-tr-border-color;
+        }
         td {
             max-width: 100%;
             display: block;
