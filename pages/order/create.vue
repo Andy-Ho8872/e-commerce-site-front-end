@@ -39,11 +39,10 @@
         <v-form ref="form" v-model="valid">
             <v-card class="checkout_warpper my-12 ma-auto" elevation="4">
                 <!-- 選擇付款方式 -->
-                <div>
                     <v-card-title>選擇您的付款方式</v-card-title>
                     <v-card-subtitle class="mt-2">
-                        <label class="ma-2 blue blue-grey lighten-4" v-for="payment in payments" :key="payment.id">
-                            <!-- 預設選擇現金付款 -->
+                        <!-- <label class="ma-2 blue blue-grey lighten-4" v-for="payment in payments" :key="payment.id">
+                            
                             <input type="radio" name="payment_id" 
                                 v-model="form.payment_id"
                                 :value="payment.id" 
@@ -53,11 +52,14 @@
                                 <v-icon dark>fa-bookmark fa-fw</v-icon>
                                 <span>{{ payment.title }}</span>
                             </div>
-                        </label>
+                        </label> -->
+                        <v-chip-group mandatory active-class="deep-purple--text text--accent-4" name="payment_id" v-model="form.payment_id">
+                            <v-chip v-for="payment in payments" :key="payment.id" :value="payment.id">
+                                {{ payment.title }}
+                            </v-chip>
+                        </v-chip-group>
                     </v-card-subtitle>
-                </div>
                 <!-- 選擇送達地址 -->
-                <div>
                     <v-card-title>輸入您的地址</v-card-title>
                     <v-text-field
                         class="text_field"
@@ -69,7 +71,6 @@
                         placeholder="OO市OO區OO路OO號..."
                         hide-details="auto"
                     ></v-text-field>
-                </div>
                 <!-- 按鈕與金額顯示 -->
                 <div class="d-flex align-center justify-center">
                     <!-- 送出按鈕 -->
@@ -158,33 +159,34 @@ export default {
 <style lang="scss" scoped>
 $border-radius: 50px;
 //* 標籤
-label {
-    display: inline-flex;
-    align-items: center;
-    position: relative;
-    border-radius: $border-radius;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    transition: all 0.5s ease-in-out;
-    cursor: pointer;
-    //? 文字內容
-    div {
-        padding: 12px;
-        letter-spacing: 4px;
-        font-weight: bold;
-    }
-    //? radio 按鈕
-    input[type="radio"] {
-        display: none;
-        //? check 後改變 label 的背景色
-        &:checked + div {
-            background: #1E88E5;
-            color: #FFF;
-            border-radius: $border-radius;
+    //! default (暫不使用) 
+// label {
+//     display: inline-flex;
+//     align-items: center;
+//     position: relative;
+//     border-radius: $border-radius;
+//     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
+//     text-align: center;
+//     transition: all 0.5s ease-in-out;
+//     cursor: pointer;
+//     //? 文字內容
+//     div {
+//         padding: 12px;
+//         letter-spacing: 4px;
+//         font-weight: bold;
+//     }
+//     //? radio 按鈕
+//     input[type="radio"] {
+//         display: none;
+//         //? check 後改變 label 的背景色
+//         &:checked + div {
+//             background: #1E88E5;
+//             color: #FFF;
+//             border-radius: $border-radius;
 
-        }
-    }
-}
+//         }
+//     }
+// }
 .checkout_warpper {
     width: 500px;
 }
