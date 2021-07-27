@@ -26,7 +26,11 @@
             <v-card-subtitle>
                 加入時間:
                 <span class="font-weight-bold black--text">
-                    {{ user.created_at }}
+                    {{ $moment(user.created_at).format('LL') }}
+                </span>
+                <!-- Relative Time -->
+                <span class="font-weight-bold gray--text">
+                    ({{ $moment(user.created_at).fromNow() }})
                 </span>
             </v-card-subtitle>
         </v-card>

@@ -35,7 +35,7 @@
                         </template>
                         <!-- 訂購時間 -->
                         <v-card-subtitle>
-                            訂購時間: <span class="font-weight-bold black--text">{{ order.created_at }}</span>
+                            訂購時間: <span class="font-weight-bold black--text">{{ $moment(order.created_at).format('YYYY年 MMM Do a h:mm:ss') }}</span>
                         </v-card-subtitle>
                         <!-- 刪除按鈕 -->
                         <div class="btn_container ma-2 pa-2">

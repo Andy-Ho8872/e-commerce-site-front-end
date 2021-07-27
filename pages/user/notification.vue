@@ -64,8 +64,12 @@
                                 訂單編號 - <span class="font-weight-bold">{{ notification.data.order_id }}</span>
                             </v-list-item-subtitle>
                             <!-- 訂購時間 -->
-                            <v-list-item-subtitle>訂購時間 - 
-                                <span class="font-weight-bold">{{ notification.data.created_at }}</span>
+                            <v-list-item-subtitle class="my-2">訂購時間 - 
+                                <span class="font-weight-bold">{{ $moment(notification.data.created_at).format('YYYY年 MMM Do a h:mm:ss') }}</span>
+                            </v-list-item-subtitle>
+                            <!-- 已讀時間 -->
+                            <v-list-item-subtitle class="my-2" v-show="notification.read_at">
+                                <span class="font-weight-bold">在 {{ $moment(notification.read_at).format('YYYY年 MMM Do a h:mm:ss') }} 看過這則通知</span>
                             </v-list-item-subtitle>
                             <!-- 已讀按鈕 -->
                             <div class="btn_container">
