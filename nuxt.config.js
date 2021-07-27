@@ -38,7 +38,13 @@ export default {
 
     buildModules: [
         '@nuxtjs/vuetify',
+        '@nuxtjs/moment',
     ],
+    moment: {
+        defaultLocale: 'zh-tw',
+        locales: ['zh-tw'],
+        defaultTimezone: 'Asia/Taipei'
+    },
 
     vuetify: {
         customVariables: ['~/assets/variables.scss'],
