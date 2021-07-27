@@ -2,7 +2,7 @@
     <v-container>
         <LoadingCircle v-if="loading"/>
         <!-- 搜尋成功 -->
-        <div v-else-if="result">
+        <div v-else-if="results">
             <h2 class="text-center">
                 關於
                 <span class="blue--text lighten-5">
