@@ -143,7 +143,7 @@ export default {
 .auto_complete {
     position: absolute;
     overflow-y: auto;
-    max-height: 300px;
+    max-height: fit-content;
     top: 65%;
     padding: 0;
 }
