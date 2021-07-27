@@ -36,7 +36,7 @@
             <!-- no result text -->
             <p
                 class="text-center blue--text caption font-weight-bold pt-4"
-                v-show="!autoCompleteItems.length"
+                v-show="!autoCompleteItems"
             >
                 {{ no_result_text }}
             </p>
