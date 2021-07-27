@@ -2,6 +2,8 @@
     <div class="search_container d-flex flex-column">
         <v-text-field
             id="search"
+            v-click-outside="onClickOutside"
+            @click="showModal = true"
             autocomplete="off"
             name="search"
             v-model="searchText"
@@ -26,11 +28,14 @@
             ></v-progress-linear>
             <!-- results -->
             <li
-                class="text-center blue--text text-button font-weight-bold"
+                class="blue--text text-button font-weight-bold"
                 v-for="item in autoCompleteItems"
                 :key="item.id"
                 @click="[setInitialState(item.title), switchRoute()]"
             >
+                <v-avatar>
+                    <v-img :src="item.imgUrl" :alt="item.title"></v-img>
+                </v-avatar>
                 {{ item.title }}
             </li>
             <!-- no result text -->
@@ -107,6 +112,10 @@ export default {
             this.selected = title
             this.showModal = false
         },
+        //* 點擊 Search 以外的區域則會關閉 
+        onClickOutside () {
+            this.showModal = false
+        },
     },
     computed: {
         ...mapGetters({
@@ -123,14 +132,6 @@ export default {
                 this.search(val)
             }
         },
-    },
-    mounted() {
-        //* 點擊區域外關閉
-        document.addEventListener('click', e => {
-            e.target.id === 'search'
-                ? (this.showModal = true)
-                : (this.showModal = false)
-        })
     },
 }
 </script>
