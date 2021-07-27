@@ -18,7 +18,11 @@
                 >
                     <!-- 圖片 -->
                     <div class="half">
-                        <v-img :src="product.imgUrl" class="rounded-t-xl"></v-img>
+                        <v-img :src="product.imgUrl" class="rounded-xl ma-6"></v-img>
+                        <v-card-subtitle class="mx-4 grey--text text--darken-1 text-lg-left text-center">
+                            本商品於 {{ $moment(product.created_at).format('ll') }}
+                            ({{ $moment(product.created_at).fromNow() }}) 上架
+                        </v-card-subtitle>
                     </div>
                     <!-- 詳細資訊 -->
                     <div class="half">
