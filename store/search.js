@@ -1,4 +1,4 @@
-import { apiSearchByTitle } from '../APIs/api.js'
+import { apiSearchByTitle, apiSearchAutoComplete } from '../APIs/api.js'
 
 export const state = () => ({
     //* 搜尋結果
@@ -51,7 +51,7 @@ export const actions = {
         commit('SET_AUTO_COMPLETE_LOADING', true)
         try {
             if (title) {
-                const res = await apiSearchByTitle(title)
+                const res = await apiSearchAutoComplete(title)
                 const items = res.data.products
                 commit('SET_AUTO_COMPLETE_ITEMS', items)
             } else {

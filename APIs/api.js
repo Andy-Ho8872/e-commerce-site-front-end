@@ -110,6 +110,8 @@ export const apiGetProductTags = () => productRequest.get(`/tags/getTags`);
 export const apiGetProductsWithPagination = (page) => productRequest.get(`/pagination?page=${page}`);
     //* 搜尋商品(名稱)
 export const apiSearchByTitle = (title) => productRequest.get(`/search/${title}`);
+    //* 搜尋商品(自動補全)
+export const apiSearchAutoComplete = (title) => productRequest.get(`/search/${title}/autocomplete`);
     //! 搜尋商品(標籤)  暫時未用到
 export const apiSearchByTag = (id) => productRequest.get(`/tags/${id}`);
 //------------------------------------------- 商品相關的 API -------------------------------------------//
