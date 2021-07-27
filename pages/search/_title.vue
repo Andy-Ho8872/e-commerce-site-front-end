@@ -2,7 +2,7 @@
     <v-container>
         <LoadingCircle v-if="loading"/>
         <!-- 搜尋成功 -->
-        <div v-else-if="result.length">
+        <div v-else-if="result">
             <h2 class="text-center">
                 關於
                 <span class="blue--text lighten-5">
@@ -13,7 +13,7 @@
             <!-- 商品陳列 -->
             <v-sheet elevation="6" rounded="lg" class="my-12 px-6">
                     <v-row justify="space-around">
-                        <div v-for="product in result" class="mt-8 mb-16" :key="product.id">
+                        <div v-for="product in results" class="mt-8 mb-16" :key="product.id">
                             <SkeletonCardV2 :cardWidth="200" :cardHeight="290" v-if="loading"/>
                             <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-6"/>
                         </div>
@@ -41,7 +41,7 @@ export default {
     computed: {
         ...mapGetters({
             //* 搜尋結果
-            result: 'search/getResult',
+            results: 'search/getResult',
             loading: 'search/getPageLoading'
         }),
         searchQuery() {
