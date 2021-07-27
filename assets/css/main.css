@@ -10,7 +10,7 @@
 
 html,
 body {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .v-main_wrap {
