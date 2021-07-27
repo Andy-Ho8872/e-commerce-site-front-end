@@ -3,7 +3,7 @@
         <LoadingCircle v-if="loading"/>
         <!-- 搜尋成功 -->
         <div v-else-if="results">
-            <h2 class="text-center">
+            <h2 class="text-center mb-6">
                 關於
                 <span class="blue--text lighten-5">
                     "{{ searchQuery }}"
@@ -11,25 +11,18 @@
                 的搜尋結果
             </h2>
             <!-- 商品陳列 -->
-            <v-sheet elevation="6" rounded="lg" class="my-12 px-6">
-                    <v-row justify="space-around">
-                        <div v-for="product in results" class="mt-8 mb-16" :key="product.id">
-                            <SkeletonCardV2 :cardWidth="200" :cardHeight="290" v-if="loading"/>
-                            <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-6"/>
-                        </div>
-                    </v-row>
+            <v-sheet elevation="6" rounded="lg" class="px-6">
+                <v-row justify="space-around">
+                    <div v-for="product in results" :key="product.id" class="mt-8 mb-16" >
+                        <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-8"/>
+                    </div>
+                </v-row>
             </v-sheet>
         </div>
         <!-- 搜尋失敗 -->
-        <v-row v-else>
-            <h2 class="ma-auto">
-                找不到關於
-                <span class="blue--text lighten-5">
-                    "{{ searchQuery }}"
-                </span>
-                的搜尋結果
-            </h2>
-        </v-row>
+        <div v-else class="text-center">
+            <SearchNotFound :searchQuery="searchQuery"/>
+        </div>
     </v-container>
 </template>
 
