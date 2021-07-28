@@ -108,8 +108,10 @@ export const apiGetProduct = (id) => productRequest.get(`/${id}`);
 export const apiGetProductTags = () => productRequest.get(`/tags/getTags`);
     //* 商品換頁(Pagination) 
 export const apiGetProductsWithPagination = (page) => productRequest.get(`/pagination?page=${page}`);
-    //* 搜尋商品(名稱)
+    // 搜尋商品(名稱) //! 暫時不使用 
 export const apiSearchByTitle = (title) => productRequest.get(`/search/${title}`);
+    //* 搜尋商品(含分頁)
+export const apiSearchByTitleWithPagination = (title, page) => productRequest.get(`/search/${title}/pagination?page=${page}`);
     //* 搜尋商品(自動補全)
 export const apiSearchAutoComplete = (title) => productRequest.get(`/search/${title}/autocomplete`);
     //! 搜尋商品(標籤)  暫時未用到
