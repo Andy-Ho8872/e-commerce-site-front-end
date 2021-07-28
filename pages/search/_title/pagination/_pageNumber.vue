@@ -7,7 +7,7 @@
             <h2 class="text-center mb-6">
                 關於
                 <span class="blue--text lighten-5">
-                    "{{ searchQuery }}"
+                    "{{ searchText }}"
                 </span>
                 的搜尋結果
             </h2>
@@ -48,7 +48,7 @@ export default {
             results: 'search/getResult',
             loading: 'search/getPageLoading'
         }),
-        searchQuery() {
+        searchText() {
             return this.$route.params.title
         },
         length() {
@@ -61,8 +61,8 @@ export default {
             fetchData: 'search/searchProductsWithPagination', 
         }),
         CheckOrFetch() {
-            if (this.results.current_page != this.page) {
-                this.fetchData({ title: this.searchQuery, pageNumber: this.page })
+            if (!this.results || this.results.current_page != this.page) {
+                this.fetchData({ title: this.searchText, pageNumber: this.page })
             }
         },
     },
