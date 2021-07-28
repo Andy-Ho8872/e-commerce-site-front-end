@@ -7,7 +7,7 @@
                     :key="tag.id"
                     color="primary"
                     nuxt
-                    :to="{ name: 'search-title', params: { title: tag.title } }"
+                    :to="{ name: 'search-title-pagination-pageNumber', params: { title: tag.title, pageNumber: 1} }"
                 >
                     {{ tag.title }}
                 </v-chip>
