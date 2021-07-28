@@ -10,8 +10,8 @@
             placeholder="相機、螢幕、服裝、折扣..."
             append-icon="fa-search"
             @keyup="handleAutoComplete"
-            @click:append="search(searchText)"
-            @keydown.enter="search(searchText)"
+            @click:append="search({ title: searchText, pageNumber: 1 })"
+            @keydown.enter="search({ title: searchText, pageNumber: 1 })"
             solo
             dense
         >
@@ -61,15 +61,16 @@ export default {
     },
     data() {
         return {
-            searchText: '',
-            selected: null,
+            searchText: '', //* 使用者輸入的搜尋關鍵字
+            selected: null, //* 使用者在 auto-complete 中所選擇的關鍵字
             showModal: false,
         }
     },
     methods: {
         ...mapActions({
-            //* 搜尋商品
-            search: 'search/searchProducts',
+            //* 搜尋商品(含分頁)
+            search: 'search/searchProductsWithPagination',
+            //* 自動補全
             autoComplete: 'search/fetchAutoComplete',
         }),
         handleAutoComplete(e) {
@@ -103,8 +104,11 @@ export default {
         },
         switchRoute() {
             this.$router.push({
-                name: 'search-title',
-                params: { title: this.selected },
+                name: 'search-title-pagination-pageNumber',
+                params: { 
+                    title: this.selected,
+                    pageNumber: 1 //* 預設為第一頁
+                },
             })
         },
         setInitialState(title) {
@@ -129,7 +133,7 @@ export default {
         },
         selected(val) {
             if (val) {
-                this.search(val)
+                this.search({ title: val, pageNumber: 1 })
             }
         },
     },
