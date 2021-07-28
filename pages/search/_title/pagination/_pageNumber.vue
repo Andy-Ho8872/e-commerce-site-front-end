@@ -1,5 +1,6 @@
 <template>
     <v-container>
+        <!-- 讀取中 -->
         <LoadingCircle v-if="loading"/>
         <!-- 搜尋成功 -->
         <div v-else-if="results">
@@ -10,18 +11,23 @@
                 </span>
                 的搜尋結果
             </h2>
-            <!-- 商品陳列 -->
+            <!-- 顯示搜尋內容 -->
             <v-sheet elevation="6" rounded="lg" class="px-6">
                 <v-row justify="space-around">
-                    <div v-for="product in results" :key="product.id" class="mt-8 mb-16" >
+                    <div v-for="product in results.data" :key="product.id" class="mt-8 mb-16" >
                         <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-8"/>
                     </div>
                 </v-row>
             </v-sheet>
-        </div>
-        <!-- 搜尋失敗 -->
-        <div v-else class="text-center">
-            <SearchNotFound :searchQuery="searchQuery"/>
+            <!-- 控制分頁 -->
+            <div class="text-center my-8">
+                <v-pagination
+                    circle
+                    v-model="page"
+                    :length="length"
+                    @input="CheckOrFetch"
+                ></v-pagination>
+            </div>
         </div>
     </v-container>
 </template>
@@ -30,6 +36,11 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    data() {
+        return {
+            page: Number(this.$route.params.pageNumber) || 1,
+        }
+    },
     //* 此處的 search function 在 Components/Header.vue 裡
     computed: {
         ...mapGetters({
@@ -39,18 +50,26 @@ export default {
         }),
         searchQuery() {
             return this.$route.params.title
+        },
+        length() {
+            return Number(this.results.last_page)
         }
     },
     methods: {
         ...mapActions({
             //* 搜尋商品
-            search: 'search/searchProducts', 
+            fetchData: 'search/searchProductsWithPagination', 
         }),
+        CheckOrFetch() {
+            if (this.results.current_page != this.page) {
+                this.fetchData({ title: this.searchQuery, pageNumber: this.page })
+            }
+        },
     },
     created() {
         //* 避免再重新整理頁面的時候發送相同的 request 
-        this.search(this.searchQuery)
-    }
+        this.CheckOrFetch()
+    },
 }
 </script>
 
