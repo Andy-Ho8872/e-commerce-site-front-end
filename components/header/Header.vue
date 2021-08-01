@@ -85,7 +85,7 @@
                 <!-- 如果購物車內有商品才顯示 -->
                 <v-badge color="orange" :content="userCart.length" :value="userCart.length">
                     <!-- 購物車 svg -->
-                    <v-img :src="require('~/static/cart/ShoppingCart.svg')"></v-img>
+                    <v-img :src="require('~/static/cart/ShoppingCart.svg')" alt="Shopping.svg"></v-img>
                 </v-badge>
             </nuxt-link>
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->

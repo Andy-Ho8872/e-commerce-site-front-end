@@ -2,7 +2,7 @@
     <div class="text-center">
         <!-- 圖片 -->
         <v-img
-            :src="require('~/static/notification/EmptyNotification.svg')"
+            :src="require('~/static/notification/EmptyNotification.svg')" alt="EmptyNotification.svg"
             class="mx-auto mb-4"
             :max-width="width"
             :max-height="height"

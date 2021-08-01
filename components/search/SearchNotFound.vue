@@ -7,7 +7,7 @@
             </span>
             的搜尋結果
         </h2>
-        <v-img :src="require('~/static/search/SearchNotFound.svg')"
+        <v-img :src="require('~/static/search/SearchNotFound.svg')" alt="SearchNotFound.svg"
             class="mx-auto mb-4"
             :max-width="width" 
             :max-height="height"

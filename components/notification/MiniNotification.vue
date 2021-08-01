@@ -14,7 +14,7 @@
                     <v-list-item  :key="notification.id">
                         <!-- 通知圖片 -->
                         <v-list-item-avatar tile size="40">
-                            <v-img :src="require('~/static/order/OrderConfirmed.svg')"></v-img>
+                            <v-img :src="require('~/static/order/OrderConfirmed.svg')" alt="OrderConfirmed.svg"></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content>
                             <!-- 標題 -->
