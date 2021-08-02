@@ -1,9 +1,16 @@
 <template>
     <div class="text-center">
-        <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
+        <v-progress-circular :size="size" color="primary" indeterminate></v-progress-circular>
     </div>
 </template>
 
 <script>
-export default {}
+export default {
+    props: {
+        size: {
+            type:[String, Number],
+            default: 50
+        }
+    }
+}
 </script>
