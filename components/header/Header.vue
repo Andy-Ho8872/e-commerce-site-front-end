@@ -2,7 +2,7 @@
     <div class="navbar blue darken-1 white--text">
         <!-- Navbar 上層 -->
         <v-row class="navbar_upper d-md-flex align-center justify-center ma-3" :class="{ show: active }">
-            <div class="content_wrapper d-flex caption">
+            <div class="content_wrapper d-flex flex-column flex-sm-row caption">
                 <!-- 回到首頁 -->
                 <v-row class="content">
                     <li>
@@ -15,7 +15,7 @@
             </div>
             <v-spacer></v-spacer>
             <!-- 以上勿動 -->
-            <div class="content_wrapper d-flex caption">
+            <div class="content_wrapper d-flex flex-column flex-sm-row caption">
                 <!-- 通知總覽-->
                 <v-row class="content">
                     <li class="notification" @mouseenter="appear = true" @mouseleave="appear = false">
@@ -235,14 +235,12 @@ a {
         }
     }
 }
-@media (max-width: 640px) {
+@media (max-width: 640px) { //? default 640
     li {
         width: 100%;
     }
     //* navbar 上層 -------------------------------------------------------------- Start
     .navbar_upper {
-        flex-direction: column;
-        align-content: flex-start;
         position: absolute;
         width: 70vw;
         top: 100%;
@@ -254,15 +252,12 @@ a {
     }
     .content_wrapper {
         width: inherit;
-        flex-direction: column;
-        align-content: flex-start;
         li {
             margin: 10% 0;
         }
     }
     //? 使用者帳號、登出
     .content {
-        flex-direction: column;
         margin: 0 5%;
         &:nth-child(-n + 1) {
             border-bottom: 1px solid white;
