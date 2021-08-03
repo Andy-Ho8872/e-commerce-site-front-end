@@ -4,8 +4,10 @@
         <EmptyCart v-if="!userCart.length"/>
         <!-- 若有商品-->
         <div v-else>
+            <!-- Banner -->
+            <Banner icon="fa-shopping-cart" text="您的購物車" elevation="1" class="my-4"/>
             <!-- Header -->
-            <v-card class="cart_header d-none d-sm-flex justify-space-around mb-6 pa-6 font-weight-bold rounded-t-xl" elevation="2">
+            <v-card class="cart_header d-none d-sm-flex justify-space-around mb-4 pa-6 font-weight-bold" elevation="2">
                 <!-- left -->
                 <div class="cart_header__left">
                     <div class="icon_group">
@@ -83,7 +85,7 @@
                 </div>
             </v-card>
             <!-- Footer -->
-            <v-card class="cart_footer d-flex flex-sm-row flex-column mt-4 pa-4 rounded-b-xl align-center text-right" elevation="2">
+            <v-card class="cart_footer d-flex flex-sm-row flex-column mt-4 pa-4 align-center text-right" elevation="2">
                 <!-- 小計金額 -->
                 <div class="subtotal text-sm-right text-center title font-weight-bold">
                     小計: <span class="red--text">{{ subTotal }}</span>
