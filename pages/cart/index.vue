@@ -53,7 +53,7 @@
                     <!-- section right -->
                     <div class="cart_section__right d-flex flex-sm-row flex-column justify-space-around align-center">
                         <!-- 價格區域 -->
-                        <div class="unit_price d-flex flex-sm-column">
+                        <div class="unit_price d-flex flex-sm-column font-weight-bold grey--text text--darken-2">
                             <!-- 原價 -->
                             <span :class="[item.discount_rate == 1 ? '' : 'discounted']">
                                 ${{ Math.floor(item.unit_price) }}
@@ -68,7 +68,7 @@
                             <QuantityField :product_quantity="item.product_quantity" :product_id="item.product_id"/>
                         </div>
                         <!-- 商品總價 -->
-                        <div class="total d-none d-sm-flex">
+                        <div class="total d-none d-sm-flex font-weight-bold grey--text text--darken-2">
                             <span>${{ item.total }}</span>
                         </div>
                         <!-- 刪除按鈕(單項商品) -->
