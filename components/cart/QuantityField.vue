@@ -48,7 +48,8 @@ export default {
         },
         product_quantity: {
             type: Number,
-            require: true
+            require: true,
+            default: 1
         }
     },
     data () {  
