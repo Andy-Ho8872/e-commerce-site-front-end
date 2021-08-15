@@ -4,108 +4,50 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 // components
 import Header from '@/components/header/Header.vue'
-import MiniNotification from '@/components/notification/MiniNotification.vue'
-import AutoComplete from '@/components/search/AutoComplete.vue'
 // Utilities
 import { createLocalVue, RouterLinkStub, shallowMount } from '@vue/test-utils'
+// vuex modules
+import auth from '@/store/__mocks__/auth.js'
+import cart from '@/store/__mocks__/cart.js'
+import notification from '@/store/__mocks__/notification.js'
 // use packages
 Vue.use(Vuetify)
-Vue.use(Vuex)
-Vue.use(VueRouter)
+const localVue = createLocalVue()
+localVue.use(Vuex)
+localVue.use(VueRouter)
 
 describe('Header.vue', () => {
-    const localVue = createLocalVue()
     let router
     let store
     beforeEach(() => {
         router = new VueRouter()
         store = new Vuex.Store({
             modules: {
-                auth: {
-                    namespaced: true,
-                    state: () => ({
-                        token: 'test token',
-                        user: {
-                            id: 1,
-                            name: 'Tommy',
-                        },
-                    }),
-                    getters: {
-                        getToken(state) {
-                            return state.token
-                        },
-                        getUserInfo(state) {
-                            return state.user
-                        },
-                    },
-                    mutations: {
-                        SET_TOKEN(state) {
-                            state.token = 'Bearer token'
-                        },
-                    },
-                    actions: {
-                        fetchRequiredData() {
-                            console.log('fake data fetched')
-                        },
-                    },
-                },
-                cart: {
-                    namespaced: true,
-                    state: () => ({
-                        userCart: [
-                            {
-                                id: 1,
-                                name: '3C',
-                                quantity: 1,
-                            },
-                            {
-                                id: 2,
-                                name: '服裝',
-                                quantity: 1,
-                            },
-                        ],
-                    }),
-                    getters: {
-                        getUserCart(state) {
-                            return state.userCart
-                        },
-                    },
-                },
-                notification: {
-                    namespaced: true,
-                    state: () => ({
-                        unReadNotifications: [
-                            {
-                                id: 1,
-                                text: 'fake notification-1',
-                            },
-                            {
-                                id: 2,
-                                text: 'fake notification-2',
-                            },
-                        ],
-                    }),
-                    getters: {
-                        getUnreadNotifications(state) {
-                            return state.unReadNotifications
-                        },
-                    },
-                },
+                auth,
+                cart,
+                notification
             },
         })
     })
-    test('should change route correctly', () => {
+
+    test('vuex actions should be called once', async () => {
         const wrapper = shallowMount(Header, {
             localVue,
             store,
             router,
-            NuxtLink: RouterLinkStub,
-            stubs: ['nuxt-link', 'MiniNotification.vue', 'AutoComplete.vue'],
-            components: {
-                'MiniNotification': MiniNotification,
-                'AutoComplete': AutoComplete
-            }
+            stubs: {
+                NuxtLink: RouterLinkStub, // fake router
+                MiniNotification: true, // fake component
+                AutoComplete: true, // fake component
+            },
         })
-        expect(wrapper.findComponent(Header).exists()).toBeTruthy()
+        // 找出有 logout function 的DOM
+        const logoutBtn = wrapper.findAll('li')
+        // logout function
+        const logout = auth.actions.logout
+        // 點擊以觸發
+        await logoutBtn.trigger('click')
+        // 觸發完成
+        expect(logout).toBeCalled()
     })
 })
