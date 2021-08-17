@@ -3,6 +3,8 @@ import Vuetify from 'vuetify'
 import Vuex from 'vuex'
 // components
 import QuantityField from '@/components/cart/QuantityField.vue'
+// Vuex modules
+import cart from '@/store/__mocks__/cart.js'
 // Utilities
 import { createLocalVue, mount } from '@vue/test-utils'
 // use packages
@@ -19,38 +21,7 @@ describe('QuantityField.vue', () => {
         store = new Vuex.Store({
             modules: {
                 // 假資料
-                cart: {
-                    namespaced: true,
-                    state: () => ({
-                        loading: false,
-                        product: {
-                            id: 1,
-                            title: 'test1',
-                            quantity: 1,
-                        },
-                    }),
-                    getters: {
-                        getLoading(state) {
-                            return state.loading
-                        },
-                    },
-                    mutations: {
-                        INCREMENT(state) {
-                            state.product.quantity += 1
-                        },
-                        DECREMENT(state) {
-                            state.product.quantity -= 1
-                        },
-                    },
-                    actions: {
-                        async increaseByOne({ commit }) {
-                            commit('INCREMENT')
-                        },
-                        async decreaseByOne({ commit }) {
-                            commit('DECREMENT')
-                        },
-                    },
-                },
+                cart
             },
         })
     })
@@ -110,13 +81,14 @@ describe('QuantityField.vue', () => {
         })
         expect(wrapper.find('.v-btn').trigger('click'))
     })
-    test('action should trigger mutation to change the quantity of the product', async () => {
+    test('vuex action should trigger mutation to change the quantity of the product', async () => {
         const wrapper = mount(QuantityField, {
             localVue,
             vuetify,
             store,
         })
         await store.dispatch('cart/increaseByOne')
-        expect(store.state.cart.product.quantity).toBe(2)
+        const product_quantity = store.state.cart.product.quantity
+        expect(product_quantity).toBe(2)
     })
 })
