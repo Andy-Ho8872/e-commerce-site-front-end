@@ -10,7 +10,13 @@ import { createLocalVue, RouterLinkStub, mount } from '@vue/test-utils'
 import auth from '@/store/__mocks__/auth.js'
 import cart from '@/store/__mocks__/cart.js'
 import notification from '@/store/__mocks__/notification.js'
-// use packages
+// mock api calls
+import mockAxios from 'axios'
+import { mockApiGetUserInfo } from '@/APIs/__mocks__/mockAPI.js'
+jest.mock('axios')
+// mock api data
+mockAxios.get.mockImplementation(() => Promise.resolve({ data: { name: 'Tommy' } }))
+// use packages or library
 Vue.use(Vuetify)
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -69,5 +75,10 @@ describe('Header.vue', () => {
         router.push({ name: 'auth-login' })
         // APP 網址應該包含該路由的路徑
         expect(wrapper.vm.$route.path).toContain('auth/login')
+    })
+    test('axios get should return a name of user', async () => {
+        const wrapper = initSetup()
+        const result = await mockApiGetUserInfo()
+        expect(result.name).toBe('Tommy')
     })
 })
