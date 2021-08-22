@@ -6,16 +6,16 @@ import Vuex from 'vuex'
 import Header from '@/components/header/Header.vue'
 // Utilities
 import { createLocalVue, RouterLinkStub, mount } from '@vue/test-utils'
-// vuex modules
+// mock vuex modules
 import auth from '@/store/__mocks__/auth.js'
 import cart from '@/store/__mocks__/cart.js'
 import notification from '@/store/__mocks__/notification.js'
 // mock api calls
-import mockAxios from 'axios'
 import { mockApiGetUserInfo } from '@/APIs/__mocks__/mockAPI.js'
-jest.mock('axios')
+import mockAxios from 'axios'
 // mock api data
-mockAxios.get.mockImplementation(() => Promise.resolve({ data: { name: 'Tommy' } }))
+jest.mock('axios')
+mockAxios.get.mockResolvedValue({ data: { name: 'Tommy' } })
 // use packages or library
 Vue.use(Vuetify)
 const localVue = createLocalVue()
@@ -24,38 +24,40 @@ localVue.use(VueRouter)
 
 describe('Header.vue', () => {
     // presets
+    let vuetify
+    let router
+    let store
     const routes = [
         {
             path: '/auth/login',
             name: 'auth-login',
         },
     ]
-    const vuetify = new Vuetify()
-    const router = new VueRouter({ routes })
-    const store = new Vuex.Store({
-        modules: {
-            auth,
-            cart,
-            notification,
-        },
+    beforeEach(() => {
+        vuetify = new Vuetify()
+        router = new VueRouter({ routes })
+        store = new Vuex.Store({
+            modules: {
+                auth,
+                cart,
+                notification,
+            },
+        })
     })
-    // 初始化元件的狀態
-    const initSetup = () => {
-        return mount(Header, {
-            localVue,
-            vuetify,
-            store,
-            router,
+    afterEach(jest.clearAllMocks)
+    // tests
+    test('vuex actions should be called once', async () => {
+        const wrapper = mount(Header, {
             stubs: {
                 NuxtLink: RouterLinkStub, // fake router
                 MiniNotification: true, // fake component
                 AutoComplete: true, // fake component
             },
+            localVue,
+            vuetify,
+            router,
+            store,
         })
-    }
-    // tests
-    test('vuex actions should be called once', async () => {
-        const wrapper = initSetup()
         // 找出有 logout function 的DOM
         const logoutBtn = wrapper.findAll('li')
         // logout function
@@ -66,7 +68,17 @@ describe('Header.vue', () => {
         expect(logout).toBeCalled()
     })
     test('login route should be pushed correctly after triggering a click event', async () => {
-        const wrapper = initSetup()
+        const wrapper = mount(Header, {
+            stubs: {
+                NuxtLink: RouterLinkStub, // fake router
+                MiniNotification: true, // fake component
+                AutoComplete: true, // fake component
+            },
+            localVue,
+            vuetify,
+            router,
+            store,
+        })
         // 找出有切換路由功能的 DOM
         const loginButton = wrapper.findAll('li')
         // 等待點擊事件觸發
@@ -77,8 +89,19 @@ describe('Header.vue', () => {
         expect(wrapper.vm.$route.path).toContain('auth/login')
     })
     test('axios get should return a name of user', async () => {
-        const wrapper = initSetup()
+        const wrapper = mount(Header, {
+            stubs: {
+                NuxtLink: RouterLinkStub, // fake router
+                MiniNotification: true, // fake component
+                AutoComplete: true, // fake component
+            },
+            localVue,
+            vuetify,
+            router,
+            store,
+        })
         const result = await mockApiGetUserInfo()
         expect(result.name).toBe('Tommy')
+        expect(mockAxios.get).toHaveBeenCalledTimes(1)
     })
 })
