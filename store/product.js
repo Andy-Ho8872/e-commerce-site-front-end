@@ -10,9 +10,7 @@ export const state = () => ({
     //* 首頁的商品
     indexPageProducts: [],
     //* 瀏覽過的商品(暫存用)
-    products: [],
-    // 單一產品(由 id 進行篩選) //! 暫時不用
-    // product: {},
+    viewedProducts: [],
     //* 分頁的產品
     paginatedProducts: [], 
     //* pagination 的 loading 狀態 
@@ -26,8 +24,8 @@ export const getters = {
         return state.indexPageProducts
     },
     //* 瀏覽過的商品(暫存用)
-    getAllProducts(state) {
-        return state.products
+    getViewedProducts(state) {
+        return state.viewedProducts
     },
     getPaginatedProducts(state) {
         return state.paginatedProducts
@@ -35,10 +33,6 @@ export const getters = {
     getLoading(state) {
         return state.loading
     },
-    //! 暫不使用
-    // getSingleProduct(state) {
-    //     return state.product
-    // },
     getAllProductTags(state) {
         return state.productTags
     },
@@ -48,10 +42,6 @@ export const mutations = {
     SET_INDEX_PAGE_PRODUCTS(state, products) {
         state.indexPageProducts = products
     },
-    // 所有瀏覽過的商品 //! 暫時不用
-    // SET_PRODUCTS(state, products) {
-    //     state.products = products
-    // },
     //* 單一商品
     SET_PRODUCT(state, product) {
         state.product = product
@@ -63,13 +53,9 @@ export const mutations = {
         state.loading = loading
     },
     //* 紀錄瀏覽過的產品(作為快取用)
-    PUSH_PRODUCT(state, product) {
-        state.products.push(product)
+    PUSH_PRODUCT_TO_VIEWED_PRODUCTS(state, product) {
+        state.viewedProducts.push(product)
     },
-    //! 重設單品 (清空原有的 Object) 暫時未用
-    // RESET_PRODUCT(state) {
-    //     state.product = {}
-    // },
     //* 產品的標籤 
     SET_PRODUCT_TAGS(state, tags) {
         state.productTags = tags
@@ -89,20 +75,9 @@ export const actions = {
             }
         }
     },
-    //! 抓取所有商品 (暫時未用)
-    // async fetchAllProducts(state) {
-    //     try {
-    //         const res = await apiGetProducts()
-    //         //* 所有產品的資料
-    //         const products = res.data
-    //         state.commit('SET_PRODUCTS', products)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // },
     //* 抓取單一商品
     async fetchSingleProduct({ state, commit }, productId) {
-        let exist = state.products.find(product => product.id == productId)
+        let exist = state.viewedProducts.find(product => product.id == productId)
         //* 若是找不到才抓取
         if (exist === undefined) {
             try {
@@ -110,8 +85,7 @@ export const actions = {
                 //* 所有產品的資料
                 const product = res.data.product
                 //* 將點擊過的產品放入 products 暫存，若使用者在瀏覽過相同產品的時候就不用再發送一次 request
-                await commit('PUSH_PRODUCT', product)
-                //! 暫時不用 commit('SET_PRODUCT', product)
+                await commit('PUSH_PRODUCT_TO_VIEWED_PRODUCTS', product)
             } catch (error) {
                 console.log(error)
             }

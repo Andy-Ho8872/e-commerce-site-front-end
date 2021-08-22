@@ -1,12 +1,6 @@
 <template>
     <v-container class="my-auto">
-        <div v-if="!product" class="text-center">
-            <v-progress-circular
-                :size="50"
-                color="primary"
-                indeterminate
-            ></v-progress-circular>
-        </div>
+        <LoadingCircle v-if="!product"/>
         <!-- 商品 -->
         <v-row v-if="product">
             <v-col>
@@ -124,10 +118,10 @@ export default {
     },
     computed: {
         ...mapGetters({
-            products: 'product/getAllProducts',
+            products: 'product/getViewedProducts',
         }),
         product() {
-            return this.products.find(p => p.id == this.$route.params.id)
+            return this.products.find(product => product.id == this.$route.params.id)
         }
     },
     methods: {
