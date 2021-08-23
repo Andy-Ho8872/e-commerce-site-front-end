@@ -7,13 +7,12 @@ import Header from '@/components/header/Header.vue'
 // Utilities
 import { createLocalVue, RouterLinkStub, mount } from '@vue/test-utils'
 // mock vuex modules
-import auth from '@/store/__mocks__/auth.js'
-import cart from '@/store/__mocks__/cart.js'
-import notification from '@/store/__mocks__/notification.js'
-// mock api calls
-import { mockApiGetUserInfo } from '@/APIs/__mocks__/mockAPI.js'
+import auth from '@/tests/__mocks__/store/auth.js'
+import cart from '@/tests/__mocks__/store/cart.js'
+import notification from '@/tests/__mocks__/store/notification.js'
+// mock api calls and data
+import { mockApiGetUserInfo } from '@/tests/__mocks__/APIs/api.js'
 import mockAxios from 'axios'
-// mock api data
 jest.mock('axios')
 mockAxios.get.mockResolvedValue({ data: { name: 'Tommy' } })
 // use packages or library
