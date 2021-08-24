@@ -37,7 +37,7 @@
             </v-list>
             <!-- 導向連結 -->
             <nuxt-link :to="{ name: 'user-notification' }">
-                <div class="bottom_text text-center">
+                <div class="bottom_text user_notification_link text-center">
                     <span class="font-weight-bold pt-3">查看所有通知</span>
                 </div>
             </nuxt-link>
