@@ -6,7 +6,7 @@
             <v-divider></v-divider>
             <!-- 若無通知 -->
             <div v-if="!unReadNotifications.length" class="ma-4">
-                <EmptyNotification />
+                <EmptyNotification class="empty_notification"/>
             </div>
             <!-- 若有通知 -->
             <v-list v-else max-height="385" class="overflow-y-auto">
