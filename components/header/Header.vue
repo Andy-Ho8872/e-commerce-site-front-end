@@ -42,14 +42,14 @@
                 <!-- 如果有使用者登入，則顯示他的帳號(電子郵件)以及登出按鈕 -->
                 <v-row v-if="user" class="content">
                     <!-- 使用者帳號 -->
-                    <li>
+                    <li class="user_email">
                         <nuxt-link :to="{ name: 'user-account' }">
                             <v-icon class="icon" dark small>fa-user fa-fw</v-icon>
                             <span>{{ user.email }}</span>
                         </nuxt-link>
                     </li>
                     <!-- 登出按鈕 -->
-                    <li @click="logout">
+                    <li class="logout_btn" @click="logout">
                         <v-icon class="icon" dark small>fa-share fa-fw</v-icon>
                         <span>登出</span>
                     </li>
