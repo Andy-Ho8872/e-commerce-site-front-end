@@ -1,6 +1,7 @@
 <template>
     <div class="d-flex align-center">
         <v-rating
+            class="product_rating"
             v-model="rating"
             dense
             background-color="yellow darken-2"
