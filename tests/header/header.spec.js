@@ -73,7 +73,7 @@ describe('Header.vue', () => {
         // 應被觸發一次
         expect(logout).toBeCalled()
         // 不應該渲染出使用者的 email
-        expect(userEmail.text()).toBe("")
+        expect(userEmail.text()).toBe('')
     })
     test('login route should be pushed correctly after triggering a click event', async () => {
         const wrapper = mount(Header, {
@@ -132,5 +132,27 @@ describe('Header.vue', () => {
         })
         const userEmail = wrapper.find('.user_email')
         expect(userEmail.text()).toBe('Tommy@example.com')
+    })
+    test('should toggle active status when clicking extend_bar', async () => {
+        const wrapper = mount(Header, {
+            stubs: {
+                NuxtLink: RouterLinkStub, // fake router
+                MiniNotification: true, // fake component
+                AutoComplete: true, // fake component
+            },
+            localVue,
+            vuetify,
+            router,
+            store,
+        })
+        //* 初始為 false
+        const extendBar = wrapper.find('.extend_bar')
+        expect(wrapper.vm.active).toBeFalsy()
+        //* 點擊後 active 應為 true
+        await extendBar.trigger('click') // 切換 active 狀態
+        expect(wrapper.vm.active).toBeTruthy()
+        //* 點擊後 active 應為 false
+        await extendBar.trigger('click')
+        expect(wrapper.vm.active).toBeFalsy()
     })
 })
