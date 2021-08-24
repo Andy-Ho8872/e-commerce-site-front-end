@@ -80,7 +80,7 @@ describe('ProductV2.vue', () => {
         const productTitle = wrapper.find('.product_title')
         expect(productTitle.text()).toBe('very long prod...')
     })
-    test('should render format product label when discount_rate is not equal to 1', async () => {
+    test('should render formatted product label when discount_rate is not equal to 1', async () => {
         const wrapper = mount(ProductV2, {
             propsData: {
                 // fake data
@@ -105,6 +105,7 @@ describe('ProductV2.vue', () => {
         })
         const productLabel = wrapper.find('.product_label')
         expect(productLabel.exists()).toBeTruthy()
+        //* formatted label = discount_rate * 10
         expect(productLabel.text()).toContain('8.5')
     })
     test('should render discounted unit_price and class when discount_rate is not equal to 1', async () => {
