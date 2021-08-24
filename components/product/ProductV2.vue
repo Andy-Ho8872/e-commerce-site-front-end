@@ -13,20 +13,20 @@
                 :alt="product.title"
             />
             <div
-                class="label text-center yellow blue--text rounded-tr-lg rounded-bl-lg"
+                class="product_label text-center yellow blue--text rounded-tr-lg rounded-bl-lg"
                 v-if="product.discount_rate != 1"
             >
                 <span>{{ formatLabel }} 折</span>
             </div>
             <!-- 標籤名稱 -->
-            <Tags :product="product" class="tags mx-2" />
+            <Tags :product="product" class="product_tags mx-2"/>
             <!-- 商品名稱 -->
-            <v-card-title class="font-weight-bold text-body-2">
+            <v-card-title class="product_title font-weight-bold text-body-2">
                 {{ conditionalTitle }}
             </v-card-title>
             <!-- 商品價格 -->
             <v-card-text
-                class="price d-flex"
+                class="product_unit_price d-flex"
                 :class="[
                     product.discount_rate != 1
                         ? 'text-body-1 font-weight-bold blue--text'
@@ -35,7 +35,7 @@
             >
                 $ {{ conditionalPrice }}
             </v-card-text>
-            <Ratings :product="product" :size="12" class="ratings mx-1 my-2" />
+            <Ratings :product="product" :size="12" class="product_ratings mx-1 my-2" />
         </v-card>
         <!-- 放入購物車按鈕 -->
         <v-btn 
@@ -110,24 +110,24 @@ export default {
     width: 100%;
     height: auto;
 }
-.label {
+.product_label {
     width: 48px;
     position: absolute;
     z-index: 1;
     top: 0;
     right: 0;
 }
-.tags {
+.product_tags {
     position: absolute;
     left: 0;
     bottom: 30%;
 }
-.ratings {
+.product_ratings {
     position: absolute;
     bottom: 0;
     right: 0;
 }
-.price {
+.product_unit_price {
     position: relative;
 }
 .action_btn {
