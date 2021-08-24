@@ -1,32 +1,19 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-import VueRouter from 'vue-router'
-import Vuex from 'vuex'
 // components
 import ProductV2 from '@/components/product/ProductV2.vue'
 // Utilities
 import { createLocalVue, RouterLinkStub, mount } from '@vue/test-utils'
-// mock vuex modules
-import product from '@/tests/__mocks__/store/product.js'
 // use packages or library
 Vue.use(Vuetify)
 const localVue = createLocalVue()
-localVue.use(Vuex)
-localVue.use(VueRouter)
 
 describe('ProductV2.vue', () => {
     // presets
     let vuetify
-    let router
     let store
     beforeEach(() => {
         vuetify = new Vuetify()
-        router = new VueRouter({})
-        store = new Vuex.Store({
-            modules: {
-                product,
-            },
-        })
     })
     test('should render product title', async () => {
         const wrapper = mount(ProductV2, {
@@ -48,8 +35,6 @@ describe('ProductV2.vue', () => {
             },
             localVue,
             vuetify,
-            router,
-            store,
         })
         const productTitle = wrapper.find('.product_title')
         expect(productTitle.text()).toBe('product-1')
@@ -74,8 +59,6 @@ describe('ProductV2.vue', () => {
             },
             localVue,
             vuetify,
-            router,
-            store,
         })
         const productTitle = wrapper.find('.product_title')
         expect(productTitle.text()).toBe('very long prod...')
@@ -100,8 +83,6 @@ describe('ProductV2.vue', () => {
             },
             localVue,
             vuetify,
-            router,
-            store,
         })
         const productLabel = wrapper.find('.product_label')
         expect(productLabel.exists()).toBeTruthy()
@@ -128,8 +109,6 @@ describe('ProductV2.vue', () => {
             },
             localVue,
             vuetify,
-            router,
-            store,
         })
         const productUnitPrice = wrapper.find('.product_unit_price')
         // discounted price = unit_price * discount_rate
@@ -158,8 +137,6 @@ describe('ProductV2.vue', () => {
             },
             localVue,
             vuetify,
-            router,
-            store,
         })
         const productLabel = wrapper.find('.product_label')
         expect(productLabel.exists()).toBeFalsy()
