@@ -14,7 +14,13 @@ import notification from '@/tests/__mocks__/store/notification.js'
 import { mockApiGetUserInfo } from '@/tests/__mocks__/APIs/api.js'
 import mockAxios from 'axios'
 jest.mock('axios')
-mockAxios.get.mockResolvedValue({ data: { name: 'Tommy' } })
+mockAxios.get.mockResolvedValue({
+    data: {
+        user: {
+            email: 'Tommy@example.com',
+        },
+    },
+})
 // use packages or library
 Vue.use(Vuetify)
 const localVue = createLocalVue()
@@ -57,14 +63,17 @@ describe('Header.vue', () => {
             router,
             store,
         })
+        const userEmail = wrapper.find('.user_email')
         // 找出有 logout function 的DOM
-        const logoutBtn = wrapper.findAll('li')
-        // logout function
+        const logoutBtn = wrapper.find('.logout_btn')
+        // mock function
         const logout = auth.actions.logout
         // 點擊以觸發
         await logoutBtn.trigger('click')
-        // 觸發完成
+        // 應被觸發一次
         expect(logout).toBeCalled()
+        // 不應該渲染出使用者的 email
+        expect(userEmail.text()).toBe("")
     })
     test('login route should be pushed correctly after triggering a click event', async () => {
         const wrapper = mount(Header, {
@@ -87,7 +96,7 @@ describe('Header.vue', () => {
         // APP 網址應該包含該路由的路徑
         expect(wrapper.vm.$route.path).toContain('auth/login')
     })
-    test('axios get should return a name of user', async () => {
+    test('axios get should return a email of user', async () => {
         const wrapper = mount(Header, {
             stubs: {
                 NuxtLink: RouterLinkStub, // fake router
@@ -100,7 +109,28 @@ describe('Header.vue', () => {
             store,
         })
         const result = await mockApiGetUserInfo()
-        expect(result.name).toBe('Tommy')
+        expect(result.user.email).toBe('Tommy@example.com')
         expect(mockAxios.get).toHaveBeenCalledTimes(1)
+    })
+    test('should render user name after fetching API data', async () => {
+        const wrapper = mount(Header, {
+            stubs: {
+                NuxtLink: RouterLinkStub, // fake router
+                MiniNotification: true, // fake component
+                AutoComplete: true, // fake component
+            },
+            localVue,
+            vuetify,
+            router,
+            store,
+        })
+        const result = await mockApiGetUserInfo()
+        await wrapper.setData({
+            user: {
+                email: result.user.email,
+            },
+        })
+        const userEmail = wrapper.find('.user_email')
+        expect(userEmail.text()).toBe('Tommy@example.com')
     })
 })
