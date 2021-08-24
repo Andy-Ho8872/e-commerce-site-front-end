@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import VueRouter from 'vue-router'
 // components
 import ProductV2 from '@/components/product/ProductV2.vue'
 // Utilities
@@ -7,13 +8,21 @@ import { createLocalVue, RouterLinkStub, mount } from '@vue/test-utils'
 // use packages or library
 Vue.use(Vuetify)
 const localVue = createLocalVue()
+localVue.use(VueRouter)
 
 describe('ProductV2.vue', () => {
     // presets
     let vuetify
-    let store
+    let router
+    const routes = [
+        {
+            path: '/products/:id',
+            name: 'products',
+        },
+    ]
     beforeEach(() => {
         vuetify = new Vuetify()
+        router = new VueRouter({ routes })
     })
     test('should render product title', async () => {
         const wrapper = mount(ProductV2, {
@@ -116,7 +125,6 @@ describe('ProductV2.vue', () => {
         expect(productUnitPrice.text()).toContain('754') //* discounted price
         expect(productUnitPrice.classes()).toContainEqual('blue--text') //* discounted class
     })
-
     test('should not render product_label when discount_rate is equal to 1', async () => {
         const wrapper = mount(ProductV2, {
             propsData: {
@@ -140,5 +148,35 @@ describe('ProductV2.vue', () => {
         })
         const productLabel = wrapper.find('.product_label')
         expect(productLabel.exists()).toBeFalsy()
+    })
+    test('should receive correct route params after clicking product card', async () => {
+        const wrapper = mount(ProductV2, {
+            propsData: {
+                // fake data
+                product: {
+                    id: 1,
+                    title: 'product-1',
+                    imgUrl: 'https://www.example.com/iamge/1.jpg',
+                    unit_price: 888,
+                    discount_rate: 1,
+                    ratings: 5,
+                },
+            },
+            stubs: {
+                NuxtLink: RouterLinkStub, // fake router
+                Tags: true, // fake component
+                Ratings: true, // fake component
+            },
+            localVue,
+            vuetify,
+            router,
+        })
+        const productCard = wrapper.find('.v-card')
+        // 等待點擊事件觸發
+        await productCard.trigger('click')
+        //* 觸發後切換路由 params = 產品 id
+        router.push({ name: 'products', params: { id: 1 } })
+        // APP 網址應該包含該路由的路徑
+        expect(wrapper.vm.$route.path).toContain('products/1')
     })
 })
