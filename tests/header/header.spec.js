@@ -112,7 +112,7 @@ describe('Header.vue', () => {
         expect(result.user.email).toBe('Tommy@example.com')
         expect(mockAxios.get).toHaveBeenCalledTimes(1)
     })
-    test('should render user name after fetching API data', async () => {
+    test('should render user Email after fetching API data', async () => {
         const wrapper = mount(Header, {
             stubs: {
                 NuxtLink: RouterLinkStub, // fake router
