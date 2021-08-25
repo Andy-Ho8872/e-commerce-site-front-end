@@ -13,20 +13,20 @@
                 <template v-for="notification in unReadNotifications">
                     <v-list-item  :key="notification.id">
                         <!-- 通知圖片 -->
-                        <v-list-item-avatar tile size="40">
-                            <v-img :src="require('~/static/order/OrderConfirmed.svg')" alt="OrderConfirmed.svg"></v-img>
+                        <v-list-item-avatar tile size="60">
+                            <v-img :src="notification.data.avatar_url" alt="OrderConfirmed"></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content>
                             <!-- 標題 -->
                             <v-list-item-title class="py-1 font-weight-bold">
                                 {{ notification.data.title }}
                             </v-list-item-title>
-                            <!-- 訂單編號 -->
+                            <!-- 文字 -->
                             <v-list-item-subtitle class="my-2">
-                                訂單編號 - <span class="font-weight-bold">{{ notification.data.order_id }}</span>
+                                <span class="font-weight-bold">{{ notification.data.body }}</span>
                             </v-list-item-subtitle>
-                            <!-- 訂購時間 -->
-                            <v-list-item-subtitle>訂購時間 - 
+                            <!-- 時間 -->
+                            <v-list-item-subtitle>
                                 <span class="font-weight-bold">{{ notification.data.created_at }}</span>
                             </v-list-item-subtitle>
                             <v-divider class="my-2"></v-divider>
