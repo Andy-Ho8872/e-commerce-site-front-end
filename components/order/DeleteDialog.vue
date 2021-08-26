@@ -21,7 +21,7 @@
                     <span class="font-weight-bold">返回</span>
                 </v-btn>
                 <v-btn color="red darken-1" text @click="[dialog = false, deleteSingleOrder(order.id)]"
-                    class="ma-4 pa-4 white--text" 
+                    class="delete_btn ma-4 pa-4 white--text" 
                     :loading="loading" 
                     :disabled="loading"
                     >
