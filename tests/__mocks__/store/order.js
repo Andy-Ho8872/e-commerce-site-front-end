@@ -41,10 +41,16 @@ export const mutations = {
     SET_ALL_ORDERS(state, orders) {
         state.orders = orders
     },
+    REMOVE_SINGLE_ORDER: jest.fn((state) => {
+        state.order = {}
+    })
 }
 export const actions = {
     fetchAllOrders: jest.fn(),
-    fetchTableColumns: jest.fn()
+    fetchTableColumns: jest.fn(),
+    deleteSingleOrder: jest.fn(({ commit }) => {
+        commit('REMOVE_SINGLE_ORDER')
+    })
 }
 export default {
     namespaced: true,
