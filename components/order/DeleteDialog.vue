@@ -12,7 +12,7 @@
                 刪除這筆訂單?
             </v-card-title>
             <!-- 卡片內容 -->
-            <v-card-text>您確定要刪除訂單編號 - <span class="font-weight-bold">{{ order.id }}</span> 嗎?</v-card-text>
+            <v-card-text>您確定要刪除訂單編號 - <span class="order_id font-weight-bold">{{ order.id }}</span> 嗎?</v-card-text>
             <!-- 按鈕群組 -->
             <v-card-actions>
                 <v-spacer></v-spacer>
