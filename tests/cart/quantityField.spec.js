@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 // components
 import QuantityField from '@/components/cart/QuantityField.vue'
 // Vuex modules
-import cart from '@/store/__mocks__/cart.js'
+import cart from '@/tests/__mocks__/store/cart.js'
 // Utilities
 import { createLocalVue, mount } from '@vue/test-utils'
 // use packages
