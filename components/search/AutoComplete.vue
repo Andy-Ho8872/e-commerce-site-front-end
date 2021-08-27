@@ -28,7 +28,7 @@
             ></v-progress-linear>
             <!-- results -->
             <li
-                class="blue--text text-button font-weight-bold"
+                class="auto_complete__result blue--text text-button font-weight-bold"
                 v-for="item in autoCompleteItems"
                 :key="item.id"
                 @click="[setInitialState(item.title), switchRoute()]"
