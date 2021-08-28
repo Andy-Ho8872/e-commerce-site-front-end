@@ -62,22 +62,14 @@ export const actions = {
                 //* 若有搜尋結果
                 if (result) {
                     //* 導向至搜尋結果
-                    this.$router.push({
-                        name: 'search-title-pagination-pageNumber',
-                        params: {
-                            title: payload.title,
-                            pageNumber: payload.pageNumber,
-                        },
-                    })
+                    console.log('navigated to search result page');
                 } else {
                     //* 導向至搜尋失敗畫面
-                    this.$router.push({
-                        name: 'search-searchNotFound',
-                    })
+                    console.log('navigated to fail page');
                 }
             } else {
                 //* 導向至首頁
-                this.$router.push({ name: 'index' })
+                console.log('navigated to home page');
             }
         } catch (error) {
             console.log(error)
