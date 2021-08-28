@@ -31,6 +31,12 @@ describe('AutoComplete.vue', () => {
     let vuetify
     let store
     let router
+    const routes = [
+        {
+            name: 'search-title-pagination-pageNumber',
+            path: '/products/search/:title/pagination/:pageNumber',
+        },
+    ]
     beforeEach(() => {
         vuetify = new Vuetify()
         store = new Vuex.Store({
@@ -38,7 +44,9 @@ describe('AutoComplete.vue', () => {
                 search,
             },
         })
-        router = new VueRouter({})
+        router = new VueRouter({
+            routes,
+        })
     })
     // tests
     test('should have default no_result_text', async () => {
@@ -79,6 +87,21 @@ describe('AutoComplete.vue', () => {
         await wrapper.setData({ searchText: '高品質相機' })
         expect(autoCompleteResult.text()).toContain('高品質相機')
     })
+    test('should change route after clicking autoCompleteResult link', async () => {
+        const wrapper = mount(AutoComplete, {
+            localVue,
+            vuetify,
+            store,
+            router
+        })
+        const autoCompleteResult = wrapper.find('.auto_complete__result')
+        await wrapper.setData({ searchText: '高品質相機' })
+        await autoCompleteResult.trigger('click')
+        const selectedValue = wrapper.vm.selected
+        expect(selectedValue).toBe('高品質相機')
+        const routePath = wrapper.vm.$route.path
+        expect(routePath).toContain(`products/search/`)
+    })
     test('fetch autoComplete action should be called with SET_AUTO_COMPLETE_ITEMS mutation', async () => {
         const wrapper = mount(AutoComplete, {
             localVue,
@@ -94,7 +117,7 @@ describe('AutoComplete.vue', () => {
                 imgUrl: 'https:example.com/image/1',
             },
         ]
-        expect(commit).toHaveBeenCalledWith("SET_AUTO_COMPLETE_ITEMS", fakeItems)
+        expect(commit).toHaveBeenCalledWith('SET_AUTO_COMPLETE_ITEMS', fakeItems)
     })
     test('SET_AUTO_COMPLETE_ITEMS mutation should change state', async () => {
         const wrapper = mount(AutoComplete, {
@@ -103,7 +126,7 @@ describe('AutoComplete.vue', () => {
             store,
         })
         const state = {
-            autoCompleteItems: []
+            autoCompleteItems: [],
         }
         const fakeItems = [
             {
