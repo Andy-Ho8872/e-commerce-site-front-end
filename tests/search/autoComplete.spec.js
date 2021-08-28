@@ -9,7 +9,7 @@ import { createLocalVue, mount } from '@vue/test-utils'
 // mock vuex modules
 import search from '@/tests/__mocks__/store/search.js'
 // mock api calls and data
-import { mockAutoComplete } from '@/tests/__mocks__/APIs/api.js'
+import { mockApiAutoComplete } from '@/tests/__mocks__/APIs/api.js'
 import mockAxios from 'axios'
 jest.mock('axios')
 mockAxios.get.mockResolvedValue({
@@ -130,9 +130,20 @@ describe('AutoComplete.vue', () => {
                 },
             ],
         }
-    
         await search.mutations.RESET_AUTO_COMPLETE_ITEMS(state)
         // 陣列應被清空
         expect(state.autoCompleteItems).toHaveLength(0)
+    })
+    test('axios get should receive an argument of user input', async () => {
+        const wrapper = mount(AutoComplete, {
+            localVue,
+            vuetify,
+            store,
+        })
+        const inputValue = '3C'
+        const result = await mockApiAutoComplete(inputValue)
+        expect(result.item.title).toBe('auto-complete-1')
+        expect(mockAxios.get).toBeCalledWith(`http://localhost:8000/api/products/serarch/${inputValue}`)
+        expect(mockAxios.get).toHaveBeenCalledTimes(1)
     })
 })

@@ -14,3 +14,9 @@ export const mockApiDeleteSingleOrder = (orderId) =>
         .delete(`http://localhost:8000/api/auth/user/order/${orderId}/delete`)
         .then(res => res.data)
         .catch(err => console.error(err))
+
+export const mockApiAutoComplete = (inputValue) =>
+    axios
+        .get(`http://localhost:8000/api/products/serarch/${inputValue}`)
+        .then(res => res.data)
+        .catch(err => console.error(err))
