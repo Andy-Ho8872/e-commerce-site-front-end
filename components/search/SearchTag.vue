@@ -3,6 +3,7 @@
         <v-row>
             <v-chip-group column v-if="tags.length">
                 <v-chip
+                    class="product_tag_title"
                     v-for="tag in tags"
                     :key="tag.id"
                     color="primary"
