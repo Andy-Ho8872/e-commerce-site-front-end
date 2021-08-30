@@ -55,8 +55,8 @@
                         <span class="mx-2">登入</span>
                     </nuxt-link>
                     <v-spacer></v-spacer>
-                    <!-- 忘記密碼 -->
-                    <h4>忘記密碼</h4>
+                    <!-- 目前不使用 -->
+                    <!-- <h4>忘記密碼</h4> -->
                 </v-row>
                 <!-- 註冊按鈕 -->
                 <div class="text-center mt-10">
