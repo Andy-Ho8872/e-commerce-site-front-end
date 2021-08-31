@@ -11,6 +11,7 @@
             :to="{ name: 'products-id', params: { id: item.id } }"
         >
             <v-img
+                class="product_image"
                 :src="item.imgUrl"
                 :alt="item.title"
                 :lazy-src="item.imgUrl"
