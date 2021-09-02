@@ -4,6 +4,11 @@ export const state = () => ({
         id: 1,
         name: 'Tommy',
     },
+    loading: false,
+    message: {
+        email: ['必須是 E-MAIL 格式!'],
+        password: ['密碼只能填入英文或數字!!!'],
+    },
 })
 
 export const getters = {
@@ -13,15 +18,22 @@ export const getters = {
     getUserInfo(state) {
         return state.user
     },
+    getLoading(state) {
+        return state.loading
+    },
+    getMessage(state) {
+        return state.message
+    },
 }
 
 export const mutations = {
-    SET_TOKEN: jest.fn()
+    SET_TOKEN: jest.fn(),
 }
 
 export const actions = {
     fetchRequiredData: jest.fn(),
     logout: jest.fn(),
+    checkIfUserHasLoggedIn: jest.fn(),
 }
 
 export default {
@@ -29,5 +41,5 @@ export default {
     state,
     getters,
     mutations,
-    actions
+    actions,
 }
