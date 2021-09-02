@@ -125,4 +125,19 @@ describe('login.vue', () => {
         // 按鈕應可以作用
         expect(submitBtn.props('disabled')).not.toBeTruthy()
     })
+    test('should render error messages correctly', async () => {
+        const wrapper = mount(login, {
+            stubs: {
+                NuxtLink: RouterLinkStub, // fake router
+            },
+            localVue,
+            vuetify,
+            router,
+            store,
+        })
+        // 最多只有 email 與 password 兩種錯誤
+        const errorMessages = wrapper.findAll('.v-alert')
+        expect(errorMessages.at(0).text()).toBe('必須是 E-MAIL 格式!')
+        expect(errorMessages.at(1).text()).toBe('密碼只能填入英文或數字!!!')
+    })
 })
