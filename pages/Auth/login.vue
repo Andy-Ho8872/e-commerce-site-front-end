@@ -18,7 +18,7 @@
                 <!-- 電子郵件(帳號) -->
                 <div>
                     <v-text-field
-                        class="ma-6"
+                        class="input_email ma-6"
                         name="email"
                         required
                         v-model="form.email"
@@ -31,7 +31,7 @@
                     </v-text-field>
                     <!-- 密碼 -->
                     <v-text-field
-                        class="ma-6"
+                        class="input_password ma-6"
                         name="password"
                         required
                         counter
@@ -61,7 +61,7 @@
                 <!-- 登入按鈕 -->
                 <div class="text-center mt-10">
                     <v-btn
-                        class="title"
+                        class="submit_btn title"
                         @click.prevent="login(form)"
                         :disabled="!valid"
                         :loading="loading"
