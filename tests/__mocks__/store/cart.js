@@ -16,7 +16,9 @@ export const state = () => ({
         title: 'test1',
         quantity: 1,
     },
-    loading: false
+    loading: false,
+    //* 判定購物車內是否有商品 初始為 false
+    valid: false
 })
 
 export const getters = {
@@ -28,6 +30,9 @@ export const getters = {
     },
     getProduct(state) {
         return state.product
+    },
+    getValidStatus(state) {
+        return state.valid
     }
 }
 
@@ -47,6 +52,8 @@ export const actions = {
     async decreaseByOne({ commit }) {
         commit('DECREMENT')
     },
+    deleteFromCart: jest.fn(),
+    deleteAllFromCart: jest.fn()
 }
 
 export default {
