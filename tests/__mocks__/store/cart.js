@@ -2,12 +2,14 @@ export const state = () => ({
     userCart: [
         {
             id: 1,
-            name: '3C',
+            product_id: 1,
+            title: '單眼相機',
             quantity: 1,
         },
         {
             id: 2,
-            name: '服裝',
+            product_id: 2,
+            title: '連身長裙',
             quantity: 1,
         },
     ],
