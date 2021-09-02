@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-// import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 // components
 import CarouselV3 from '@/components/index/CarouselV3.vue'
