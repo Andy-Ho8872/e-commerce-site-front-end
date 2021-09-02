@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <!-- 若無商品-->
-        <EmptyCart v-if="!userCart.length"/>
+        <EmptyCart class="empty_cart_component" v-if="!userCart.length"/>
         <!-- 若有商品-->
         <div v-else>
             <!-- Banner -->
