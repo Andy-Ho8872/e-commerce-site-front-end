@@ -57,11 +57,11 @@
                         <!-- 價格區域 -->
                         <div class="unit_price d-flex flex-sm-column font-weight-bold grey--text text--darken-2">
                             <!-- 原價 -->
-                            <span :class="[item.discount_rate == 1 ? '' : 'discounted']">
+                            <span class="original_price" :class="[item.discount_rate == 1 ? '' : 'discounted']">
                                 ${{ Math.floor(item.unit_price) }}
                             </span>
                             <!-- 折扣後 -->
-                            <span v-if="item.discount_rate != 1" class="red--text text-lighten-5">
+                            <span v-if="item.discount_rate != 1" class="discounted_price red--text text-lighten-5">
                                 ${{ Math.floor(item.unit_price * item.discount_rate) }}
                             </span>
                         </div>
