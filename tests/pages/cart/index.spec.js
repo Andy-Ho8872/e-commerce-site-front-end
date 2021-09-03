@@ -69,4 +69,38 @@ describe('cart.vue', () => {
         router.push({ name: 'products-id', params: { id: 1 } })
         expect(wrapper.vm.$route.path).toContain('/products/1')
     })
+    test('should have discounted class when discounted_rate is not equal to 1', async () => {
+        const wrapper = mount(cartPage, {
+            stubs: {
+                NuxtLink: RouterLinkStub, // fake router
+                EmptyCart: true, // fake component
+                Banner: true, // fake component
+                QuantityField: true, // fake component
+            },
+            localVue,
+            vuetify,
+            router,
+            store,
+        })
+        const discountedPrice = wrapper.findAll('.unit_price > .original_price')
+        expect(discountedPrice.at(0).classes()).toContain('discounted') // discount_rate 0.85
+        expect(discountedPrice.at(1).classes()).not.toContain('discounted') // discount_rate 1 (should not contain "discounted" class)
+    })
+
+    test('should render discounted price when discounted_rate is not equal to 1', async () => {
+        const wrapper = mount(cartPage, {
+            stubs: {
+                NuxtLink: RouterLinkStub, // fake router
+                EmptyCart: true, // fake component
+                Banner: true, // fake component
+                QuantityField: true, // fake component
+            },
+            localVue,
+            vuetify,
+            router,
+            store,
+        })
+        const discountedPrice = wrapper.findAll('.unit_price > .discounted_price')
+        expect(discountedPrice.at(0).exists()).toBeTruthy() // discount_rate 0.85
+    })
 })
