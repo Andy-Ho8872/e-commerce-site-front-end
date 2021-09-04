@@ -26,8 +26,8 @@ export const state = () => ({
         },
         {
             id: 2,
-            payment_id: 1,
-            status_id: 1,
+            payment_id: 2,
+            status_id: 2,
             items_count: 4,
             sumSubtotal: 3660,
             address: '桃園市OO區OO路OO號',
