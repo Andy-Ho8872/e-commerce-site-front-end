@@ -3,7 +3,7 @@
         <!-- loading -->
         <LoadingCircle v-if="!user"/>
         <!-- 若無訂單 -->
-        <EmptyOrder v-else-if="!orders.length"/>
+        <EmptyOrder class="empty_order_component" v-else-if="!orders.length"/>
         <!-- 若有訂單 -->
         <div v-else>
             <div class="text-center text-h5 mb-6">
