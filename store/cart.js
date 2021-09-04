@@ -58,7 +58,9 @@ export const mutations = {
         }   
     },
     REMOVE_ALL_FROM_CART(state) { //? 所有資料
-        state.userCart = []
+        //* 如果 solution 1 無法正確清除陣列資料，請使用 solution 2 
+        state.userCart = [] // solution 1
+        // state.userCart.length = 0 // solution 2
     }
 }
 
