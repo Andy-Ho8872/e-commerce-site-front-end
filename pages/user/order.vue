@@ -7,7 +7,7 @@
             </div>
             <!-- 若有訂單 -->
             <v-list v-else max-height="500" class="overflow-y-auto">
-                <v-list-item v-for="order in orders" :key="order.id">
+                <v-list-item v-for="order in orders" :key="'order' + order.id">
                     <v-list-item-content>
                         <!-- 子標題(導覽連結) -->
                         <nuxt-link :to="{ name: 'order-id-details', params: { id: order.id }}">
@@ -23,13 +23,13 @@
                         </v-card-subtitle>
                         <!-- 付款方式 -->
                         <template v-for="payment in payments" >
-                            <v-card-subtitle v-if="order.payment_id == payment.id" :key="payment.id">
+                            <v-card-subtitle v-if="order.payment_id == payment.id" :key="'payment' + payment.id">
                                 付款方式: <span class="font-weight-bold black--text">{{ payment.title }}</span>
                             </v-card-subtitle>
                         </template>
                         <!-- 商品狀態 -->
-                        <template v-for="(status, index) in status" >
-                            <v-card-subtitle v-if="order.status_id == status.id" :key="index" >
+                        <template v-for="status in status" >
+                            <v-card-subtitle v-if="order.status_id == status.id" :key="'status' + status.id">
                                 商品狀態: <span class="font-weight-bold black--text">{{ status.title }}</span>
                             </v-card-subtitle>
                         </template>

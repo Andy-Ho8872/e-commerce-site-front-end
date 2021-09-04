@@ -21,7 +21,7 @@
                 </thead>
                 <!-- 訂單細項 -->
                 <tbody class="grey lighten-3 blue-grey--text text--darken-4">
-                    <tr v-for="order in orders" :key="order.id">
+                    <tr v-for="order in orders" :key="'order' + order.id">
                         <!-- 訂單編號 -->
                         <td data-title="訂單編號" id="order_id">
                             <span>{{ order.id }}</span>
@@ -30,7 +30,7 @@
                         <td data-title="付款方式" id="payment_id">
                             <!-- 顯示符合付款 id 的名稱 -->
                             <template v-for="payment in payments">
-                                <span v-if="order.payment_id == payment.id" :key="payment.id">
+                                <span v-if="order.payment_id == payment.id" :key="'payment' + payment.id">
                                     {{ payment.title }}
                                 </span>
                             </template> 
@@ -41,7 +41,7 @@
                         <td data-title="出貨狀態" id="status_id">
                             <!-- 顯示符合出貨狀態 id 的名稱 (可在優化) -->
                             <template v-for="status in status">
-                                <span v-if="order.status_id == status.id" :key="status.id">
+                                <span v-if="order.status_id == status.id" :key="'status' + status.id">
                                     {{ status.title }}
                                 </span>
                             </template>

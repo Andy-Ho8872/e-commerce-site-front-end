@@ -25,7 +25,7 @@
                 </thead>
                 <!-- 細項 -->
                 <tbody class="grey lighten-3 blue-grey--text text--darken-4">
-                    <tr v-for="item in order.items" :key="item.id">
+                    <tr v-for="item in order.items" :key="'item' + item.id">
                         <!-- 編號 -->
                         <td data-title="商品編號" id="items_id">
                             <span>{{ item.pivot.product_id }}</span>

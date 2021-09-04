@@ -12,7 +12,7 @@
             </thead>
             <!-- 表格內容 -->
             <tbody class="teal lighten-4 blue-grey--text text--darken-4">
-                <tr v-for="item in userCart" :key="item.id">
+                <tr v-for="item in userCart" :key="'item' + item.id">
                     <!-- 商品圖片與名稱 -->
                     <td data-title="商品" id="item_image">
                         <div class="justify-start align-center">
@@ -54,7 +54,7 @@
                             </div>
                         </label> -->
                         <v-chip-group mandatory active-class="deep-purple--text text--accent-4" name="payment_id" v-model="form.payment_id">
-                            <v-chip v-for="payment in payments" :key="payment.id" :value="payment.id">
+                            <v-chip v-for="payment in payments" :key="'payment' + payment.id" :value="payment.id">
                                 {{ payment.title }}
                             </v-chip>
                         </v-chip-group>
