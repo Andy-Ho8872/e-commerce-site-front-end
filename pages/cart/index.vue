@@ -74,7 +74,7 @@
                             <span>${{ item.total }}</span>
                         </div>
                         <!-- 刪除按鈕(單項商品) -->
-                        <v-btn class="cart_section_btn white--text"
+                        <v-btn class="delete_single_item cart_section_btn white--text"
                             @click="deleteFromCart(item.product_id)"
                             color="red lighten-2"
                         >
@@ -93,7 +93,7 @@
                 <!-- 按鈕群組 -->
                 <div class="cart_footer_btn d-flex">
                     <!-- 清空物品 -->
-                    <v-btn class="white--text mx-6"
+                    <v-btn class="delete_all_items white--text mx-6"
                         @click="deleteAllFromCart"
                         color="error"
                         :disabled="!valid"
