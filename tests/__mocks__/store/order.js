@@ -41,7 +41,7 @@ export const state = () => ({
             title: '現金付款'
         },
         {
-            id: 1,
+            id: 2,
             title: '刷卡付款'
         },
     ],
