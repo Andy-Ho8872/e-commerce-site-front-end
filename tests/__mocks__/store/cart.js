@@ -4,15 +4,21 @@ export const state = () => ({
             id: 1,
             product_id: 1,
             title: '單眼相機',
+            unit_price: 1000,
             discount_rate: 0.85,
             quantity: 1,
+            //! readonly
+            total: 850, // unit_price * discount_rate * quantity 
         },
         {
             id: 2,
             product_id: 2,
             title: '連身長裙',
+            unit_price: 500,
             discount_rate: 1,
             quantity: 1,
+            //! readonly
+            total: 500, // unit_price * discount_rate * quantity 
         },
     ],
     product: {
