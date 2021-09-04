@@ -8,7 +8,7 @@ export const state = () => ({
             discount_rate: 0.85,
             quantity: 1,
             //! readonly
-            total: 850, // unit_price * discount_rate * quantity 
+            total: 850, // unit_price * discount_rate * quantity
         },
         {
             id: 2,
@@ -18,7 +18,7 @@ export const state = () => ({
             discount_rate: 1,
             quantity: 1,
             //! readonly
-            total: 500, // unit_price * discount_rate * quantity 
+            total: 500, // unit_price * discount_rate * quantity
         },
     ],
     product: {
@@ -28,7 +28,7 @@ export const state = () => ({
     },
     loading: false,
     //* 判定購物車內是否有商品 初始為 false
-    valid: false
+    valid: true,
 })
 
 export const getters = {
@@ -43,7 +43,7 @@ export const getters = {
     },
     getValidStatus(state) {
         return state.valid
-    }
+    },
 }
 
 export const mutations = {
@@ -53,6 +53,22 @@ export const mutations = {
     DECREMENT(state) {
         state.product.quantity -= 1
     },
+    //* 判定購物車內是否有資料
+    CHECK_AND_SET_VALID_STATUS: jest.fn((state) => {
+        state.userCart.length ? (state.valid = true) : (state.valid = false)
+    }),
+    REMOVE_SINGLE_PRODUCT_FROM_CART: jest.fn((state, productId) => {
+        const index = state.userCart.findIndex(item => {
+            return item.product_id == productId
+        })
+        if (index !== -1) {
+            state.userCart.splice(index, 1)
+        }
+    }),
+    REMOVE_ALL_FROM_CART: jest.fn(state => {
+        // state.userCart = [] // default
+        state.userCart.length = 0
+    }),
 }
 
 export const actions = {
@@ -62,8 +78,14 @@ export const actions = {
     async decreaseByOne({ commit }) {
         commit('DECREMENT')
     },
-    deleteFromCart: jest.fn(),
-    deleteAllFromCart: jest.fn()
+    deleteFromCart: jest.fn(({ commit }, productId) => {
+        commit('REMOVE_SINGLE_PRODUCT_FROM_CART', productId)
+    }),
+    deleteAllFromCart: jest.fn(async ({ commit }) => {
+        //* 確認購物車內是否還有商品
+        await commit('CHECK_AND_SET_VALID_STATUS')
+        commit('REMOVE_ALL_FROM_CART')
+    }),
 }
 
 export default {
@@ -71,5 +93,5 @@ export default {
     state,
     getters,
     mutations,
-    actions
+    actions,
 }
