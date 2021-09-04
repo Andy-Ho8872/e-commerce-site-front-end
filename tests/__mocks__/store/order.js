@@ -14,11 +14,48 @@ export const state = () => ({
         ]
     },
     //* 所有訂單
-    orders: [],
+    orders: [
+        {
+            id: 1,
+            payment_id: 1,
+            status_id: 1,
+            items_count: 2,
+            sumSubtotal: 1380,
+            address: '桃園市OO區OO路OO號',
+            created_at: '2021/09/04'
+        },
+        {
+            id: 2,
+            payment_id: 1,
+            status_id: 1,
+            items_count: 4,
+            sumSubtotal: 3660,
+            address: '桃園市OO區OO路OO號',
+            created_at: '2021/09/05'
+        },
+    ],
     //* 付款方式
-    payments: [],
+    payments: [
+        {
+            id: 1,
+            title: '現金付款'
+        },
+        {
+            id: 1,
+            title: '刷卡付款'
+        },
+    ],
     //* 商品狀態
-    status: [],
+    status: [
+        {
+            id: 1,
+            title: '出貨中'
+        },
+        {
+            id: 2,
+            title: '已到貨'
+        }
+    ],
     //* */ loading 狀態
     loading: false
 })
