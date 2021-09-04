@@ -66,11 +66,11 @@
                         <td data-title="編輯操作" id="actions">
                             <div class="btn_container">
                                 <!-- 按鈕群組 -->
-                                <DeleteDialog :order="order" />
+                                <DeleteDialog :order="order" class="delete_dialog_component"/>
                                 <!-- 查看 --> 
-                                <v-btn color="light-blue" dark nuxt :to="{ name: 'order-id-details', params: { id: order.id }}">
+                                <v-btn class="navigator" color="light-blue" dark nuxt :to="{ name: 'order-id-details', params: { id: order.id }}">
                                     <v-icon>fa-hand-point-right fa-fw</v-icon>
-                                    查看
+                                    <span>查看</span>
                                 </v-btn>   
                             </div>
                         </td>
