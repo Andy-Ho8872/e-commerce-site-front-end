@@ -54,7 +54,7 @@
                             </div>
                         </label> -->
                         <v-chip-group mandatory active-class="deep-purple--text text--accent-4" name="payment_id" v-model="form.payment_id">
-                            <v-chip v-for="payment in payments" :key="'payment' + payment.id" :value="payment.id">
+                            <v-chip v-for="payment in payments" :key="'payment' + payment.id" :value="payment.id" class="payment_title">
                                 {{ payment.title }}
                             </v-chip>
                         </v-chip-group>
@@ -74,7 +74,7 @@
                 <!-- 按鈕與金額顯示 -->
                 <div class="d-flex align-center justify-center">
                     <!-- 送出按鈕 -->
-                    <v-btn large rounded color="primary" class="ma-4"
+                    <v-btn large rounded color="primary" class="create_order_btn ma-4"
                         @click="checkAndCreateOrder"
                         :disabled="!valid" 
                         :loading="loading"
@@ -84,7 +84,7 @@
                     </v-btn>
                     <v-spacer></v-spacer>
                     <!-- 金額小計 -->
-                    <div class="text-h6 mr-8 font-weight-bold">
+                    <div class="subtotal text-h6 mr-8 font-weight-bold">
                         金額小計: <span class="red--text text-lighten-2">{{ subTotal }}</span> 
                     </div>
                 </div>
