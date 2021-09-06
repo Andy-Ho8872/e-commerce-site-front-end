@@ -8,13 +8,13 @@ export const state = () => ({
         items: [
             {
                 id: 1,
-                title: "item-1"
+                title: 'item-1',
             },
             {
                 id: 2,
-                title: "item-22"
+                title: 'item-22',
             },
-        ]
+        ],
     },
     //* 所有訂單
     orders: [
@@ -24,43 +24,77 @@ export const state = () => ({
             status_id: 1,
             items_count: 2,
             sumSubtotal: 1380,
+            items: [
+                {
+                    id: 1,
+                    title: '精美服裝',
+                    imgUrl: 'https://example.com/images/1',
+                    pivot: {
+                        product_id: 1,
+                        product_quantity: 1,
+                    },
+                    subtotal: 800,
+                },
+                {
+                    id: 2,
+                    title: '時尚背包',
+                    imgUrl: 'https://example.com/images/2',
+                    pivot: {
+                        product_id: 2,
+                        product_quantity: 1,
+                    },
+                    subtotal: 580,
+                },
+            ],
             address: '桃園市OO區OO路OO號',
-            created_at: '2021/09/04'
+            created_at: '2021/09/04',
         },
         {
             id: 2,
             payment_id: 2,
             status_id: 2,
-            items_count: 4,
+            items_count: 1,
             sumSubtotal: 3660,
+            items: [
+                {
+                    id: 3,
+                    title: '舒適球鞋',
+                    imgUrl: 'https://example.com/images/3',
+                    pivot: {
+                        product_id: 3,
+                        product_quantity: 1,
+                    },
+                    subtotal: 3660,
+                },
+            ],
             address: '桃園市OO區OO路OO號',
-            created_at: '2021/09/05'
+            created_at: '2021/09/05',
         },
     ],
     //* 付款方式
     payments: [
         {
             id: 1,
-            title: '現金付款'
+            title: '現金付款',
         },
         {
             id: 2,
-            title: '刷卡付款'
+            title: '刷卡付款',
         },
     ],
     //* 商品狀態
     status: [
         {
             id: 1,
-            title: '出貨中'
+            title: '出貨中',
         },
         {
             id: 2,
-            title: '已到貨'
-        }
+            title: '已到貨',
+        },
     ],
     //* */ loading 狀態
-    loading: false
+    loading: false,
 })
 export const getters = {
     getAllOrders(state) {
@@ -74,16 +108,16 @@ export const getters = {
     },
     getStatus(state) {
         return state.status
-    }
+    },
 }
 export const mutations = {
     //* 訂單相關
     SET_ALL_ORDERS(state, orders) {
         state.orders = orders
     },
-    REMOVE_SINGLE_ORDER: jest.fn((state) => {
+    REMOVE_SINGLE_ORDER: jest.fn(state => {
         state.order = {}
-    })
+    }),
 }
 export const actions = {
     createOrder: jest.fn(async ({ commit }, order) => {
@@ -105,12 +139,12 @@ export const actions = {
     fetchTableColumns: jest.fn(),
     deleteSingleOrder: jest.fn(({ commit }) => {
         commit('REMOVE_SINGLE_ORDER')
-    })
+    }),
 }
 export default {
     namespaced: true,
     state,
     getters,
     mutations,
-    actions
+    actions,
 }
