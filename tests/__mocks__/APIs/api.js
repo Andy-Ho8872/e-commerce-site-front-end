@@ -15,6 +15,12 @@ export const mockApiDeleteSingleOrder = (orderId) =>
         .then(res => res.data)
         .catch(err => console.error(err))
 
+export const mockApiCreateOrder = (order) =>
+    axios
+        .post(`http://localhost:8000/api/auth/user/orders/create`, order)
+        .then(res => res.data)
+        .catch(err => console.error(err))
+
 export const mockApiAutoComplete = (inputValue) =>
     axios
         .get(`http://localhost:8000/api/products/serarch/${inputValue}`)

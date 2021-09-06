@@ -1,3 +1,6 @@
+// mock api calls and data
+import { mockApiCreateOrder } from '@/tests/__mocks__/APIs/api.js'
+
 export const state = () => ({
     //* 單筆訂單 (測試)
     order: {
@@ -83,6 +86,21 @@ export const mutations = {
     })
 }
 export const actions = {
+    createOrder: jest.fn(async ({ commit }, order) => {
+        //? start loading
+        commit('SET_LOADING', true)
+        try {
+            //* 向後端發送資料
+            await mockApiCreateOrder({
+                payment_id: order.payment_id,
+                address: order.address,
+            })
+        } catch (error) {
+            console.log('假資料建立失敗 from tests/__mocks__/store/order.js')
+        }
+        //? start loading
+        commit('SET_LOADING', false)
+    }),
     fetchAllOrders: jest.fn(),
     fetchTableColumns: jest.fn(),
     deleteSingleOrder: jest.fn(({ commit }) => {
