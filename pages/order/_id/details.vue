@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <!-- loading -->
-        <LoadingCircle v-if="userOrder.length == 0"/>
+        <LoadingCircle v-if="userOrder.length == 0" class="loading_circle"/>
         <!-- content -->
         <div v-if="order">
             <!-- 返回按鈕 -->
