@@ -27,7 +27,7 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(VueRouter)
 
-describe('order/index.vue', () => {
+describe('order/create.vue', () => {
     // presets
     let vuetify
     let router
