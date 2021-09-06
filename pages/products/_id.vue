@@ -13,7 +13,7 @@
                     <!-- 圖片 -->
                     <div class="half">
                         <v-img :src="product.imgUrl" class="rounded-xl ma-6"></v-img>
-                        <v-card-subtitle class="mx-4 grey--text text--darken-1 text-lg-left text-center">
+                        <v-card-subtitle class="product_created_at mx-4 grey--text text--darken-1 text-lg-left text-center">
                             本商品於 {{ $moment(product.created_at).format('ll') }}
                             ({{ $moment(product.created_at).fromNow() }}) 上架
                         </v-card-subtitle>
@@ -21,21 +21,21 @@
                     <!-- 詳細資訊 -->
                     <div class="half">
                         <!-- 名稱 -->
-                        <v-card-title class="justify-center">
+                        <v-card-title class="product_title justify-center">
                             {{ product.title }}
                         </v-card-title>
                         <!-- 敘述 -->
-                        <v-card-text class="text-justify">
+                        <v-card-text class="product_description text-justify">
                             {{ product.description }}
                         </v-card-text>
                         <!-- 價格 -->
                         <v-card-text class="title">
                             <!-- 原價 -->
-                            <span :class="[product.discount_rate == 1 ? '' : 'discounted']">
+                            <span class="product_original_price" :class="[product.discount_rate == 1 ? '' : 'discounted']">
                                 $ {{ Math.floor(product.unit_price) }}
                             </span>
                             <!-- 折價後 -->
-                            <span class="mx-2 discount_price title red--text" v-if="product.discount_rate != 1">
+                            <span class="product_discount_price mx-2 title red--text" v-if="product.discount_rate != 1">
                                 $ {{ Math.floor(product.unit_price * product.discount_rate) }}
                             </span>
                         </v-card-text>
@@ -45,10 +45,11 @@
                         <Tags :product="product" class="mx-4 my-6"/>
                         <!-- 輸入數量 -->
                         <v-form>
-                            <v-row class="input_field ma-3 py-4">
+                            <v-row class="input_container ma-3 py-4">
                                 <span class="px-2">購買數量</span>
-                                <!-- 增加按鈕 -->
+                                <!-- 減少按鈕 -->
                                 <v-btn
+                                    class="decrement_btn"
                                     @click="changeCount(-1)"
                                     tile
                                     small
@@ -60,15 +61,16 @@
                                 </v-btn>
                                 <!-- 輸入數量 -->
                                 <input
-                                    class="grey lighten-2 text-center"
+                                    class="input_field grey lighten-2 text-center"
                                     name="product_quantity"
                                     type="number"
                                     autocomplete="off"
                                     @blur="validateInput(productPayload.quantity)"
                                     v-model.number="productPayload.quantity"
                                 />
-                                <!-- 減少按鈕 -->
+                                <!-- 增加按鈕 -->
                                 <v-btn
+                                    class="increment_btn"
                                     @click="changeCount(1)"
                                     tile
                                     small
