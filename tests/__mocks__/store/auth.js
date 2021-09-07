@@ -3,6 +3,8 @@ export const state = () => ({
     user: {
         id: 1,
         name: 'Tommy',
+        email: 'Tommy@example.com',
+        created_at: '2021/08/03'
     },
     loading: false,
     message: {
