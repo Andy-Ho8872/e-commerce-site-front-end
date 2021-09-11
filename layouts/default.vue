@@ -4,6 +4,7 @@
             <Header class="header"/>
             <!-- <HeaderV2 class="header"/> -->
             <nuxt class="content"/>
+            <Footer class="footer"/>
             <AlertMessage class="alert-message"/>
             <!-- 置頂按鈕 -->
             <v-fab-transition>
@@ -57,7 +58,6 @@ $padding-top-xss: 35%; //*   mobile... <375px
 .v-main {
     background-color: #FAFAFA;
 }
-
 .header {
     position: fixed;
     top: 0;
@@ -66,6 +66,7 @@ $padding-top-xss: 35%; //*   mobile... <375px
 .content {
     padding: 0;
     padding-top: $padding-top-xl;
+    min-height: 100vh;
     // padding-bottom: $header-v2-padding-bottom; //! 若使用 HeaderV2 則必須使用此屬性
 }
 .alert-message {
