@@ -3,31 +3,29 @@
         <!-- 讀取中 -->
         <LoadingCircle v-if="loading"/>
         <!-- 搜尋成功 -->
-        <div v-else-if="results">
-            <h2 class="text-center mb-6">
-                關於
-                <span class="blue--text lighten-5">
-                    "{{ searchText }}"
-                </span>
-                的搜尋結果
-            </h2>
-            <!-- 顯示搜尋內容 -->
-            <v-sheet elevation="6" rounded="lg" class="px-6">
-                <v-row justify="space-around">
-                    <div v-for="product in results.data" :key="product.id" class="mt-8 mb-16" >
-                        <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-8"/>
-                    </div>
-                </v-row>
-            </v-sheet>
-            <!-- 控制分頁 -->
-            <div class="text-center my-8">
-                <v-pagination
-                    circle
-                    v-model="page"
-                    :length="length"
-                    @input="CheckOrFetch"
-                ></v-pagination>
-            </div>
+        <h2 class="text-center mb-6">
+            關於
+            <span class="blue--text lighten-5">
+                "{{ searchText }}"
+            </span>
+            的搜尋結果
+        </h2>
+        <!-- 顯示搜尋內容 -->
+        <v-sheet elevation="6" rounded="lg" class="px-6">
+            <v-row justify="space-around">
+                <div v-for="product in results.data" :key="product.id" class="mt-8 mb-16" >
+                    <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" v-show="!loading" class="mx-8"/>
+                </div>
+            </v-row>
+        </v-sheet>
+        <!-- 控制分頁 -->
+        <div class="text-center my-8">
+            <v-pagination
+                circle
+                v-model="page"
+                :length="length"
+                @input="CheckOrFetch"
+            ></v-pagination>
         </div>
     </v-container>
 </template>
@@ -46,13 +44,15 @@ export default {
         ...mapGetters({
             //* 搜尋結果
             results: 'search/getResult',
-            loading: 'search/getPageLoading'
+            loading: 'search/getPageLoading',
+            //* 紀錄搜尋URL 
+            searchedUrlRecord: 'search/getSearchedUrlRecord', //! 暫時未用到
         }),
         searchText() {
             return this.$route.params.title
         },
         length() {
-            return Number(this.results.last_page)
+            return this.results.last_page
         }
     },
     methods: {
@@ -61,13 +61,10 @@ export default {
             fetchData: 'search/searchProductsWithPagination', 
         }),
         CheckOrFetch() {
-            if (!this.results || this.results.current_page != this.page) {
-                this.fetchData({ title: this.searchText, pageNumber: this.page })
-            }
+            this.fetchData({ title: this.searchText, pageNumber: this.page })
         },
     },
     created() {
-        //* 避免再重新整理頁面的時候發送相同的 request 
         this.CheckOrFetch()
     },
 }

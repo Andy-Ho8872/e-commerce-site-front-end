@@ -9,6 +9,8 @@ export const state = () => ({
     searchText: '',
     //* 搜尋結果
     searchResult: [],
+    //* 紀錄搜尋過的URL網址
+    searchedUrlRecord: '', //! 暫時未用到
     //* loading 狀態
     pageLoading: false,
     autoCompleteLoading: false,
@@ -22,6 +24,9 @@ export const getters = {
     },
     getResult(state) {
         return state.searchResult
+    },
+    getSearchedUrlRecord(state) { //! 暫時未用到
+        return state.searchedUrlRecord
     },
     getPageLoading(state) {
         return state.pageLoading
@@ -41,6 +46,9 @@ export const mutations = {
     SET_SEARCH_RESULT(state, result) {
         state.searchResult = result
     },
+    SET_SEARCHED_URL_RECORD(state, url) { //! 暫時未用到
+        state.searchedUrlRecord = url
+    },
     SET_PAGE_LOADING(state, loading) {
         state.pageLoading = loading
     },
@@ -50,8 +58,9 @@ export const mutations = {
     SET_AUTO_COMPLETE_ITEMS(state, items) {
         state.autoCompleteItems = items
     },
-    RESET_SEARCH_RESULT(state) {
-        state.searchResult = []
+    RESET_SEARCH_RESULT(state) { //! 暫時未用到
+        state.searchResult = [] // 方法 1
+        // state.searchResult.length = 0 // 方法 2
     },
     RESET_AUTO_COMPLETE_ITEMS(state) {
         state.autoCompleteItems = []
@@ -74,31 +83,6 @@ export const actions = {
         }
         commit('SET_AUTO_COMPLETE_LOADING', false)
     },
-    // 搜尋功能(舊版本) //! 暫時不使用
-    async searchProducts({ commit }, title) {
-        commit('SET_PAGE_LOADING', true)
-        try {
-            //* 若有輸入字符才向後端發送請求
-            if (title) {
-                const res = await apiSearchByTitle(title)
-                //* 將結果寫入 state
-                let result = res.data.products
-                await commit('SET_SEARCH_RESULT', result)
-                //* 導向至搜尋結果
-                this.$router.push({
-                    name: 'search-title',
-                    params: { title: title },
-                })
-            } else {
-                //* 導向至首頁
-                this.$router.push({ name: 'index' })
-            }
-        } catch (error) {
-            console.log(error)
-            console.log('搜尋失敗 from /store/search.js')
-        }
-        commit('SET_PAGE_LOADING', false)
-    },
     //* 搜尋功能(含分頁)
     async searchProductsWithPagination({ commit }, payload) {
         commit('SET_PAGE_LOADING', true)
@@ -113,9 +97,9 @@ export const actions = {
                 )
                 //* 將結果寫入 state
                 const result = res.data.products
-                await commit('SET_SEARCH_RESULT', result)
                 //* 若有搜尋結果
                 if (result) {
+                    await commit('SET_SEARCH_RESULT', result)
                     //* 導向至搜尋結果
                     this.$router.push({
                         name: 'search-title-pagination-pageNumber',
@@ -124,6 +108,11 @@ export const actions = {
                             pageNumber: payload.pageNumber,
                         },
                     })
+                    //! 暫時未用
+                    // const searchedUrl = res.data.products.first_page_url
+                    // if (searchedUrl) {
+                    //     commit('SET_SEARCHED_URL_RECORD', searchedUrl)
+                    // }
                 } else {
                     //* 導向至搜尋失敗畫面
                     this.$router.push({
