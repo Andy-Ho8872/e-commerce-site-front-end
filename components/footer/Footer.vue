@@ -32,9 +32,7 @@
                 <nuxt-link :to="{ name: 'user-order' }">查看訂單</nuxt-link>
             </li>
             <li>
-                <nuxt-link :to="{ name: 'user-notification' }"
-                    >通知總覽</nuxt-link
-                >
+                <nuxt-link :to="{ name: 'user-notification' }">通知總覽</nuxt-link>
             </li>
         </ul>
         <ul class="author_links">
