@@ -1,10 +1,11 @@
 <template>
     <!-- 骨架屏 -->
-    <v-sheet elevation="2"  :width="cardWidth" :height="cardHeight">
+    <v-sheet elevation="2" :width="cardWidth" :height="cardHeight">
         <!-- 圖片和標題 -->
         <v-skeleton-loader type="card"></v-skeleton-loader>
         <!-- 文字敘述 -->
         <v-skeleton-loader type="text" class="mx-4"></v-skeleton-loader>
+        <v-skeleton-loader type="text" class="ml-4 mr-16 mt-4"></v-skeleton-loader>
     </v-sheet>
 </template>
 
@@ -18,7 +19,7 @@ export default {
         },
         cardHeight: {
             type: Number,
-            default: 290
+            default: 330
         }
     }
 }
