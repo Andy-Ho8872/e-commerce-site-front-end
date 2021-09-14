@@ -1,53 +1,60 @@
 <template>
-    <div class="card_wrapper" :style="{ width: `${cardWidth}px`}">
-        <v-card rounded="t-lg"
-            :elevation="elevation"
-            :width="cardWidth"
-            :height="cardHeight"
-            nuxt
-            :to="{ name: 'products-id', params: { id: product.id } }"
-        >
-            <img
-                class="responsive_img"
-                :src="product.imgUrl"
-                :alt="product.title"
-            />
-            <div
-                class="product_label text-center yellow blue--text rounded-tr-lg rounded-bl-lg"
-                v-if="product.discount_rate != 1"
+    <div class="card_wrapper">
+        <v-card rounded="t-lg" :elevation="elevation" :width="cardWidth">
+            <nuxt-link
+                :to="{ name: 'products-id', params: { id: product.id } }"
             >
-                <span>{{ formatLabel }} 折</span>
-            </div>
-            <!-- 標籤名稱 -->
-            <Tags :product="product" class="product_tags mx-2"/>
-            <!-- 商品名稱 -->
-            <v-card-title class="product_title font-weight-bold text-body-2">
-                {{ conditionalTitle }}
-            </v-card-title>
-            <!-- 商品價格 -->
-            <v-card-text
-                class="product_unit_price d-flex"
-                :class="[
-                    product.discount_rate != 1
-                        ? 'text-body-1 font-weight-bold blue--text'
-                        : '',
-                ]"
+                <img
+                    class="responsive_img"
+                    :src="product.imgUrl"
+                    :alt="product.title"
+                />
+                <div
+                    class="product_label text-center yellow blue--text rounded-tr-lg rounded-bl-lg"
+                    v-if="product.discount_rate != 1"
+                >
+                    <span>{{ formatLabel }} 折</span>
+                </div>
+                <!-- 標籤名稱 -->
+                <Tags :product="product" class="product_tags mx-2" />
+                <!-- 商品名稱 -->
+                <v-card-title
+                    class="product_title font-weight-bold text-body-2 black--text"
+                >
+                    {{ conditionalTitle }}
+                </v-card-title>
+                <!-- 商品價格 -->
+                <v-card-text
+                    class="product_unit_price d-flex"
+                    :class="[
+                        product.discount_rate != 1
+                            ? 'text-body-1 font-weight-bold blue--text'
+                            : 'black--text',
+                    ]"
+                >
+                    $ {{ conditionalPrice }}
+                </v-card-text>
+                <v-card-text>
+                    <Ratings
+                        :product="product"
+                        :size="12"
+                        class="product_ratings mx-1"
+                    />
+                </v-card-text>
+            </nuxt-link>
+            <!-- 放入購物車按鈕 -->
+            <v-btn
+                :elevation="elevation"
+                @click="addToCart(product.id)"
+                class="action_btn rounded-b-lg"
+                color="primary"
+                tile
+                large
+                depressed
             >
-                $ {{ conditionalPrice }}
-            </v-card-text>
-            <Ratings :product="product" :size="12" class="product_ratings mx-1 my-2" />
+                <span>加入購物車</span>
+            </v-btn>
         </v-card>
-        <!-- 放入購物車按鈕 -->
-        <v-btn 
-            :elevation="elevation"
-            @click="addToCart(product.id)"
-            class="action_btn rounded-b-lg"
-            color="primary"
-            tile 
-            large 
-            depressed>
-            <span>加入購物車</span>
-        </v-btn>  
     </div>
 </template>
 
@@ -63,17 +70,13 @@ export default {
         },
         cardWidth: {
             type: [Number, String],
-            default: 200
-        },
-        cardHeight: {
-            type: [Number, String],
-            default: 290
+            default: 200,
         },
         //* 卡片陰影 (box-shadow)
         elevation: {
             type: [Number, String],
-            default: 2
-        }
+            default: 2,
+        },
     },
     computed: {
         //* 商品折數
@@ -93,14 +96,14 @@ export default {
                 ? Math.floor(this.product.unit_price)
                 : Math.floor(
                       this.product.unit_price * this.product.discount_rate
-                )
+                  )
         },
     },
     methods: {
         ...mapActions({
             //* 加入購物車
-            addToCart: 'cart/addToCart'
-        })
+            addToCart: 'cart/addToCart',
+        }),
     },
 }
 </script>
@@ -120,18 +123,18 @@ export default {
 .product_tags {
     position: absolute;
     left: 0;
-    bottom: 30%;
+    bottom: 35%;
 }
 .product_ratings {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    left: 5%;
+    bottom: 5%;
 }
 .product_unit_price {
     position: relative;
 }
 .action_btn {
     position: absolute;
-    width: inherit;
+    width: 100%;
 }
 </style>
