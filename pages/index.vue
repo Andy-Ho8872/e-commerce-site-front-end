@@ -30,11 +30,11 @@
             <v-row justify="space-around">
                 <!-- 骨架屏 -->
                 <template v-for="(n,index) in 6"> 
-                    <SkeletonCardV2 :cardWidth="200" :cardHeight="290" :key="index" v-if="loading" class="mx-6 mt-8 mb-16"/>
+                    <SkeletonCardV2 :cardWidth="200" :key="'skeleton' + index" v-if="loading" class="mx-6 mt-8 mb-16"/>
                 </template>
                 <!-- 商品卡片 -->
                 <template v-for="product in products">
-                    <ProductV2 :product="product" :cardWidth="200" :cardHeight="290" :elevation="4" :key="product.id" v-if="!loading" class="mx-6 mt-8 mb-16"/>
+                    <ProductV2 :product="product" :cardWidth="200" :elevation="4" :key="product.id" v-if="!loading" class="mx-6 mt-8 mb-16"/>
                 </template>
             </v-row>
         </v-sheet>
