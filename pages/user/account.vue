@@ -42,6 +42,18 @@ import userMixin from '~/mixins/userMixin'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+    head() {
+        return {
+            title: '個人資料',
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: '使用者的帳戶資料'
+                }
+            ]
+        }
+    },
     middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
     mixins: [userMixin],
     methods: {

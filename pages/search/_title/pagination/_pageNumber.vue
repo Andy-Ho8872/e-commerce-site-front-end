@@ -35,6 +35,20 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    head() {
+        if(this.searchText) {
+            return {
+                title: this.searchText,
+                meta: [
+                    {
+                        hid: 'description',
+                        name: 'description',
+                        content: this.searchText
+                    }
+                ]
+            }
+        }
+    },
     data() {
         return {
             page: Number(this.$route.params.pageNumber) || 1,

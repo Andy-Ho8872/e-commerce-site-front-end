@@ -53,6 +53,18 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+    head() {
+        return {
+            title: '首頁',
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: '全網最便宜都在這，快來血拚吧!'
+                }
+            ]
+        }
+    },
     data() {
         return {
             loading: true, // 骨架屏狀態

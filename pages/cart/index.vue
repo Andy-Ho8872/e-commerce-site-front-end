@@ -122,6 +122,18 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+    head() {
+        return {
+            title: '我的購物車',
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: '使用者所購買的商品。'
+                }
+            ]
+        }
+    },
     middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
     methods: {
         ...mapActions({

@@ -106,6 +106,20 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+    head() {
+        if (this.product) {
+            return {
+                title: this.product.title,
+                meta: [
+                    {
+                        hid: 'description',
+                        name: 'description',
+                        content: '優質的購物網站，全網最便宜都在這。'
+                    }
+                ]
+            }
+        }
+    },
     validate({ params }) {
         return /^\d+$/.test(params.id)
     },

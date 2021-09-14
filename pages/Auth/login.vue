@@ -91,6 +91,18 @@ import { mapActions } from 'vuex'
 import authMixin from '~/mixins/authMixin'
 
 export default {
+    head() {
+        return {
+            title: '立即登入以購物',
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: '優質的購物網站，全網最便宜都在這，立即登入並開始血拚吧!'
+                }
+            ]
+        }
+    },
     mixins: [authMixin],
     methods: {
         ...mapActions({

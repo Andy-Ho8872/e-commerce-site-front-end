@@ -98,6 +98,18 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
     middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
+    head() {
+        return {
+            title: '建立訂單',
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: '填上您的付款方式與地址，以便寄送商品。'
+                }
+            ]
+        }
+    },
     data() {
         return {
             //* 表格標頭

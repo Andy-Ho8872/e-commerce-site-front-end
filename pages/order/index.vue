@@ -85,6 +85,18 @@
 import orderMixin from '~/mixins/orderMixin'
 
 export default {
+    head() {
+        return {
+            title: '訂單總覽',
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: '使用者的訂單與細項。'
+                }
+            ]
+        }
+    },
     middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
     mixins:[orderMixin],
     data() {

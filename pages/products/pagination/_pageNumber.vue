@@ -29,6 +29,18 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    head() {
+        return {
+            title: '瀏覽所有商品',
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: '優質的購物網站，全網最便宜都在這。'
+                }
+            ]
+        }
+    },
     validate({ params }) {
         return /^\d+$/.test(params.pageNumber)
     },

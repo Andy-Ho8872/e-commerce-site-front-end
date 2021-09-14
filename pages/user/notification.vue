@@ -97,6 +97,18 @@
 import notificationMixin from '~/mixins/notificationMixin'
 
 export default {
+    head() {
+        return {
+            title: '通知總覽',
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: '使用者所接收到的通知'
+                }
+            ]
+        }
+    },
     middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
     mixins: [notificationMixin],
     data() {
