@@ -5,18 +5,14 @@
         <v-row v-if="product">
             <v-col>
                 <v-card
-                    class="d-flex flex-wrap justify-space-between rounded-xl ma-auto"
-                    elevation="4"
-                    color="grey lighten-4"
-                    width="900"
+                    class="d-flex flex-wrap justify-space-between rounded-lg ma-auto"
+                    :width="width"
+                    :elevation="elevation"
+                    :color="color"
                 >
                     <!-- 圖片 -->
                     <div class="half">
-                        <v-img :src="product.imgUrl" class="rounded-xl ma-6"></v-img>
-                        <v-card-subtitle class="product_created_at mx-4 grey--text text--darken-1 text-lg-left text-center">
-                            本商品於 {{ $moment(product.created_at).format('ll') }}
-                            ({{ $moment(product.created_at).fromNow() }}) 上架
-                        </v-card-subtitle>
+                        <v-img :src="product.imgUrl" :alt="product.title" class="rounded-lg ma-6"></v-img>
                     </div>
                     <!-- 詳細資訊 -->
                     <div class="half">
@@ -24,25 +20,29 @@
                         <v-card-title class="product_title justify-center">
                             {{ product.title }}
                         </v-card-title>
-                        <!-- 敘述 -->
-                        <v-card-text class="product_description text-justify">
-                            {{ product.description }}
-                        </v-card-text>
                         <!-- 價格 -->
                         <v-card-text class="title">
-                            <!-- 原價 -->
-                            <span class="product_original_price" :class="[product.discount_rate == 1 ? '' : 'discounted']">
-                                $ {{ Math.floor(product.unit_price) }}
-                            </span>
-                            <!-- 折價後 -->
-                            <span class="product_discount_price mx-2 title red--text" v-if="product.discount_rate != 1">
-                                $ {{ Math.floor(product.unit_price * product.discount_rate) }}
-                            </span>
+                            <v-sheet rounded="lg" class="pa-2">
+                                <!-- 原價 -->
+                                <span class="product_original_price" :class="[product.discount_rate == 1 ? '' : 'discounted']">
+                                    $ {{ Math.floor(product.unit_price) }}
+                                </span>
+                                <!-- 折價後 -->
+                                <span class="product_discounted_price mx-2 blue--text text-h5" v-if="product.discount_rate != 1">
+                                    $ {{ Math.floor(product.unit_price * product.discount_rate) }}
+                                </span>
+                                <!-- 折扣標籤 -->
+                                <v-badge tile :content="`${product.discount_rate * 10} 折`" v-if="product.discount_rate != 1"></v-badge>
+                            </v-sheet>
                         </v-card-text>
                         <!-- 評級 -->
-                        <Ratings :product="product" class="mx-4 my-6"/>
+                        <v-card-text>
+                            <Ratings :product="product" size="24"/>
+                        </v-card-text>
                         <!-- 標籤 -->
-                        <Tags :product="product" class="mx-4 my-6"/>
+                        <v-card-text>
+                            <Tags :product="product"/>
+                        </v-card-text>
                         <!-- 輸入數量 -->
                         <v-form>
                             <v-row class="input_container ma-3 py-4">
@@ -97,6 +97,33 @@
                         </v-form>
                     </div>
                 </v-card>
+                <!-- 商品規格 -->
+                <v-card :width="width" :elevation="elevation" :color="color" class="rounded-lg ma-auto my-6">
+                    <v-card-title class="font-weight-bold">商品規格</v-card-title>
+                    <!-- 庫存數量 -->
+                    <v-card-text class="product_stock_quantity text-subtitle-1">
+                        庫存數量: {{ product.stock_quantity }}
+                    </v-card-text>
+                    <!-- 上架日期 -->
+                    <v-card-text class="product_created_at text-subtitle-1">
+                        上架日期: 
+                        {{ $moment(product.created_at).format('ll') }} 
+                        ({{ $moment(product.created_at).fromNow() }})
+                    </v-card-text>
+                    <!-- 更動日期 -->
+                    <v-card-text class="product_updated_at text-subtitle-1">
+                        更動日期: 
+                        {{ $moment(product.updated_at).format('ll') }} 
+                        ({{ $moment(product.updated_at).fromNow() }})
+                    </v-card-text>
+                </v-card>
+                <!-- 敘述 -->
+                <v-card :width="width" :elevation="elevation" :color="color" class="rounded-lg ma-auto my-6">
+                    <v-card-title class="font-weight-bold">商品詳情</v-card-title>
+                    <v-card-text class="product_description text-subtitle-1 text-justify">
+                        {{ product.description }}
+                    </v-card-text>
+                </v-card>
             </v-col>
         </v-row>
     </v-container>
@@ -125,6 +152,10 @@ export default {
     },
     data() {
         return {
+            //* 商品卡片 style
+            width: 900,
+            elevation: 4,
+            color: 'grey lighten-4',
             //* 暫存資料
             productPayload: {
                 id: this.$route.params.id,
