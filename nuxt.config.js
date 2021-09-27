@@ -8,7 +8,9 @@ export default {
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: '' },
+            { name: 'keywords', content: '電商，購物，血拚，消費' },
+            { name: 'author', content: 'Andy-Ho' },
+            { hid: 'description', name: 'description', content: '優質的購物網站，全網最便宜都在這，趕快來搶購。' },
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

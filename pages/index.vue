@@ -60,7 +60,7 @@ export default {
                 {
                     hid: 'description',
                     name: 'description',
-                    content: '全網最便宜都在這，快來血拚吧!'
+                    content: '全網最便宜都在這，優質的購物網站，快來血拚吧!'
                 }
             ]
         }
