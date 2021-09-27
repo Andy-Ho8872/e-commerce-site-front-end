@@ -25,13 +25,13 @@
         </ul>
         <ul class="account_links">
             <h2>會員中心</h2>
-            <li>
+            <li @click="scrollToTop">
                 <nuxt-link :to="{ name: 'user-account' }">個人資料</nuxt-link>
             </li>
-            <li>
+            <li @click="scrollToTop">
                 <nuxt-link :to="{ name: 'user-order' }">查看訂單</nuxt-link>
             </li>
-            <li>
+            <li @click="scrollToTop">
                 <nuxt-link :to="{ name: 'user-notification' }">通知總覽</nuxt-link>
             </li>
         </ul>
@@ -53,7 +53,16 @@
 </template>
 
 <script>
-export default {}
+export default {
+    methods: {
+        scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            })
+        },
+    }
+}
 </script>
 
 <style lang="scss" scoped>
