@@ -32,8 +32,8 @@ export const getters = {
 
 export const mutations = {
     //* 設置使用者購物車的資料
-    SET_USER_CART(state, payload) {
-        state.userCart = payload
+    SET_USER_CART(state, carts) {
+        state.userCart = carts
     },
     //* 判定購物車內是否有資料
     CHECK_AND_SET_VALID_STATUS(state) {
@@ -70,9 +70,9 @@ export const actions = {
     async fetchUserCart({ commit }) {
         try {
             const res = await apiGetCartProducts()
-            const payload = res.data.carts
+            const carts = res.data.carts
             //* 將資料寫入
-            await commit('SET_USER_CART', payload)
+            await commit('SET_USER_CART', carts)
             //* 確認購物車內是否還有商品
             commit('CHECK_AND_SET_VALID_STATUS')
         } catch (error) {
