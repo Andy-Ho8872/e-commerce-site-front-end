@@ -122,7 +122,6 @@ export default {
     position: relative;
     background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
     max-width: 600px;
-    height: 600px;
 }
 .error_msg {
     position: absolute;
