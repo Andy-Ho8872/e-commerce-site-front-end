@@ -8,6 +8,7 @@ export default {
             form: {
                 email: '',
                 password: '',
+                password_confirmation: ''
             },
             //* 表單驗證規則
             valid: null, //* 是否合格
@@ -19,6 +20,8 @@ export default {
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     return pattern.test(value) || '範例 : abc123@gmail.com'
                 },
+                // 比對密碼與確認密碼欄位是否吻合
+                password_confirmation: value => value == this.form.password || '輸入的密碼不一致'
             },
         }
     },

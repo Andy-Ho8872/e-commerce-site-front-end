@@ -47,6 +47,24 @@
                         placeholder="Password"
                     >
                     </v-text-field>
+                    <!-- 確認密碼 -->
+                    <v-text-field
+                        class="ma-6"
+                        name="password_confirmation"
+                        required
+                        counter
+                        v-model="form.password_confirmation"
+                        :rules="[rules.required, rules.min, rules.password_confirmation]"
+                        :type="show ? 'text' : 'password'"
+                        @click:append="show = !show"
+                        :append-icon="show ? 'fa-eye' : 'fa-eye-slash'"
+                        minlength="6"
+                        prepend-icon="fa-lock"
+                        color="blue"
+                        label="確認密碼"
+                        placeholder="Password_Confirmation"
+                    >
+                    </v-text-field>
                 </div>
                 <!-- 已有帳戶? -->
                 <v-row class="has_account font-italic">
@@ -122,7 +140,6 @@ export default {
     position: relative;
     background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 80%);
     max-width: 600px;
-    height: 600px;
 }
 .error_msg {
     position: absolute;
