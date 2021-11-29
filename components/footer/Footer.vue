@@ -47,7 +47,7 @@
             </li>
         </ul>
         <div class="copy_right_claim text-center">
-            <h3>Copyright © 2021 AndyHo8872.</h3>
+            <h3>Copyright © {{ new Date().getFullYear() }} AndyHo8872.</h3>
         </div>
     </div>
 </template>
