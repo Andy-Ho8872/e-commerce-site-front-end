@@ -4,6 +4,7 @@ import {
     // apiCsrfLogin, //! 暫時不用
     apiGetUserInfo,
     apiUserLogout,
+    apiUpdateUserProfile,
 } from '~/APIs/api.js'
 
 export const state = () => ({
@@ -76,9 +77,9 @@ export const mutations = {
 export const actions = {
     //* 提示訊息
     async setFlashMessage({ commit }, message) {
-        //* 設置訊息 
+        //* 設置訊息
         commit('SET_MESSAGE', message)
-        //* 3秒後清除訊息 
+        //* 3秒後清除訊息
         setTimeout(() => {
             commit('CLEAR_MESSAGE')
         }, 3000)
@@ -123,7 +124,9 @@ export const actions = {
         await dispatch('order/fetchAllOrders', null, { root: true }) //? 使用者的訂單
         await dispatch('order/fetchTableColumns', null, { root: true }) //? 付款方式欄位
         //* 從 store/notification.js 撈取
-        await dispatch('notification/fetchAllNotifications', null, { root: true }) //? 使用者的通知
+        await dispatch('notification/fetchAllNotifications', null, {
+            root: true,
+        }) //? 使用者的通知
     },
     //* 確認使用者是否已經登入
     async checkIfUserHasLoggedIn({ state }) {
@@ -148,7 +151,7 @@ export const actions = {
             })
             //* 若帳密正確，則將資料儲存在 localStorage
             await commit('SET_LOCAL_STORAGE', res)
-            //* 撈取必要的資料 
+            //* 撈取必要的資料
             await dispatch('fetchRequiredData')
             //* 重新導向
             this.$router.push({ name: 'user-account' })
@@ -181,6 +184,30 @@ export const actions = {
             //* 重新導向
             this.$router.push({ name: 'index' })
             alert('您已經登出')
+        } catch (error) {
+            console.log('error from store/auth.js')
+        }
+        //? end loading
+        commit('SET_LOADING', false)
+    },
+    //* 更新使用者個人檔案
+    async updateUserProfile({ commit, dispatch }, data) {
+        //? start loading
+        commit('SET_LOADING', true)
+        try {
+            await apiUpdateUserProfile({
+                user_name: data.name,
+                user_phone: data.phone,
+                user_address: data.address,
+            })
+            //* 重新撈取資料
+            await dispatch('fetchUserInfo')
+            //* 提示訊息
+            const message = {
+                type: 'success',
+                text: '個人資料變更成功',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log('error from store/auth.js')
         }

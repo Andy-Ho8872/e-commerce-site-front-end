@@ -91,6 +91,8 @@ export const apiUserLogin = data => userRequest.post('/login', data);
 export const apiUserLogout = () => authRequest.get('/logout');
     //* 取得使用者
 export const apiGetUserInfo = () => authRequest.get('/getUser');
+    //* 更新使用者個人檔案
+export const apiUpdateUserProfile = (data) => authRequest.post('updateProfile', data);
 //------------------------------------------- 使用者相關 API -------------------------------------------//
 
 
