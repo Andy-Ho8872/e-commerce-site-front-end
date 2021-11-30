@@ -107,7 +107,7 @@ export const apiGetProduct = (id) => productRequest.get(`/${id}`);
     //* 撈取商品標籤
 export const apiGetProductTags = () => productRequest.get(`/tags/getTags`);
     //* 商品換頁(Pagination) 
-export const apiGetProductsWithPagination = (page) => productRequest.get(`/pagination?page=${page}`);
+export const apiGetProductsWithPagination = (orderBy, sortBy, page) => productRequest.get(`/pagination/orderBy/${orderBy}/sortBy/${sortBy}?page=${page}`);
     // 搜尋商品(名稱) //! 暫時不使用 
 export const apiSearchByTitle = (title) => productRequest.get(`/search/${title}`);
     //* 搜尋商品(含分頁)

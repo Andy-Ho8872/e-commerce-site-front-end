@@ -104,18 +104,18 @@ export const actions = {
         }
     },
     //* 產品的資料(含分頁)
-    async fetchPaginatedProducts({ commit }, pageNumber) {
+    async fetchPaginatedProducts({ commit }, payload) {
         //? start loading
         commit('SET_LOADING', true)
         try {
             //* 撈取資料
-            const res = await apiGetProductsWithPagination(pageNumber)
+            const res = await apiGetProductsWithPagination(payload.orderBy, payload.sortBy, payload.page)
             const products = res.data.products
             await commit('SET_PAGINATED_PRODUCTS', products)
             //* 最後導向至該頁
             this.$router.push({
                 name: 'products-pagination-pageNumber',
-                params: { pageNumber: pageNumber },
+                params: { pageNumber: payload.page },
             })
         } 
         catch (error) {
