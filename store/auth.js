@@ -5,6 +5,7 @@ import {
     apiGetUserInfo,
     apiUserLogout,
     apiUpdateUserProfile,
+    apiClearUserProfile
 } from '~/APIs/api.js'
 
 export const state = () => ({
@@ -210,6 +211,36 @@ export const actions = {
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log('error from store/auth.js')
+            const message = {
+                type: 'error',
+                text: '個人資料變更失敗，請重新嘗試。',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        }
+        //? end loading
+        commit('SET_LOADING', false)
+    },
+    //* 清除使用者個人檔案
+    async clearUserProfile({ commit, dispatch }, data) {
+        //? start loading
+        commit('SET_LOADING', true)
+        try {
+            await apiClearUserProfile()
+            //* 重新撈取資料
+            await dispatch('fetchUserInfo')
+            //* 提示訊息
+            const message = {
+                type: 'success',
+                text: '個人資料已經清除',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        } catch (error) {
+            console.log('error from store/auth.js')
+            const message = {
+                type: 'error',
+                text: '個人資料刪除失敗，請重新嘗試。',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         }
         //? end loading
         commit('SET_LOADING', false)

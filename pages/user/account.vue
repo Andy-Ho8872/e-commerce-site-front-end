@@ -36,15 +36,17 @@
                     <li>電話: {{ user.phone || defaultProfileText }}</li>
                     <li>地址: {{ user.address || defaultProfileText }}</li>
                 </ul>
-                <!-- 彈出視窗 -->
-                <v-dialog v-model="dialog" max-width="600px">
+                <!-- 更新檔案彈出視窗 -->
+                <v-dialog v-model="updateDialog" max-width="600px">
                     <v-card>
+                        <v-form ref="form" v-model="saveBtnValid">
                         <v-card-title class="font-weight-bold mb-4">新增 / 變更檔案</v-card-title>
                         <v-card-text>
                             <v-row>
                                 <v-col>
                                     <v-text-field 
                                         v-model="profile.name"
+                                        :rules="[rules.stringOnly]"
                                         outlined
                                         prepend-inner-icon="fa-id-badge" 
                                         label="姓名" 
@@ -53,6 +55,7 @@
                                     </v-text-field>
                                     <v-text-field 
                                         v-model="profile.phone"
+                                        :rules="[rules.number]"
                                         outlined 
                                         prepend-inner-icon="fa-phone"
                                         label="電話" 
@@ -70,18 +73,32 @@
                                 </v-col>
                             </v-row>
                         </v-card-text>
+                        </v-form>
                         <!-- 按鈕操作 -->
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn @click="dialog = false" color="error" text>取消</v-btn>
-                            <v-btn @click="updateUserProfile(profile)" color="primary" :loading="loading">儲存</v-btn>
+                            <v-btn @click="updateDialog = false" color="error" outlined>取消</v-btn>
+                            <v-btn @click="updateProfileAndSetDialog" color="primary" :disabled="!saveBtnValid" :loading="loading">儲存</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+                <!-- 清空檔案彈出視窗 -->
+                <v-dialog v-model="deleteDialog" max-width="600px">
+                    <v-card>
+                        <v-card-title class="font-weight-bold mb-4">清空檔案</v-card-title>
+                        <v-card-text>即將清空您的個人檔案，是否繼續執行?</v-card-text>
+                        <!-- 按鈕操作 -->
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn @click="deleteDialog = false" color="error" outlined>取消</v-btn>
+                            <v-btn @click="clearProfileAndSetDialog" color="primary" :loading="loading">確認</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
                 <!-- 按鈕操作 -->
                 <v-card-actions>
-                    <v-btn color="error" outlined>刪除檔案</v-btn>
-                    <v-btn color="primary" @click="dialog = true">變更檔案</v-btn>
+                    <v-btn color="error" outlined :disabled="!deleteBtnValid" @click="deleteDialog = true">清空檔案</v-btn>
+                    <v-btn color="primary" @click="updateDialog = true">變更檔案</v-btn>
                 </v-card-actions>
             </v-card-subtitle>
             <!-- 登出 -->
@@ -117,26 +134,84 @@ export default {
     mixins: [userMixin],
     data() {
         return {
-            dialog: false,
+            // 彈出視窗
+            updateDialog: false,
+            deleteDialog: false,
+            // 按鈕是否禁用
+            saveBtnValid: true,
+            deleteBtnValid: false,
+            // 個人資料預設文字
             defaultProfileText: "尚未填寫",
             // 個人資料欄位
             profile: {
                 name: '',
                 phone: '',
                 address: ''
+            },
+            //* 欄位規則
+            rules: {
+                number: value => {
+                    const pattern = /^[0-9]*$/
+                    return pattern.test(value) || '電話號碼只能有數字。'
+                },
+                stringOnly: value => {
+                    const pattern = /^\D*$/
+                    return pattern.test(value) || '名字不能包含數字。'
+                }
             }
         }
     },
     methods: {
-        ...mapActions(({
+        ...mapActions({
             logout: 'auth/logout',
             updateUserProfile: 'auth/updateUserProfile',
-        }))
+            clearUserProfile: 'auth/clearUserProfile',
+        }),
+        //* 初始化使用者的輸入欄位預設值
+        initUserProfileInputs() {
+            if(this.user) {
+                //* 若使用者沒有設定，則為 null 
+                this.profile.name = this.user.name || null
+                this.profile.phone = this.user.phone || null
+                this.profile.address = this.user.address || null
+            }
+            return null
+        },
+        async updateProfileAndSetDialog() {
+            await this.updateUserProfile(this.profile)
+            this.checkIfProfileValueExists()
+            //* 關閉 dialog
+            this.updateDialog = false
+        },
+        async clearProfileAndSetDialog() {
+            await this.clearUserProfile()
+            await this.initUserProfileInputs()
+            this.checkIfProfileValueExists()
+            this.deleteDialog = false
+        },
+        checkIfProfileValueExists() {
+            //* 欄位至少要有一個值，否則禁用按鈕 
+            if(this.user.name || this.user.phone || this.user.address) {
+                this.saveBtnValid = true
+            } 
+            if(this.profile.name || this.profile.phone || this.address) {
+                this.saveBtnValid = true
+                this.deleteBtnValid = true
+            }
+            else {
+                this.saveBtnValid = false
+                this.deleteBtnValid = false
+            }
+        }
     },
     computed: {
         ...mapGetters({
             loading: 'auth/getLoading'
         })
+    },
+    mounted() {
+        this.initUserProfileInputs()
+        this.checkIfProfileValueExists()
     }
 }
 </script>
