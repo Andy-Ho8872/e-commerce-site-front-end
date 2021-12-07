@@ -47,7 +47,7 @@
                                     <v-text-field 
                                         v-model="profile.name"
                                         placeholder="王小明"
-                                        :rules="[rules.lettersOnly]"
+                                        :rules="[rules.lettersOnly, rules.required]"
                                         outlined
                                         prepend-inner-icon="fa-id-badge" 
                                         label="姓名" 
@@ -57,7 +57,7 @@
                                     <v-text-field 
                                         v-model="profile.phone"
                                         placeholder="0912345678"
-                                        :rules="[rules.numbersOnly]"
+                                        :rules="[rules.required, rules.numbersOnly]"
                                         maxlength="10"
                                         counter="10"
                                         outlined 
@@ -69,6 +69,7 @@
                                     <v-text-field 
                                         v-model="profile.address"
                                         placeholder="OO市OO區OO路..."
+                                        :rules="[rules.required]"
                                         outlined 
                                         prepend-inner-icon="fa-map-marker-alt"
                                         label="地址" 
@@ -163,6 +164,7 @@ export default {
                     const pattern = /^\D*$/
                     return pattern.test(value) || '名字不能包含數字。'
                 },
+                required: value => !!value || '此欄位必填',
             }
         }
     },
