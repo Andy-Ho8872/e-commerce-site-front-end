@@ -46,7 +46,8 @@
                                 <v-col>
                                     <v-text-field 
                                         v-model="profile.name"
-                                        :rules="[rules.stringOnly]"
+                                        placeholder="王小明"
+                                        :rules="[rules.lettersOnly]"
                                         outlined
                                         prepend-inner-icon="fa-id-badge" 
                                         label="姓名" 
@@ -55,7 +56,10 @@
                                     </v-text-field>
                                     <v-text-field 
                                         v-model="profile.phone"
-                                        :rules="[rules.number]"
+                                        placeholder="0912345678"
+                                        :rules="[rules.numbersOnly]"
+                                        maxlength="10"
+                                        counter="10"
                                         outlined 
                                         prepend-inner-icon="fa-phone"
                                         label="電話" 
@@ -64,6 +68,7 @@
                                     </v-text-field>
                                     <v-text-field 
                                         v-model="profile.address"
+                                        placeholder="OO市OO區OO路..."
                                         outlined 
                                         prepend-inner-icon="fa-map-marker-alt"
                                         label="地址" 
@@ -150,14 +155,14 @@ export default {
             },
             //* 欄位規則
             rules: {
-                number: value => {
-                    const pattern = /^[0-9]*$/
+                numbersOnly: value => {
+                    const pattern = /^[\d ]*$/
                     return pattern.test(value) || '電話號碼只能有數字。'
                 },
-                stringOnly: value => {
+                lettersOnly: value => {
                     const pattern = /^\D*$/
                     return pattern.test(value) || '名字不能包含數字。'
-                }
+                },
             }
         }
     },
