@@ -54,6 +54,14 @@
                         <td data-title="金額總計" id="sumSubtotal">
                             <span class="red--text text--lighten-1">{{ order.sumSubtotal }}</span>
                         </td>
+                        <!-- 買家姓名 -->
+                        <td data-title="買家姓名" id="buyer_name">
+                            <span>{{ order.buyer_name }}</span>
+                        </td>
+                        <!-- 買家電話 -->
+                        <td data-title="買家電話" id="buyer_phone">
+                            <span>{{ order.buyer_phone }}</span>
+                        </td>
                         <!-- 送達地址 -->
                         <td data-title="送達地址" id="address">
                             <span>{{ order.address }}</span>
@@ -107,6 +115,8 @@ export default {
                 { title: '出貨狀態' },
                 { title: '商品個數' },
                 { title: '金額總計' },
+                { title: '買家姓名' },
+                { title: '買家電話' },
                 { title: '送達地址' },
                 { title: '訂購時間' },
                 { title: '編輯操作' },
