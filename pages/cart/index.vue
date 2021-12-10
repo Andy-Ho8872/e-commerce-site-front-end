@@ -76,7 +76,8 @@
                         <!-- 刪除按鈕(單項商品) -->
                         <v-btn class="delete_single_item cart_section_btn white--text"
                             @click="deleteFromCart(item.product_id)"
-                            color="red lighten-2"
+                            color="red"
+                            outlined
                         >
                             <v-icon small>fa-trash-alt fa-fw</v-icon>
                             <span>刪除</span>
@@ -105,10 +106,10 @@
                     <nuxt-link :to="{ name: 'order-create' }" :event="valid ? 'click' : ''">
                         <!-- 結帳按鈕 -->
                         <v-btn class="white--text mx-6"
-                            color="blue lighten-2"
+                            color="primary"
                             :disabled="!valid"
                         >
-                            <v-icon small>fa-shopping-basket fa-fw</v-icon>
+                            <v-icon small>fa-check-square fa-fw</v-icon>
                             <span class="ml-2">結帳</span>
                         </v-btn>
                     </nuxt-link>
