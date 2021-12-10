@@ -12,11 +12,30 @@
                 刪除這筆訂單?
             </v-card-title>
             <!-- 卡片內容 -->
-            <v-card-text class="font-weight-bold">您確定要刪除訂單編號 - <span>{{ order.id }}</span> 嗎?</v-card-text>
+            <v-card-subtitle class="font-weight-bold mt-4">您確定要刪除訂單編號 - <span>{{ order.id }}</span> 嗎?</v-card-subtitle>
+            <v-card-subtitle>
+                <v-divider></v-divider>
+                <v-subheader>訂單商品內容</v-subheader>
+                <!-- 商品內容 -->
+                    <v-list>
+                        <v-list-item v-for="item in order.items" :key="'item' + item.pivot.product_id">
+                            <!-- 圖片 -->
+                            <v-list-item-avatar>
+                                <v-img :src="item.imgUrl" :alt="item.title"></v-img>
+                            </v-list-item-avatar>
+                            <!-- 名稱 -->
+                            <v-list-item-content>
+                                {{ item.title }}
+                            </v-list-item-content>
+                            <!-- 數量 -->
+                            <div>x {{ item.pivot.product_quantity }}</div>
+                        </v-list-item>
+                    </v-list>
+            </v-card-subtitle>
             <!-- 按鈕群組 -->
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" outlined @click="dialog = false">
+                <v-btn color="primary" outlined @click="dialog = false">
                     <span class="font-weight-bold">返回</span>
                 </v-btn>
                 <v-btn color="red darken-1" outlined @click="[dialog = false, deleteSingleOrder(order.id)]"
