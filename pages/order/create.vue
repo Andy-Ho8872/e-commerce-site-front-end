@@ -52,8 +52,8 @@
                     <!-- 姓名 -->
                     <v-text-field
                         class="text_field"
-                        name="name"
-                        v-model="form.name"
+                        name="buyer_name"
+                        v-model="form.buyer_name"
                         :rules="[rules.required, rules.lettersOnly]"
                         outlined
                         label="您的姓名"
@@ -63,8 +63,8 @@
                     <!-- 電話 -->
                     <v-text-field
                         class="text_field"
-                        name="phone"
-                        v-model="form.phone"
+                        name="buyer_phone"
+                        v-model="form.buyer_phone"
                         :rules="[rules.required, rules.numbersOnly]"
                         maxlength="10"
                         outlined
@@ -152,8 +152,8 @@ export default {
             form: {
                 //* 預設為現金付款
                 payment_id: 1,
-                name: '',
-                phone: '',
+                buyer_name: '',
+                buyer_phone: '',
                 address: ''
             },
             //* 自動填入資料 
@@ -219,12 +219,12 @@ export default {
         //* 設定輸入欄位的值
         setFormInputs() {
             if(this.autoFill) {
-                this.form.name = this.user.name 
-                this.form.phone = this.user.phone
+                this.form.buyer_name = this.user.name 
+                this.form.buyer_phone = this.user.phone
                 this.form.address = this.user.address
             } else {
-                this.form.name = ''
-                this.form.phone = ''
+                this.form.buyer_name = ''
+                this.form.buyer_phone = ''
                 this.form.address = ''
             }
         },
