@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="dialog" persistent max-width="290" transition="dialog-bottom-transition">
+    <v-dialog v-model="dialog" persistent max-width="600" transition="dialog-bottom-transition">
         <template v-slot:activator="{ on, attrs }">
             <v-btn color="red" dark v-bind="attrs" v-on="on">
                 <v-icon>fa-trash-alt fa-fw</v-icon>
@@ -8,24 +8,22 @@
         </template>
         <v-card>
             <!-- 卡片標題 -->
-            <v-card-title class="headline">
+            <v-card-title class="headline font-weight-bold">
                 刪除這筆訂單?
             </v-card-title>
             <!-- 卡片內容 -->
-            <v-card-text>您確定要刪除訂單編號 - <span class="order_id font-weight-bold">{{ order.id }}</span> 嗎?</v-card-text>
+            <v-card-text class="font-weight-bold">您確定要刪除訂單編號 - <span>{{ order.id }}</span> 嗎?</v-card-text>
             <!-- 按鈕群組 -->
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" text @click="dialog = false">
-                    <v-icon>fa-long-arrow-alt-left fa-fw</v-icon>
+                <v-btn color="green darken-1" outlined @click="dialog = false">
                     <span class="font-weight-bold">返回</span>
                 </v-btn>
-                <v-btn color="red darken-1" text @click="[dialog = false, deleteSingleOrder(order.id)]"
+                <v-btn color="red darken-1" outlined @click="[dialog = false, deleteSingleOrder(order.id)]"
                     class="delete_btn ma-4 pa-4 white--text" 
                     :loading="loading" 
                     :disabled="loading"
                     >
-                    <v-icon>fa-trash-alt fa-fw</v-icon>
                     <span class="font-weight-bold">刪除</span>
                 </v-btn>
             </v-card-actions>
