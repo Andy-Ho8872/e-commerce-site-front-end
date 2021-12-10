@@ -77,7 +77,6 @@
                                 <DeleteDialog :order="order" class="delete_dialog_component"/>
                                 <!-- 查看 --> 
                                 <v-btn color="primary" dark nuxt :to="{ name: 'order-id-details', params: { id: order.id }}">
-                                    <v-icon>fa-hand-point-right fa-fw</v-icon>
                                     <span>查看</span>
                                 </v-btn>   
                             </div>

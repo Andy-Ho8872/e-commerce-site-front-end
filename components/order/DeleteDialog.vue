@@ -1,8 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent max-width="600" transition="dialog-bottom-transition">
         <template v-slot:activator="{ on, attrs }">
-            <v-btn color="red" dark v-bind="attrs" v-on="on">
-                <v-icon>fa-trash-alt fa-fw</v-icon>
+            <v-btn color="error" outlined v-bind="attrs" v-on="on">
                 <span>刪除</span>
             </v-btn>
         </template>
