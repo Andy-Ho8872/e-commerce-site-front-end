@@ -137,6 +137,8 @@ export const actions = {
             await apiCreateOrder({
                 payment_id: order.payment_id,
                 address: order.address,
+                buyer_name: order.buyer_name,
+                buyer_phone: order.buyer_phone,
             })
             //* 訂單建立後從 store/cart.js 清空使用者的購物車資料
             await commit('cart/CLEAR_USER_CART', null, { root: true })
