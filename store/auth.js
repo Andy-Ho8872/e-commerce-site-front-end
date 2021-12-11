@@ -81,8 +81,10 @@ export const actions = {
         //* 設置訊息
         commit('SET_MESSAGE', message)
         //* 3秒後清除訊息
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             commit('CLEAR_MESSAGE')
+            //* 清除 timeout 以防止記憶體洩漏 
+            clearTimeout(timeout)
         }, 3000)
     },
     //* 註冊流程
@@ -93,6 +95,7 @@ export const actions = {
             await apiUserRegister({
                 email: user.email,
                 password: user.password,
+                password_confirmation: user.password_confirmation
             })
             //* 註冊成功後跳轉
             alert('註冊成功，即將為您跳轉至登入頁面。')
