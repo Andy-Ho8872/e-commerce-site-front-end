@@ -27,17 +27,18 @@
                 color="blue darken-2"
             ></v-progress-linear>
             <!-- results -->
-            <li
-                class="auto_complete__result blue--text text-button font-weight-bold"
-                v-for="item in autoCompleteItems"
-                :key="item.id"
-                @click="[setInitialState(item.title), switchRoute()]"
-            >
-                <v-avatar>
-                    <v-img :src="item.imgUrl" :alt="item.title"></v-img>
-                </v-avatar>
-                {{ item.title }}
-            </li>
+            <v-list>
+                <v-list-item-group>
+                    <v-list-item class="autocomplete_item" v-for="item in autoCompleteItems" :key="item.id" @click="[setInitialState(item.title), switchRoute()]">
+                        <v-list-item-avatar>
+                            <v-img :src="item.imgUrl" :alt="item.title"></v-img>
+                        </v-list-item-avatar>
+                        <v-list-item-content class="text-button font-weight-bold">
+                            <v-list-item-subtitle class="blue--text">{{ item.title }}</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-item-group>
+            </v-list>
             <!-- no result text -->
             <p
                 class="text-center blue--text caption font-weight-bold pt-4"
@@ -158,11 +159,9 @@ ul {
     background: rgba(255, 255, 255, 1);
     box-shadow: 1px 1px 4px gray;
 }
-li {
-    cursor: pointer;
-    padding: 8px;
+.autocomplete_item {
     &:hover {
-        background: #f5f5f5;
+        background: #E0E0E0;
     }
 }
 </style>
