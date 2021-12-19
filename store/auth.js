@@ -1,12 +1,22 @@
+//! old version
+// import {
+//     apiUserRegister,
+//     apiUserLogin,
+//     // apiCsrfLogin, //! 暫時不用
+//     apiGetUserInfo,
+//     apiUserLogout,
+//     apiUpdateUserProfile,
+//     apiClearUserProfile
+// } from '~/APIs/api.js'
+//* new version
 import {
     apiUserRegister,
     apiUserLogin,
-    // apiCsrfLogin, //! 暫時不用
-    apiGetUserInfo,
     apiUserLogout,
+    apiGetUserInfo,
+    apiClearUserProfile,
     apiUpdateUserProfile,
-    apiClearUserProfile
-} from '~/APIs/api.js'
+} from '~/APIs/user.js'
 
 export const state = () => ({
     token: null, //* 憑證
@@ -83,7 +93,7 @@ export const actions = {
         //* 3秒後清除訊息
         const timeout = setTimeout(() => {
             commit('CLEAR_MESSAGE')
-            //* 清除 timeout 以防止記憶體洩漏 
+            //* 清除 timeout 以防止記憶體洩漏
             clearTimeout(timeout)
         }, 3000)
     },
@@ -95,7 +105,7 @@ export const actions = {
             await apiUserRegister({
                 email: user.email,
                 password: user.password,
-                password_confirmation: user.password_confirmation
+                password_confirmation: user.password_confirmation,
             })
             //* 註冊成功後跳轉
             alert('註冊成功，即將為您跳轉至登入頁面。')

@@ -1,4 +1,7 @@
-import { apiGetCarouselProducts } from '../APIs/api.js'
+//! old version
+// import { apiGetCarouselProducts } from '../APIs/api.js'
+//* new version
+import { apiGetCarouselProducts } from '~/APIs/product'
 
 export const state = () => ({
     //* 圖片輪播的檔案

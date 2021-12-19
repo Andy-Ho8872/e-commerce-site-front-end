@@ -1,10 +1,19 @@
+//! old version
+// import {
+//     apiGetTableColumns,
+//     apiCreateOrder,
+//     apiGetAllOrders,
+//     apiGetSingleOrder,
+//     apiDeleteSingleOrder,
+// } from '../APIs/api.js'
+//* new version
 import {
     apiGetTableColumns,
     apiCreateOrder,
     apiGetAllOrders,
     apiGetSingleOrder,
     apiDeleteSingleOrder,
-} from '../APIs/api.js'
+} from '~/APIs/order'
 
 export const state = () => ({
     //* 所有訂單

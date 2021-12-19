@@ -1,10 +1,19 @@
+//! old version
+// import {
+//     apiGetAllNotifications,
+//     apiGetUnReadNotifications,
+//     apiMarkNotification,
+//     apiMarkAllNotifications,
+//     apiDeleteAllNotifications
+// } from '~/APIs/api'
+//* new version 
 import {
     apiGetAllNotifications,
     apiGetUnReadNotifications,
     apiMarkNotification,
     apiMarkAllNotifications,
     apiDeleteAllNotifications
-} from '~/APIs/api'
+} from '~/APIs/notification'
 
 export const state = () => ({
     //* 通知訊息

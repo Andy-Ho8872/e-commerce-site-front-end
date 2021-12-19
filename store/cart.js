@@ -1,3 +1,15 @@
+//! old version 
+// import {
+//     apiGetCartProducts,
+//     apiAddToCart,
+//     apiAddToCartWithQuantity,
+//     apiDeleteFromCart,
+//     apiDeleteAllFromCart,
+//     apiUpdateQuantity,
+//     apiIncreaseQuantityByOne,
+//     apiDecreaseQuantityByOne,
+// } from '../APIs/api.js'
+//* new version 
 import {
     apiGetCartProducts,
     apiAddToCart,
@@ -7,7 +19,7 @@ import {
     apiUpdateQuantity,
     apiIncreaseQuantityByOne,
     apiDecreaseQuantityByOne,
-} from '../APIs/api.js'
+} from '../APIs/cart.js'
 
 export const state = () => ({
     //* 購物車中的內容

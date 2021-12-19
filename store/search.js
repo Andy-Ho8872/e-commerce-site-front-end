@@ -1,8 +1,15 @@
+//! old version
+// import {
+//     // apiSearchByTitle, //! 舊版本 暫不使用
+//     apiSearchAutoComplete,
+//     apiSearchByTitleWithPagination,
+// } from '../APIs/api.js'
+//* new version 
 import {
     // apiSearchByTitle, //! 舊版本 暫不使用
     apiSearchAutoComplete,
     apiSearchByTitleWithPagination,
-} from '../APIs/api.js'
+} from '~/APIs/product'
 
 export const state = () => ({
     //* 搜尋關鍵字

@@ -1,10 +1,19 @@
+//! old version 
+// import {
+//     // apiGetProducts, //! 暫時不用
+//     apiGetProduct,
+//     apiGetProductsWithPagination,
+//     apiGetProductTags,
+//     apiGetIndexPageProducts,
+// } from '~/APIs/api.js'
+//* new version
 import {
     // apiGetProducts, //! 暫時不用
     apiGetProduct,
     apiGetProductsWithPagination,
     apiGetProductTags,
     apiGetIndexPageProducts,
-} from '~/APIs/api.js'
+} from '~/APIs/product'
 
 export const state = () => ({
     //* 首頁的商品
