@@ -54,12 +54,9 @@
                     <nuxt-link :to="{ name: 'auth-register' }">
                         <span class="mx-2">註冊</span>
                     </nuxt-link>
-                    <v-spacer></v-spacer>
-                    <!-- 目前不使用 -->
-                    <!-- <h4>忘記密碼</h4> -->
                 </v-row>
                 <!-- 登入按鈕 -->
-                <div class="text-center mt-10">
+                <div class="text-center mt-8">
                     <v-btn
                         class="submit_btn title"
                         @click.prevent="login(form)"
@@ -73,12 +70,33 @@
                         登入
                     </v-btn>
                 </div>
-                <v-divider class="my-8"></v-divider>
-                <!-- 第三方登入 -->
-                <v-btn color="primary" @click="socialiteLogin('github')">
-                    <v-icon color="white">mdi-github</v-icon>
-                    <span>以 Github 登入</span>
-                </v-btn>
+                <!-- divider -->
+                <div class="divider d-flex align-center mt-8">
+                    <div class="divider_line"></div>
+                    <div class="divider__text px-2">或</div>
+                    <div class="divider_line"></div>
+                </div>
+                <!-- 第三方登入按鈕 -->
+                <v-row class="my-8">
+                    <v-col>
+                        <v-btn color="grey" @click="socialiteLogin('github')">
+                            <v-icon color="white">mdi-github</v-icon>
+                            <span class="white--text">Github</span>
+                        </v-btn>
+                    </v-col>
+                    <v-col>
+                        <v-btn color="red" @click="socialiteLogin('google')">
+                            <v-icon color="white">mdi-google</v-icon>
+                            <span class="white--text">Google</span>
+                        </v-btn>
+                    </v-col>
+                    <v-col>
+                        <v-btn color="primary" @click="socialiteLogin('facebook')">
+                            <v-icon color="white">mdi-facebook</v-icon>
+                            <span>Facebook</span>
+                        </v-btn>
+                    </v-col>
+                </v-row>
             </v-form>
             <!-- 顯示錯誤訊息(預設隱藏) -->
             <div class="error_msg text-center">
@@ -143,5 +161,10 @@ export default {
 }
 .has_account {
     margin: 0 10%;
+}
+.divider_line {
+    width: 100%;
+    height: 0px;
+    border-bottom: 1px solid #7C4DFF;
 }
 </style>
