@@ -16,6 +16,7 @@ import {
     apiGetUserInfo,
     apiClearUserProfile,
     apiUpdateUserProfile,
+    apiUserSocialiteLogin,
 } from '~/APIs/user.js'
 
 export const state = () => ({
@@ -175,6 +176,18 @@ export const actions = {
             dispatch('setFlashMessage', msg)
         }
         //? end loading
+        commit('SET_LOADING', false)
+    },
+    //* 使用第三方登入 
+    async socialiteLogin({ commit }, provider) {
+        //? start loading
+        commit('SET_LOADING', true)
+        try {
+            //* 開啟第三方登入的網址
+            window.location.href = (`${apiUserSocialiteLogin(provider)}`)
+        } catch (error) {
+            console.log(error);
+        }
         commit('SET_LOADING', false)
     },
     //* 清除所有的 state

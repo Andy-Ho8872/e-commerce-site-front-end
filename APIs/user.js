@@ -5,6 +5,10 @@ import config from '../APIs/config'
 export const apiUserRegister = data => config.userRequest.post('/register', data);
     //* 登入 (取得 Token)
 export const apiUserLogin = data => config.userRequest.post('/login', data);
+    //* 第三方登入(取得 Token) 
+export const apiUserSocialiteLogin = (provider) => {
+    return `${process.env.apiUrl}/user/socialiteLogin/${provider}/redirect`;
+}
     //----------------------------------- 以下操作必須包含Token -------------------------------------//
     //* 登出 
 export const apiUserLogout = () => config.authRequest.get('/logout');

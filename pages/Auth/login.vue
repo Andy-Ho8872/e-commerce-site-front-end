@@ -73,6 +73,12 @@
                         登入
                     </v-btn>
                 </div>
+                <v-divider class="my-8"></v-divider>
+                <!-- 第三方登入 -->
+                <v-btn color="primary" @click="socialiteLogin('github')">
+                    <v-icon color="white">mdi-github</v-icon>
+                    <span>以 Github 登入</span>
+                </v-btn>
             </v-form>
             <!-- 顯示錯誤訊息(預設隱藏) -->
             <div class="error_msg text-center">
@@ -108,6 +114,7 @@ export default {
         ...mapActions({
             //* 登入使用者
             login: 'auth/login',
+            socialiteLogin: 'auth/socialiteLogin', //* 第三方登入
         }),
     },
     mounted() {
