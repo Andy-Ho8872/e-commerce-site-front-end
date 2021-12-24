@@ -1,13 +1,15 @@
 <template>
     <v-container>
+        <!-- TODO 重構 ui -->
         <!-- loading -->
         <LoadingCircle v-if="!user"/>
         <!-- 若無訂單 -->
         <EmptyOrder class="empty_order_component" v-else-if="!orders.length"/>
         <!-- 若有訂單 -->
         <div v-else>
-            <div class="text-center text-h5 mb-6">
-                您好，<span class="font-weight-bold">{{ user.email }}</span>，以下為您的訂單
+            <div class="text-center text-subtitle-1 text-md-h5 mb-6">
+                您好，<span class="font-weight-bold">{{ user.name || user.email }}</span>，以下為您的訂單
+                <v-divider class="mt-2 mb-8"></v-divider>
             </div>
             <!-- 表格內容 -->
             <table class="light-blue darken-1 rounded-xl">
@@ -77,7 +79,7 @@
                                 <DeleteDialog :order="order" class="delete_dialog_component"/>
                                 <!-- 查看 --> 
                                 <v-btn color="primary" dark nuxt :to="{ name: 'order-id-details', params: { id: order.id }}">
-                                    <span>查看</span>
+                                    查看
                                 </v-btn>   
                             </div>
                         </td>

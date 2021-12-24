@@ -1,7 +1,7 @@
 <template>
     <v-container v-if="user">
         <v-card class="pa-4" rounded="lg">
-            <div class="d-flex justify-center align-center text-center text-h6 font-weight-bold">歡迎回來 {{ user.email }}</div>
+            <div class="d-flex justify-center align-center text-center text-h6 font-weight-bold">歡迎回來 {{ user.name || user.email }}</div>
             <!-- tabs -->
             <v-tabs centered v-model="tab">
                 <v-tab v-for="(item, index) in items" :key="index" :to="item.to" nuxt>

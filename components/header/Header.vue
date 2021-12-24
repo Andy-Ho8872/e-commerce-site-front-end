@@ -39,13 +39,13 @@
                         </nuxt-link>
                     </li>
                 </v-row>
-                <!-- 如果有使用者登入，則顯示他的帳號(電子郵件)以及登出按鈕 -->
+                <!-- 如果有使用者登入，則顯示他的帳號(電子郵件)或名稱，以及登出按鈕 -->
                 <v-row v-if="user" class="content">
                     <!-- 使用者帳號 -->
-                    <li class="user_email">
+                    <li class="user_title">
                         <nuxt-link :to="{ name: 'user-account' }">
                             <v-icon class="icon" dark small>fa-user fa-fw</v-icon>
-                            <span>{{ user.email }}</span>
+                            <span>{{ user.name || user.email }}</span>
                         </nuxt-link>
                     </li>
                     <!-- 登出按鈕 -->
