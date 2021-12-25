@@ -21,8 +21,11 @@ export default {
         })
     },
     async mounted() {
-        await localStorage.setItem('Token', `Bearer ${this.token}`)
-        this.fetchRequiredData()
+        if(this.token) {
+            await localStorage.setItem('Token', `Bearer ${this.token}`)
+            this.fetchRequiredData()
+            this.$router.push({ name: 'index' })
+        }
         this.$router.push({ name: 'index' })
     }
 }
