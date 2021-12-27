@@ -45,7 +45,8 @@ a {
 }
 
 table {
-  width: 100%;
+  width: 80%;
+  margin: auto;
   border-collapse: collapse;
   border-bottom: 4px solid;
   box-shadow: 2px 2px 4px #eceff1;
@@ -67,7 +68,8 @@ tbody td {
 }
 
 tbody tr:hover {
-  transform: scale(1.05);
+  transform: scale(1.035);
+  transition: all .3s ease-out;
 }
 
 tbody tr:nth-child(even) {
@@ -75,10 +77,17 @@ tbody tr:nth-child(even) {
 }
 
 @media (max-width: 768px) {
+  table {
+    width: 100%;
+  }
   th {
     display: none;
   }
+  tbody tr {
+    border-top: 4px solid #039BE5;
+  }
   tbody td {
+    max-width: 100%;
     display: block;
     position: relative;
     text-align: right;
@@ -94,5 +103,20 @@ tbody tr:nth-child(even) {
     letter-spacing: 0.125rem;
     padding-left: 10%;
     left: 0;
+  }
+  tbody td span {
+    display: flex;
+    flex-wrap: wrap;
+    word-break: break-all;
+    padding-left: 40%;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: end;
+  }
+}
+
+@media (max-width: 320px) {
+  td:last-child {
+    padding-right: 0;
   }
 }

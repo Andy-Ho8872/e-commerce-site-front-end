@@ -1,6 +1,5 @@
 <template>
     <v-container>
-        <!-- TODO 重構 ui -->
         <!-- loading -->
         <LoadingCircle v-if="!user"/>
         <!-- 若無訂單 -->
@@ -25,8 +24,8 @@
                 <tbody class="grey lighten-3 blue-grey--text text--darken-4">
                     <tr v-for="order in orders" :key="'order' + order.id">
                         <!-- 訂單編號 -->
-                        <td data-title="訂單編號" id="order_id">
-                            <span>{{ order.id }}</span>
+                        <td data-title="訂單編號" id="order_id">         
+                            <span class="blue--text">#{{ order.id }}</span>
                         </td>
                         <!-- 付款方式 -->
                         <td data-title="付款方式" id="payment_id">
@@ -43,9 +42,12 @@
                         <td data-title="出貨狀態" id="status_id">
                             <!-- 顯示符合出貨狀態 id 的名稱 (可在優化) -->
                             <template v-for="status in status">
-                                <span v-if="order.status_id == status.id" :key="'status' + status.id">
+                                <v-btn rounded v-if="order.status_id == status.id" :key="'status' + status.id" 
+                                    class="font-weight-bold"
+                                    :class="status.title == '出貨中' ? 'yellow lighten-3 yellow--text text--darken-4' : 'green accent-1 green--text text-darken-4'"
+                                >
                                     {{ status.title }}
-                                </span>
+                                </v-btn>
                             </template>
                         </td>
                         <!-- 購買件數 -->
@@ -126,91 +128,4 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-$letter-spacing: 0.125rem;
-$tbody-td-padding: 10%;
-$td-padding: 1.5rem 0;
-//? only for RWD
-$title-font-weight: 600;
-$tbody-tr-border-color: #039BE5;
-
-a {
-    text-decoration: none;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-bottom: 4px solid;
-    box-shadow: 2px 2px 4px #eceff1;
-    th {
-        letter-spacing: $letter-spacing;
-        padding: 1rem;
-    }
-}
-tbody {
-    text-align: center;
-    td {
-        padding: $td-padding;
-        font-weight: $title-font-weight;
-        letter-spacing: $letter-spacing;
-        // max-width: 200px;
-    }
-    tr {
-        &:hover {
-            transform: scale(1.035);
-            transition: all .3s ease-out;
-        }
-        &:nth-child(even) {
-            background: #fff;
-        }
-    }
-}
-
-@media (max-width: 768px) {
-    th {
-        display: none;
-    }
-    tbody {
-        tr {
-            border-top: 4px solid $tbody-tr-border-color;
-        }
-        td {
-            max-width: 100%;
-            display: block;
-            position: relative;
-            text-align: right;
-            padding-right: $tbody-td-padding;
-            //* 除了最後一個元素之外，其餘的都要加上底線
-            &:not(:last-child) {
-                border-bottom: 1px solid #b0bec5;
-            }
-            //* 表格標題
-            &::before {
-                content: attr(data-title);
-                position: absolute;
-                font-weight: $title-font-weight;
-                letter-spacing: $letter-spacing;
-                padding-left: $tbody-td-padding;
-                left: 0;
-            }
-            span {
-                display: flex;
-                flex-wrap: wrap;
-                padding-left: 40%;
-                justify-content: flex-end;
-                align-items: center;
-                // text-align: justify; //! default
-                text-align: end; 
-            }
-        }
-    }
-}
-//* i phone 5 SE 
-@media (max-width: 320px) {
-    //* 按鈕群組的 padding 為 0
-    td:last-child {
-        padding-right: 0;
-    }
-}
-</style>
+// style 在 main.css 

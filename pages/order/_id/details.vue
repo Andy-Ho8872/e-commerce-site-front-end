@@ -28,7 +28,7 @@
                     <tr v-for="item in order.items" :key="'item' + item.pivot.product_id">
                         <!-- 編號 -->
                         <td data-title="商品編號" id="items_id">
-                            <span>{{ item.pivot.product_id }}</span>
+                            <span class="blue--text">#{{ item.pivot.product_id }}</span>
                         </td>
                         <!-- 名稱 -->
                         <td data-title="商品名稱" id="items_title">
@@ -44,7 +44,7 @@
                         </td>
                         <!-- 金額 -->
                         <td data-title="金額小計" id="items_subtotal">
-                            <span>{{ item.subtotal }}</span>
+                            <span class="red--text">{{ item.subtotal }}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -99,84 +99,3 @@ export default {
     },
 }
 </script>
-
-// <style lang="scss" scoped>
-$letter-spacing: 0.125rem;
-$padding: 10%;
-$td-padding: 1.5rem 0;
-//? only for RWD
-$title-font-weight: 600;
-$tbody-tr-border-color: #039BE5;
-
-a {
-    text-decoration: none;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-bottom: 4px solid;
-    box-shadow: 2px 2px 4px #eceff1;
-    th {
-        letter-spacing: $letter-spacing;
-        padding: 1rem;
-    }
-}
-tbody {
-    text-align: center;
-    td {
-        padding: $td-padding;
-        font-weight: $title-font-weight;
-        letter-spacing: $letter-spacing;
-        // max-width: 200px;
-    }
-    tr {
-        &:hover {
-            transform: scale(1.035);
-            transition: all .3s ease-out;
-        }
-        &:nth-child(even) {
-            background: #fff;
-        }
-    }
-}
-
-@media (max-width: 768px) {
-    th {
-        display: none;
-    }
-    tbody {
-        tr {
-            border-top: 4px solid $tbody-tr-border-color;
-        }
-        td {
-            max-width: 100%;
-            display: block;
-            position: relative;
-            text-align: right;
-            padding-right: $padding;
-            //* 除了最後一個元素之外，其餘的都要加上底線
-            &:not(:last-child) {
-                border-bottom: 1px solid #b0bec5;
-            }
-            //* 表格標題
-            &::before {
-                content: attr(data-title);
-                position: absolute;
-                font-weight: $title-font-weight;
-                letter-spacing: $letter-spacing;
-                padding-left: $padding;
-                left: 0;
-            }
-            span {
-                display: flex;
-                flex-wrap: wrap;
-                padding-left: 40%;
-                justify-content: flex-end;
-                align-items: center;
-                // text-align: justify; //! default
-                text-align: end; 
-            }
-        }
-    }
-}
-</style>

@@ -47,16 +47,18 @@ input::-webkit-inner-spin-button {
 
 //* pages/order ----------------------------------------------- Start
 $letter-spacing: 0.125rem;
-$padding: 10%;
+$tbody-td-padding: 10%;
 $td-padding: 1.5rem 0;
 //? only for RWD
 $title-font-weight: 600;
+$tbody-tr-border-color: #039BE5;
 
 a {
     text-decoration: none;
 }
 table {
-    width: 100%;
+    width: 80%;
+    margin: auto;
     border-collapse: collapse;
     border-bottom: 4px solid;
     box-shadow: 2px 2px 4px #eceff1;
@@ -71,10 +73,12 @@ tbody {
         padding: $td-padding;
         font-weight: $title-font-weight;
         letter-spacing: $letter-spacing;
+        // max-width: 200px;
     }
     tr {
         &:hover {
-            transform: scale(1.05);
+            transform: scale(1.035);
+            transition: all .3s ease-out;
         }
         &:nth-child(even) {
             background: #fff;
@@ -83,15 +87,22 @@ tbody {
 }
 
 @media (max-width: 768px) {
+    table{ 
+        width: 100%;
+    }
     th {
         display: none;
     }
     tbody {
+        tr {
+            border-top: 4px solid $tbody-tr-border-color;
+        }
         td {
+            max-width: 100%;
             display: block;
             position: relative;
             text-align: right;
-            padding-right: $padding;
+            padding-right: $tbody-td-padding;
             //* 除了最後一個元素之外，其餘的都要加上底線
             &:not(:last-child) {
                 border-bottom: 1px solid #b0bec5;
@@ -102,10 +113,27 @@ tbody {
                 position: absolute;
                 font-weight: $title-font-weight;
                 letter-spacing: $letter-spacing;
-                padding-left: $padding;
+                padding-left: $tbody-td-padding;
                 left: 0;
             }
+            span {
+                display: flex;
+                flex-wrap: wrap;
+                word-break: break-all;
+                // padding-left: 40%; //! default
+                justify-content: flex-end;
+                align-items: center;
+                // text-align: justify; //! default
+                text-align: end; 
+            }
         }
+    }
+}
+//* i phone 5 SE 
+@media (max-width: 320px) {
+    //* 按鈕群組的 padding 為 0
+    td:last-child {
+        padding-right: 0;
     }
 }
 //* pages/order ----------------------------------------------- End

@@ -1,124 +1,127 @@
 <template>
     <v-container>
-        <div class="text-center text-h4 mb-6">您選購的商品</div>
-        <table class="teal accent lighten-1 rounded-xl">
-            <!-- 表格標頭 -->
-            <thead class="white--text font-weight-bold">
-                <tr>
-                    <th v-for="(head, index) in tableHeads" :key="index" class="text-center">
-                        {{ head.title }}
-                    </th>
-                </tr>
-            </thead>
-            <!-- 表格內容 -->
-            <tbody class="teal lighten-4 blue-grey--text text--darken-4">
-                <tr v-for="item in userCart" :key="'item' + item.id">
-                    <!-- 商品圖片與名稱 -->
-                    <td data-title="商品" id="item_image">
-                        <div class="justify-start align-center">
+        <div class="table__container mt-8">
+            <table class="teal accent lighten-1 rounded-xl">
+                <!-- 表格標頭 -->
+                <thead class="white--text font-weight-bold">
+                    <tr>
+                        <th v-for="(head, index) in tableHeads" :key="index" class="text-center">
+                            {{ head.title }}
+                        </th>
+                    </tr>
+                </thead>
+                <!-- 表格內容 -->
+                <tbody class="teal lighten-4 blue-grey--text text--darken-4">
+                    <tr v-for="item in userCart" :key="'item' + item.id">
+                        <!-- 名稱 -->
+                        <td data-title="商品" id="item_image">
+                            <span>{{ item.title }}</span>
+                        </td>
+                        <td>
                             <img :src="item.imgUrl" :alt="item.title" width="80" height="80">
-                            <div>{{ item.title }}</div>
+                        </td>
+                        <!-- 單價 -->
+                        <td data-title="單價" id="item_unit_price">
+                            <span>{{ item.unit_price }}</span>
+                        </td>
+                        <!-- 購買數量 -->
+                        <td data-title="數量" id="item_qty">
+                            <span>{{ item.product_quantity }}</span>
+                        </td>
+                        <!-- 總價 -->
+                        <td data-title="總價" id="item_subtotal">
+                            <span>{{ item.total }}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 表單 -->
+            <div class="form__container">
+                <v-form ref="form" v-model="valid">
+                    <v-card class="checkout_wrapper my-12 ma-auto" elevation="4">
+                        <!-- 選擇付款方式 -->
+                            <v-card-title class="font-weight-bold">選擇您的付款方式</v-card-title>
+                            <v-card-subtitle class="mt-2">
+                                <v-chip-group mandatory active-class="deep-purple--text text--accent-4" name="payment_id" v-model="form.payment_id">
+                                    <v-chip v-for="payment in payments" :key="'payment' + payment.id" :value="payment.id" large label class="payment_title">
+                                        {{ payment.title }}
+                                    </v-chip>
+                                </v-chip-group>
+                            </v-card-subtitle>
+                        <!-- 輸入訂單資訊 -->
+                            <v-card-title class="font-weight-bold">輸入訂單詳細資料</v-card-title>
+                            <!-- 姓名 -->
+                            <v-text-field
+                                class="text_field"
+                                name="buyer_name"
+                                v-model="form.buyer_name"
+                                :rules="[rules.required, rules.lettersOnly]"
+                                outlined
+                                label="您的姓名"
+                                placeholder="王小明"
+                                hide-details="auto"
+                            ></v-text-field>
+                            <!-- 電話 -->
+                            <v-text-field
+                                class="text_field"
+                                name="buyer_phone"
+                                v-model="form.buyer_phone"
+                                :rules="[rules.required, rules.numbersOnly]"
+                                maxlength="10"
+                                outlined
+                                label="您的電話"
+                                placeholder="0912345678"
+                                hide-details="auto"
+                            ></v-text-field>
+                            <!-- 地址 -->
+                            <v-text-field
+                                class="text_field"
+                                name="address"
+                                v-model="form.address"
+                                :rules="[rules.required]"
+                                outlined
+                                label="您的地址"
+                                placeholder="OO市OO區OO路OO號..."
+                                hide-details="auto"
+                            ></v-text-field>
+                            <!-- 使用常用資料 -->
+                            <v-card-subtitle>
+                                <v-switch @click="checkAutoFill" v-model="autoFill" inset label="填入我的個人資料"></v-switch>
+                            </v-card-subtitle>
+                            <!-- 提醒視窗 -->
+                            <v-dialog v-model="dialog" width="600">
+                                <v-card>
+                                    <v-card-title class="font-weight-bold">尚未填寫個人資料</v-card-title>
+                                    <v-card-text class="font-weight-bold">我們發現您尚未填寫您的個人檔案，是否先進行填寫?</v-card-text>
+                                    <!-- 按鈕操作 -->
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn @click="dialog = false" color="error" outlined>先不要</v-btn>
+                                        <v-btn color="primary" nuxt :to="{ name: 'user-account' }">去填寫</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                        <!-- 按鈕與金額顯示 -->
+                        <div class="d-flex align-center justify-center">
+                            <!-- 送出按鈕 -->
+                            <v-btn large rounded color="primary" class="create_order_btn ma-4"
+                                @click="checkAndCreateOrder"
+                                :disabled="!valid" 
+                                :loading="loading"
+                            >
+                                <v-icon>fa-check fa-fw</v-icon>
+                                <span>建立訂單</span>
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                            <!-- 金額小計 -->
+                            <div class="subtotal text-h6 mr-8 font-weight-bold">
+                                金額小計: <span class="red--text text-lighten-2">{{ subTotal }}</span> 
+                            </div>
                         </div>
-                    </td>
-                    <!-- 單價 -->
-                    <td data-title="單價" id="item_unit_price">
-                        {{ item.unit_price }}
-                    </td>
-                    <!-- 購買數量 -->
-                    <td data-title="數量" id="item_qty">
-                        {{ item.product_quantity }}
-                    </td>
-                    <!-- 總價 -->
-                    <td data-title="總價" id="item_subtotal">
-                        {{ item.total }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <!-- 表單 -->
-        <v-form ref="form" v-model="valid">
-            <v-card class="checkout_wrapper my-12 ma-auto" elevation="4">
-                <!-- 選擇付款方式 -->
-                    <v-card-title class="font-weight-bold">選擇您的付款方式</v-card-title>
-                    <v-card-subtitle class="mt-2">
-                        <v-chip-group mandatory active-class="deep-purple--text text--accent-4" name="payment_id" v-model="form.payment_id">
-                            <v-chip v-for="payment in payments" :key="'payment' + payment.id" :value="payment.id" large label class="payment_title">
-                                {{ payment.title }}
-                            </v-chip>
-                        </v-chip-group>
-                    </v-card-subtitle>
-                <!-- 輸入訂單資訊 -->
-                    <v-card-title class="font-weight-bold">輸入訂單詳細資料</v-card-title>
-                    <!-- 姓名 -->
-                    <v-text-field
-                        class="text_field"
-                        name="buyer_name"
-                        v-model="form.buyer_name"
-                        :rules="[rules.required, rules.lettersOnly]"
-                        outlined
-                        label="您的姓名"
-                        placeholder="王小明"
-                        hide-details="auto"
-                    ></v-text-field>
-                    <!-- 電話 -->
-                    <v-text-field
-                        class="text_field"
-                        name="buyer_phone"
-                        v-model="form.buyer_phone"
-                        :rules="[rules.required, rules.numbersOnly]"
-                        maxlength="10"
-                        outlined
-                        label="您的電話"
-                        placeholder="0912345678"
-                        hide-details="auto"
-                    ></v-text-field>
-                    <!-- 地址 -->
-                    <v-text-field
-                        class="text_field"
-                        name="address"
-                        v-model="form.address"
-                        :rules="[rules.required]"
-                        outlined
-                        label="您的地址"
-                        placeholder="OO市OO區OO路OO號..."
-                        hide-details="auto"
-                    ></v-text-field>
-                    <!-- 使用常用資料 -->
-                    <v-card-subtitle>
-                        <v-switch @click="checkAutoFill" v-model="autoFill" inset label="填入我的個人資料"></v-switch>
-                    </v-card-subtitle>
-                    <!-- 提醒視窗 -->
-                    <v-dialog v-model="dialog" width="600">
-                        <v-card>
-                            <v-card-title class="font-weight-bold">尚未填寫個人資料</v-card-title>
-                            <v-card-text class="font-weight-bold">我們發現您尚未填寫您的個人檔案，是否先進行填寫?</v-card-text>
-                            <!-- 按鈕操作 -->
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn @click="dialog = false" color="error" outlined>先不要</v-btn>
-                                <v-btn color="primary" nuxt :to="{ name: 'user-account' }">去填寫</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                <!-- 按鈕與金額顯示 -->
-                <div class="d-flex align-center justify-center">
-                    <!-- 送出按鈕 -->
-                    <v-btn large rounded color="primary" class="create_order_btn ma-4"
-                        @click="checkAndCreateOrder"
-                        :disabled="!valid" 
-                        :loading="loading"
-                    >
-                        <v-icon>fa-check fa-fw</v-icon>
-                        <span>建立訂單</span>
-                    </v-btn>
-                    <v-spacer></v-spacer>
-                    <!-- 金額小計 -->
-                    <div class="subtotal text-h6 mr-8 font-weight-bold">
-                        金額小計: <span class="red--text text-lighten-2">{{ subTotal }}</span> 
-                    </div>
-                </div>
-            </v-card>
-        </v-form>  
+                    </v-card>
+                </v-form>  
+            </div>
+        </div>
     </v-container>
 </template>
 
@@ -144,6 +147,7 @@ export default {
             //* 表格標頭
             tableHeads: [
                 { title: '商品' },
+                { title: '圖片' },
                 { title: '單價' },
                 { title: '數量' },
                 { title: '總價' },          
@@ -239,12 +243,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$border-radius: 50px;
+// table 的 style 在 main.css 
 .checkout_wrapper {
-    width: 500px;
+    width: 80%;
 }
 .text_field {
     width: 350px;
     padding: 16px;
+}
+@media (max-width: 768px) {
+    .checkout_wrapper {
+        width: 100%;
+    }
 }
 </style>
