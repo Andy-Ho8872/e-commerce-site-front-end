@@ -11,7 +11,7 @@
                 刪除這筆訂單?
             </v-card-title>
             <!-- 卡片內容 -->
-            <v-card-subtitle class="font-weight-bold mt-4">您確定要刪除訂單編號 - <span>{{ order.id }}</span> 嗎?</v-card-subtitle>
+            <v-card-subtitle class="font-weight-bold mt-4">您確定要刪除訂單編號 <span class="blue--text">#{{ order.id }}</span> 嗎?</v-card-subtitle>
             <v-card-subtitle>
                 <v-divider></v-divider>
                 <v-subheader>訂單商品內容</v-subheader>
