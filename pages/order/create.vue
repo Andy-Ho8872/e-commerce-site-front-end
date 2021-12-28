@@ -48,6 +48,7 @@
                                     </v-chip>
                                 </v-chip-group>
                             </v-card-subtitle>
+                            <v-divider></v-divider>
                         <!-- 輸入訂單資訊 -->
                             <v-card-title class="font-weight-bold">輸入訂單詳細資料</v-card-title>
                             <!-- 姓名 -->
@@ -88,6 +89,7 @@
                             <v-card-subtitle>
                                 <v-switch @click="checkAutoFill" v-model="autoFill" inset label="填入我的個人資料"></v-switch>
                             </v-card-subtitle>
+                            <v-divider></v-divider>
                             <!-- 提醒視窗 -->
                             <v-dialog v-model="dialog" width="600">
                                 <v-card>
@@ -101,22 +103,21 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
-                        <!-- 按鈕與金額顯示 -->
-                        <div class="d-flex align-center justify-center">
-                            <!-- 送出按鈕 -->
-                            <v-btn large rounded color="primary" class="create_order_btn ma-4"
+                        <!-- 金額小計 -->
+                        <div class="subtotal text-right text-h6 font-weight-bold ma-4">
+                            金額小計: <span class="red--text text-lighten-2">{{ subTotal }}</span> 
+                        </div>
+                        <v-divider></v-divider>
+                        <!-- 送出按鈕 -->
+                        <div class="text-right">
+                            <v-btn large color="primary" class="create_order_btn ma-6"
                                 @click="checkAndCreateOrder"
                                 :disabled="!valid" 
                                 :loading="loading"
                             >
                                 <v-icon>fa-check fa-fw</v-icon>
                                 <span>建立訂單</span>
-                            </v-btn>
-                            <v-spacer></v-spacer>
-                            <!-- 金額小計 -->
-                            <div class="subtotal text-h6 mr-8 font-weight-bold">
-                                金額小計: <span class="red--text text-lighten-2">{{ subTotal }}</span> 
-                            </div>
+                            </v-btn> 
                         </div>
                     </v-card>
                 </v-form>  
