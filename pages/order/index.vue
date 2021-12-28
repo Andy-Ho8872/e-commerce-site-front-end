@@ -80,7 +80,7 @@
                                 <!-- 按鈕群組 -->
                                 <DeleteDialog :order="order" class="delete_dialog_component"/>
                                 <!-- 查看 --> 
-                                <v-btn color="primary" dark nuxt :to="{ name: 'order-id-details', params: { id: order.id }}">
+                                <v-btn class="nav_button" color="primary" dark nuxt :to="{ name: 'order-id-details', params: { id: order.id }}">
                                     查看
                                 </v-btn>   
                             </div>

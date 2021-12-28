@@ -61,10 +61,16 @@ describe('DeleteDialog.vue', () => {
                         {
                             id: 1,
                             title: 'item-1',
+                            pivot: {
+                                product_id: 1
+                            }
                         },
                         {
                             id: 2,
                             title: 'item-22',
+                            pivot: {
+                                product_id: 2
+                            }
                         },
                     ],
                 },
@@ -87,7 +93,10 @@ describe('DeleteDialog.vue', () => {
                     items: [
                         {
                             id: 2,
-                            title: "test item"
+                            title: "test item",
+                            pivot: {
+                                product_id: 1
+                            }
                         }
                     ]
                 }

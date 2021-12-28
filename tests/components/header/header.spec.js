@@ -17,6 +17,7 @@ jest.mock('axios')
 mockAxios.get.mockResolvedValue({
     data: {
         user: {
+            name: 'Tommy',
             email: 'Tommy@example.com',
         },
     },
@@ -63,17 +64,23 @@ describe('Header.vue', () => {
             router,
             store,
         })
-        const userEmail = wrapper.find('.user_email')
+        const userTitle = wrapper.find('.user_title')
         // 找出有 logout function 的DOM
         const logoutBtn = wrapper.find('.logout_btn')
         // mock function
         const logout = auth.actions.logout
         // 點擊以觸發
         await logoutBtn.trigger('click')
+        await wrapper.setData({
+            user: {
+                name: '',
+                email: '',
+            }
+        })
         // 應被觸發一次
         expect(logout).toBeCalled()
-        // 不應該渲染出使用者的 email
-        expect(userEmail.text()).toBe('')
+        // 不應該渲染出使用者的 email 或 名字
+        expect(userTitle.text()).toBe('')
     })
     test('login route should be pushed correctly after triggering a click event', async () => {
         const wrapper = mount(Header, {
@@ -127,11 +134,12 @@ describe('Header.vue', () => {
         const result = await mockApiGetUserInfo()
         await wrapper.setData({
             user: {
+                name: result.user.name,
                 email: result.user.email,
             },
         })
-        const userEmail = wrapper.find('.user_email')
-        expect(userEmail.text()).toBe('Tommy@example.com')
+        const userTitle = wrapper.find('.user_title')
+        expect(userTitle.text()).toBe('Tommy')
     })
     test('should toggle active status when clicking extend_bar', async () => {
         const wrapper = mount(Header, {

@@ -105,7 +105,7 @@ describe('order/index.vue', () => {
             router,
             store,
         })
-        const navBtn = wrapper.findAll('.navigator')
+        const navBtn = wrapper.findAll('.nav_button')
         await navBtn.at(0).trigger('click')
         router.push({ name: 'order-id-details', params: { id: 1 } })
         expect(wrapper.vm.$route.path).toContain('order/1/details')

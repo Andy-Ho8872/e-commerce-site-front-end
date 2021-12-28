@@ -34,7 +34,7 @@
                             <v-img :src="item.imgUrl" :alt="item.title"></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content class="text-button font-weight-bold">
-                            <v-list-item-subtitle class="blue--text">{{ item.title }}</v-list-item-subtitle>
+                            <v-list-item-subtitle class="auto_complete__result blue--text">{{ item.title }}</v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list-item-group>

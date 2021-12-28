@@ -65,13 +65,13 @@ describe('order/create.vue', () => {
         const productTitle = wrapper.findAll('#items_title')
         const productId = wrapper.findAll('#items_id')
         expect(productTitle.at(0).text()).toBe('精美服裝')
-        expect(productId.at(0).text()).toBe('1') 
+        expect(productId.at(0).text()).toContain('1') 
         // change to another route
         await router.push({ name: 'order-id-details', params: { id: 2 } })
         // fake data
         const productTitle2 = wrapper.findAll('#items_title')
         const productId2 = wrapper.findAll('#items_id')
         expect(productTitle2.at(0).text()).toBe('舒適球鞋')
-        expect(productId2.at(0).text()).toBe('3') 
+        expect(productId2.at(0).text()).toContain('3') 
     })
 })
