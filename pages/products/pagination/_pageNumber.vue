@@ -21,11 +21,11 @@
         </div>
         <!-- content -->
         <v-sheet elevation="6" rounded="lg" class="px-6">
-            <v-row justify="space-around">
-                <div v-for="product in results.data" :key="product.id" class="mt-8 mb-16" >
-                    <SkeletonCardV2 :cardWidth="200" v-if="loading" class="mx-8"/>
-                    <ProductV2 :product="product" :cardWidth="200" :elevation="4" v-show="!loading" class="mx-8"/>
-                </div>
+            <v-row>
+                <v-col v-for="product in results.data" :key="product.id" cols="12" lg="2" md="4" sm="6" class="mt-8 mb-16" >
+                    <SkeletonCardV2 :cardWidth="200" v-if="loading"/>
+                    <ProductV2 :product="product" :cardWidth="200" :elevation="4" v-show="!loading"/>
+                </v-col>
             </v-row>
         </v-sheet>
         <!-- 控制分頁 -->

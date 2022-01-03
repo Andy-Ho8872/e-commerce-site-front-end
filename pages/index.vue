@@ -27,15 +27,13 @@
         <!-- 熱門商品 -->
         <Banner elevation="2" icon="fa-burn" iconColor="red lighten-1" text="熱門商品" backgroundColor="white" class="mt-16"/>
         <v-sheet elevation="6" rounded="lg" class="px-6">
-            <v-row justify="space-around">
-                <!-- 骨架屏 -->
-                <template v-for="(n,index) in 6"> 
-                    <SkeletonCardV2 :cardWidth="200" :key="'skeleton' + index" v-if="loading" class="mx-6 mt-8 mb-16"/>
-                </template>
-                <!-- 商品卡片 -->
-                <template v-for="product in products">
-                    <ProductV2 :product="product" :cardWidth="200" :elevation="4" :key="product.id" v-if="!loading" class="mx-6 mt-8 mb-16"/>
-                </template>
+            <v-row>
+                <v-col v-for="product in products" :key="product.id" cols="12" lg="2" md="4" sm="6">
+                    <!-- 骨架屏 -->
+                    <SkeletonCardV2 :cardWidth="200" v-if="loading" class="mt-8 mb-16"/>
+                    <!-- 商品卡片 -->
+                    <ProductV2 :product="product" :cardWidth="200" :elevation="4" v-if="!loading" class="mt-8 mb-16"/>
+                </v-col>
             </v-row>
         </v-sheet>
         <!-- 觀看更多商品 -->
