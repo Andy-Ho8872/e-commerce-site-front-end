@@ -1,6 +1,6 @@
 <template>
     <div class="card_wrapper">
-        <v-card rounded="t-lg" :elevation="elevation" :width="cardWidth">
+        <v-card rounded="t-lg" :elevation="elevation" :width="cardWidth" class="ma-auto">
             <nuxt-link
                 :to="{ name: 'products-id', params: { id: product.id } }"
             >
@@ -18,10 +18,8 @@
                 <!-- 標籤名稱 -->
                 <Tags :product="product" class="product_tags mx-2" />
                 <!-- 商品名稱 -->
-                <v-card-title
-                    class="product_title font-weight-bold text-body-2 black--text"
-                >
-                    {{ conditionalTitle }}
+                <v-card-title class="product_title font-weight-bold text-body-2 black--text">
+                    <span class="text-truncate">{{ product.title }}</span>
                 </v-card-title>
                 <!-- 商品價格 -->
                 <v-card-text
@@ -83,20 +81,11 @@ export default {
         formatLabel() {
             return this.product.discount_rate * 10
         },
-        //* 若商品標題過長則縮減
-        conditionalTitle() {
-            const target = 14
-            return this.product.title.length > target
-                ? this.product.title.substring(0, target) + '...'
-                : this.product.title
-        },
         //* 若該商品有打折則顯示折扣後的價格，否則顯示原價
         conditionalPrice() {
             return this.product.discount_rate == 1
                 ? Math.floor(this.product.unit_price)
-                : Math.floor(
-                      this.product.unit_price * this.product.discount_rate
-                  )
+                : Math.floor(this.product.unit_price * this.product.discount_rate)
         },
     },
     methods: {
