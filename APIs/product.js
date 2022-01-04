@@ -5,7 +5,7 @@ import config from '../APIs/config'
 export const apiGetProducts = () => config.productRequest.get('/'); // ! 暫時不使用
     //* 網站首頁的產品
 export const apiGetIndexPageProducts = () => config.productRequest.get('/indexPage');
-    //* 圖片輪播產品
+    //! 圖片輪播產品 (暫時不使用)
 export const apiGetCarouselProducts = () => config.productRequest.get('/carousel');
     //* 撈取單一產品
 export const apiGetProduct = (id) => config.productRequest.get(`/${id}`);
