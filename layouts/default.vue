@@ -48,7 +48,6 @@ export default {
 
 <style lang="scss" scoped>
 $z-index-top : 10000;
-$header-v2-padding-bottom: 20%; //! 若使用 HeaderV2 則必須使用此屬性
 $padding-top-xl: 10%; //*   4k and ultra-wide or large desktop...  > 1904px 
 $padding-top-lg: 15%; //*   desktop... 1264px > < 1904px
 $padding-top-md: 20%; //*   Large tablet to laptop... 960px > < 1264px
@@ -67,7 +66,6 @@ $padding-top-xss: 35%; //*   mobile... <375px
     padding: 0;
     padding-top: $padding-top-xl;
     min-height: 100vh;
-    // padding-bottom: $header-v2-padding-bottom; //! 若使用 HeaderV2 則必須使用此屬性
 }
 .alert-message {
     z-index: $z-index-top;
