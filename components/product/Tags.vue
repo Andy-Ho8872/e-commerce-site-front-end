@@ -1,6 +1,6 @@
 <template>
     <!-- 產品標籤 -->
-    <v-chip-group column>
+    <v-chip-group class="pb-1">
         <v-chip label color="primary" small v-for="tag in product.tags" :key="tag.id">
             <!-- 名稱 -->
             <span>{{ tag.title }}</span>
