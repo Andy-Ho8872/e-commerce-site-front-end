@@ -26,9 +26,9 @@
         <CarouselV3 :cardWidth="340" :cardHeight="340" :data="items.latest_products" v-show="!loading"/>
         <!-- 熱門商品 -->
         <Banner elevation="2" icon="fa-burn" iconColor="red lighten-1" text="熱門商品" backgroundColor="white" class="mt-16"/>
-        <v-sheet elevation="6" rounded="lg" class="px-6">
+        <v-sheet elevation="6" rounded="lg" class="px-1 px-md-6">
             <v-row>
-                <v-col v-for="product in products" :key="product.id" cols="12" lg="2" md="4" sm="6">
+                <v-col v-for="product in products" :key="product.id" cols="6" lg="2" md="3" sm="4">
                     <!-- 骨架屏 -->
                     <SkeletonCardV2 :cardWidth="200" v-if="loading" class="mt-8 mb-16"/>
                     <!-- 商品卡片 -->

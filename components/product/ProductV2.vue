@@ -1,59 +1,55 @@
 <template>
-    <div class="card_wrapper">
-        <v-card rounded="t-lg" :elevation="elevation" :width="cardWidth" class="ma-auto">
-            <nuxt-link
-                :to="{ name: 'products-id', params: { id: product.id } }"
+    <v-card class="card_content ma-auto" rounded="t-lg" :elevation="elevation">
+        <nuxt-link :to="{ name: 'products-id', params: { id: product.id } }">
+            <img
+                class="responsive_img"
+                :src="product.imgUrl"
+                :alt="product.title"
+            />
+            <div
+                class="product_label text-center yellow blue--text rounded-tr-lg rounded-bl-lg"
+                v-if="product.discount_rate != 1"
             >
-                <img
-                    class="responsive_img"
-                    :src="product.imgUrl"
-                    :alt="product.title"
+                <span>{{ formatLabel }} 折</span>
+            </div>
+            <!-- 標籤名稱 -->
+            <Tags :product="product" class="product_tags mx-2" />
+            <!-- 商品名稱 -->
+            <v-card-title class="product_title font-weight-bold text-body-2 black--text">
+                <span class="text-truncate">{{ product.title }}</span>
+            </v-card-title>
+            <!-- 商品價格 -->
+            <v-card-text
+                class="product_unit_price d-flex"
+                :class="[
+                    product.discount_rate != 1
+                        ? 'text-body-1 font-weight-bold blue--text'
+                        : 'black--text',
+                ]"
+            >
+                $ {{ conditionalPrice }}
+            </v-card-text>
+            <v-card-text>
+                <Ratings
+                    :product="product"
+                    :size="12"
+                    class="product_ratings mx-1"
                 />
-                <div
-                    class="product_label text-center yellow blue--text rounded-tr-lg rounded-bl-lg"
-                    v-if="product.discount_rate != 1"
-                >
-                    <span>{{ formatLabel }} 折</span>
-                </div>
-                <!-- 標籤名稱 -->
-                <Tags :product="product" class="product_tags mx-2" />
-                <!-- 商品名稱 -->
-                <v-card-title class="product_title font-weight-bold text-body-2 black--text">
-                    <span class="text-truncate">{{ product.title }}</span>
-                </v-card-title>
-                <!-- 商品價格 -->
-                <v-card-text
-                    class="product_unit_price d-flex"
-                    :class="[
-                        product.discount_rate != 1
-                            ? 'text-body-1 font-weight-bold blue--text'
-                            : 'black--text',
-                    ]"
-                >
-                    $ {{ conditionalPrice }}
-                </v-card-text>
-                <v-card-text>
-                    <Ratings
-                        :product="product"
-                        :size="12"
-                        class="product_ratings mx-1"
-                    />
-                </v-card-text>
-            </nuxt-link>
-            <!-- 放入購物車按鈕 -->
-            <v-btn
-                :elevation="elevation"
-                @click="addToCart(product.id)"
-                class="action_btn rounded-b-lg"
-                color="primary"
-                tile
-                large
-                depressed
-            >
-                <span>加入購物車</span>
-            </v-btn>
-        </v-card>
-    </div>
+            </v-card-text>
+        </nuxt-link>
+        <!-- 放入購物車按鈕 -->
+        <v-btn
+            :elevation="elevation"
+            @click="addToCart(product.id)"
+            class="action_btn rounded-b-lg"
+            color="primary"
+            tile
+            large
+            depressed
+        >
+            <span>加入購物車</span>
+        </v-btn>
+    </v-card>
 </template>
 
 <script>
@@ -98,6 +94,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card_content {
+    width: 200px;
+}
 .responsive_img {
     width: 100%;
     height: auto;
@@ -125,5 +124,10 @@ export default {
 .action_btn {
     position: absolute;
     width: 100%;
+}
+@media (max-width: 415px) {
+    .card_content {
+        width: 100%;
+    }
 }
 </style>

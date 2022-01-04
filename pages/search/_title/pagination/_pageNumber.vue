@@ -11,9 +11,9 @@
             的搜尋結果
         </h2>
         <!-- 顯示搜尋內容 -->
-        <v-sheet elevation="6" rounded="lg" class="px-6">
+        <v-sheet elevation="6" rounded="lg" class="px-1 px-md-6">
             <v-row>
-                <v-col v-for="product in results.data" :key="product.id" cols="12" lg="2" md="4" sm="6" class="mt-8 mb-16" >
+                <v-col v-for="product in results.data" :key="product.id" cols="6" lg="2" md="3" sm="4" class="mt-8 mb-16">
                     <SkeletonCardV2 :cardWidth="200" v-if="loading"/>
                     <ProductV2 :product="product" :cardWidth="200" :elevation="4" v-show="!loading"/>
                 </v-col>

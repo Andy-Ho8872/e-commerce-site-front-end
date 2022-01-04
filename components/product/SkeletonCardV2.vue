@@ -1,6 +1,6 @@
 <template>
     <!-- 骨架屏 -->
-    <v-sheet elevation="2" :width="cardWidth" :height="cardHeight">
+    <v-sheet elevation="2" class="card_content ma-auto">
         <!-- 圖片和標題 -->
         <v-skeleton-loader type="card"></v-skeleton-loader>
         <!-- 文字敘述 -->
@@ -25,4 +25,13 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.card_content {
+    width: 200px;
+}
+@media (max-width: 415px) {
+    .card_content {
+        width: 100%;
+    }
+}
+</style>
