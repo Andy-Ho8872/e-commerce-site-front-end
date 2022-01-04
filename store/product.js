@@ -16,7 +16,7 @@ import {
 } from '~/APIs/product'
 
 export const state = () => ({
-    //* 首頁的商品
+    //* 首頁的商品(包含 carousel)
     indexPageProducts: [],
     //* 瀏覽過的商品(暫存用)
     viewedProducts: [],
@@ -77,7 +77,7 @@ export const actions = {
         if (!state.indexPageProducts.length) { 
             try {
                 const res = await apiGetIndexPageProducts()
-                const products = res.data.products
+                const products = res.data
                 commit('SET_INDEX_PAGE_PRODUCTS', products)
             } catch (error) {
                 console.log(error)

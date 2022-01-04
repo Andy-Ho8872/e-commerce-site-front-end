@@ -28,11 +28,11 @@
         <Banner elevation="2" icon="fa-burn" iconColor="red lighten-1" text="熱門商品" backgroundColor="white" class="mt-16"/>
         <v-sheet elevation="6" rounded="lg" class="px-1 px-md-6">
             <v-row>
-                <v-col v-for="product in products" :key="product.id" cols="6" lg="2" md="3" sm="4">
+                <v-col v-for="item in items.hot_sale_products" :key="item.id" cols="6" lg="2" md="3" sm="4">
                     <!-- 骨架屏 -->
                     <SkeletonCardV2 :cardWidth="200" v-if="loading" class="mt-8 mb-16"/>
                     <!-- 商品卡片 -->
-                    <ProductV2 :product="product" :cardWidth="200" :elevation="4" v-if="!loading" class="mt-8 mb-16"/>
+                    <ProductV2 :product="item" :cardWidth="200" :elevation="4" v-if="!loading" class="mt-8 mb-16"/>
                 </v-col>
             </v-row>
         </v-sheet>
@@ -70,20 +70,17 @@ export default {
     },
     methods: {
         ...mapActions({
-            fetchCarouselItem: 'carousel/fetchCarouselItem', //? 輪播的商品
-            fetchIndexPageProducts: 'product/fetchIndexPageProducts', //? 首頁的商品
+            fetchIndexPageProducts: 'product/fetchIndexPageProducts', //? 首頁的商品(含 slider 商品)
         })
     },
     computed: {
         ...mapGetters({
-            items: 'carousel/getCarouselItem',
-            products: 'product/getIndexPageProducts',
+            items: 'product/getIndexPageProducts',
         })
     },
     // 掛載時結束 loading 狀態
     async mounted() { 
         await this.fetchIndexPageProducts()
-        await this.fetchCarouselItem()
         this.loading = false    
     },
 }
