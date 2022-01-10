@@ -1,15 +1,14 @@
 <template>
-    <v-row class="align-center justify-center">
+    <div>
         <!-- 減少數量 -->
         <v-btn
             @click="decrement(product_id)"
             :disabled='loading'
-            tile 
-            small 
-            depressed 
+            fab
+            x-small 
             outlined 
             color="error">
-            <v-icon>fa-minus fa-fw</v-icon>
+            <v-icon x-small>fa-minus fa-fw</v-icon>
         </v-btn>
         <!-- 當前數量 -->
         <input
@@ -17,22 +16,21 @@
             @change="updateQuantity(productPayload)"
             autocomplete="off" 
             :disabled='loading'
-            class="grey lighten-2 text-center"
+            class="text-center"
             name="product_quantity"
-            type="number" 
-            v-model.number="productPayload.quantity">
+            type="number"
+            v-model="productPayload.quantity">
         <!-- 增加數量 -->
         <v-btn 
             @click="increment(product_id)"
             :disabled='loading'
-            tile
-            small 
-            depressed 
+            fab
+            x-small 
             outlined 
             color="indigo">
-            <v-icon>fa-plus fa-fw</v-icon>
+            <v-icon x-small>fa-plus fa-fw</v-icon>
         </v-btn>
-    </v-row>
+    </div>
 </template>
 
 
@@ -92,19 +90,22 @@ export default {
         //* 增加數量
         async increment (productId) {
             await this.increaseByOne(productId)
-            this.productPayload.quantity++ //* 暫存數據 
-            
         },
         //* 減少數量
         async decrement (productId) {
             await this.decreaseByOne(productId)
-            this.productPayload.quantity-- //* 暫存數據
             //* 最小值為 1
             if(this.productPayload.quantity < 1) {
                 this.productPayload.quantity = 1
             }
         },
     },
+    watch: {
+        product_quantity() {
+            //* 若 props 有變動則更新暫存的數據 
+            this.productPayload.quantity = this.product_quantity
+        }
+    }
 }
 </script>
 
