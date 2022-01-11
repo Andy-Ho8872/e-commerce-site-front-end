@@ -48,11 +48,9 @@ export default {
 
 <style lang="scss" scoped>
 $z-index-top : 10000;
-$padding-top-xl: 10%; //*   4k and ultra-wide or large desktop...  > 1904px 
-$padding-top-lg: 15%; //*   desktop... 1264px > < 1904px
-$padding-top-md: 20%; //*   Large tablet to laptop... 960px > < 1264px
-$padding-top-xs: 30%; //*   mobile... <600px
-$padding-top-xss: 35%; //*   mobile... <375px
+$padding-top-xl: 9.5rem; //*   4k and ultra-wide or large desktop...  > 1904px 
+$padding-top-lg: 10rem; //*   desktop... 1264px > < 1904px
+$padding-top-md: 7.5rem; //*   desktop... 1264px > < 1904px
 
 .v-main {
     background-color: #FAFAFA;
@@ -82,24 +80,14 @@ $padding-top-xss: 35%; //*   mobile... <375px
     right: 0;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 768px) {
     .content {
         padding-top: $padding-top-lg;
     }
 }
-@media (max-width: 960px) {
+@media (max-width: 640px) {
     .content {
         padding-top: $padding-top-md;
-    }
-}
-@media (max-width: 600px) {
-    .content {
-        padding-top: $padding-top-xs;
-    }
-}
-@media (max-width: 375px) {
-    .content {
-        padding-top: $padding-top-xss;
     }
 }
 </style>
