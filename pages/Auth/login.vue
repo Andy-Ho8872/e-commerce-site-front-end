@@ -78,22 +78,22 @@
                 </div>
                 <!-- 第三方登入按鈕 -->
                 <v-row class="my-8">
-                    <v-col>
-                        <v-btn color="grey" @click="socialiteLogin('github')">
-                            <v-icon color="white">mdi-github</v-icon>
-                            <span class="white--text">Github</span>
-                        </v-btn>
-                    </v-col>
-                    <v-col>
-                        <v-btn color="red" @click="socialiteLogin('google')">
+                    <v-col cols="12" md="4">
+                        <v-btn block color="red" @click="socialiteLogin('google')">
                             <v-icon color="white">mdi-google</v-icon>
                             <span class="white--text">Google</span>
                         </v-btn>
                     </v-col>
-                    <v-col>
-                        <v-btn color="primary" @click="socialiteLogin('facebook')">
+                    <v-col cols="12" md="4">
+                        <v-btn block color="primary" @click="socialiteLogin('facebook')">
                             <v-icon color="white">mdi-facebook</v-icon>
                             <span>Facebook</span>
+                        </v-btn>
+                    </v-col>
+                    <v-col cols="12" md="4">
+                        <v-btn block color="grey" @click="socialiteLogin('github')">
+                            <v-icon color="white">mdi-github</v-icon>
+                            <span class="white--text">Github</span>
                         </v-btn>
                     </v-col>
                 </v-row>
