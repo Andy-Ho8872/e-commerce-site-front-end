@@ -48,6 +48,13 @@
                             <span>{{ user.name || user.email }}</span>
                         </nuxt-link>
                     </li>
+                    <!--  -->
+                    <li class="admin_dashboard" v-if="user.is_admin">
+                        <nuxt-link :to="{ name: 'admin' }">
+                            <v-icon class="icon" dark small>fa-user-shield fa-fw</v-icon>
+                            <span>商品管理</span>
+                        </nuxt-link>
+                    </li>
                     <!-- 登出按鈕 -->
                     <li class="logout_btn" @click="logout">
                         <v-icon class="icon" dark small>fa-share fa-fw</v-icon>
