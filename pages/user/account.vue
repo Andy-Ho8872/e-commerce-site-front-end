@@ -178,9 +178,11 @@ export default {
         initUserProfileInputs() {
             if(this.user) {
                 //* 若使用者沒有設定，則為 null 
-                this.profile.name = this.user.name || null
-                this.profile.phone = this.user.phone || null
-                this.profile.address = this.user.address || null
+                this.profile = {
+                    name: this.user.name || null,
+                    phone: this.user.phone || null,
+                    address: this.user.address || null,
+                }
             }
             return null
         },
