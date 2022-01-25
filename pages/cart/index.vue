@@ -125,7 +125,7 @@
                 </v-card>
                 <!-- Footer -->
                 <v-card
-                    class="cart_footer d-flex flex-column justify-end mt-4 pa-4 align-center text-right"
+                    class="cart_footer d-flex flex-column justify-end mt-4 mb-6 pa-4 align-center text-right"
                     elevation="2"
                 >
                     <!-- 小計金額 -->
