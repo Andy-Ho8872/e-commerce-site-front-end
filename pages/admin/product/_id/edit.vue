@@ -33,32 +33,56 @@
                 </v-card-subtitle>
                 <v-card-subtitle>
                     規格:
-                    <template v-if="product.variations.length">
+                    <template v-if="product.variations">
                         <v-card-text v-for="variation in product.variations" :key="variation.id">
                             {{ variation.title }} 
                             <v-btn class="mx-2" color="error" small @click="deleteProductVariation({ product_id: product.id, variation_id: variation.id })">刪除規格</v-btn>
-                            <v-card-text v-for="(option, index) in variation.options" :key="option.id" class="d-flex">
+                            <v-card-text v-for="(option, index) in variation.options" :key="`option_${index}`" class="d-flex">
                                 #{{index + 1}} - {{ option }}
-                                <div class="variation_option_btns d-flex flex-column">
-                                    <v-btn class="mx-2" color="error" small>刪除選項</v-btn>
-                                    <v-btn class="mx-2 mt-4" color="primary" small>新增選項</v-btn>
-                                </div>
+                                <!-- index 不為 0 才顯示 -->
+                                <template v-if="index != 0">
+                                    <v-btn class="mx-2" color="error" x-small icon>
+                                        <v-icon>fa-trash</v-icon>
+                                    </v-btn>
+                                </template>
+                            </v-card-text>
+                            <v-card-text>
+                                <v-btn color="primary" small>新增選項</v-btn>
                             </v-card-text>
                         </v-card-text>
                         <v-card-text>
                             <v-btn color="primary" small @click="variationFormDialog = true">新增規格</v-btn>
                         </v-card-text>
                         <!-- 規格表單 -->
-                        <v-dialog v-model="variationFormDialog" max-width="600">
-                            <v-card>
+                        <v-dialog v-model="variationFormDialog" max-width="600" scrollable>
+                            <v-card class="overflow-auto">
                                 <v-card-title class="mb-4">新增規格</v-card-title>
-                                <v-card-subtitle>
-                                    <v-text-field label="名稱" name="variation_title" v-model="variationPayload.variation_title"></v-text-field>
-                                </v-card-subtitle>
+                                <!-- 滾動式內容 -->
+                                <v-card-text style="height: 450px">
+                                    <v-card-subtitle>
+                                        <v-text-field label="名稱" name="variation_title" v-model="variationPayload.variation_title"></v-text-field>
+                                    </v-card-subtitle>
+                                    <v-card-subtitle v-for="(option, index) in variationPayload.variation_options" :key="`variation_option_${index}`">
+                                        <div class="d-flex align-center">
+                                            <v-text-field :label="`選項${index + 1}`" name="variation_options[]" v-model="variationPayload.variation_options[index]"></v-text-field>
+                                            <!-- index 不為 0 才顯示 -->
+                                            <template v-if="index != 0">
+                                                <v-btn class="mx-2" color="error" icon small @click="deleteVariationOptions(index)">
+                                                    <v-icon>fa-trash</v-icon>
+                                                </v-btn>
+                                            </template>
+                                        </div>
+                                    </v-card-subtitle>
+                                    <!-- 新增選項按鈕 -->
+                                    <v-card-subtitle>
+                                        <v-btn color="success" small @click="addVariationOptions()">新增選項</v-btn>
+                                    </v-card-subtitle>
+                                </v-card-text>
+                                <!-- 取消、確認按鈕 -->
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn text color="error" @click="variationFormDialog = false">取消</v-btn>
-                                    <v-btn color="primary" @click="addProductVariation(variationPayload)">確認</v-btn>
+                                    <v-btn color="primary" @click="[addProductVariation(variationPayload), resetVariationPayload()]">確認</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
@@ -89,9 +113,13 @@ export default {
     data() {
         return {
             variationFormDialog: false,
+            //* 規格參數 
             variationPayload: {
                 product_id: this.$route.params.id,
-                variation_title: ''
+                variation_title: '',
+                variation_options: [
+                    ''
+                ]
             },
             //* 表單內容
             formInput: {
@@ -101,7 +129,7 @@ export default {
                 rating: '',
                 stock_quantity: '',
                 tags: [],
-                variations: [],
+                // variations: [],
                 discount_rate: '',
                 available: ''
             }
@@ -133,6 +161,22 @@ export default {
                 available: this.product.available || null
             }
         },
+        resetVariationPayload() {
+            this.variationPayload = {
+                product_id: this.$route.params.id,
+                variation_title: '',
+                variation_options: ['',]
+            }
+            //* 關閉彈出視窗 
+            this.variationFormDialog = false
+        },
+        //* 選項輸入框操作
+        addVariationOptions() {
+            this.variationPayload.variation_options.push('')
+        },
+        deleteVariationOptions(index) {
+            this.variationPayload.variation_options.splice(index, 1)
+        }
     },
     async mounted() {
         await this.refetchSingleProduct(this.$route.params.id)
