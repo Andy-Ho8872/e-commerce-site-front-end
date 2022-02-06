@@ -97,7 +97,8 @@ export const actions = {
         try {
             await apiAdminAddProductVariation(payload.product_id,{
                 product_id: payload.product_id,
-                variation_title: payload.variation_title
+                variation_title: payload.variation_title,
+                variation_options: payload.variation_options
             })
             dispatch('refetchSingleProduct', payload.product_id)
             //* 提示訊息
