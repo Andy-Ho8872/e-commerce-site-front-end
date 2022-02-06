@@ -40,11 +40,11 @@
                         規格:
                         <template v-if="product.variations">
                             <v-card-text v-for="variation in product.variations" :key="variation.id">
-                                {{ variation.title }} 
+                                <v-chip color="teal" label outlined>{{ variation.title }}</v-chip> 
                                 <v-btn class="mx-2" color="error" small @click="deleteProductVariation({ product_id: product.id, variation_id: variation.id })">刪除規格</v-btn>
                                 <!-- 產品選項 -->
-                                <v-card-text v-for="(option, index) in variation.options" :key="`option_${index}`" class="d-flex">
-                                    #{{index + 1}} - {{ option }}   
+                                <v-card-text v-for="(option, index) in variation.options" :key="`option_${index}`">
+                                    #{{index + 1}} - <v-chip color="primary" label outlined small>{{ option }}</v-chip>   
                                 </v-card-text>
                                 <v-card-text>
                                     <v-btn color="primary" small>變更選項</v-btn>

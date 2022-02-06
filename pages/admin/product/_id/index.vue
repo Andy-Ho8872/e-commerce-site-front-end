@@ -32,15 +32,15 @@
                     規格:
                     <template v-if="product.variations.length">
                         <v-card-text v-for="variation in product.variations" :key="variation.id">
-                            {{ variation.title }}
+                            <v-chip color="green" small label outlined>{{ variation.title }}</v-chip> 
                             <v-card-text v-for="(option, index) in variation.options" :key="`option_${index}`">
-                                #{{index + 1}} - {{ option }}
+                                #{{index + 1}} - <v-chip color="primary" small label outlined>{{ option }}</v-chip>
                             </v-card-text>
                         </v-card-text>
                     </template>
                     <template v-else>
                         <v-card-text>
-                            <v-chip color="error" label small text outlined>尚無規格</v-chip>
+                            <v-chip color="error" label small outlined>尚無規格</v-chip>
                         </v-card-text>
                     </template>
                 </v-card-subtitle>
