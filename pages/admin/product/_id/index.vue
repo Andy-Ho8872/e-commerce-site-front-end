@@ -33,13 +33,15 @@
                     <template v-if="product.variations.length">
                         <v-card-text v-for="variation in product.variations" :key="variation.id">
                             {{ variation.title }}
-                            <v-card-text v-for="(option, index) in variation.options" :key="option.id">
+                            <v-card-text v-for="(option, index) in variation.options" :key="`option_${index}`">
                                 #{{index + 1}} - {{ option }}
                             </v-card-text>
                         </v-card-text>
                     </template>
                     <template v-else>
-                        <v-card-text>尚無規格</v-card-text>
+                        <v-card-text>
+                            <v-chip color="error" label small text outlined>尚無規格</v-chip>
+                        </v-card-text>
                     </template>
                 </v-card-subtitle>
                 <v-card-subtitle>折價率: {{ product.discount_rate }}</v-card-subtitle>
