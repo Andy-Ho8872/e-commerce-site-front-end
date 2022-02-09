@@ -1,5 +1,10 @@
 import { apiAdminGetProducts, apiAdminGetSingleProduct } from '~/APIs/admin.js'
-import { apiAdminAddProductVariation, apiAdminDeleteProductVariation, apiGetProductTags } from '../APIs/admin'
+import { 
+    apiAdminAddProductVariation, 
+    apiAdminDeleteProductVariation, 
+    apiAdminUpdateProductVariationOption,
+    apiGetProductTags 
+} from '../APIs/admin'
 
 export const state = () => ({
     //* 所有商品的資料(目前不使用分頁)
@@ -90,9 +95,8 @@ export const actions = {
         }
     },
     updateProductInfo({ commit }) {
-        test
+        //todo 
     },
-    
     async addProductVariation({ dispatch, commit }, payload) {
         try {
             await apiAdminAddProductVariation(payload.product_id,{
@@ -116,7 +120,7 @@ export const actions = {
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         }
     },
-    async deleteProductVariation({ dispatch, commit }, payload) {
+    async deleteProductVariation({ dispatch }, payload) {
         try {
             await apiAdminDeleteProductVariation(payload.product_id, payload.variation_id)
             //* 更新後重新撈取
@@ -129,6 +133,31 @@ export const actions = {
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log(error);
+        }
+    },
+    async updateProductVariationOption({ dispatch }, { product_id, variation_id, options, optionIndex }) {
+        try {
+            //* 建立一個暫存陣列
+            const newOptionArray = Array.from(options)
+            //* 先將暫存陣列中的該值篩刪除
+            await newOptionArray.splice(optionIndex, 1)
+            //* 向後端傳送新的陣列 
+            await apiAdminUpdateProductVariationOption(product_id, variation_id, { variation_options: newOptionArray })
+            //* 更新後重新撈取
+            dispatch('refetchSingleProduct', product_id)
+            //* 提示訊息
+            const message = {
+                type: 'success',
+                text: '選項刪除成功',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        } catch (error) {
+            console.log(error)
+            const message = {
+                type: 'error',
+                text: '選項刪除失敗',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         }
     },
 }
