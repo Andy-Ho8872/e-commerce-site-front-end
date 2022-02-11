@@ -105,10 +105,11 @@
                         <v-text-field label="折價率" type="number" max="1" name="discount_rate" v-model="formInput.discount_rate"></v-text-field>
                     </v-card-subtitle>
                     <v-card-subtitle>
-                        <v-text-field label="有現貨" name="available" v-model="formInput.available"></v-text-field>
+                        <!-- <v-text-field label="有現貨" name="available" v-model="formInput.available"></v-text-field> -->
+                        <v-select label="有現貨" :items="selectOptions" item-text="text" item-value="value" v-model="formInput.available"></v-select>
                     </v-card-subtitle>
                     <v-card-actions>
-                        <v-btn color="primary" class="ma-2">更新商品資料</v-btn>
+                        <v-btn color="primary" class="ma-2" @click="submitForm">更新商品資料</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card>
@@ -123,7 +124,6 @@ export default {
     data() {
         return {
             variationFormDialog: false,
-            variationOptionsFormDialog: false,
             //* 規格參數 
             variationPayload: {
                 product_id: this.$route.params.id,
@@ -132,6 +132,16 @@ export default {
                     ''
                 ]
             },
+            selectOptions: [
+                { 
+                    text: '是',
+                    value: '1' 
+                },
+                { 
+                    text: '否',
+                    value: '0' 
+                },
+            ],
             //* 表單內容
             formInput: {
                 title: '',
