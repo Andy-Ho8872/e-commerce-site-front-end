@@ -44,12 +44,15 @@
                                 <v-btn class="mx-2" color="error" small @click="deleteProductVariation({ product_id: product.id, variation_id: variation.id })">刪除規格</v-btn>
                                 <!-- 產品選項 -->
                                 <v-card-text v-for="(option, index) in variation.options" :key="`option_${index}`" class="d-flex align-center">
-                                    <span>#{{index + 1}} -</span> 
+                                    <span>#{{index + 1}}</span> 
+                                    <!-- todo 更改 style -->
                                     <div class="d-flex align-center">
-                                        <v-chip color="primary" label outlined small class="mx-2">{{ option }}</v-chip>
+                                        <div class="chip_wrapper">
+                                            <v-chip color="primary" label outlined small class="mx-2">{{ option }}</v-chip>
+                                        </div>
                                         <template v-if="index != 0">
                                             <v-card-text>
-                                                <v-btn color="primary" small @click="updateProductVariationOption({ product_id: product.id, variation_id: variation.id, options: variation.options, optionIndex: index })">刪除選項</v-btn>
+                                                <v-btn color="primary" small @click="deleteProductVariationOption({ product_id: product.id, variation_id: variation.id, options: variation.options, optionIndex: index })">刪除選項</v-btn>
                                             </v-card-text>
                                         </template> 
                                     </div>
@@ -155,7 +158,7 @@ export default {
             fetchProductTags: 'admin/fetchProductTags',
             addProductVariation: 'admin/addProductVariation',
             deleteProductVariation: 'admin/deleteProductVariation',
-            updateProductVariationOption: 'admin/updateProductVariationOption'
+            deleteProductVariationOption: 'admin/deleteProductVariationOption'
         }),
         initFormInput() {
             this.formInput = {

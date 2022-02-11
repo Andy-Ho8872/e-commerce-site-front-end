@@ -135,7 +135,7 @@ export const actions = {
             console.log(error);
         }
     },
-    async updateProductVariationOption({ dispatch }, { product_id, variation_id, options, optionIndex }) {
+    async deleteProductVariationOption({ dispatch }, { product_id, variation_id, options, optionIndex }) {
         try {
             //* 建立一個暫存陣列
             const newOptionArray = Array.from(options)
