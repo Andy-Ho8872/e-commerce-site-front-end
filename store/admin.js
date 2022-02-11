@@ -42,6 +42,11 @@ export const mutations = {
     SET_PRODUCT_TAGS(state, tags) {
         state.productTags = tags
     },
+    REFRESH_VIEWED_PRODUCT(state, product) {
+        const productToFind = (product) => product.id == product.id
+        const productIndex = state.viewedProducts.findIndex(productToFind)
+        state.viewedProducts[productIndex] = product
+    }
 }
 
 export const actions = {
@@ -94,8 +99,10 @@ export const actions = {
             }
         }
     },
-    updateProductInfo({ commit }) {
-        //todo 
+    async updateProductInfo({ dispatch, commit }, product) {
+        await this.$router.push({ name: 'admin-product-id', params: { id: product.id } })
+        dispatch('refetchSingleProduct', product.id)
+        commit('REFRESH_VIEWED_PRODUCT', product)
     },
     async addProductVariation({ dispatch, commit }, payload) {
         try {
