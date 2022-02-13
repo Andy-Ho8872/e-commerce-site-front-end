@@ -224,13 +224,20 @@ export default {
         //* 設定輸入欄位的值
         setFormInputs() {
             if(this.autoFill) {
-                this.form.buyer_name = this.user.name 
-                this.form.buyer_phone = this.user.phone
-                this.form.address = this.user.address
+                // this.form.buyer_name = this.user.name 
+                // this.form.buyer_phone = this.user.phone
+                // this.form.address = this.user.address
+                this.form = {
+                    buyer_name: this.user.name,
+                    buyer_phone: this.user.phone,
+                    address: this.user.address
+                }
             } else {
-                this.form.buyer_name = ''
-                this.form.buyer_phone = ''
-                this.form.address = ''
+                this.form = {
+                    buyer_name: '',
+                    buyer_phone: '',
+                    address: ''
+                }
             }
         },
         //* 建立訂單 
