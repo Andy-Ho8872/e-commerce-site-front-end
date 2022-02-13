@@ -100,18 +100,19 @@ export const actions = {
         }
     },
     async updateProductInfo({ dispatch, commit }, product) {
+        // todo 
         await this.$router.push({ name: 'admin-product-id', params: { id: product.id } })
         dispatch('refetchSingleProduct', product.id)
         commit('REFRESH_VIEWED_PRODUCT', product)
     },
-    async addProductVariation({ dispatch, commit }, payload) {
+    async addProductVariation({ dispatch }, { product_id, variation_title, variation_options }) {
         try {
-            await apiAdminAddProductVariation(payload.product_id,{
-                product_id: payload.product_id,
-                variation_title: payload.variation_title,
-                variation_options: payload.variation_options
+            await apiAdminAddProductVariation(product_id,{
+                product_id,
+                variation_title,
+                variation_options
             })
-            dispatch('refetchSingleProduct', payload.product_id)
+            dispatch('refetchSingleProduct', product_id)
             //* 提示訊息
             const message = {
                 type: 'success',
@@ -127,11 +128,11 @@ export const actions = {
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         }
     },
-    async deleteProductVariation({ dispatch }, payload) {
+    async deleteProductVariation({ dispatch }, { product_id, variation_id }) {
         try {
-            await apiAdminDeleteProductVariation(payload.product_id, payload.variation_id)
+            await apiAdminDeleteProductVariation(product_id, variation_id)
             //* 更新後重新撈取
-            dispatch('refetchSingleProduct', payload.product_id)
+            dispatch('refetchSingleProduct', product_id)
             //* 提示訊息
             const message = {
                 type: 'success',
