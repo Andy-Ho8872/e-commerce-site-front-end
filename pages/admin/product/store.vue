@@ -43,13 +43,13 @@
                     </v-card-subtitle>
                     <!-- 折價率 -->
                     <v-card-subtitle>
-                        <v-text-field label="折價率(最多1、最少0.01)" type="number" name="discount_rate" v-model="formInput.discount_rate" :rules="[rules.required, rules.maxValue, rules.minValue, rules.maxLetterLength2]"></v-text-field>
+                        <v-text-field label="折價率: 最多1(預設)、最少0.01" type="number" name="discount_rate" v-model="formInput.discount_rate" :rules="[rules.required, rules.maxValue, rules.minValue, rules.maxLetterLength2]"></v-text-field>
                     </v-card-subtitle>
                     <v-card-subtitle>  
-                        <v-select label="是否有現貨" :items="selectOptions" item-text="text" item-value="value" v-model="formInput.available" :rules="[rules.required]"></v-select>
+                        <v-select label="是否有現貨(預設是)" :items="selectOptions" item-text="text" item-value="value" v-model="formInput.available" :rules="[rules.required]"></v-select>
                     </v-card-subtitle>
                     <v-card-actions>
-                        <v-btn color="primary" class="ma-2" :disabled="!valid">上架商品</v-btn>
+                        <v-btn color="primary" class="ma-2" :disabled="!valid" @click="storeProduct(formInput)">上架商品</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card>
@@ -93,7 +93,7 @@ export default {
                 rating: '',
                 stock_quantity: '',
                 tags: [],
-                discount_rate: '',
+                discount_rate: 1,
                 available: 1
             }
         }
@@ -105,6 +105,11 @@ export default {
             productTags: 'admin/getProductTags'
         }),
     },
+    methods: {
+        ...mapActions({
+            storeProduct: 'admin/storeProduct'
+        })
+    }
 }
 </script>
 
