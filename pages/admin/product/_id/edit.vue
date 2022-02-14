@@ -12,6 +12,9 @@
                     <v-card-subtitle> 
                         <v-text-field label="名稱" name="title" v-model="formInput.title" :rules="[rules.required]"></v-text-field>
                     </v-card-subtitle>
+                    <v-card-subtitle> 
+                        <v-text-field label="商品圖片網址" name="imgUrl" v-model="formInput.imgUrl" :rules="[rules.required]"></v-text-field>
+                    </v-card-subtitle>
                     <v-card-subtitle>
                         <v-text-field label="單價" name="unit_price" v-model="formInput.unit_price" :rules="[rules.required]"></v-text-field>
                     </v-card-subtitle>
@@ -45,7 +48,6 @@
                                 <!-- 產品選項 -->
                                 <v-card-text v-for="(option, index) in variation.options" :key="`option_${index}`" class="d-flex align-center">
                                     <span>#{{index + 1}}</span> 
-                                    <!-- todo 更改 style -->
                                     <div class="d-flex align-center">
                                         <div class="chip_wrapper">
                                             <v-chip color="primary" label outlined small class="mx-2">{{ option }}</v-chip>
@@ -105,10 +107,10 @@
                         <v-text-field label="折價率(最多1、最少0.01)" type="number" name="discount_rate" v-model="formInput.discount_rate" :rules="[rules.required, rules.maxValue, rules.minValue, rules.maxLetterLength2]"></v-text-field>
                     </v-card-subtitle>
                     <v-card-subtitle>  
-                        <v-select label="是否有現貨" :items="selectOptions" item-text="text" item-value="value" v-model="formInput.available" :rules="[rules.shouldContainOne]"></v-select>
+                        <v-select label="是否有現貨" :items="selectOptions" item-text="text" item-value="value" v-model="formInput.available" :rules="[rules.required]"></v-select>
                     </v-card-subtitle>
                     <v-card-actions>
-                        <v-btn color="primary" class="ma-2" :disabled="!valid">更新商品資料</v-btn>
+                        <v-btn color="primary" class="ma-2" :disabled="!valid" @click="updateProductInfo({ product_id: product.id, formInput })">更新商品資料</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card>
@@ -157,13 +159,14 @@ export default {
             //* 表單內容
             formInput: {
                 title: '',
+                imgUrl: '',
                 unit_price: '',
                 description: '',
                 rating: '',
                 stock_quantity: '',
                 tags: [],
                 discount_rate: '',
-                available: ''
+                available: 1
             }
         }
     },
@@ -180,11 +183,13 @@ export default {
             fetchProductTags: 'admin/fetchProductTags',
             addProductVariation: 'admin/addProductVariation',
             deleteProductVariation: 'admin/deleteProductVariation',
-            deleteProductVariationOption: 'admin/deleteProductVariationOption'
+            deleteProductVariationOption: 'admin/deleteProductVariationOption',
+            updateProductInfo: 'admin/updateProductInfo'
         }),
         initFormInput() {
             this.formInput = {
                 title: this.product.title || null,
+                imgUrl: this.product.imgUrl || null,
                 unit_price: this.product.unit_price || null,
                 description: this.product.description || null,
                 rating: this.product.rating || null,

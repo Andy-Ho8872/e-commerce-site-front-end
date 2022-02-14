@@ -3,7 +3,8 @@ import {
     apiAdminAddProductVariation, 
     apiAdminDeleteProductVariation, 
     apiAdminUpdateProductVariationOption,
-    apiGetProductTags 
+    apiGetProductTags,
+    apiAdminUpdateProduct 
 } from '../APIs/admin'
 
 export const state = () => ({
@@ -42,10 +43,11 @@ export const mutations = {
     SET_PRODUCT_TAGS(state, tags) {
         state.productTags = tags
     },
-    REFRESH_VIEWED_PRODUCT(state, product) {
+    REFRESH_PRODUCTS_ARRAY(state, product) {
         const productToFind = (product) => product.id == product.id
         const productIndex = state.viewedProducts.findIndex(productToFind)
         state.viewedProducts[productIndex] = product
+        state.products[productIndex] = product
     }
 }
 
@@ -99,11 +101,39 @@ export const actions = {
             }
         }
     },
-    async updateProductInfo({ dispatch, commit }, product) {
-        // todo 
-        await this.$router.push({ name: 'admin-product-id', params: { id: product.id } })
-        dispatch('refetchSingleProduct', product.id)
-        commit('REFRESH_VIEWED_PRODUCT', product)
+    async updateProductInfo({ state, dispatch, commit }, { product_id, formInput }) {
+        try {
+            //* 只取得 tag 的 id 的陣列(array)
+            const tagIDs = formInput.tags.map(tag => tag.id)
+            // todo 
+            await apiAdminUpdateProduct(product_id, {
+                title: formInput.title,
+                imgUrl: formInput.imgUrl,
+                unit_price: formInput.unit_price,
+                description: formInput.description,
+                rating: formInput.rating,
+                stock_quantity: formInput.stock_quantity,
+                tags: tagIDs, //* 此欄位只能回傳 ID 的值 ex: [1, 4]， 因後端接受只包含 ID 號碼的陣列。 
+                discount_rate: formInput.discount_rate,
+                available: formInput.available,
+            })
+            await dispatch('refetchSingleProduct', product_id)
+            await commit('REFRESH_PRODUCTS_ARRAY', state.product)
+            //* 提示訊息
+            const message = {
+            type: 'success',
+            text: '商品更新成功',
+        }
+        dispatch('globalMessage/setFlashMessage', message, { root: true })
+        this.$router.push({ name: 'admin-product-id', params: { id: product_id } })
+        } catch (error) {
+            console.log(error)
+            const message = {
+                type: 'error',
+                text: '商品更新失敗',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        }
     },
     async addProductVariation({ dispatch }, { product_id, variation_title, variation_options }) {
         try {
