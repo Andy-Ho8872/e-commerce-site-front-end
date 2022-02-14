@@ -22,7 +22,7 @@
                 <v-card-subtitle>標籤: 
                     <v-card-text>
                         <v-chip-group>
-                            <v-chip color="blue" v-for="tag in product.tags" :key="tag.id">
+                            <v-chip color="blue" v-for="tag in product.tags" :key="'tag' + tag.id">
                                 <span class="white--text">{{ tag.title }}</span>
                             </v-chip>
                         </v-chip-group>
@@ -31,9 +31,9 @@
                 <v-card-subtitle>
                     規格:
                     <template v-if="product.variations.length">
-                        <v-card-text v-for="variation in product.variations" :key="variation.id">
+                        <v-card-text v-for="variation in product.variations" :key="'variation' + variation.id">
                             <v-chip color="green" small label outlined>{{ variation.title }}</v-chip> 
-                            <v-card-text v-for="(option, index) in variation.options" :key="`option_${index}`">
+                            <v-card-text v-for="(option, index) in variation.options" :key="'option' + index">
                                 #{{index + 1}} - <v-chip color="primary" small label outlined>{{ option }}</v-chip>
                             </v-card-text>
                         </v-card-text>
