@@ -179,8 +179,7 @@ export default {
     },
     methods: {
         ...mapActions({
-            refetchSingleProduct: 'admin/refetchSingleProduct',
-            fetchProductTags: 'admin/fetchProductTags',
+            fetchSingleProduct: 'admin/fetchSingleProduct',
             addProductVariation: 'admin/addProductVariation',
             deleteProductVariation: 'admin/deleteProductVariation',
             deleteProductVariationOption: 'admin/deleteProductVariationOption',
@@ -216,8 +215,7 @@ export default {
         }
     },
     async mounted() {
-        await this.refetchSingleProduct(this.$route.params.id)
-        this.fetchProductTags()
+        await this.fetchSingleProduct(this.$route.params.id)
         this.initFormInput()
     }
 }

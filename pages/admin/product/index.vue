@@ -57,11 +57,13 @@ export default {
     },
     methods: {
         ...mapActions({
-            fetchProducts: 'admin/fetchProducts'
+            fetchProducts: 'admin/fetchProducts',
+            fetchProductTags: 'admin/fetchProductTags',
         })
     },
     created() {
         this.fetchProducts()
+        this.fetchProductTags()
     }
 }
 </script>
