@@ -46,17 +46,14 @@ export const mutations = {
         state.productTags = tags
     },
     REFRESH_PRODUCTS_ARRAY(state, product) {
-        const productToFind = (product) => product.id == product.id
+        //* 需要更新的商品
+        const productToFind = (product) => product.id == state.product.id
+        //* 更新已瀏覽商品中的該筆資料(暫存) 
         const viewedProductIndex = state.viewedProducts.findIndex(productToFind)
-        //* 更新已瀏覽的商品中的該筆資料 
         state.viewedProducts[viewedProductIndex] = product
-        // todo 以下待修改
-        //* 更新所有商品中的該筆資料
-        // const productIndex = state.products.findIndex(productToFind)
-        // state.products[productIndex] = product //todo 找出為何 index 不符合預期的結果
-        // console.log(state.products);
-        // console.log(`viewedProductIndex == ${viewedProductIndex}`);
-        // console.log(`productIndex == ${productIndex}`);
+        //* 更新所有商品中的該筆資料(暫存)
+        const productIndex = state.products.findIndex(productToFind)
+        state.products[productIndex] = product
     }
 }
 
@@ -83,15 +80,14 @@ export const actions = {
         }
     },
     async fetchSingleProduct({ state, commit }, productId) {
-        let exist = state.viewedProducts.find(
-            product => product.id == productId
-        )
+        let exist = state.viewedProducts.find(product => product.id == productId)
         // //* 若是找不到才抓取
         if (exist === undefined) {
             try {
                 const res = await apiAdminGetSingleProduct(productId)
                 //* 所有產品的資料
                 const product = res.data.product
+                commit('SET_PRODUCT', product)
                 //* 將點擊過的產品放入 products 暫存，若使用者在瀏覽過相同產品的時候就不用再發送一次 request
                 await commit('PUSH_PRODUCT_TO_VIEWED_PRODUCTS', product)
             } catch (error) {
@@ -136,8 +132,6 @@ export const actions = {
                 available: formInput.available,
             })
             //* 重新撈取商品 
-            // await dispatch('refetchSingleProduct', product_id)
-            // await commit('REFRESH_PRODUCTS_ARRAY', state.product)
             dispatch('refetchProducts')
             //* 提示訊息
             const message = {
@@ -173,7 +167,6 @@ export const actions = {
             //* 重新撈取更新後的商品 
             await dispatch('refetchSingleProduct', product_id)
             await commit('REFRESH_PRODUCTS_ARRAY', state.product)
-            dispatch('refetchProducts')
             //* 提示訊息
             const message = {
                 type: 'success',
@@ -190,14 +183,16 @@ export const actions = {
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         }
     },
-    async addProductVariation({ dispatch }, { product_id, variation_title, variation_options }) {
+    async addProductVariation({ state, dispatch, commit }, { product_id, variation_title, variation_options }) {
         try {
             await apiAdminAddProductVariation(product_id,{
                 product_id,
                 variation_title,
                 variation_options
             })
-            dispatch('refetchSingleProduct', product_id)
+            //* 重新撈取更新後的商品 
+            await dispatch('refetchSingleProduct', product_id)
+            await commit('REFRESH_PRODUCTS_ARRAY', state.product)
             //* 提示訊息
             const message = {
                 type: 'success',
@@ -213,11 +208,12 @@ export const actions = {
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         }
     },
-    async deleteProductVariation({ dispatch }, { product_id, variation_id }) {
+    async deleteProductVariation({ state, dispatch, commit }, { product_id, variation_id }) {
         try {
             await apiAdminDeleteProductVariation(product_id, variation_id)
             //* 更新後重新撈取
-            dispatch('refetchSingleProduct', product_id)
+            await dispatch('refetchSingleProduct', product_id)
+            commit('REFRESH_PRODUCTS_ARRAY', state.product)
             //* 提示訊息
             const message = {
                 type: 'success',
@@ -228,7 +224,7 @@ export const actions = {
             console.log(error);
         }
     },
-    async deleteProductVariationOption({ dispatch }, { product_id, variation_id, options, optionIndex }) {
+    async deleteProductVariationOption({ state, commit, dispatch }, { product_id, variation_id, options, optionIndex }) {
         try {
             //* 建立一個暫存陣列
             const newOptionArray = Array.from(options)
@@ -237,7 +233,8 @@ export const actions = {
             //* 向後端傳送新的陣列 
             await apiAdminUpdateProductVariationOption(product_id, variation_id, { variation_options: newOptionArray })
             //* 更新後重新撈取
-            dispatch('refetchSingleProduct', product_id)
+            await dispatch('refetchSingleProduct', product_id)
+            commit('REFRESH_PRODUCTS_ARRAY', state.product)
             //* 提示訊息
             const message = {
                 type: 'success',
