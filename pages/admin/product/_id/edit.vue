@@ -22,7 +22,7 @@
                         <v-textarea label="敘述" name="description" v-model="formInput.description" :rules="[rules.required]"></v-textarea>
                     </v-card-subtitle>
                     <v-card-subtitle>
-                        <v-text-field label="評分(最多5、最少1)" name="ratings" type="number" v-model="formInput.rating" :rules="[rules.required, rules.maxValue2, rules.minValue2 ,rules.maxLetterLength]"></v-text-field>
+                        <v-text-field label="評分(最多5、最少1)" name="ratings" type="number" v-model="formInput.rating" :rules="[rules.required, rules.maxValue2, rules.minValue2, rules.maxLetterLength2]"></v-text-field>
                     </v-card-subtitle>
                     <v-card-subtitle>
                         <v-text-field label="庫存" name="stock_quantity" v-model="formInput.stock_quantity" :rules="[rules.required]"></v-text-field>
@@ -104,10 +104,10 @@
                     </v-card-subtitle>
                     <!-- 折價率 -->
                     <v-card-subtitle>
-                        <v-text-field label="折價率(最多1、最少0.01)" type="number" name="discount_rate" v-model="formInput.discount_rate" :rules="[rules.required, rules.maxValue, rules.minValue, rules.maxLetterLength2]"></v-text-field>
+                        <v-text-field label="折價率: 最多1(原價)、最少0.01" type="number" name="discount_rate" v-model="formInput.discount_rate" :rules="[rules.required, rules.maxValue, rules.minValue, rules.maxLetterLength]"></v-text-field>
                     </v-card-subtitle>
                     <v-card-subtitle>  
-                        <v-select label="是否有現貨" :items="selectOptions" item-text="text" item-value="value" v-model="formInput.available" :rules="[rules.required]"></v-select>
+                        <v-select label="是否有現貨(預設是)" :items="selectOptions" item-text="text" item-value="value" v-model="formInput.available" :rules="[rules.required]"></v-select>
                     </v-card-subtitle>
                     <v-card-actions>
                         <v-btn color="primary" class="ma-2" :disabled="!valid" @click="updateProductInfo({ product_id: product.id, formInput })">更新商品資料</v-btn>
@@ -120,24 +120,15 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import inputRulesMixin from '~/mixins/inputRulesMixin'
 
 export default {
+    mixins: [inputRulesMixin], //* 表單驗證規則
     data() {
         return {
             variationFormDialog: false,
             //* 表單是否通過驗證 
             valid: false,
-            //* 驗證規則 
-            rules: {
-                required: value => !!value || '此欄位必填',
-                shouldContainOne: value => value.length > 0 || '請至少選擇一個選項',
-                maxLetterLength: value => value.length <= 3 || '字串長度不可超過 3 ex: 4.55',
-                maxLetterLength2: value => value.length <= 4 || '字串長度不可超過 4 ex: 0.005',
-                maxValue: value => value <= 1 || '請依照範圍輸入: 0 ~ 1 ex: 1.00',
-                minValue: value => value > 0  || '請依照範圍輸入: 0 ~ 1 ex: 0.45',
-                maxValue2: value => value <= 5  || '請依照範圍輸入: 1 ~ 5 ex: 4.5',
-                minValue2: value => value >= 1  || '請依照範圍輸入: 1 ~ 5 ex: 1.1',
-            },
             //* 規格參數 
             variationPayload: {
                 product_id: this.$route.params.id,
@@ -165,7 +156,7 @@ export default {
                 rating: '',
                 stock_quantity: '',
                 tags: [],
-                discount_rate: '',
+                discount_rate: 1,
                 available: 1
             }
         }

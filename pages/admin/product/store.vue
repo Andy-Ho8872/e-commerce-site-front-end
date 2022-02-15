@@ -59,21 +59,13 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import inputRulesMixin from '~/mixins/inputRulesMixin'
 
 export default {
+    mixins: [inputRulesMixin], //* 表單驗證規則
     data() {
         return {
             valid: false,
-            //* 驗證規則 
-            rules: {
-                required: value => !!value || '此欄位必填',
-                maxLetterLength: value => value.length <= 4 || '字串長度不可超過 4 ex: 0.005',
-                maxLetterLength2: value => value.length <= 3 || '字串長度不可超過 3 ex: 4.55',
-                maxValue: value => value <= 1 || '請依照範圍輸入: 0 ~ 1 ex: 1.00',
-                minValue: value => value > 0  || '請依照範圍輸入: 0 ~ 1 ex: 0.45',
-                maxValue2: value => value <= 5  || '請依照範圍輸入: 1 ~ 5 ex: 4.5',
-                minValue2: value => value >= 1  || '請依照範圍輸入: 1 ~ 5 ex: 1.1',
-            },
             selectOptions: [
                 { 
                     text: '是',
@@ -101,7 +93,6 @@ export default {
     computed: {
         ...mapGetters({
             products: 'admin/getViewedProducts',
-            product: 'admin/getProduct',
             productTags: 'admin/getProductTags'
         }),
     },
