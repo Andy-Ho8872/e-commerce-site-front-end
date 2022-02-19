@@ -83,12 +83,6 @@ export default {
                     icon: 'fa-box',
                     to: { name: 'admin-tag-all' },
                 },
-                {
-                    id: 4,
-                    title: '新增',
-                    icon: 'fa-box',
-                    to: { name: 'admin-tag-store' },
-                },
             ]
         }
     },
