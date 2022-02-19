@@ -9,4 +9,8 @@ export const apiAdminDeleteProductVariation = (product_id, variation_id) => conf
 export const apiAdminUpdateProductVariationOption = (product_id, variation_id, data) => config.adminRequest.patch(`/product/${product_id}/variation/${variation_id}/update`, data)
 
 
-export const apiGetProductTags = () => config.adminRequest.get('/product/tag/getTags')
+export const apiAdminGetProductTags = () => config.adminRequest.get('/product/tag/getTags')
+export const apiAdminGetProductTag = (tag_id) => config.adminRequest.get(`/product/tag/${tag_id}`)
+export const apiAdminStoreProductTag = (data) => config.adminRequest.post('/product/tag/store', data)
+export const apiAdminUpdateProductTag = (tag_id, data) => config.adminRequest.patch(`/product/tag/${tag_id}/update`, data)
+export const apiAdminDeleteProductTag = (tag_id) => config.adminRequest.delete(`/product/tag/${tag_id}/delete`)
