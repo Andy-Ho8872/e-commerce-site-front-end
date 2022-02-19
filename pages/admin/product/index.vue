@@ -5,6 +5,9 @@
                 <thead>
                     <tr>
                         <th class="text-left">
+                            序號
+                        </th>
+                        <th class="text-left">
                             商品
                         </th>
                         <th class="text-left">
@@ -13,14 +16,15 @@
                         <th class="text-left">
                             庫存
                         </th>
-                        <th class="text-left">
+                        <th class="text-center">
                             操作
                         </th>
                     </tr>
                 </thead>
                 <!-- content -->
                 <tbody>
-                    <tr v-for="product in products" :key="product.id">
+                    <tr v-for="(product, index) in products" :key="product.id">
+                        <td class="text-left px-4">#{{ index }}</td>
                         <td class="text-left pl-2">
                             <v-avatar size="36">
                                 <v-img :src="product.imgUrl"></v-img>
@@ -29,7 +33,7 @@
                         </td>
                         <td class="text-left px-4">{{ product.unit_price }}</td>
                         <td class="text-left px-4">{{ product.stock_quantity }}</td>
-                        <td class="text-left px-4">
+                        <td class="text-center px-4">
                             <div class="action_btns">
                                 <v-btn color="error" outlined nuxt :to="{ name: 'admin-product-id-edit', params: { id: product.id } }">編輯</v-btn>
                                 <v-btn color="primary" nuxt :to="{ name: 'admin-product-id', params: { id: product.id } }">查看</v-btn>
