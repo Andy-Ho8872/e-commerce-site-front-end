@@ -132,11 +132,6 @@ export default {
         searchText(val) {
             val ? (this.showModal = true) : (this.showModal = false)
         },
-        selected(val) {
-            if (val) {
-                this.search({ title: val, pageNumber: 1 })
-            }
-        },
     },
 }
 </script>
