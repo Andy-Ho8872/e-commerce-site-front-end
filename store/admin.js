@@ -5,8 +5,12 @@ import {
     apiAdminAddProductVariation, 
     apiAdminDeleteProductVariation, 
     apiAdminUpdateProductVariationOption,
-    apiGetProductTags,
-    apiAdminUpdateProduct 
+    apiAdminUpdateProduct,
+    //* 產品標籤操作
+    apiAdminGetProductTags,
+    apiAdminStoreProductTag,
+    apiAdminUpdateProductTag,
+    apiAdminDeleteProductTag,
 } from '../APIs/admin'
 
 export const state = () => ({
@@ -15,6 +19,7 @@ export const state = () => ({
     product: {},
     viewedProducts: [],
     productTags: [],
+    productTag: {}
 })
 
 export const getters = {
@@ -42,9 +47,6 @@ export const mutations = {
     PUSH_PRODUCT_TO_VIEWED_PRODUCTS(state, product) {
         state.viewedProducts.push(product)
     },
-    SET_PRODUCT_TAGS(state, tags) {
-        state.productTags = tags
-    },
     REFRESH_PRODUCTS_ARRAY(state, product) {
         //* 需要更新的商品
         const productToFind = (product) => product.id == state.product.id
@@ -54,7 +56,11 @@ export const mutations = {
         //* 更新所有商品中的該筆資料(暫存)
         const productIndex = state.products.findIndex(productToFind)
         state.products[productIndex] = product
-    }
+    },
+    //* ----------------------------商品標籤操作----------------------------* // 
+    SET_PRODUCT_TAGS(state, tags) {
+        state.productTags = tags
+    },
 }
 
 export const actions = {
@@ -102,17 +108,6 @@ export const actions = {
             commit('SET_PRODUCT', product)
         } catch (error) {
             console.log(error);
-        }
-    },
-    async fetchProductTags({ state, commit }) {
-        if (!state.productTags.length) {
-            try {
-                const res = await apiGetProductTags()
-                const tags = res.data.tags
-                commit('SET_PRODUCT_TAGS', tags)
-            } catch (error) {
-                console.log(error)
-            }
         }
     },
     async storeProduct({ dispatch }, formInput) {
@@ -250,4 +245,82 @@ export const actions = {
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         }
     },
+    //* ----------------------------商品標籤操作----------------------------* //  
+    async fetchProductTags({ state, commit }) {
+        if (!state.productTags.length) {
+            try {
+                const res = await apiAdminGetProductTags()
+                const tags = res.data.tags
+                commit('SET_PRODUCT_TAGS', tags)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    },
+    async refetchProductTags({ commit }) {
+        try {
+            const res = await apiAdminGetProductTags()
+            const tags = res.data.tags
+            commit('SET_PRODUCT_TAGS', tags)
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    async storeProductTag({ dispatch }, { tag_title }) {
+        try {
+            await apiAdminStoreProductTag({ title: tag_title })
+            await dispatch('refetchProductTags')
+            //* 提示訊息
+            const message = {
+                type: 'success',
+                text: '標籤新增成功',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        } catch (error) {
+            //* 提示訊息
+            const message = {
+                type: 'error',
+                text: '標籤新增失敗',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        }
+    },
+    async updateProductTag({ dispatch }, { tag_id, tag_title }) {
+        try {
+            await apiAdminUpdateProductTag(tag_id, { title: tag_title })
+            await dispatch('refetchProductTags')
+            //* 提示訊息
+            const message = {
+                type: 'success',
+                text: '標籤變更成功',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        } catch (error) {
+            //* 提示訊息
+            const message = {
+                type: 'error',
+                text: '標籤變更失敗',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        }
+    },
+    async deleteProductTag({ dispatch }, { tag_id }) {
+        try {
+            await apiAdminDeleteProductTag(tag_id)
+            await dispatch('refetchProductTags')
+            //* 提示訊息
+            const message = {
+                type: 'success',
+                text: '標籤刪除成功',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        } catch (error) {
+            //* 提示訊息
+            const message = {
+                type: 'error',
+                text: '標籤刪除失敗',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        }
+    }
 }
