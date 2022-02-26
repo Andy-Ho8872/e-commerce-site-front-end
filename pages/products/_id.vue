@@ -41,7 +41,12 @@
                         </v-card-text>
                         <!-- 標籤 -->
                         <v-card-text>
-                            <Tags :product="product"/>
+                            <v-chip-group class="pb-1" column>
+                                <v-chip label color="primary" small v-for="tag in product.tags" :key="tag.id">
+                                    <!-- 名稱 -->
+                                    <span>{{ tag.title }}</span>
+                                </v-chip>
+                            </v-chip-group>
                         </v-card-text>
                         <!-- 輸入數量 -->
                         <v-form>
