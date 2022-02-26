@@ -74,7 +74,7 @@ export const mutations = {
 export const actions = {
     async fetchIndexPageProducts({ state, commit }) {
         //* state 中沒有資料才撈取
-        if (!state.indexPageProducts.length) { 
+        if (!state.indexPageProducts.success) { 
             try {
                 const res = await apiGetIndexPageProducts()
                 const products = res.data
