@@ -49,7 +49,7 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="error" text class="ma-2" @click="dialog = false">取消</v-btn>
-                            <v-btn color="primary" class="ma-2" :loading="loading" :disabled="!valid" @click="storeProduct(formInput)">上架</v-btn>
+                            <v-btn color="primary" class="ma-2" :disabled="!valid" @click="storeProduct(formInput)">上架</v-btn>
                         </v-card-actions>
                     </v-form>
                 </v-card-text>
