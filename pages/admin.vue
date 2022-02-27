@@ -69,12 +69,6 @@ export default {
                     icon: 'fa-box',
                     to: { name: 'admin-product' },
                 },
-                {
-                    id: 2,
-                    title: '上架',
-                    icon: 'fa-cloud-upload-alt',
-                    to: { name: 'admin-product-store' },
-                },
             ],
             tagLinks: [
                 {
