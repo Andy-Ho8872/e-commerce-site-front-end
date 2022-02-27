@@ -47,7 +47,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="error" text @click="dialogToCreate = false">取消</v-btn>
-                        <v-btn color="primary" @click="[storeProductTag({ tag_title: formInput.tag_title}), resetFormInput(), dialogToCreate = false]">新增</v-btn>
+                        <v-btn color="primary" :disabled="!createValid" @click="[storeProductTag({ tag_title: formInput.tag_title}) ,resetFormInput(), dialogToCreate = false]">新增</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card>
@@ -63,7 +63,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="error" text @click="dialogToUpdate = false">取消</v-btn>
-                        <v-btn color="primary" @click="[updateProductTag({ tag_id: formInput.tag_id, tag_title: formInput.tag_title }), dialogToUpdate = false]">修改</v-btn>
+                        <v-btn color="primary" :disabled="!updateValid" @click="[updateProductTag({ tag_id: formInput.tag_id, tag_title: formInput.tag_title }), dialogToUpdate = false]">修改</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card>
