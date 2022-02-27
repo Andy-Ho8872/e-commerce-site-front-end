@@ -147,7 +147,6 @@ export default {
         ...mapGetters({
             products: 'admin/getProducts',
             productTags: 'admin/getProductTags',
-            loading: 'admin/getLoading'
         }),
     },
     methods: {
@@ -156,9 +155,6 @@ export default {
             fetchProductTags: 'admin/fetchProductTags',
             storeProduct: 'admin/storeProduct',
         }),
-        detectLoadingStatus() {
-            this.loading ? null : this.dialog = false
-        }
     },
     created() {
         this.fetchProducts()
