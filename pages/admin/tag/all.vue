@@ -21,13 +21,13 @@
             <!-- content -->
             <tbody>
                 <tr v-for="(tag, index) in productTags" :key="tag.id">
-                    <td class="text-left px-4">
-                        <span>#{{ index }}</span>
+                    <td class="text-left px-4" data-title="序號">
+                        <span>#{{ index + 1 }}</span>
                     </td>
-                    <td class="text-left px-4">
+                    <td class="text-left px-4" data-title="名稱">
                         <span>{{ tag.title }}</span>
                     </td>
-                    <td class="text-right px-4">
+                    <td class="text-right px-4" data-title="操作">
                         <div class="action_btns">
                             <v-btn color="error" outlined  @click="[dialogToDelete = true, setFormInput(index)]">刪除</v-btn>
                             <v-btn color="primary" @click="[dialogToUpdate = true, setFormInput(index)]">編輯</v-btn>

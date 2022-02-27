@@ -24,17 +24,25 @@
                 <!-- content -->
                 <tbody>
                     <tr v-for="(product, index) in products" :key="product.id">
-                        <td class="text-left px-4">#{{ index }}</td>
-                        <td class="text-left pl-2">
-                            <v-avatar size="36">
-                                <v-img :src="product.imgUrl"></v-img>
-                            </v-avatar>
-                            <span>{{ product.title }}</span>
+                        <td class="text-left px-4" data-title="序號">
+                            <span>#{{ index + 1 }}</span>
                         </td>
-                        <td class="text-left px-4">{{ product.unit_price }}</td>
-                        <td class="text-left px-4">{{ product.stock_quantity }}</td>
-                        <td class="text-center px-4">
-                            <div class="action_btns">
+                        <td class="text-left pl-2" data-title="商品">
+                            <span>
+                                <v-avatar size="36">
+                                    <v-img :src="product.imgUrl"></v-img>
+                                </v-avatar>
+                                {{ product.title }}
+                            </span>
+                        </td>
+                        <td class="text-left px-4" data-title="單價">
+                            <span>{{ product.unit_price }}</span>
+                        </td>
+                        <td class="text-left px-4" data-title="庫存">
+                            <span>{{ product.stock_quantity }}</span>
+                        </td>
+                        <td class="text-center px-4" data-title="操作">
+                            <div class="action_btns text-right text-md-center">
                                 <v-btn color="error" outlined nuxt :to="{ name: 'admin-product-id-edit', params: { id: product.id } }">編輯</v-btn>
                                 <v-btn color="primary" nuxt :to="{ name: 'admin-product-id', params: { id: product.id } }">查看</v-btn>
                             </div>
