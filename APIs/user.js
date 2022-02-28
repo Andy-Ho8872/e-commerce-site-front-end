@@ -18,4 +18,6 @@ export const apiGetUserInfo = () => config.authRequest.get('/getUser');
 export const apiUpdateUserProfile = (data) => config.authRequest.patch('updateProfile', data);
     //* 清空使用者個人檔案 
 export const apiClearUserProfile = () => config.authRequest.patch('clearProfile');
+    //* 新增信用卡 
+export const apiAddCreditCard = (data) => config.authRequest.post('addCreditCard', data);
 //------------------------------------------- 使用者相關 API -------------------------------------------//

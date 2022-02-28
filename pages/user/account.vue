@@ -104,9 +104,43 @@
                 <!-- 按鈕操作 -->
                 <v-card-actions>
                     <v-btn color="error" outlined :disabled="!deleteBtnValid" @click="deleteDialog = true">清空檔案</v-btn>
-                    <v-btn color="primary" @click="updateDialog = true">變更檔案</v-btn>
+                    <v-btn color="primary" @click="[updateDialog = true, initUserProfileInputs()]">變更檔案</v-btn>
                 </v-card-actions>
             </v-card-subtitle>
+            <!-- 付款方式(信用卡) -->
+            <v-card-subtitle class="font-weight-bold">
+                信用卡: 
+                <v-card class="user_credit_cards pa-4 my-6" rounded="lg" max-width="250" v-for="creditCard in user.credit_cards" :key="'creditCard' + creditCard.id">
+                    <li>型號: {{ creditCard.card_type || defaultProfileText }}</li>
+                    <li>卡號: {{ creditCard.masked_card_number || defaultProfileText }}</li>
+                    <li>持有人: {{ creditCard.card_holder || defaultProfileText }}</li>
+                    <li>到期日: {{ creditCard.card_expiration_date || defaultProfileText }}</li>
+                    <!-- <v-divider></v-divider> -->
+                </v-card>
+                <v-card-actions>
+                    <v-btn color="primary" @click="storeDialog = true">新增信用卡</v-btn>
+                </v-card-actions>
+            </v-card-subtitle>
+            <!-- 填寫表單 -->
+            <v-dialog v-model="storeDialog" width="600">
+                <v-card>
+                    <v-card-title>新增信用卡</v-card-title>
+                    <v-form v-model="creditCardValid">
+                        <v-card-text>
+                            <v-text-field label="卡號" outlined maxlength="16" counter="16" v-model="creditCard.number" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
+                            <v-text-field label="持有人" outlined v-model="creditCard.holder_name" :rules="[rules.required]"></v-text-field>
+                            <v-select label="到期日(月)" outlined :items="months" v-model="creditCard.expiration_month" :rules="[rules.required]"></v-select>
+                            <v-select label="到期日(年)" outlined :items="years" v-model="creditCard.expiration_year" :rules="[rules.required]"></v-select>
+                            <v-text-field label="安全碼(CVV)" outlined maxlength="3" counter="3" v-model="creditCard.cvv" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
+                        </v-card-text>
+                    </v-form>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="error" text @click="storeDialog = false">取消</v-btn>
+                        <v-btn color="primary" :disabled="!creditCardValid" @click="addCreditCard(creditCard)">新增</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
             <!-- 登出 -->
             <v-divider class="my-6"></v-divider>
             <v-card-actions class="btn_container ma-4">
@@ -144,9 +178,11 @@ export default {
             // 彈出視窗
             updateDialog: false,
             deleteDialog: false,
+            storeDialog: false,
             // 按鈕是否禁用
             saveBtnValid: true,
             deleteBtnValid: false,
+            creditCardValid: false,
             // 個人資料預設文字
             defaultProfileText: "尚未填寫",
             // 個人資料欄位
@@ -155,6 +191,39 @@ export default {
                 phone: '',
                 address: ''
             },
+            creditCard: {
+                type: 'visa',
+                number: '',
+                holder_name: '',
+                expiration_month: '',
+                expiration_year: '',
+                cvv: ''
+            },
+            months: [
+                '01',
+                '02',
+                '03',
+                '04',
+                '05',
+                '06',
+                '07',
+                '08',
+                '09',
+                '10',
+                '11',
+                '12',
+            ],
+            years: [
+                '22',
+                '23',
+                '24',
+                '25',
+                '26',
+                '27',
+                '28',
+                '29',
+                '30',
+            ]
         }
     },
     methods: {
@@ -162,6 +231,7 @@ export default {
             logout: 'auth/logout',
             updateUserProfile: 'auth/updateUserProfile',
             clearUserProfile: 'auth/clearUserProfile',
+            addCreditCard: 'auth/addCreditCard'
         }),
         //* 初始化使用者的輸入欄位預設值
         initUserProfileInputs() {
@@ -192,7 +262,7 @@ export default {
             if(this.user.name || this.user.phone || this.user.address) {
                 this.saveBtnValid = true
             } 
-            if(this.profile.name || this.profile.phone || this.address) {
+            if(this.profile.name || this.profile.phone || this.profile.address) {
                 this.saveBtnValid = true
                 this.deleteBtnValid = true
             }
@@ -200,7 +270,7 @@ export default {
                 this.saveBtnValid = false
                 this.deleteBtnValid = false
             }
-        }
+        },
     },
     computed: {
         ...mapGetters({

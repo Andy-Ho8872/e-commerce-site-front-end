@@ -17,6 +17,7 @@ import {
     apiClearUserProfile,
     apiUpdateUserProfile,
     apiUserSocialiteLogin,
+    apiAddCreditCard
 } from '~/APIs/user.js'
 
 export const state = () => ({
@@ -247,7 +248,7 @@ export const actions = {
         commit('SET_LOADING', false)
     },
     //* 清除使用者個人檔案
-    async clearUserProfile({ commit, dispatch }, data) {
+    async clearUserProfile({ commit, dispatch }) {
         //? start loading
         commit('SET_LOADING', true)
         try {
@@ -271,4 +272,30 @@ export const actions = {
         //? end loading
         commit('SET_LOADING', false)
     },
+    async addCreditCard({ dispatch, commit }, { type, number, holder_name, expiration_month, expiration_year, cvv }) {
+        try {
+            await apiAddCreditCard({
+                type,
+                number,
+                holder_name,
+                expiration_month,
+                expiration_year,
+                cvv
+            })
+            //* 重新撈取資料
+            await dispatch('fetchUserInfo')
+            //* 提示訊息
+            const message = {
+                type: 'success',
+                text: '成功新增信用卡',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        } catch (error) {
+            const message = {
+                type: 'error',
+                text: '信用卡新增失敗',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        }
+    }
 }
