@@ -83,7 +83,7 @@
                         <!-- 按鈕操作 -->
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn @click="updateDialog = false" color="error" outlined>取消</v-btn>
+                            <v-btn @click="updateDialog = false" text color="error">取消</v-btn>
                             <v-btn @click="updateProfileAndSetDialog" color="primary" :disabled="!saveBtnValid" :loading="loading">儲存</v-btn>
                         </v-card-actions>
                     </v-card>
@@ -96,7 +96,7 @@
                         <!-- 按鈕操作 -->
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn @click="deleteDialog = false" color="error" outlined>取消</v-btn>
+                            <v-btn @click="deleteDialog = false" text color="error">取消</v-btn>
                             <v-btn @click="clearProfileAndSetDialog" color="primary" :loading="loading">確認</v-btn>
                         </v-card-actions>
                     </v-card>
