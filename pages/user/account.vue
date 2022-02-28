@@ -121,6 +121,7 @@
 
 <script>
 import userMixin from '~/mixins/userMixin'
+import inputRulesMixins from '~/mixins/inputRulesMixin'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -137,7 +138,7 @@ export default {
         }
     },
     middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
-    mixins: [userMixin],
+    mixins: [userMixin, inputRulesMixins],
     data() {
         return {
             // 彈出視窗
@@ -154,18 +155,6 @@ export default {
                 phone: '',
                 address: ''
             },
-            //* 欄位規則
-            rules: {
-                numbersOnly: value => {
-                    const pattern = /^[\d ]*$/
-                    return pattern.test(value) || '電話號碼只能有數字。'
-                },
-                lettersOnly: value => {
-                    const pattern = /^\D*$/
-                    return pattern.test(value) || '名字不能包含數字。'
-                },
-                required: value => !!value || '此欄位必填',
-            }
         }
     },
     methods: {
