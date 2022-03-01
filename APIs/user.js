@@ -20,4 +20,6 @@ export const apiUpdateUserProfile = (data) => config.authRequest.patch('updatePr
 export const apiClearUserProfile = () => config.authRequest.patch('clearProfile');
     //* 新增信用卡 
 export const apiAddCreditCard = (data) => config.authRequest.post('addCreditCard', data);
+//* 刪除信用卡
+export const apiDeleteCreditCard = (card_id) => config.authRequest.delete(`creditCards/${card_id}/delete`);
 //------------------------------------------- 使用者相關 API -------------------------------------------//

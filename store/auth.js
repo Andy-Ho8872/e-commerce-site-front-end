@@ -17,7 +17,8 @@ import {
     apiClearUserProfile,
     apiUpdateUserProfile,
     apiUserSocialiteLogin,
-    apiAddCreditCard
+    apiAddCreditCard,
+    apiDeleteCreditCard
 } from '~/APIs/user.js'
 
 export const state = () => ({
@@ -294,6 +295,25 @@ export const actions = {
             const message = {
                 type: 'error',
                 text: '信用卡新增失敗',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        }
+    },
+    async deleteCreditCard({ dispatch }, card_id) {
+        try {
+            await apiDeleteCreditCard(card_id)
+            //* 重新撈取資料
+            await dispatch('fetchUserInfo')
+            //* 提示訊息
+            const message = {
+                type: 'success',
+                text: '成功刪除信用卡',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
+        } catch (error) {
+            const message = {
+                type: 'error',
+                text: '信用卡刪除失敗',
             }
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         }

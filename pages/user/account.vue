@@ -37,7 +37,7 @@
                     <li>地址: {{ user.address || defaultProfileText }}</li>
                 </ul>
                 <!-- 更新檔案彈出視窗 -->
-                <v-dialog v-model="updateDialog" max-width="600px">
+                <v-dialog v-model="updateProfileDialog" max-width="600px">
                     <v-card>
                         <v-form ref="form" v-model="saveBtnValid">
                         <v-card-title class="font-weight-bold mb-4">新增 / 變更檔案</v-card-title>
@@ -83,48 +83,68 @@
                         <!-- 按鈕操作 -->
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn @click="updateDialog = false" text color="error">取消</v-btn>
+                            <v-btn @click="updateProfileDialog = false" text color="error">取消</v-btn>
                             <v-btn @click="updateProfileAndSetDialog" color="primary" :disabled="!saveBtnValid" :loading="loading">儲存</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
                 <!-- 清空檔案彈出視窗 -->
-                <v-dialog v-model="deleteDialog" max-width="600px">
+                <v-dialog v-model="deleteProfileDialog" max-width="600px">
                     <v-card>
                         <v-card-title class="font-weight-bold mb-4">清空檔案</v-card-title>
                         <v-card-text>即將清空您的個人檔案，是否繼續執行?</v-card-text>
                         <!-- 按鈕操作 -->
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn @click="deleteDialog = false" text color="error">取消</v-btn>
+                            <v-btn @click="deleteProfileDialog = false" text color="error">取消</v-btn>
                             <v-btn @click="clearProfileAndSetDialog" color="primary" :loading="loading">確認</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
                 <!-- 按鈕操作 -->
                 <v-card-actions>
-                    <v-btn color="error" outlined :disabled="!deleteBtnValid" @click="deleteDialog = true">清空檔案</v-btn>
-                    <v-btn color="primary" @click="[updateDialog = true, initUserProfileInputs()]">變更檔案</v-btn>
+                    <v-btn color="error" outlined :disabled="!deleteBtnValid" @click="deleteProfileDialog = true">清空檔案</v-btn>
+                    <v-btn color="primary" @click="[updateProfileDialog = true, initUserProfileInputs()]">變更檔案</v-btn>
                 </v-card-actions>
             </v-card-subtitle>
             <!-- 付款方式(信用卡) -->
             <v-card-subtitle class="font-weight-bold">
                 信用卡: 
-                <v-card class="user_credit_cards pa-4 my-6" rounded="lg" max-width="250" v-for="creditCard in user.credit_cards" :key="'creditCard' + creditCard.id">
-                    <li>型號: {{ creditCard.card_type || defaultProfileText }}</li>
-                    <li>卡號: {{ creditCard.masked_card_number || defaultProfileText }}</li>
-                    <li>持有人: {{ creditCard.card_holder || defaultProfileText }}</li>
-                    <li>到期日: {{ creditCard.card_expiration_date || defaultProfileText }}</li>
-                    <!-- <v-divider></v-divider> -->
+                <v-card class="user_credit_cards pa-4 my-6" rounded="lg" max-width="250" v-for="(creditCard) in user.credit_cards" :key="'creditCard' + creditCard.id">
+                    <v-card-text class="font-weight-bold">
+                        <li>型號: {{ creditCard.card_type || defaultProfileText }}</li>
+                        <li>卡號: {{ creditCard.masked_card_number || defaultProfileText }}</li>
+                        <li>持有人: {{ creditCard.card_holder || defaultProfileText }}</li>
+                        <li>到期日: {{ creditCard.card_expiration_date || defaultProfileText }}</li>
+                    </v-card-text>
+                    <!-- 刪除信用卡按鈕 -->
+                    <v-card-actions>
+                        <v-btn class="ma-auto" color="error" icon  @click="openAndSetDeleteCreditCardDialog(creditCard)">
+                            <v-icon>fa-trash</v-icon>
+                        </v-btn>
+                    </v-card-actions>
                 </v-card>
+                <!-- 刪除信用卡彈出視窗 -->
+                <v-dialog v-model="deleteCreditCardDialog" max-width="600">
+                    <v-card>
+                        <v-card-title class="font-weight-bold mb-4">刪除信用卡</v-card-title>
+                        <v-card-text>您即將刪除這張信用卡，卡號: {{ currentSelectedCard.masked_card_number }}。</v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="error" text @click="deleteCreditCardDialog = false">取消</v-btn>
+                            <v-btn color="primary" @click="deleteCreditCard(currentSelectedCard.id)">確認</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+                <!-- 新增信用卡按鈕 -->
                 <v-card-actions>
-                    <v-btn color="primary" @click="storeDialog = true">新增信用卡</v-btn>
+                    <v-btn color="primary" @click="storeCreditCardDialog = true">新增信用卡</v-btn>
                 </v-card-actions>
             </v-card-subtitle>
             <!-- 填寫表單 -->
-            <v-dialog v-model="storeDialog" width="600">
+            <v-dialog v-model="storeCreditCardDialog" width="600">
                 <v-card>
-                    <v-card-title>新增信用卡</v-card-title>
+                    <v-card-title class="font-weight-bold mb-4">新增信用卡</v-card-title>
                     <v-form v-model="creditCardValid">
                         <v-card-text>
                             <v-text-field label="卡號" outlined maxlength="16" counter="16" v-model="creditCard.number" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
@@ -136,7 +156,7 @@
                     </v-form>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="error" text @click="storeDialog = false">取消</v-btn>
+                        <v-btn color="error" text @click="storeCreditCardDialog = false">取消</v-btn>
                         <v-btn color="primary" :disabled="!creditCardValid" @click="addCreditCard(creditCard)">新增</v-btn>
                     </v-card-actions>
                 </v-card>
@@ -176,9 +196,10 @@ export default {
     data() {
         return {
             // 彈出視窗
-            updateDialog: false,
-            deleteDialog: false,
-            storeDialog: false,
+            updateProfileDialog: false,
+            deleteProfileDialog: false,
+            storeCreditCardDialog: false,
+            deleteCreditCardDialog: false,
             // 按鈕是否禁用
             saveBtnValid: true,
             deleteBtnValid: false,
@@ -191,14 +212,20 @@ export default {
                 phone: '',
                 address: ''
             },
+            //* 信用卡相關欄位 
             creditCard: {
-                type: 'visa',
+                type: 'visa', // 預設
                 number: '',
                 holder_name: '',
                 expiration_month: '',
                 expiration_year: '',
                 cvv: ''
             },
+            currentSelectedCard: {
+                id: '',
+                masked_card_number: ''
+            },
+            // 有效日期(月)
             months: [
                 '01',
                 '02',
@@ -213,6 +240,7 @@ export default {
                 '11',
                 '12',
             ],
+            // 有效日期(年)
             years: [
                 '22',
                 '23',
@@ -231,7 +259,8 @@ export default {
             logout: 'auth/logout',
             updateUserProfile: 'auth/updateUserProfile',
             clearUserProfile: 'auth/clearUserProfile',
-            addCreditCard: 'auth/addCreditCard'
+            addCreditCard: 'auth/addCreditCard',
+            deleteCreditCard: 'auth/deleteCreditCard'
         }),
         //* 初始化使用者的輸入欄位預設值
         initUserProfileInputs() {
@@ -249,13 +278,13 @@ export default {
             await this.updateUserProfile(this.profile)
             this.checkIfProfileValueExists()
             //* 關閉 dialog
-            this.updateDialog = false
+            this.updateProfileDialog = false
         },
         async clearProfileAndSetDialog() {
             await this.clearUserProfile()
             await this.initUserProfileInputs()
             this.checkIfProfileValueExists()
-            this.deleteDialog = false
+            this.deleteProfileDialog = false
         },
         checkIfProfileValueExists() {
             //* 欄位至少要有一個值，否則禁用按鈕 
@@ -271,6 +300,13 @@ export default {
                 this.deleteBtnValid = false
             }
         },
+        openAndSetDeleteCreditCardDialog(creditCard) {
+            this.deleteCreditCardDialog = true
+            this.currentSelectedCard = {
+                id: creditCard.id,
+                masked_card_number: creditCard.masked_card_number
+            }
+        }
     },
     computed: {
         ...mapGetters({
