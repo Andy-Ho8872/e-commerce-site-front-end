@@ -6,11 +6,11 @@ export default {
                 required: value => !!value || '此欄位必填',
                 numbersOnly: value => {
                     const pattern = /^[\d ]*$/
-                    return pattern.test(value) || '電話號碼只能有數字。'
+                    return pattern.test(value) || '只能填入數字。'
                 },
                 lettersOnly: value => {
                     const pattern = /^\D*$/
-                    return pattern.test(value) || '名字不能包含數字。'
+                    return pattern.test(value) || '不能填入數字。'
                 },
                 shouldContainOne: value => value.length > 0 || '請至少選擇一個選項',
                 maxLetterLength: value => value.length <= 4 || '字串長度不可超過 4 ex: 0.005',
