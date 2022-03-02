@@ -68,7 +68,7 @@
                             <v-dialog v-model="variationFormDialog" max-width="600" scrollable>
                                 <v-form v-model="dialogValid">
                                     <v-card class="overflow-auto">
-                                        <v-card-title class="mb-4">新增規格</v-card-title>
+                                        <v-card-title class="font-weight-bold">新增規格</v-card-title>
                                         <!-- 滾動式內容 -->
                                         <v-card-text style="height: 450px">
                                             <v-card-subtitle>

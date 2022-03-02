@@ -39,7 +39,7 @@
         <!-- 彈出視窗(新增) -->
         <v-dialog v-model="dialogToCreate" max-width="600">
             <v-card>
-                <v-card-title>新增商品標籤</v-card-title>
+                <v-card-title class="font-weight-bold">新增商品標籤</v-card-title>
                 <v-form v-model="createValid">
                     <v-card-subtitle>
                         <v-text-field label="標籤名稱" :rules="[rules.required]" v-model="formInput.tag_title"></v-text-field>
@@ -55,7 +55,7 @@
         <!-- 彈出視窗(修改) -->
         <v-dialog v-model="dialogToUpdate" max-width="600">
             <v-card>
-                <v-card-title>修改商品標籤</v-card-title>
+                <v-card-title class="font-weight-bold">修改商品標籤</v-card-title>
                 <v-form v-model="updateValid">
                     <v-card-subtitle>
                         <v-text-field label="標籤名稱" :rules="[rules.required]" v-model="formInput.tag_title"></v-text-field>
@@ -71,7 +71,7 @@
         <!-- 彈出視窗(刪除) -->
         <v-dialog v-model="dialogToDelete" max-width="600">
             <v-card>
-                <v-card-title>刪除標籤 - {{ formInput.tag_title }}</v-card-title>
+                <v-card-title class="font-weight-bold">刪除標籤 - {{ formInput.tag_title }}</v-card-title>
                 <v-card-text>您確定要刪除這個標籤嗎?</v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
