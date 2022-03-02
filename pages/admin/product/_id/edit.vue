@@ -71,14 +71,14 @@
                                     <!-- 滾動式內容 -->
                                     <v-card-text style="height: 450px">
                                         <v-card-subtitle>
-                                            <v-text-field label="名稱" name="variation_title" v-model="variationPayload.variation_title"></v-text-field>
+                                            <v-text-field label="名稱" placeholder="尺寸..." name="variation_title" v-model="variationPayload.variation_title"></v-text-field>
                                         </v-card-subtitle>
                                         <v-card-subtitle v-for="(option, index) in variationPayload.variation_options" :key="`variation_option_${index}`">
                                             <div class="d-flex align-center">
-                                                <v-text-field :label="`選項${index + 1}`" name="variation_options[]" v-model="variationPayload.variation_options[index]"></v-text-field>
+                                                <v-text-field ref="variation_option_input" :label="`選項${index + 1}`" placeholder="XL..." name="variation_options[]" v-model="variationPayload.variation_options[index]"></v-text-field>
                                                 <!-- index 不為 0 才顯示 -->
                                                 <template v-if="index != 0">
-                                                    <v-btn class="mx-2" color="error" icon small @click="dialogDeleteVariationOptions(index)">
+                                                    <v-btn class="mx-2" color="error" icon small @click="deleteVariationOptionInputField(index)">
                                                         <v-icon>fa-trash</v-icon>
                                                     </v-btn>
                                                 </template>
@@ -86,7 +86,7 @@
                                         </v-card-subtitle>
                                         <!-- 新增選項按鈕 -->
                                         <v-card-subtitle>
-                                            <v-btn color="success" small @click="dialogAddVariationOptions()">新增選項</v-btn>
+                                            <v-btn color="success" small @click="createVariationOptionInputField()">新增選項</v-btn>
                                         </v-card-subtitle>
                                     </v-card-text>
                                     <!-- 取消、確認按鈕 -->
@@ -198,10 +198,13 @@ export default {
             //* 關閉彈出視窗 
             this.variationFormDialog = false
         },
-        dialogAddVariationOptions() {
-            this.variationPayload.variation_options.push('')
+        async createVariationOptionInputField() { 
+            await this.variationPayload.variation_options.push('')
+            //* 當輸入框被新增時，則自動focus 最後一個輸入框
+            const lastIndex = this.$refs.variation_option_input.length - 1
+            this.$refs.variation_option_input[lastIndex].focus()
         },
-        dialogDeleteVariationOptions(index) {
+        deleteVariationOptionInputField(index) {
             this.variationPayload.variation_options.splice(index, 1)
         }
     },
