@@ -66,36 +66,38 @@
                             </v-card-text>
                             <!-- 規格彈出視窗 -->
                             <v-dialog v-model="variationFormDialog" max-width="600" scrollable>
-                                <v-card class="overflow-auto">
-                                    <v-card-title class="mb-4">新增規格</v-card-title>
-                                    <!-- 滾動式內容 -->
-                                    <v-card-text style="height: 450px">
-                                        <v-card-subtitle>
-                                            <v-text-field label="名稱" placeholder="尺寸..." name="variation_title" v-model="variationPayload.variation_title"></v-text-field>
-                                        </v-card-subtitle>
-                                        <v-card-subtitle v-for="(option, index) in variationPayload.variation_options" :key="`variation_option_${index}`">
-                                            <div class="d-flex align-center">
-                                                <v-text-field ref="variation_option_input" :label="`選項${index + 1}`" placeholder="XL..." name="variation_options[]" v-model="variationPayload.variation_options[index]"></v-text-field>
-                                                <!-- index 不為 0 才顯示 -->
-                                                <template v-if="index != 0">
-                                                    <v-btn class="mx-2" color="error" icon small @click="deleteVariationOptionInputField(index)">
-                                                        <v-icon>fa-trash</v-icon>
-                                                    </v-btn>
-                                                </template>
-                                            </div>
-                                        </v-card-subtitle>
-                                        <!-- 新增選項按鈕 -->
-                                        <v-card-subtitle>
-                                            <v-btn color="success" small @click="createVariationOptionInputField()">新增選項</v-btn>
-                                        </v-card-subtitle>
-                                    </v-card-text>
-                                    <!-- 取消、確認按鈕 -->
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn text color="error" @click="variationFormDialog = false">取消</v-btn>
-                                        <v-btn color="primary" @click="[addProductVariation(variationPayload), resetVariationPayload()]">確認</v-btn>
-                                    </v-card-actions>
-                                </v-card>
+                                <v-form v-model="dialogValid">
+                                    <v-card class="overflow-auto">
+                                        <v-card-title class="mb-4">新增規格</v-card-title>
+                                        <!-- 滾動式內容 -->
+                                        <v-card-text style="height: 450px">
+                                            <v-card-subtitle>
+                                                <v-text-field label="名稱" placeholder="尺寸..." name="variation_title" v-model="variationPayload.variation_title" :rules="[rules.required]"></v-text-field>
+                                            </v-card-subtitle>
+                                            <v-card-subtitle v-for="(option, index) in variationPayload.variation_options" :key="`variation_option_${index}`">
+                                                <div class="d-flex align-center">
+                                                    <v-text-field ref="variation_option_input" :label="`選項${index + 1}`" placeholder="XL..." name="variation_options[]" v-model="variationPayload.variation_options[index]" :rules="[rules.required]"></v-text-field>
+                                                    <!-- index 不為 0 才顯示 -->
+                                                    <template v-if="index != 0">
+                                                        <v-btn class="mx-2" color="error" icon small @click="deleteVariationOptionInputField(index)">
+                                                            <v-icon>fa-trash</v-icon>
+                                                        </v-btn>
+                                                    </template>
+                                                </div>
+                                            </v-card-subtitle>
+                                            <!-- 新增選項按鈕 -->
+                                            <v-card-subtitle>
+                                                <v-btn color="success" small @click="createVariationOptionInputField()">新增選項</v-btn>
+                                            </v-card-subtitle>
+                                        </v-card-text>
+                                        <!-- 取消、確認按鈕 -->
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn text color="error" @click="variationFormDialog = false">取消</v-btn>
+                                            <v-btn color="primary" :disabled="!dialogValid"  @click="[addProductVariation(variationPayload), resetVariationPayload()]">確認</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-form>
                             </v-dialog>
                         </template>
                         <template v-else>
@@ -129,6 +131,7 @@ export default {
             variationFormDialog: false,
             //* 表單是否通過驗證 
             valid: false,
+            dialogValid: false,
             //* 規格參數 
             variationPayload: {
                 product_id: this.$route.params.id,
