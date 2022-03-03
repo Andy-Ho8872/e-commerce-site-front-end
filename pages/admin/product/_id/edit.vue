@@ -56,7 +56,7 @@
                                         <template v-if="index != 0">
                                             <v-card-text>
                                                 <v-btn color="error" icon small @click="deleteProductVariationOption({ product_id: product.id, variation_id: variation.id, options: variation.options, optionIndex: index })">
-                                                    <v-icon>fa-trash-alt</v-icon>
+                                                    <v-icon>fa-xmark</v-icon>
                                                 </v-btn>
                                             </v-card-text>
                                         </template> 

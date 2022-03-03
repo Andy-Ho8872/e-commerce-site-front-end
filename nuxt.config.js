@@ -17,8 +17,8 @@ export default {
             //* Font-AwesomeIcon (CDN)
             {
                 rel: 'stylesheet',
-                href: 'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
-                //! 舊版本，暫不使用 href: 'https://cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css',
+                href: 'https://use.fontawesome.com/releases/v6.0.0/css/all.css',
+                // ! 舊版本，暫不使用 href: 'https://cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css',
             },
             //* 字型
             {

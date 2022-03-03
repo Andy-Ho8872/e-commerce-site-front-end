@@ -120,7 +120,7 @@
                     <!-- 刪除信用卡按鈕 -->
                     <v-card-actions>
                         <v-btn class="ma-auto" color="error" icon  @click="openAndSetDeleteCreditCardDialog(creditCard)">
-                            <v-icon>fa-trash</v-icon>
+                            <v-icon>fa-xmark</v-icon>
                         </v-btn>
                     </v-card-actions>
                 </v-card>
