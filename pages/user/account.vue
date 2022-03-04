@@ -113,7 +113,7 @@
                 <v-card class="user_credit_cards pa-4 my-6" rounded="lg" max-width="250" v-for="(creditCard) in user.credit_cards" :key="'creditCard' + creditCard.id">
                     <v-card-text class="font-weight-bold">
                         <li>型號: {{ creditCard.card_type || defaultProfileText }}</li>
-                        <li>卡號: {{ creditCard.masked_card_number || defaultProfileText }}</li>
+                        <li>卡號: {{ formattedCreditCardNumber(creditCard.masked_card_number) || defaultProfileText }}</li>
                         <li>持有人: {{ creditCard.card_holder || defaultProfileText }}</li>
                         <li>到期日: {{ creditCard.card_expiration_date || defaultProfileText }}</li>
                     </v-card-text>
@@ -128,7 +128,7 @@
                 <v-dialog v-model="deleteCreditCardDialog" max-width="600">
                     <v-card>
                         <v-card-title class="font-weight-bold mb-4">刪除信用卡</v-card-title>
-                        <v-card-text>您即將刪除這張信用卡，卡號: {{ currentSelectedCard.masked_card_number }}。</v-card-text>
+                        <v-card-text>您即將刪除這張信用卡，卡號: {{ formattedCreditCardNumber(currentSelectedCard.masked_card_number) }}。</v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="error" text @click="deleteCreditCardDialog = false">取消</v-btn>
@@ -305,6 +305,12 @@ export default {
             this.currentSelectedCard = {
                 id: creditCard.id,
                 masked_card_number: creditCard.masked_card_number
+            }
+        },
+        formattedCreditCardNumber(text) {
+            let formattedText = text.split('').join('')
+            if (formattedText.length > 0) {
+                return formattedText = formattedText.match(new RegExp('.{1,4}', 'g')).join(' ');
             }
         }
     },
