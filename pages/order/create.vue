@@ -43,48 +43,58 @@
                             <v-card-title class="font-weight-bold">選擇您的付款方式</v-card-title>
                             <v-card-subtitle class="mt-2">
                                 <v-chip-group mandatory active-class="deep-purple--text text--accent-4" name="payment_id" v-model="form.payment_id">
-                                    <v-chip v-for="payment in payments" :key="'payment' + payment.id" :value="payment.id" large label class="payment_title">
+                                    <v-chip v-for="payment in payments" :key="'payment' + payment.id" :value="payment.id" large label @click="checkPaymentMethod(payment)" class="payment_title">
                                         {{ payment.title }}
                                     </v-chip>
                                 </v-chip-group>
                             </v-card-subtitle>
                             <v-divider></v-divider>
+                            <!-- todo 新增信用卡欄位 -->
+                            <div v-if="!creditCardFormDisabled">
+                                <v-card-title class="font-weight-bold">選擇刷卡帳戶</v-card-title>
+                                <v-card-text>
+                                    <v-text-field class="text_field"  label="卡號" outlined maxlength="16" counter="16" v-model="form.creditCard.number" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
+                                    <v-text-field class="text_field" label="持有人" outlined v-model="form.creditCard.holder_name" :rules="[rules.required]"></v-text-field>
+                                    <v-select class="text_field" label="到期日(月)" outlined :items="months" v-model="form.creditCard.expiration_month" :rules="[rules.required]"></v-select>
+                                    <v-select class="text_field" label="到期日(年)" outlined :items="years" v-model="form.creditCard.expiration_year" :rules="[rules.required]"></v-select>
+                                    <v-text-field class="text_field" label="安全碼(CVV)" outlined maxlength="3" counter="3" v-model="form.creditCard.cvv" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
+                                </v-card-text>
+                            </div>
                         <!-- 輸入訂單資訊 -->
                             <v-card-title class="font-weight-bold">輸入訂單詳細資料</v-card-title>
                             <!-- 姓名 -->
-                            <v-text-field
-                                class="text_field"
-                                name="buyer_name"
-                                v-model="form.buyer_name"
-                                :rules="[rules.required, rules.lettersOnly]"
-                                outlined
-                                label="您的姓名"
-                                placeholder="王小明"
-                                hide-details="auto"
-                            ></v-text-field>
-                            <!-- 電話 -->
-                            <v-text-field
-                                class="text_field"
-                                name="buyer_phone"
-                                v-model="form.buyer_phone"
-                                :rules="[rules.required, rules.numbersOnly]"
-                                maxlength="10"
-                                outlined
-                                label="您的電話"
-                                placeholder="0912345678"
-                                hide-details="auto"
-                            ></v-text-field>
-                            <!-- 地址 -->
-                            <v-text-field
-                                class="text_field"
-                                name="address"
-                                v-model="form.address"
-                                :rules="[rules.required]"
-                                outlined
-                                label="您的地址"
-                                placeholder="OO市OO區OO路OO號..."
-                                hide-details="auto"
-                            ></v-text-field>
+                            <v-card-text>
+                                <v-text-field
+                                    class="text_field"
+                                    name="buyer_name"
+                                    v-model="form.user_profile.buyer_name"
+                                    :rules="[rules.required, rules.lettersOnly]"
+                                    outlined
+                                    label="您的姓名"
+                                    placeholder="王小明"
+                                ></v-text-field>
+                                <!-- 電話 -->
+                                <v-text-field
+                                    class="text_field"
+                                    name="buyer_phone"
+                                    v-model="form.user_profile.buyer_phone"
+                                    :rules="[rules.required, rules.numbersOnly]"
+                                    maxlength="10"
+                                    outlined
+                                    label="您的電話"
+                                    placeholder="0912345678"
+                                ></v-text-field>
+                                <!-- 地址 -->
+                                <v-text-field
+                                    class="text_field"
+                                    name="address"
+                                    v-model="form.user_profile.address"
+                                    :rules="[rules.required]"
+                                    outlined
+                                    label="您的地址"
+                                    placeholder="OO市OO區OO路OO號..."
+                                ></v-text-field>
+                            </v-card-text>
                             <!-- 使用常用資料 -->
                             <v-card-subtitle>
                                 <v-switch @click="checkAutoFill" v-model="autoFill" inset label="填入我的個人資料"></v-switch>
@@ -128,9 +138,11 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import inputRulesMixins from '~/mixins/inputRulesMixin'
 
 export default {
     middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
+    mixins:[inputRulesMixins],
     head() {
         return {
             title: '建立訂單',
@@ -157,28 +169,56 @@ export default {
             form: {
                 //* 預設為現金付款
                 payment_id: 1,
-                buyer_name: '',
-                buyer_phone: '',
-                address: ''
+                //* 購買者資訊 
+                user_profile: {
+                    buyer_name: '',
+                    buyer_phone: '',
+                    address: ''
+                },
+                //* 信用卡相關欄位(有勾選刷卡付款後才需要填入)
+                creditCard: {
+                    type: 'visa', // 預設
+                    number: '',
+                    holder_name: '',
+                    expiration_month: '',
+                    expiration_year: '',
+                    cvv: '', 
+                },  
             },
+            creditCardFormDisabled: true,
+            // 有效日期(月)
+            months: [
+                '01',
+                '02',
+                '03',
+                '04',
+                '05',
+                '06',
+                '07',
+                '08',
+                '09',
+                '10',
+                '11',
+                '12',
+            ],
+            // 有效日期(年)
+            years: [
+                '22',
+                '23',
+                '24',
+                '25',
+                '26',
+                '27',
+                '28',
+                '29',
+                '30',
+            ],
             //* 自動填入資料 
             autoFill: false,
             //* 彈出視窗
             dialog: false,
             //* 表單驗證
             valid: false,
-            //* 表單驗證規則 
-            rules: {
-                numbersOnly: value => {
-                    const pattern = /^[\d ]*$/
-                    return pattern.test(value) || '電話號碼只能有數字。'
-                },
-                lettersOnly: value => {
-                    const pattern = /^\D*$/
-                    return pattern.test(value) || '名字不能包含數字。'
-                },
-                required: value => !!value || '此欄位必填',
-            }
         }
     },
     computed: {
@@ -221,22 +261,47 @@ export default {
                 this.autoFill = false
             }
         },
+        //* 檢查使用者的付款方式 
+        checkPaymentMethod(payment) {
+            payment.title == "刷卡付款" ? this.creditCardFormDisabled = false : this.creditCardFormDisabled = true
+        },
         //* 設定輸入欄位的值
         setFormInputs() {
             if(this.autoFill) {
-                // this.form.buyer_name = this.user.name 
-                // this.form.buyer_phone = this.user.phone
-                // this.form.address = this.user.address
                 this.form = {
-                    buyer_name: this.user.name,
-                    buyer_phone: this.user.phone,
-                    address: this.user.address
+                    payment_id: this.form.payment_id,
+                    user_profile: {
+                        buyer_name: this.user.name,
+                        buyer_phone: this.user.phone,
+                        address: this.user.address
+                    },
+                    //* 信用卡相關欄位(有勾選刷卡付款後才需要填入)
+                    creditCard: {
+                        type: 'visa', // 預設
+                        number: '',
+                        holder_name: '',
+                        expiration_month: '',
+                        expiration_year: '',
+                        cvv: '', 
+                    },
                 }
             } else {
                 this.form = {
-                    buyer_name: '',
-                    buyer_phone: '',
-                    address: ''
+                    payment_id: this.form.payment_id,
+                    user_profile: {
+                        buyer_name: '',
+                        buyer_phone: '',
+                        address: ''
+                    },
+                    //* 信用卡相關欄位(有勾選刷卡付款後才需要填入)
+                    creditCard: {
+                        type: 'visa', // 預設
+                        number: '',
+                        holder_name: '',
+                        expiration_month: '',
+                        expiration_year: '',
+                        cvv: '', 
+                    },
                 }
             }
         },
@@ -257,7 +322,6 @@ export default {
 }
 .text_field {
     width: 350px;
-    padding: 16px;
 }
 @media (max-width: 768px) {
     .checkout_wrapper {

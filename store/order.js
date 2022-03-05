@@ -145,9 +145,16 @@ export const actions = {
             //* 向後端發送資料
             await apiCreateOrder({
                 payment_id: order.payment_id,
-                address: order.address,
-                buyer_name: order.buyer_name,
-                buyer_phone: order.buyer_phone,
+                address: order.user_profile.address,
+                buyer_name: order.user_profile.buyer_name,
+                buyer_phone: order.user_profile.buyer_phone,
+                //* 信用卡欄位(如果有勾選刷卡付款才需要填入) 
+                card_type: order.creditCard.type, //* 預設是 visa
+                card_number: order.creditCard.number,
+                card_holder: order.creditCard.holder_name,
+                card_expiration_month: order.creditCard.expiration_month,
+                card_expiration_year: order.creditCard.expiration_year,
+                card_CVV: order.creditCard.cvv,
             })
             //* 訂單建立後從 store/cart.js 清空使用者的購物車資料
             await commit('cart/CLEAR_USER_CART', null, { root: true })
