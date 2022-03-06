@@ -132,14 +132,14 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="error" text @click="deleteCreditCardDialog = false">取消</v-btn>
-                            <v-btn color="primary" @click="deleteCreditCard(currentSelectedCard.id)">確認</v-btn>
+                            <v-btn color="primary" :loading="loading" @click="deleteUserCreditCard(currentSelectedCard.id)">確認</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
                 <!-- 新增信用卡按鈕 -->
                 <v-card-actions>
-                    <v-btn color="primary" @click="storeCreditCardDialog = true">新增信用卡</v-btn>
-                </v-card-actions>
+                    <v-btn color="primary" @click="initCreditCardForm()">新增信用卡</v-btn>
+                </v-card-actions>   
             </v-card-subtitle>
             <!-- 填寫表單 -->
             <v-dialog v-model="storeCreditCardDialog" width="600">
@@ -157,7 +157,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="error" text @click="storeCreditCardDialog = false">取消</v-btn>
-                        <v-btn color="primary" :disabled="!creditCardValid" @click="addCreditCard(creditCard)">新增</v-btn>
+                        <v-btn color="primary" :loading="loading" :disabled="!creditCardValid" @click="storeUserCreditCard">新增</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -307,11 +307,30 @@ export default {
                 masked_card_number: creditCard.masked_card_number
             }
         },
+        async storeUserCreditCard() {
+            await this.addCreditCard(this.creditCard)
+            this.storeCreditCardDialog = false
+        },
         formattedCreditCardNumber(text) {
             let formattedText = text.split('').join('')
             if (formattedText.length > 0) {
                 return formattedText = formattedText.match(new RegExp('.{1,4}', 'g')).join(' ');
             }
+        },
+        initCreditCardForm() {
+            this.storeCreditCardDialog = true
+            this.creditCard = {
+                type: 'visa', // 預設
+                number: '',
+                holder_name: '',
+                expiration_month: '',
+                expiration_year: '',
+                cvv: ''
+            }
+        },
+        async deleteUserCreditCard(currentSelectedCard_id) {
+            await this.deleteCreditCard(currentSelectedCard_id)
+            this.deleteCreditCardDialog = false
         }
     },
     computed: {

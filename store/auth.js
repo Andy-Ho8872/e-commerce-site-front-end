@@ -274,6 +274,7 @@ export const actions = {
         commit('SET_LOADING', false)
     },
     async addCreditCard({ dispatch, commit }, { type, number, holder_name, expiration_month, expiration_year, cvv }) {
+        commit('SET_LOADING', true)
         try {
             await apiAddCreditCard({
                 type,
@@ -298,8 +299,10 @@ export const actions = {
             }
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         }
+        commit('SET_LOADING', false)
     },
-    async deleteCreditCard({ dispatch }, card_id) {
+    async deleteCreditCard({ dispatch, commit }, card_id) {
+        commit('SET_LOADING', true)
         try {
             await apiDeleteCreditCard(card_id)
             //* 重新撈取資料
@@ -317,5 +320,6 @@ export const actions = {
             }
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         }
+        commit('SET_LOADING', false)
     }
 }
