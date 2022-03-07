@@ -147,7 +147,14 @@
                     <v-card-title class="font-weight-bold mb-4">新增信用卡</v-card-title>
                     <v-form v-model="creditCardValid">
                         <v-card-text>
-                            <v-text-field label="卡號" outlined maxlength="16" counter="16" v-model="creditCard.number" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
+                            <VCleaveInput
+                                v-model="creditCard.number"
+                                :options="options"
+                                :rules="[rules.required]"
+                                :append-icon="creditCardIcon"
+                                outlined
+                                label="卡號"
+                            />
                             <v-text-field label="持有人" outlined v-model="creditCard.holder_name" :rules="[rules.required]"></v-text-field>
                             <v-select label="到期日(月)" outlined :items="months" v-model="creditCard.expiration_month" :rules="[rules.required]"></v-select>
                             <v-select label="到期日(年)" outlined :items="years" v-model="creditCard.expiration_year" :rules="[rules.required]"></v-select>
@@ -177,8 +184,12 @@
 import userMixin from '~/mixins/userMixin'
 import inputRulesMixins from '~/mixins/inputRulesMixin'
 import { mapActions, mapGetters } from 'vuex'
+import VCleaveInput from "vuetify-cleave";
 
 export default {
+    components: {
+        VCleaveInput //* 以套件來驗證輸入的信用卡
+    },
     head() {
         return {
             title: '個人資料',
@@ -214,12 +225,28 @@ export default {
             },
             //* 信用卡相關欄位 
             creditCard: {
-                type: 'visa', // 預設
+                type: '', // 預設
                 number: '',
                 holder_name: '',
                 expiration_month: '',
                 expiration_year: '',
-                cvv: ''
+                cvv: '',
+            },
+            creditCardIcon: 'fa-regular fa-credit-card',
+            //* cleave.js(套件) 驗證所需的參數
+            options: {
+                creditCard: true,
+                delimiter: '-',
+                onCreditCardTypeChanged: (type) => {
+                    this.creditCard.type = type //* 表單內 credit card 的 type
+                    if(type == 'unknown') this.creditCardIcon = "fa-regular fa-credit-card"
+                    if(type == 'visa') this.creditCardIcon = "fa-brands fa-cc-visa"
+                    if(type == 'jcb') this.creditCardIcon = "fa-brands fa-cc-jcb"
+                    if(type == 'diners') this.creditCardIcon = "fa-brands fa-cc-diners-club"
+                    if(type == 'amex') this.creditCardIcon = "fa-brands fa-cc-amex"
+                    if(type == 'mastercard') this.creditCardIcon = "fa-brands fa-cc-mastercard"
+                    if(type == 'discover') this.creditCardIcon = "fa-brands fa-cc-discover"
+                }
             },
             currentSelectedCard: {
                 id: '',
