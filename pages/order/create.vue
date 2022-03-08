@@ -283,15 +283,22 @@ export default {
         }),
         //* 確認是否有使用自動填入功能 
         autoFillUserProfile() {
-            this.checkIfUserHasFilledProfile()
+            this.checkIfUserHasProfile()
             this.setUserProfileInputs()
         },
         //* 確認使用者是否有填入個人資料
-        checkIfUserHasFilledProfile() {
+        checkIfUserHasProfile() {
             if(!this.user.name || !this.user.phone || !this.user.address) {
                 this.dialog = true // 跳出提醒視窗
                 this.autoFill = false
             }
+        },
+        //* 確認使用者是否有填入信用卡
+        checkIfUserHasCreditCard() {
+            if(this.user.credit_cards.length) {
+                return true
+            }
+            return false
         },
         //* 檢查使用者的付款方式 
         checkPaymentMethod(payment) {
@@ -313,6 +320,7 @@ export default {
         fillCreditCardInfo() {
             if(this.autoFillCreditCard) {
                 this.selectCreditCardDialog = true
+                this.setCurrentSelectedCreditCardInputs()
             } else {
                 this.selectCreditCardDialog = false
                 this.form.creditCard.type = ''
@@ -323,9 +331,9 @@ export default {
                 this.form.creditCard.cvv = ''
             }
         },
-        //* 設定輸入欄位的值(信用卡)
-        setCurrentSelectedCreditCardInputs(index) {
-            if(this.autoFillCreditCard) {
+        //* 設定輸入欄位的值(信用卡) 預設為第一張
+        setCurrentSelectedCreditCardInputs(index = 0) {
+            if(this.autoFillCreditCard && this.checkIfUserHasCreditCard()) {
                 this.form.creditCard.type = this.user.credit_cards[index].card_type
                 this.form.creditCard.number = this.user.credit_cards[index].card_number
                 this.form.creditCard.holder_name = this.user.credit_cards[index].card_holder
