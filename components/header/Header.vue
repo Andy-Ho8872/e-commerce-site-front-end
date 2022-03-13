@@ -18,7 +18,7 @@
             <div class="content_wrapper d-flex flex-column flex-sm-row caption">
                 <!-- 通知總覽-->
                 <v-row class="content">
-                    <li class="notification" @mouseenter="appear = true" @mouseleave="appear = false">
+                    <li class="notification" @mouseenter="showNotifications = true" @mouseleave="showNotifications = false">
                         <nuxt-link :to="{ name: 'user-notification' }">
                             <!-- 通知的數量 -->
                             <v-badge color="orange" left overlap :content="unReadNotifications.length" :value="unReadNotifications.length">
@@ -28,7 +28,7 @@
                         </nuxt-link>
                         <!-- 通知列 -->
                         <v-scale-transition origin="top left">
-                            <MiniNotification :cardWidth="350" :cardHeight="500" class="hovered_component" v-show="appear"/>
+                            <MiniNotification :cardWidth="350" :cardHeight="500" class="hovered_component" v-show="showNotifications"/>
                         </v-scale-transition>
                     </li>
                     <!-- 我的訂單-->
@@ -88,7 +88,7 @@
             <!-- 搜尋區域 -->
             <AutoComplete class="searchBox d-flex mt-2 mx-2"/>
             <!-- 購物車 ICON -->
-            <div class="card_logo_container d-flex justify-center align-center" @mouseover="itemPreviewAppear = true" @mouseleave="itemPreviewAppear = false">
+            <div class="card_logo_container d-flex justify-center align-center" @mouseover="showItemPreview = true" @mouseleave="showItemPreview = false">
                 <nuxt-link class="cart_logo" :to="{ name: 'cart' }">
                     <!-- 如果購物車內有商品才顯示 -->
                     <v-badge color="orange" :content="userCart.length" :value="userCart.length">
@@ -97,7 +97,7 @@
                     </v-badge>
                 </nuxt-link>
                 <v-scale-transition origin="top">
-                    <ItemPreview class="hovered_component" :items="userCart" v-show="itemPreviewAppear"/>
+                    <ItemPreview class="hovered_component" :items="userCart" v-show="showItemPreview"/>
                 </v-scale-transition>
             </div>
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
@@ -127,8 +127,8 @@ export default {
             ],
             //* 觸發 class 
             active: false, //* 漢堡 sidebar
-            appear: false, //* 通知列表
-            itemPreviewAppear: false //* 購物車商品預覽
+            showNotifications: false, //* 通知列表
+            showItemPreview: false //* 購物車商品預覽
         }
     },
     computed: {
