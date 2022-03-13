@@ -3,7 +3,7 @@
         <!-- 減少數量 -->
         <v-btn
             @click="decrement(product_id)"
-            :disabled='loading'
+            :disabled='loading || product_quantity <= 1'
             fab
             x-small 
             outlined 
@@ -18,12 +18,11 @@
             :disabled='loading'
             class="text-center"
             name="product_quantity"
-            type="number"
-            v-model="productPayload.quantity">
+            v-model.number="productPayload.quantity">
         <!-- 增加數量 -->
         <v-btn 
             @click="increment(product_id)"
-            :disabled='loading'
+            :disabled='loading || product_quantity >= 99'
             fab
             x-small 
             outlined 
