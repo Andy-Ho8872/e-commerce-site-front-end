@@ -28,7 +28,7 @@
                         </nuxt-link>
                         <!-- 通知列 -->
                         <v-scale-transition origin="top left">
-                            <MiniNotification :cardWidth="350" :cardHeight="500" class="content_box" v-show="appear"/>
+                            <MiniNotification :cardWidth="350" :cardHeight="500" class="hovered_component" v-show="appear"/>
                         </v-scale-transition>
                     </li>
                     <!-- 我的訂單-->
@@ -88,13 +88,18 @@
             <!-- 搜尋區域 -->
             <AutoComplete class="searchBox d-flex mt-2 mx-2"/>
             <!-- 購物車 ICON -->
-            <nuxt-link class="cart_logo d-flex justify-center align-center" :to="{ name: 'cart' }">
-                <!-- 如果購物車內有商品才顯示 -->
-                <v-badge color="orange" :content="userCart.length" :value="userCart.length">
-                    <!-- 購物車 svg -->
-                    <v-img :src="require('~/static/cart/ShoppingCart.svg')" alt="Shopping.svg"></v-img>
-                </v-badge>
-            </nuxt-link>
+            <div class="card_logo_container d-flex justify-center align-center" @mouseover="itemPreviewAppear = true" @mouseleave="itemPreviewAppear = false">
+                <nuxt-link class="cart_logo" :to="{ name: 'cart' }">
+                    <!-- 如果購物車內有商品才顯示 -->
+                    <v-badge color="orange" :content="userCart.length" :value="userCart.length">
+                        <!-- 購物車 svg -->
+                        <v-img :src="require('~/static/cart/ShoppingCart.svg')" alt="Shopping.svg"></v-img>
+                    </v-badge>
+                </nuxt-link>
+                <v-scale-transition origin="top">
+                    <ItemPreview class="hovered_component" :items="userCart" v-show="itemPreviewAppear"/>
+                </v-scale-transition>
+            </div>
             <!-- 畫面寬度在 medium 以下時隱藏 spacer -->
             <v-spacer class="hidden-md-and-down"></v-spacer>
         </v-row>
@@ -123,6 +128,7 @@ export default {
             //* 觸發 class 
             active: false, //* 漢堡 sidebar
             appear: false, //* 通知列表
+            itemPreviewAppear: false //* 購物車商品預覽
         }
     },
     computed: {
@@ -185,12 +191,10 @@ a {
     margin: 0 4px;
     position: relative;
 }
-.notification {
-    .content_box {
-        position: absolute;
-        z-index: 10;
-        width: 100vw;
-    }
+.hovered_component {
+    position: absolute;
+    z-index: 10;
+    width: max-content;
 }
 .icon {
     margin: 0 4px;
