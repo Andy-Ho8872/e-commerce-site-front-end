@@ -211,7 +211,7 @@ export default {
                 },
                 //* 信用卡相關欄位(有勾選刷卡付款後才需要填入)
                 creditCard: {
-                    type: 'visa', // 預設
+                    type: 'unknown', // 預設
                     number: '',
                     holder_name: '',
                     expiration_month: '',
@@ -323,7 +323,7 @@ export default {
                 this.setCurrentSelectedCreditCardInputs()
             } else {
                 this.selectCreditCardDialog = false
-                this.form.creditCard.type = ''
+                this.form.creditCard.type = 'unknown'
                 this.form.creditCard.number = ''
                 this.form.creditCard.holder_name = ''
                 this.form.creditCard.expiration_month = ''

@@ -155,7 +155,7 @@
                                 outlined
                                 label="卡號"
                             />
-                            <v-text-field label="持有人" outlined v-model="creditCard.holder_name" :rules="[rules.required]"></v-text-field>
+                            <v-text-field label="持有人" outlined v-model="creditCard.holder_name" :rules="[rules.required , rules.lettersOnly]"></v-text-field>
                             <v-select label="到期日(月)" outlined :items="months" v-model="creditCard.expiration_month" :rules="[rules.required]"></v-select>
                             <v-select label="到期日(年)" outlined :items="years" v-model="creditCard.expiration_year" :rules="[rules.required]"></v-select>
                             <v-text-field label="安全碼(CVV)" outlined maxlength="3" counter="3" v-model="creditCard.cvv" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
@@ -347,7 +347,7 @@ export default {
         initCreditCardForm() {
             this.storeCreditCardDialog = true
             this.creditCard = {
-                type: 'visa', // 預設
+                type: 'unknown', // 預設
                 number: '',
                 holder_name: '',
                 expiration_month: '',
