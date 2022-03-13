@@ -32,10 +32,13 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
 
 export default {
     props: {
+        items: {
+            type: Array,
+            require: true
+        },
         background: {
             type: String,
             default: "white"
@@ -48,22 +51,6 @@ export default {
             type: Number,
             default: 340,
         },
-    },
-    computed: {
-        ...mapGetters({
-            items: 'carousel/getCarouselItem',
-        }),
-    },
-    methods: {
-        ...mapActions({
-            fetchCarouselItem: 'carousel/fetchCarouselItem',
-        }),
-    },
-    //* 避免重複發送相同的 request
-    created() {
-        if (!this.items.length) {
-            this.fetchCarouselItem()
-        }
     },
 }
 </script>
