@@ -245,6 +245,10 @@ a {
             }
         }
     }
+    //* 避免在 Mobile 裝置在使用 click 事件時顯示
+    .hovered_component{
+        display: none;
+    }
 }
 @media (max-width: 640px) { //? default 640
     li {
