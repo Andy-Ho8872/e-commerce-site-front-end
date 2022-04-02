@@ -9,7 +9,7 @@
             v-model="searchText"
             placeholder="相機、螢幕、服裝、折扣..."
             append-icon="fa-search"
-            @keyup="handleAutoComplete"
+            @input="debounceSearch"
             @click:append="search({ title: searchText, pageNumber: 1 })"
             @keydown.enter="search({ title: searchText, pageNumber: 1 })"
             solo
@@ -65,6 +65,7 @@ export default {
             searchText: '', //* 使用者輸入的搜尋關鍵字
             selected: null, //* 使用者在 auto-complete 中所選擇的關鍵字
             showModal: false,
+            debounce: null, //* 限制頻繁發送 GET Request
         }
     },
     methods: {
@@ -102,6 +103,14 @@ export default {
                     this.autoComplete(this.searchText)
                     break
             }
+        },
+        //* 以 debounce 減少在短時間內向伺服器大量發送 GET 請求的次數
+        debounceSearch(e) {
+            const delay = 300
+            clearTimeout(this.debounce)
+            this.debounce = setTimeout(() => {
+                this.handleAutoComplete(e)
+            }, delay)
         },
         switchRoute() {
             this.$router.push({
