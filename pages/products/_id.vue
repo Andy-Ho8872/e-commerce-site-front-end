@@ -17,7 +17,7 @@
                     <!-- 詳細資訊 -->
                     <div class="half">
                         <!-- 名稱 -->
-                        <v-card-title class="product_title justify-center">
+                        <v-card-title class="product_title justify-center font-weight-bold">
                             {{ product.title }}
                         </v-card-title>
                         <!-- 價格 -->
@@ -129,6 +129,13 @@
                         {{ product.description }}
                     </v-card-text>
                 </v-card>
+                <!-- 猜你喜歡 -->
+                <v-card-title class="font-weight-bold text-h6 text-md-h5">猜你喜歡</v-card-title>
+                <v-row>
+                    <v-col v-for="item in youMayLikeProducts" :key="'guess' + item.id" cols="6" lg="2" md="3" sm="4">
+                        <ProductV2 :product="item" :cardWidth="200" :elevation="4" class="mt-8 mb-16"/>
+                    </v-col>
+                </v-row>
             </v-col>
         </v-row>
     </v-container>
@@ -171,6 +178,7 @@ export default {
     computed: {
         ...mapGetters({
             products: 'product/getViewedProducts',
+            youMayLikeProducts: 'product/getYouMayLikeProducts'
         }),
         product() {
             return this.products.find(product => product.id == this.$route.params.id)
@@ -181,7 +189,9 @@ export default {
             //* 新增至購物車(包含數量)
             addToCartWithQuantity: 'cart/addToCartWithQuantity',
             //* 撈取商品 
-            fetchSingleProduct: 'product/fetchSingleProduct'
+            fetchSingleProduct: 'product/fetchSingleProduct',
+            //* 猜你喜歡商品 
+            fetchYouMayLikeProducts: 'product/fetchYouMayLikeProducts'
         }),
         //* 點擊按鈕變更購買數量
         changeCount(value) {
@@ -215,8 +225,12 @@ export default {
             }
         }
     },
-    created() {
-        this.fetchSingleProduct(this.$route.params.id) 
+    async created() {
+        await this.fetchSingleProduct(this.$route.params.id) 
+        // 若是商品有包含標籤，則撈取猜你喜歡的商品
+        if(this.product.tags.length != 0) {
+            this.fetchYouMayLikeProducts(this.product.tags[0].id)
+        }
     },
 }
 </script>

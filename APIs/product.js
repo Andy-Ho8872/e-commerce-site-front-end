@@ -19,6 +19,6 @@ export const apiSearchByTitle = (title) => config.productRequest.get(`/search/${
 export const apiSearchByTitleWithPagination = (title, page) => config.productRequest.get(`/search/${title}/pagination?page=${page}`);
     //* 搜尋商品(自動補全)
 export const apiSearchAutoComplete = (title) => config.productRequest.get(`/search/${title}/autocomplete`);
-    //! 搜尋商品(標籤)  暫時未用到
-export const apiSearchByTag = (id) => config.productRequest.get(`/tags/${id}`);
+    //* 搜尋商品(藉由標籤)
+export const apiGetProductsByTag = (id) => config.productRequest.get(`/tags/${id}`);
 //------------------------------------------- 商品相關的 API -------------------------------------------//

@@ -1,15 +1,8 @@
-//! old version 
-// import {
-//     // apiGetProducts, //! 暫時不用
-//     apiGetProduct,
-//     apiGetProductsWithPagination,
-//     apiGetProductTags,
-//     apiGetIndexPageProducts,
-// } from '~/APIs/api.js'
 //* new version
 import {
     // apiGetProducts, //! 暫時不用
     apiGetProduct,
+    apiGetProductsByTag,
     apiGetProductsWithPagination,
     apiGetProductTags,
     apiGetIndexPageProducts,
@@ -20,6 +13,8 @@ export const state = () => ({
     indexPageProducts: [],
     //* 瀏覽過的商品(暫存用)
     viewedProducts: [],
+    //* 猜你喜歡商品列表
+    youMayLikeProducts: [],
     //* 分頁的產品
     paginatedProducts: [], 
     //* pagination 的 loading 狀態 
@@ -35,6 +30,9 @@ export const getters = {
     //* 瀏覽過的商品(暫存用)
     getViewedProducts(state) {
         return state.viewedProducts
+    },
+    getYouMayLikeProducts(state) {
+        return state.youMayLikeProducts
     },
     getPaginatedProducts(state) {
         return state.paginatedProducts
@@ -54,6 +52,9 @@ export const mutations = {
     //* 單一商品
     SET_PRODUCT(state, product) {
         state.product = product
+    },
+    SET_YOU_MAY_LIKE_PRODUCTS(state, products) {
+        state.youMayLikeProducts = products
     },
     SET_PAGINATED_PRODUCTS(state, products) {
         state.paginatedProducts = products
@@ -98,6 +99,16 @@ export const actions = {
             } catch (error) {
                 console.log(error)
             }
+        }
+    },
+    //* 猜你喜歡商品 
+    async fetchYouMayLikeProducts({ commit }, tagId) {
+        try {
+            const res = await apiGetProductsByTag(tagId)
+            const products = res.data.tag.products
+            commit('SET_YOU_MAY_LIKE_PRODUCTS', products)
+        } catch (error) {
+            console.log(error);
         }
     },
     async fetchAllProductTags({ state, commit }) {
