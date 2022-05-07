@@ -125,6 +125,7 @@ export default {
 .filter_container {
     position: absolute;
     z-index: 1;
+    width: 50%;
     right: 0
 }
 </style>
