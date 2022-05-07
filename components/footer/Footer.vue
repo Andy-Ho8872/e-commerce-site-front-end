@@ -8,7 +8,7 @@
         </ul>
         <ul class="social_links">
             <h2>社群連結</h2>
-            <div class="links_container d-md-flex">
+            <div class="links_container d-flex">
                 <li>
                     <a href="https://github.com/Andy-Ho8872" target="_blank"><i class="fab fa-github"></i></a>
                 </li>
