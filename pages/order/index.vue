@@ -10,84 +10,70 @@
                 您好，<span class="font-weight-bold">{{ user.name || user.email }}</span>，以下為您的訂單
                 <v-divider class="mt-2 mb-8"></v-divider>
             </div>
-            <!-- 表格內容 -->
-            <table class="light-blue darken-1 rounded-xl">
-                <!-- 標題 -->
-                <thead class="white--text font-weight-bold">
-                    <tr>
-                        <th v-for="(head, index) in tableHeads" :key="index" class="text-center">
-                            {{ head.title }}
-                        </th>
-                    </tr>
-                </thead>
-                <!-- 訂單細項 -->
-                <tbody class="grey lighten-3 blue-grey--text text--darken-4">
-                    <tr v-for="order in orders" :key="'order' + order.id">
-                        <!-- 訂單編號 -->
-                        <td data-title="訂單編號" id="order_id">         
-                            <span class="blue--text">#{{ order.id }}</span>
-                        </td>
-                        <!-- 付款方式 -->
-                        <td data-title="付款方式" id="payment_id">
-                            <!-- 顯示符合付款 id 的名稱 -->
-                            <template v-for="payment in payments">
-                                <span v-if="order.payment_id == payment.id" :key="'payment' + payment.id">
-                                    {{ payment.title }}
-                                </span>
-                            </template> 
-                            <!-- 寫法 二 -->
-                            <!-- <span>{{ payments.find((payment) => payment.id == order.payment_id).title }}</span> -->
-                        </td>
-                        <!-- 出貨狀態 -->
-                        <td data-title="出貨狀態" id="status_id">
-                            <!-- 顯示符合出貨狀態 id 的名稱 (可在優化) -->
-                            <template v-for="status in status">
-                                <v-btn rounded v-if="order.status_id == status.id" :key="'status' + status.id" 
-                                    class="font-weight-bold"
-                                    :class="status.title == '出貨中' ? 'yellow lighten-3 yellow--text text--darken-4' : 'green accent-1 green--text text-darken-4'"
-                                >
-                                    {{ status.title }}
-                                </v-btn>
-                            </template>
-                        </td>
-                        <!-- 購買件數 -->
-                        <td data-title="商品個數" id="items_count">
-                            <span>{{ order.items_count }} 件商品</span> 
-                        </td>
-                        <!-- 金額總計 -->
-                        <td data-title="金額總計" id="sumSubtotal">
-                            <span class="red--text text--lighten-1">{{ order.sumSubtotal }}</span>
-                        </td>
-                        <!-- 買家姓名 -->
-                        <td data-title="買家姓名" id="buyer_name">
-                            <span>{{ order.buyer_name }}</span>
-                        </td>
-                        <!-- 買家電話 -->
-                        <td data-title="買家電話" id="buyer_phone">
-                            <span>{{ order.buyer_phone }}</span>
-                        </td>
-                        <!-- 送達地址 -->
-                        <td data-title="送達地址" id="address">
-                            <span>{{ order.address }}</span>
-                        </td>
-                        <!-- 訂購時間 -->
-                        <td data-title="訂購時間" id="created_at">
-                            <span>{{ order.created_at }}</span>
-                        </td>
-                        <!-- 訂單操作 -->
-                        <td data-title="編輯操作" id="actions">
-                            <div class="btn_container">
-                                <!-- 按鈕群組 -->
-                                <DeleteDialog :order="order" class="delete_dialog_component"/>
-                                <!-- 查看 --> 
-                                <v-btn class="nav_button" color="primary" dark nuxt :to="{ name: 'order-id-details', params: { id: order.id }}">
-                                    查看
-                                </v-btn>   
+            <v-row>
+                <v-col v-for="order in orders" :key="'order' + order.id" cols="12" sm="6" md="4" lg="3">
+                    <v-card rounded="lg" class="mx-4 my-8">
+                        <v-card-title>
+                            <span class="blue--text text-subtitle-2 text-md-h6 font-weight-bold">#{{ order.id }}</span>
+                            <span class="text-subtitle-2 text-md-subtitle-1 font-weight-bold mx-4">{{ order.items_count }} 樣商品</span>
+                            <span class="text-subtitle-2 text-md-subtitle-1 font-weight-bold">於 {{ order.created_at }} 訂購</span>
+                        </v-card-title>
+                        <v-divider class="mx-4"></v-divider>
+                        <!-- 配送訊息 -->
+                        <v-card-title class="font-weight-bold">配送訊息</v-card-title>
+                        <v-card-subtitle class="font-weight-bold">
+                            <div class="my-4">付款方式:
+                                <template v-for="payment in payments">
+                                    <v-chip 
+                                        v-if="order.payment_id == payment.id" :key="'payment' + payment.id"
+                                        class="mx-2"
+                                        color="blue"
+                                        text-color="white"
+                                        label
+                                        small>
+                                        {{ payment.title }}
+                                    </v-chip>
+                                </template>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            <div class="my-4">出貨狀態:
+                                <template v-for="status in status">
+                                    <v-chip 
+                                        v-if="order.status_id === status.id" :key="'status' + status.id"
+                                        class="mx-2"
+                                        color="orange"
+                                        text-color="white"
+                                        label
+                                        small>
+                                        {{ status.title }}
+                                    </v-chip>
+                                </template>
+                            </div>
+                            <div class="my-4">消費總計: 
+                                <span class="red--text mx-2">{{ order.sumSubtotal }}</span>
+                            </div>
+                            <div class="my-4">送達地址: 
+                                <span class="mx-2">{{ order.address }}</span>
+                            </div>
+                        </v-card-subtitle>
+                        <!-- 買家資訊 -->
+                        <v-card-title class="font-weight-bold">買家資訊</v-card-title>
+                        <v-card-subtitle class="font-weight-bold">
+                            <div class="my-4">買家姓名: 
+                                <span class="mx-2">{{ order.buyer_name }}</span>
+                            </div>
+                            <div class="my-4">買家電話: 
+                                <span class="mx-2">{{ order.buyer_phone }}</span>
+                            </div>
+                        </v-card-subtitle>
+                        <!-- 編輯操作 -->
+                        <v-card-title class="font-weight-bold">編輯操作</v-card-title>
+                        <v-card-subtitle>
+                            <DeleteDialog :order="order" class="delete_dialog_component"/>
+                            <v-btn class="my-2 mx-2" color="primary" nuxt :to="{ name: 'order-id-details', params: { id: order.id } }">查看</v-btn>
+                        </v-card-subtitle>
+                    </v-card>
+                </v-col>
+            </v-row>
         </div>
     </v-container>
 </template>
