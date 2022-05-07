@@ -26,7 +26,7 @@
         <CarouselV3 :cardWidth="340" :cardHeight="340" :data="items.latest_products" v-show="!loading"/>
         <!-- 熱門商品 -->
         <Banner elevation="2" icon="fa-burn" iconColor="red lighten-1" text="熱門商品" backgroundColor="white" class="mt-16"/>
-        <v-sheet elevation="6" rounded="lg" class="px-1 px-md-6">
+        <v-sheet elevation="6" rounded="lg" class="px-4 px-md-6">
             <v-row>
                 <v-col v-for="item in items.hot_sale_products" :key="item.id" cols="6" lg="2" md="3" sm="4">
                     <!-- 骨架屏 -->
