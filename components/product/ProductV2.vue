@@ -2,7 +2,7 @@
     <v-card class="card_content ma-auto" rounded="t-lg" :elevation="elevation">
         <nuxt-link :to="{ name: 'products-id', params: { id: product.id } }">
             <img
-                class="responsive_img"
+                class="responsive_img rounded-t-lg"
                 :src="product.imgUrl"
                 :alt="product.title"
             />
