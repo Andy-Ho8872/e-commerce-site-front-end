@@ -5,12 +5,12 @@ export default {
             rules: {
                 required: value => !!value || '此欄位必填',
                 numbersOnly: value => {
-                    const pattern = /^[\d ]*$/
+                    const pattern = /^\d+$/
                     return pattern.test(value) || '只能填入數字。'
                 },
                 lettersOnly: value => {
-                    const pattern = /^\D*$/
-                    return pattern.test(value) || '不能填入數字。'
+                    const pattern = /^[a-zA-Z]+$/ 
+                    return pattern.test(value) || '不能填入數字、空白、或特殊符號。'
                 },
                 shouldContainOne: value => value.length > 0 || '請至少選擇一個選項',
                 maxLetterLength: value => value.length <= 4 || '字串長度不可超過 4 ex: 0.005',
