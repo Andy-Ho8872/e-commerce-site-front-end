@@ -5,50 +5,42 @@
         <!-- content -->
         <div v-if="order">
             <!-- 返回按鈕 -->
-            <div class="text-center my-6">
-                <nuxt-link :to="{ name: 'order'}">
-                    <v-btn dark rounded outlined x-large color="light-blue" class="mx-1">
-                        <v-icon>fa-long-arrow-alt-left fa-fw</v-icon>
-                        <span>訂單總覽</span>
-                    </v-btn>
-                </nuxt-link>
+            <div class="text-center my-4">
+                <v-btn dark rounded outlined x-large nuxt :to="{ name: 'order'}" color="blue lighten-2" class="mx-1">
+                    <v-icon>fa-long-arrow-alt-left fa-fw</v-icon>
+                    <span>訂單總覽</span>
+                </v-btn> 
             </div>
-            <!-- 表格內容 -->
-            <table class="light-blue darken-1 rounded-xl">
-                <!-- 標題 -->
-                <thead class="white--text font-weight-bold">
-                    <tr>
-                        <th v-for="(head, index) in tableHeads" :key="index" class="text-center">
-                            {{ head.title }}
-                        </th>
-                    </tr>
-                </thead>
-                <!-- 細項 -->
-                <tbody class="grey lighten-3 blue-grey--text text--darken-4">
-                    <tr v-for="item in order.items" :key="'item' + item.pivot.product_id">
-                        <!-- 編號 -->
-                        <td data-title="商品編號" id="items_id">
-                            <span class="blue--text">#{{ item.pivot.product_id }}</span>
-                        </td>
-                        <!-- 名稱 -->
-                        <td data-title="商品名稱" id="items_title">
-                            <span>{{ item.title }}</span>
-                        </td>
-                        <!-- 圖片 -->
-                        <td data-title="商品圖片" id="items_image">
-                            <img :src="item.imgUrl" :alt="item.title" width="80" height="80"/>
-                        </td>
-                        <!-- 數量 -->
-                        <td data-title="購買數量" id="items_qty">
-                            <span>{{ item.pivot.product_quantity }}</span>
-                        </td>
-                        <!-- 金額 -->
-                        <td data-title="金額小計" id="items_subtotal">
-                            <span class="red--text">{{ item.subtotal }}</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <v-sheet color="blue lighten-2" rounded="lg" max-width="1200" class="ma-auto mb-4 pa-8">
+                <v-row>
+                    <v-col v-for="item in order.items" :key="'item' + item.pivot.product_id" cols="12" sm="6" md="4">
+                        <v-card rounded="lg" class="d-flex mb-4" nuxt :to="{ name: 'products-id', params: { id : item.pivot.product_id } }">
+                            <div class="left my-auto">
+                                <v-card-subtitle>
+                                    <v-img :src="item.imgUrl" :alt="item.title" max-height="80" max-width="80"></v-img>
+                                </v-card-subtitle>
+                            </div>
+                            <div class="right">
+                                <v-card-subtitle class="font-weight-bold">
+                                    <div class="my-4">商品編號:
+                                        <span class="mx-2">#{{ item.pivot.product_id }}</span>
+                                    </div>
+                                    <div class="my-4 d-flex">
+                                        商品名稱:
+                                        <div class="item_title mx-2 text-truncate">{{ item.title }}</div>
+                                    </div>
+                                    <div class="my-4">購買數量:
+                                        <span class="mx-2">{{ item.pivot.product_quantity }}</span>
+                                    </div>
+                                    <div class="my-4">金額小計:
+                                        <span class="mx-2">{{ item.subtotal }}</span>
+                                    </div>
+                                </v-card-subtitle>
+                            </div>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-sheet>
         </div>
     </v-container>
 </template>
@@ -70,17 +62,6 @@ export default {
             ]
         }
     },
-    data() {
-        return {
-            tableHeads: [
-                { title: '商品編號' },
-                { title: '商品名稱' },
-                { title: '商品圖片' },
-                { title: '購買數量' },
-                { title: '金額小計' },
-            ],
-        }
-    },
     methods: {
         ...mapActions({
             //* 撈取單筆訂單 
@@ -99,3 +80,12 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+.right {
+    width: 100%;
+}
+.item_title {
+    width: 50%;
+}
+</style>
