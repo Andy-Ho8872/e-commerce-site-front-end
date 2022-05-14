@@ -33,7 +33,7 @@
                     </li>
                     <!-- 我的訂單-->
                     <li>
-                        <nuxt-link :to="{ name: 'user-order' }">
+                        <nuxt-link :to="{ name: 'order' }">
                             <v-icon class="icon" dark small>fa-list-alt fa-fw</v-icon>
                             <span>我的訂單</span>
                         </nuxt-link>
