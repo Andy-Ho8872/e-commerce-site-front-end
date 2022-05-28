@@ -38,9 +38,7 @@
                         <!-- 評級 -->
                         <v-card-text>
                             <Ratings :product="product" size="24"/>
-                        </v-card-text>
-                        <!-- 標籤 -->
-                        <v-card-text>
+                            <!-- 標籤 -->
                             <v-chip-group class="pb-1" column>
                                 <v-chip label color="primary" small v-for="tag in product.tags" :key="tag.id">
                                     <!-- 名稱 -->
@@ -48,63 +46,74 @@
                                 </v-chip>
                             </v-chip-group>
                         </v-card-text>
-                        <!-- 輸入數量 -->
-                        <v-form>
-                            <v-row class="input_container ma-3 py-4">
-                                <span class="px-2">購買數量</span>
-                                <!-- 減少按鈕 -->
-                                <v-btn
-                                    class="decrement_btn"
-                                    @click="changeCount(-1)"
-                                    tile
-                                    small
-                                    depressed
-                                    outlined
-                                    color="error"
-                                >
-                                    <v-icon>fa-minus fa-fw</v-icon>
-                                </v-btn>
-                                <!-- 輸入數量 -->
-                                <input
-                                    class="input_field grey lighten-2 text-center"
-                                    name="product_quantity"
-                                    type="number"
-                                    autocomplete="off"
-                                    @blur="validateInput(productPayload.quantity)"
-                                    v-model.number="productPayload.quantity"
-                                />
-                                <!-- 增加按鈕 -->
-                                <v-btn
-                                    class="increment_btn"
-                                    @click="changeCount(1)"
-                                    tile
-                                    small
-                                    depressed
-                                    outlined
-                                    color="indigo"
-                                >
-                                    <v-icon>fa-plus fa-fw</v-icon>
-                                </v-btn>
-                            </v-row>
-                            <!-- 購買按鈕-->
-                            <div class="purchase_btn text-center">
-                                <v-btn
-                                    @click="addToCartWithQuantity(productPayload)"
-                                    class="ma-3 rounded-lg"
-                                    tile
-                                    x-large
-                                    depressed
-                                    color="primary"
-                                >
-                                    <span>放入購物車</span>
-                                </v-btn>
+                        <!-- 選擇規格 -->
+                        <v-card-text v-if="product.variations.length">
+                            <div v-for="variation in product.variations" :key="variation.id" class="d-flex align-center">
+                                <div class="font-weight-bold">{{ variation.title }}</div>
+                                <v-chip-group column mandatory class="ml-4">
+                                    <v-chip filter outlined small label color="purple" v-for="(option, index) in variation.options" :key="`option_${index}`">{{ option }}</v-chip>
+                                </v-chip-group>
                             </div>
-                        </v-form>
+                        </v-card-text>
+                        <!-- 輸入數量 -->
+                        <v-card-text>
+                            <div class="d-flex align-center">
+                                <div class="font-weight-bold">數量</div>
+                                <div class="input_container ml-4">
+                                    <!-- 減少按鈕 -->
+                                    <v-btn
+                                        class="decrement_btn"
+                                        @click="changeCount(-1)"
+                                        fab
+                                        x-small
+                                        depressed
+                                        outlined
+                                        color="error"
+                                    >
+                                        <v-icon>fa-minus fa-fw</v-icon>
+                                    </v-btn>
+                                    <!-- 輸入數量 -->
+                                    <input
+                                        class="input_field lighten-2 text-center"
+                                        name="product_quantity"
+                                        type="number"
+                                        autocomplete="off"
+                                        @blur="validateInput(productPayload.quantity)"
+                                        v-model.number="productPayload.quantity"
+                                    />
+                                    <!-- 增加按鈕 -->
+                                    <v-btn
+                                        class="increment_btn"
+                                        @click="changeCount(1)"
+                                        fab
+                                        x-small
+                                        depressed
+                                        outlined
+                                        color="indigo"
+                                    >
+                                        <v-icon>fa-plus fa-fw</v-icon>
+                                    </v-btn>
+                                </div>
+                            </div>
+                        </v-card-text>
+                        <!-- 購買按鈕-->
+                        <div class="purchase_btn text-center">
+                            <v-btn
+                                @click="addToCartWithQuantity(productPayload)"
+                                class="ma-3 rounded-lg"
+                                tile
+                                x-large
+                                depressed
+                                color="primary"
+                            >
+                                <span>放入購物車</span>
+                            </v-btn>
+                        </div>
                     </div>
                 </v-card>
-                <!-- 商品規格 -->
+                <!-- 商品詳情 -->
                 <v-card :width="width" :elevation="elevation" :color="color" class="rounded-lg ma-auto my-6">
-                    <v-card-title class="font-weight-bold">商品規格</v-card-title>
+                    <v-card-title class="font-weight-bold">商品詳情</v-card-title>
                     <!-- 庫存數量 -->
                     <v-card-text class="product_stock_quantity text-subtitle-1">
                         庫存數量: {{ product.stock_quantity }}
@@ -122,9 +131,9 @@
                         ({{ $moment(product.updated_at).fromNow() }})
                     </v-card-text>
                 </v-card>
-                <!-- 敘述 -->
+                <!-- 商品資訊 -->
                 <v-card :width="width" :elevation="elevation" :color="color" class="rounded-lg ma-auto my-6">
-                    <v-card-title class="font-weight-bold">商品詳情</v-card-title>
+                    <v-card-title class="font-weight-bold">商品資訊</v-card-title>
                     <v-card-text class="product_description text-subtitle-1 text-justify">
                         {{ product.description }}
                     </v-card-text>
