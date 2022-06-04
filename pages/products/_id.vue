@@ -48,10 +48,16 @@
                         </v-card-text>
                         <!-- 選擇規格 -->
                         <v-card-text v-if="product.variations.length">
-                            <div v-for="variation in product.variations" :key="variation.id" class="d-flex align-center">
+                            <div v-for="(variation, variationIndex) in product.variations" :key="variation.id" class="d-flex align-center">
                                 <div class="font-weight-bold">{{ variation.title }}</div>
-                                <v-chip-group column mandatory class="ml-4">
-                                    <v-chip filter outlined small label color="purple" v-for="(option, index) in variation.options" :key="`option_${index}`">{{ option }}</v-chip>
+                                <v-chip-group column class="ml-4">
+                                    <v-chip filter outlined small label color="indigo" 
+                                        v-for="(option, index) in variation.options" 
+                                        :key="`option_${index}`"
+                                        :value="option"
+                                        @click="setOptionValues(option, variationIndex)">
+                                        {{ option }}
+                                    </v-chip>
                                 </v-chip-group>
                             </div>
                         </v-card-text>
@@ -99,7 +105,7 @@
                         <!-- 購買按鈕-->
                         <div class="purchase_btn text-center">
                             <v-btn
-                                @click="addToCartWithQuantity(productPayload)"
+                                @click="addItemToCart(productPayload)"
                                 class="ma-3 rounded-lg"
                                 tile
                                 x-large
@@ -181,6 +187,7 @@ export default {
             productPayload: {
                 id: this.$route.params.id,
                 quantity: 1, //* 產品當前數量 預設 1 個
+                optionValues: [] //* 產品規格
             },
         }
     },
@@ -195,6 +202,7 @@ export default {
     },
     methods: {
         ...mapActions({
+            setGlobalMessage: 'globalMessage/setFlashMessage',
             //* 新增至購物車(包含數量)
             addToCartWithQuantity: 'cart/addToCartWithQuantity',
             //* 撈取商品 
@@ -215,6 +223,30 @@ export default {
                 case inputVal > 99: //* 數字將不大於 99
                     this.productPayload.quantity = 99
                     break;
+            }
+        },
+        //* 選擇產品規格
+        setOptionValues(option = 'null', variationIndex) {
+            const duplicated = this.productPayload.optionValues.includes(option)
+            if(!duplicated) {
+                this.productPayload.optionValues[variationIndex] = option
+            } 
+        },
+        addItemToCart(payload) {
+            let optionValueLength = this.productPayload.optionValues.length
+            //* 如果有規格需選擇
+            if (this.product.variations.length !== 0) {
+                if(optionValueLength !== this.product.variations.length) {
+                    const message = {
+                        type: 'error',
+                        text: '請點選商品規格',
+                    }
+                    this.setGlobalMessage(message)
+                } else {
+                    this.addToCartWithQuantity(payload)
+                }
+            } else {
+                this.addToCartWithQuantity(payload)
             }
         },
         //* 購買數量輸入驗證

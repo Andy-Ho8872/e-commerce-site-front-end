@@ -1,19 +1,8 @@
-//! old version 
-// import {
-//     apiGetCartProducts,
-//     apiAddToCart,
-//     apiAddToCartWithQuantity,
-//     apiDeleteFromCart,
-//     apiDeleteAllFromCart,
-//     apiUpdateQuantity,
-//     apiIncreaseQuantityByOne,
-//     apiDecreaseQuantityByOne,
-// } from '../APIs/api.js'
 //* new version 
 import {
     apiGetCartProducts,
     apiAddToCart,
-    apiAddToCartWithQuantity,
+    apiAddToCartWithData,
     apiDeleteFromCart,
     apiDeleteAllFromCart,
     apiUpdateQuantity,
@@ -121,13 +110,13 @@ export const actions = {
 
 // 動態頁面  (pages/products/_id.vue)
     //* "新增"商品至購物車(附帶商品數量)
-    async addToCartWithQuantity({ dispatch, commit }, product) {
+    async addToCartWithQuantity({ dispatch }, product) {
         try {
-            //* 若要從表單傳遞參數要透過 Object
-            const res = await apiAddToCartWithQuantity(
-                product.id, //* 產品 id
-                { product_quantity: product.quantity } //* 購買數量
-            )
+            const res = await apiAddToCartWithData({
+                product_id: product.id,
+                product_quantity: product.quantity,
+                variation_option_values: product.optionValues
+            })
             if(res.status == 201) {
                 //* 重新撈取資料
                 await dispatch('fetchUserCart')
