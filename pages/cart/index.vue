@@ -63,6 +63,8 @@
                                         :src="item.imgUrl"
                                     ></v-img>
                                     <span class="mx-2">{{ item.title }}</span>
+                                    <span class="caption blue-grey--text text--darken-1" v-if="item.variation_option_values.length">{{ item.variation_option_values }}</span>
+                                
                                 </div>
                             </nuxt-link>
                         </div>
@@ -186,6 +188,7 @@
                         <!-- 商品訊息 -->
                         <div class="cart_content_details">
                             <div class="item_title text-body-2 font-weight-bold">{{ item.title }}</div>
+                            <div class="caption blue-gray--text text-darken-2" v-if="item.variation_option_values.length">{{ item.variation_option_values }}</div>
                             <div class="item_unit_price text-button">
                                 <!-- 原價 -->
                                 <span class="blue-grey--text" :class="item.discount_rate != 1 ? 'text-decoration-line-through' : null">
