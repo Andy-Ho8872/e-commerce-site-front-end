@@ -146,7 +146,8 @@ a {
 .copy_right_claim {
     position: absolute;
     bottom: 0;
-    padding: 20px;
+    padding: 16px;
+    width: 100%;
 }
 @media (max-width: 768px) {
     ul {
