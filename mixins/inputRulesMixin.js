@@ -9,7 +9,8 @@ export default {
                     return pattern.test(value) || '只能填入數字。'
                 },
                 lettersOnly: value => {
-                    const pattern = /^[a-zA-Z]+$/ 
+                    // const pattern = /^[^!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/ //* 此版本只有不能包含特殊符號
+                    const pattern = /^[^!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?|\d]+$/ //*此版本不能包含數字及特殊符號
                     return pattern.test(value) || '不能填入數字、空白、或特殊符號。'
                 },
                 shouldContainOne: value => value.length > 0 || '請至少選擇一個選項',
