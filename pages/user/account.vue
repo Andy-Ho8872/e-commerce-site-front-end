@@ -45,7 +45,7 @@
                             <v-row>
                                 <v-col>
                                     <v-text-field 
-                                        v-model="profile.name"
+                                        v-model.trim="profile.name"
                                         placeholder="王小明"
                                         :rules="[rules.lettersOnly, rules.required]"
                                         outlined
@@ -55,7 +55,7 @@
                                         :value="user.name || null">
                                     </v-text-field>
                                     <v-text-field 
-                                        v-model="profile.phone"
+                                        v-model.trim="profile.phone"
                                         placeholder="0912345678"
                                         :rules="[rules.required, rules.numbersOnly]"
                                         maxlength="10"
@@ -67,7 +67,7 @@
                                         :value="user.phone || null">
                                     </v-text-field>
                                     <v-text-field 
-                                        v-model="profile.address"
+                                        v-model.trim="profile.address"
                                         placeholder="OO市OO區OO路..."
                                         :rules="[rules.required]"
                                         outlined 
@@ -110,19 +110,31 @@
             <!-- 付款方式(信用卡) -->
             <v-card-subtitle class="font-weight-bold">
                 信用卡: 
-                <v-card class="user_credit_cards pa-4 my-6" rounded="lg" max-width="250" v-for="(creditCard) in user.credit_cards" :key="'creditCard' + creditCard.id">
-                    <v-card-text class="font-weight-bold">
-                        <li>型號: {{ creditCard.card_type || defaultProfileText }}</li>
-                        <li>卡號: {{ formattedCreditCardNumber(creditCard.masked_card_number) || defaultProfileText }}</li>
-                        <li>持有人: {{ creditCard.card_holder || defaultProfileText }}</li>
-                        <li>到期日: {{ creditCard.card_expiration_date || defaultProfileText }}</li>
-                    </v-card-text>
-                    <!-- 刪除信用卡按鈕 -->
-                    <v-card-actions>
-                        <v-btn class="ma-auto" color="error" icon  @click="openAndSetDeleteCreditCardDialog(creditCard)">
+                <v-card class="user_credit_cards pa-4 my-6 white--text" 
+                    color="blue darken-1"
+                    rounded="lg" 
+                    max-width="250"  
+                    v-for="(creditCard) in user.credit_cards" :key="'creditCard' + creditCard.id">
+                    <div class="credit_card_icon d-flex">
+                        <!-- 刪除信用卡按鈕 -->
+                        <v-btn class="ma-auto" color="white" icon @click="openAndSetDeleteCreditCardDialog(creditCard)">
                             <v-icon>fa-xmark</v-icon>
                         </v-btn>
-                    </v-card-actions>
+                        <v-spacer></v-spacer>
+                        <!-- 性用卡型號 -->
+                        <v-icon color="white">fa-brands fa-cc-{{ creditCard.card_type }}</v-icon>
+                    </div>
+                    <div class="credit_card_number py-4">{{ formattedCreditCardNumber(creditCard.masked_card_number) }}</div>
+                    <div class="credit_card_bottom d-flex justify-space-between align-center">
+                        <div class="credit_holder_name">
+                            <div class="hint_text caption">持有人</div>
+                            <div class="card_holder">{{ creditCard.card_holder }}</div>
+                        </div>
+                        <div class="credit_expiration_date">
+                            <div class="hint_text caption">到期日</div>
+                            <div class="card_holder">{{ creditCard.card_expiration_date }}</div>
+                        </div>
+                    </div>
                 </v-card>
                 <!-- 刪除信用卡彈出視窗 -->
                 <v-dialog v-model="deleteCreditCardDialog" max-width="600">
@@ -142,13 +154,13 @@
                 </v-card-actions>   
             </v-card-subtitle>
             <!-- 填寫表單 -->
-            <v-dialog v-model="storeCreditCardDialog" width="600">
+            <v-dialog v-model="storeCreditCardDialog" max-width="600">
                 <v-card>
                     <v-card-title class="font-weight-bold mb-4">新增信用卡</v-card-title>
-                    <v-form v-model="creditCardValid">
                         <v-card-text>
+                        <v-form v-model="creditCardValid">
                             <VCleaveInput
-                                v-model="creditCard.number"
+                                v-model.trim="creditCard.number"
                                 :options="options"
                                 :rules="[rules.required]"
                                 :append-icon="creditCardIcon"
@@ -159,8 +171,8 @@
                             <v-select label="到期日(月)" outlined :items="months" v-model="creditCard.expiration_month" :rules="[rules.required]"></v-select>
                             <v-select label="到期日(年)" outlined :items="years" v-model="creditCard.expiration_year" :rules="[rules.required]"></v-select>
                             <v-text-field label="安全碼(CVV)" outlined maxlength="3" counter="3" v-model="creditCard.cvv" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
-                        </v-card-text>
-                    </v-form>
+                        </v-form>
+                    </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="error" text @click="storeCreditCardDialog = false">取消</v-btn>
