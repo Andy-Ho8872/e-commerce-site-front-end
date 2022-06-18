@@ -13,7 +13,7 @@
             </div>
             <v-sheet color="blue lighten-2" rounded="lg" max-width="1200" class="ma-auto mb-4 pa-8">
                 <v-row>
-                    <v-col v-for="item in order.items" :key="'item' + item.pivot.product_id" cols="12" sm="6" md="4">
+                    <v-col v-for="item in order.items" :key="'item' + item.pivot.product_id" cols="12" sm="6">
                         <v-card rounded="lg" class="d-flex mb-4" nuxt :to="{ name: 'products-id', params: { id : item.pivot.product_id } }">
                             <div class="left my-auto">
                                 <v-card-subtitle>
@@ -28,6 +28,12 @@
                                     <div class="my-4 d-flex">
                                         商品名稱:
                                         <div class="item_title mx-2 text-truncate">{{ item.title }}</div>
+                                    </div>
+                                    <div class="my-4 d-flex">
+                                        商品規格:
+                                        <div class="item_title mx-2 text-truncate" v-if="item.variation_option_values.length">
+                                            <span>{{ item.variation_option_values }}</span>
+                                        </div>
                                     </div>
                                     <div class="my-4">購買數量:
                                         <span class="mx-2">{{ item.pivot.product_quantity }}</span>
