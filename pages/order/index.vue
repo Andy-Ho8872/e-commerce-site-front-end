@@ -12,7 +12,7 @@
             </div>
             <v-row>
                 <v-col v-for="order in orders" :key="'order' + order.id" cols="12" sm="6" md="4" lg="3">
-                    <v-card rounded="lg" class="mx-4 my-8">
+                    <v-card rounded="lg" class="ma-2">
                         <v-card-title>
                             <span class="blue--text text-subtitle-2 text-md-h6 font-weight-bold">#{{ order.id }}</span>
                             <span class="text-subtitle-2 text-md-subtitle-1 font-weight-bold mx-4">{{ order.items_count }} 樣商品</span>
