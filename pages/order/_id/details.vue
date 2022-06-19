@@ -29,10 +29,10 @@
                                         商品名稱:
                                         <div class="item_title mx-2 text-truncate">{{ item.title }}</div>
                                     </div>
-                                    <div class="my-4 d-flex">
+                                    <div class="my-4 d-flex" v-if="item.pivot.variation_option_values.length">
                                         商品規格:
-                                        <div class="item_title mx-2 text-truncate" v-if="item.variation_option_values.length">
-                                            <span>{{ item.variation_option_values }}</span>
+                                        <div class="item_title mx-2 text-truncate">
+                                            <span v-for="(option, index) in item.pivot.variation_option_values" :key="'option' + index">{{ option }} 、</span>
                                         </div>
                                     </div>
                                     <div class="my-4">購買數量:
