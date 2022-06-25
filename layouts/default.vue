@@ -1,6 +1,6 @@
 <template>
     <v-app dark>
-        <v-main>
+        <v-main class="blue-grey lighten-5">
             <Header class="header"/>
             <!-- <HeaderV2 class="header"/> -->
             <nuxt class="content"/>
