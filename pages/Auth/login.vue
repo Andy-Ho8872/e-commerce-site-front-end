@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div class="form-wrapper ma-auto">
+        <div class="form-wrapper ma-auto rounded-xl">
             <!--註冊(登入) Icon -->
             <div class="img_wrapper">
                 <v-img
@@ -91,7 +91,7 @@
                         </v-btn>
                     </v-col>
                     <v-col cols="12" md="4">
-                        <v-btn block color="grey" @click="socialiteLogin('github')">
+                        <v-btn block color="blue-grey lighten-2" @click="socialiteLogin('github')">
                             <v-icon color="white">mdi-github</v-icon>
                             <span class="white--text">Github</span>
                         </v-btn>
@@ -145,7 +145,7 @@ export default {
 <style lang="scss" scoped>
 .form-wrapper {
     position: relative;
-    background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+    background-image: linear-gradient(135deg, #74EBD5 0%, #9FACE6 100%);
     max-width: 600px;
 }
 .error_msg {
@@ -165,6 +165,6 @@ export default {
 .divider_line {
     width: 100%;
     height: 0px;
-    border-bottom: 1px solid #7C4DFF;
+    border-bottom: 1px solid white;
 }
 </style>

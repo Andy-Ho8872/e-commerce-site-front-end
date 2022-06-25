@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div class="form-wrapper ma-auto">
+        <div class="form-wrapper ma-auto rounded-xl">
             <!--註冊(登入) Icon -->
             <div class="img_wrapper">
                 <v-img
