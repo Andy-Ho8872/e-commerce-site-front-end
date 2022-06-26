@@ -1,177 +1,174 @@
 <template>
-    <v-container>
-        <div class="table__container mt-8">
-            <table class="teal accent lighten-1 rounded-xl">
-                <!-- 表格標頭 -->
-                <thead class="white--text font-weight-bold">
-                    <tr>
-                        <th v-for="(head, index) in tableHeads" :key="index" class="text-center">
-                            {{ head.title }}
-                        </th>
-                    </tr>
-                </thead>
-                <!-- 表格內容 -->
-                <tbody class="teal lighten-4 blue-grey--text text--darken-4">
-                    <tr v-for="item in userCart" :key="'item' + item.id">
-                        <!-- 名稱 -->
-                        <td data-title="商品" id="item_image">
-                            <span>{{ item.title }}</span>
-                        </td>
-                        <td>
-                            <img :src="item.imgUrl" :alt="item.title" width="80" height="80">
-                        </td>
-                        <!-- 單價 -->
-                        <td data-title="單價" id="item_unit_price">
-                            <span>{{ item.unit_price }}</span>
-                        </td>
-                        <!-- 購買數量 -->
-                        <td data-title="數量" id="item_qty">
-                            <span>{{ item.product_quantity }}</span>
-                        </td>
-                        <!-- 總價 -->
-                        <td data-title="總價" id="item_subtotal">
-                            <span>{{ item.total }}</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <!-- 表單 -->
-            <div class="form__container">
-                <v-form ref="form" v-model="valid">
-                    <v-card class="checkout_wrapper my-12 ma-auto" elevation="4">
-                        <!-- 選擇付款方式 -->
-                            <v-card-title class="font-weight-bold">選擇您的付款方式</v-card-title>
-                            <v-card-subtitle class="mt-2">
-                                <v-chip-group mandatory active-class="deep-purple--text text--accent-4" name="payment_id" v-model="form.payment_id">
-                                    <v-chip v-for="payment in payments" :key="'payment' + payment.id" :value="payment.id" large label @click="checkPaymentMethod(payment)" class="payment_title">
-                                        {{ payment.title }}
-                                    </v-chip>
-                                </v-chip-group>
-                            </v-card-subtitle>
-                            <v-divider></v-divider>
-                            <!-- todo 新增信用卡欄位 -->
-                            <div v-if="!creditCardFormDisabled">
-                                <v-card-title class="font-weight-bold">選擇刷卡帳戶</v-card-title>
-                                <!-- 信用卡輸入欄位 -->
+    <v-container class="checkout_wrapper">
+        <v-card>
+            <v-card-title class="font-weight-bold">
+                <div>確認品項</div>
+                <v-spacer></v-spacer>
+                <v-btn color="error" outlined nuxt :to="{ name: 'cart' }">修改</v-btn>
+            </v-card-title>
+            <v-list two-line>
+                <v-list-item v-for="item in userCart" :key="'item' + item.id">
+                    <v-list-item-avatar tile size="60">
+                        <v-img :src="item.imgUrl"></v-img>
+                    </v-list-item-avatar>
+                    <!-- 規格與價格 -->
+                    <v-list-item-content>
+                        <v-list-item-title class="font-weight-bold">{{ item.title }}</v-list-item-title>
+                        <v-list-item-subtitle>
+                            <div class="my-2">{{ item.variation_option_values }}</div>
+                            <div>${{ Math.floor(item.unit_price) }} x {{ item.product_quantity }}</div>
+                        </v-list-item-subtitle>
+                    </v-list-item-content>
+                    <!-- 總價 -->
+                    <v-list-item-action-text class="text-subtitle-1 font-weight-bold">${{ item.total }}</v-list-item-action-text>
+                </v-list-item>
+            </v-list>
+        </v-card>
+        <!-- 表單 -->
+        <v-form ref="form" v-model="valid">
+            <v-card class="my-12 ma-auto" elevation="4">
+                <!-- 選擇付款方式 -->
+                    <v-card-title class="font-weight-bold">選擇您的付款方式</v-card-title>
+                    <v-card-subtitle class="mt-2">
+                        <v-chip-group mandatory active-class="deep-purple--text text--accent-4" name="payment_id" v-model="form.payment_id">
+                            <v-chip v-for="payment in payments" :key="'payment' + payment.id" :value="payment.id" large label @click="checkPaymentMethod(payment)" class="payment_title">
+                                {{ payment.title }}
+                            </v-chip>
+                        </v-chip-group>
+                    </v-card-subtitle>
+                    <v-divider></v-divider>
+                    <div v-if="!creditCardFormDisabled">
+                        <v-card-title class="font-weight-bold">選擇刷卡帳戶</v-card-title>
+                        <!-- 信用卡輸入欄位 -->
+                        <v-card-text>
+                            <VCleaveInput
+                                class="text_field"
+                                v-model="form.creditCard.number"
+                                :options="options"
+                                :rules="[rules.required]"
+                                :append-icon="creditCardIcon"
+                                outlined
+                                label="卡號"
+                            />
+                            <v-text-field class="text_field" label="持有人" outlined v-model="form.creditCard.holder_name" :rules="[rules.required]"></v-text-field>
+                            <v-select class="text_field" label="到期日(月)" outlined :items="months" v-model="form.creditCard.expiration_month" :rules="[rules.required]"></v-select>
+                            <v-select class="text_field" label="到期日(年)" outlined :items="years" v-model="form.creditCard.expiration_year" :rules="[rules.required]"></v-select>
+                            <v-text-field class="text_field" label="安全碼(CVV)" outlined maxlength="3" counter="3" v-model="form.creditCard.cvv" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
+                        </v-card-text>
+                        <!-- 自動填入我的信用卡 -->
+                        <v-card-subtitle>
+                            <v-switch @click="[autoFillCreditCard = !autoFillCreditCard, fillCreditCardInfo()]" inset label="填入我的信用卡"></v-switch>
+                        </v-card-subtitle>
+                        <!-- 選擇已經輸入的信用卡 -->
+                        <v-dialog max-width="600" v-model="selectCreditCardDialog">
+                            <v-card v-if="!user.credit_cards.length">
+                                <v-card-title class="font-weight-bold">填寫資料</v-card-title>
+                                <v-card-text>請先至個人資料填寫信用卡。</v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="error" text @click="selectCreditCardDialog = false">先不要</v-btn>
+                                    <v-btn color="primary" nuxt :to="{ name: 'user-account' }">去填寫</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                            <v-card v-else>
+                                <v-card-title class="font-weight-bold">選擇信用卡</v-card-title>
                                 <v-card-text>
-                                    <v-text-field class="text_field"  label="卡號" outlined maxlength="16" counter="16" v-model="form.creditCard.number" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
-                                    <v-text-field class="text_field" label="持有人" outlined v-model="form.creditCard.holder_name" :rules="[rules.required]"></v-text-field>
-                                    <v-select class="text_field" label="到期日(月)" outlined :items="months" v-model="form.creditCard.expiration_month" :rules="[rules.required]"></v-select>
-                                    <v-select class="text_field" label="到期日(年)" outlined :items="years" v-model="form.creditCard.expiration_year" :rules="[rules.required]"></v-select>
-                                    <v-text-field class="text_field" label="安全碼(CVV)" outlined maxlength="3" counter="3" v-model="form.creditCard.cvv" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
+                                    <v-radio-group>
+                                        <v-radio v-for="(creditCard, index) in user.credit_cards" :key="'creditCard' + creditCard.id" :label="`卡號: ${creditCard.masked_card_number}`" @click="setCurrentSelectedCreditCardInputs(index)"></v-radio>
+                                    </v-radio-group>
                                 </v-card-text>
-                                <!-- 自動填入我的信用卡 -->
-                                <v-card-subtitle>
-                                    <v-switch @click="[autoFillCreditCard = !autoFillCreditCard, fillCreditCardInfo()]" inset label="填入我的信用卡"></v-switch>
-                                </v-card-subtitle>
-                                <!-- 選擇已經輸入的信用卡 -->
-                                <v-dialog max-width="600" v-model="selectCreditCardDialog">
-                                    <v-card v-if="!user.credit_cards.length">
-                                        <v-card-title class="font-weight-bold">填寫資料</v-card-title>
-                                        <v-card-text>請先至個人資料填寫信用卡。</v-card-text>
-                                        <v-card-actions>
-                                            <v-spacer></v-spacer>
-                                            <v-btn color="error" text @click="selectCreditCardDialog = false">先不要</v-btn>
-                                            <v-btn color="primary" nuxt :to="{ name: 'user-account' }">去填寫</v-btn>
-                                        </v-card-actions>
-                                    </v-card>
-                                    <v-card v-else>
-                                        <v-card-title class="font-weight-bold">選擇信用卡</v-card-title>
-                                        <v-card-text>
-                                            <v-radio-group>
-                                                <v-radio v-for="(creditCard, index) in user.credit_cards" :key="'creditCard' + creditCard.id" :label="`卡號: ${creditCard.masked_card_number}`" @click="setCurrentSelectedCreditCardInputs(index)"></v-radio>
-                                            </v-radio-group>
-                                        </v-card-text>
-                                        <v-card-actions>
-                                            <v-spacer></v-spacer>
-                                            <v-btn color="primary" outlined @click="selectCreditCardDialog = false">關閉</v-btn>
-                                        </v-card-actions>
-                                    </v-card>
-                                </v-dialog>
-                            </div>
-                        <!-- 輸入訂單資訊 -->
-                            <v-card-title class="font-weight-bold">輸入訂單詳細資料</v-card-title>
-                            <!-- 姓名 -->
-                            <v-card-text>
-                                <v-text-field
-                                    class="text_field"
-                                    name="buyer_name"
-                                    v-model="form.user_profile.buyer_name"
-                                    :rules="[rules.required, rules.lettersOnly]"
-                                    outlined
-                                    label="您的姓名"
-                                    placeholder="王小明"
-                                ></v-text-field>
-                                <!-- 電話 -->
-                                <v-text-field
-                                    class="text_field"
-                                    name="buyer_phone"
-                                    v-model="form.user_profile.buyer_phone"
-                                    :rules="[rules.required, rules.numbersOnly]"
-                                    maxlength="10"
-                                    outlined
-                                    label="您的電話"
-                                    placeholder="0912345678"
-                                ></v-text-field>
-                                <!-- 地址 -->
-                                <v-text-field
-                                    class="text_field"
-                                    name="address"
-                                    v-model="form.user_profile.address"
-                                    :rules="[rules.required]"
-                                    outlined
-                                    label="您的地址"
-                                    placeholder="OO市OO區OO路OO號..."
-                                ></v-text-field>
-                            </v-card-text>
-                            <!-- 使用常用資料 -->
-                            <v-card-subtitle>
-                                <v-switch @click="autoFillUserProfile" v-model="autoFillProfile" inset label="填入我的個人資料"></v-switch>
-                            </v-card-subtitle>
-                            <v-divider></v-divider>
-                            <!-- 提醒視窗 -->
-                            <v-dialog v-model="dialog" width="600">
-                                <v-card>
-                                    <v-card-title class="font-weight-bold">尚未填寫個人資料</v-card-title>
-                                    <v-card-text class="font-weight-bold">我們發現您尚未填寫您的個人檔案，是否先進行填寫?</v-card-text>
-                                    <!-- 按鈕操作 -->
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn @click="dialog = false" color="error" outlined>先不要</v-btn>
-                                        <v-btn color="primary" nuxt :to="{ name: 'user-account' }">去填寫</v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-dialog>
-                        <!-- 金額小計 -->
-                        <div class="subtotal text-right text-h6 font-weight-bold ma-4">
-                            金額小計: <span class="red--text text-lighten-2">{{ subTotal }}</span> 
-                        </div>
-                        <v-divider></v-divider>
-                        <!-- 送出按鈕 -->
-                        <div class="text-right">
-                            <v-btn large color="primary" class="create_order_btn ma-6"
-                                @click="checkAndCreateOrder"
-                                :disabled="!valid" 
-                                :loading="loading"
-                            >
-                                <v-icon>fa-check fa-fw</v-icon>
-                                <span>建立訂單</span>
-                            </v-btn> 
-                        </div>
-                    </v-card>
-                </v-form>  
-            </div>
-        </div>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="primary" outlined @click="selectCreditCardDialog = false">關閉</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                    </div>
+                <!-- 輸入訂單資訊 -->
+                    <v-card-title class="font-weight-bold">輸入訂單詳細資料</v-card-title>
+                    <!-- 姓名 -->
+                    <v-card-text>
+                        <v-text-field
+                            class="text_field"
+                            name="buyer_name"
+                            v-model.trim="form.user_profile.buyer_name"
+                            :rules="[rules.required, rules.lettersOnly]"
+                            outlined
+                            label="您的姓名"
+                            placeholder="王小明"
+                        ></v-text-field>
+                        <!-- 電話 -->
+                        <v-text-field
+                            class="text_field"
+                            name="buyer_phone"
+                            v-model.trim="form.user_profile.buyer_phone"
+                            :rules="[rules.required, rules.numbersOnly]"
+                            maxlength="10"
+                            outlined
+                            label="您的電話"
+                            placeholder="0912345678"
+                        ></v-text-field>
+                        <!-- 地址 -->
+                        <v-text-field
+                            class="text_field"
+                            name="address"
+                            v-model.trim="form.user_profile.address"
+                            :rules="[rules.required]"
+                            outlined
+                            label="您的地址"
+                            placeholder="OO市OO區OO路OO號..."
+                        ></v-text-field>
+                    </v-card-text>
+                    <!-- 使用常用資料 -->
+                    <v-card-subtitle>
+                        <v-switch @click="autoFillUserProfile" v-model="autoFillProfile" inset label="填入我的個人資料"></v-switch>
+                    </v-card-subtitle>
+                    <v-divider></v-divider>
+                    <!-- 提醒視窗 -->
+                    <v-dialog v-model="dialog" width="600">
+                        <v-card>
+                            <v-card-title class="font-weight-bold">尚未填寫個人資料</v-card-title>
+                            <v-card-text class="font-weight-bold">我們發現您尚未填寫您的個人檔案，是否先進行填寫?</v-card-text>
+                            <!-- 按鈕操作 -->
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn @click="dialog = false" color="error" outlined>先不要</v-btn>
+                                <v-btn color="primary" nuxt :to="{ name: 'user-account' }">去填寫</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                <!-- 金額小計 -->
+                <div class="subtotal text-right text-h6 font-weight-bold ma-4">
+                    金額小計: <span class="red--text text-lighten-2">{{ subTotal }}</span> 
+                </div>
+                <v-divider></v-divider>
+                <!-- 送出按鈕 -->
+                <div class="text-right">
+                    <v-btn large color="primary" class="create_order_btn ma-6"
+                        @click="checkAndCreateOrder"
+                        :disabled="!valid" 
+                        :loading="loading"
+                    >
+                        <v-icon>fa-check fa-fw</v-icon>
+                        <span>建立訂單</span>
+                    </v-btn> 
+                </div>
+            </v-card>
+        </v-form>  
     </v-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import inputRulesMixins from '~/mixins/inputRulesMixin'
+import VCleaveInput from "vuetify-cleave";
 
 export default {
     middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
     mixins:[inputRulesMixins],
+    components: {
+        VCleaveInput, //* 以套件來驗證輸入的信用卡
+    },
     head() {
         return {
             title: '建立訂單',
@@ -186,14 +183,6 @@ export default {
     },
     data() {
         return {
-            //* 表格標頭
-            tableHeads: [
-                { title: '商品' },
-                { title: '圖片' },
-                { title: '單價' },
-                { title: '數量' },
-                { title: '總價' },          
-            ],
             //* 是否開啟信用卡表單
             creditCardFormDisabled: true,
             //* 自動填入資料 
@@ -218,6 +207,22 @@ export default {
                     expiration_year: '',
                     cvv: '', 
                 },  
+            },
+            creditCardIcon: 'fa-regular fa-credit-card',
+            //* cleave.js(套件) 驗證所需的參數
+            options: {
+                creditCard: true,
+                delimiter: '-',
+                onCreditCardTypeChanged: (type) => {
+                    this.form.creditCard.type = type //* 表單內 credit card 的 type
+                    if(type == 'unknown') this.creditCardIcon = "fa-regular fa-credit-card"
+                    if(type == 'visa') this.creditCardIcon = "fa-brands fa-cc-visa"
+                    if(type == 'jcb') this.creditCardIcon = "fa-brands fa-cc-jcb"
+                    if(type == 'diners') this.creditCardIcon = "fa-brands fa-cc-diners-club"
+                    if(type == 'amex') this.creditCardIcon = "fa-brands fa-cc-amex"
+                    if(type == 'mastercard') this.creditCardIcon = "fa-brands fa-cc-mastercard"
+                    if(type == 'discover') this.creditCardIcon = "fa-brands fa-cc-discover"
+                }
             },
             // 有效日期(月)
             months: [
@@ -355,14 +360,19 @@ export default {
 <style lang="scss" scoped>
 // table 的 style 在 main.css 
 .checkout_wrapper {
-    width: 80%;
+    max-width: 50%;
 }
 .text_field {
     width: 350px;
 }
+@media (max-width: 1280px) {
+    .checkout_wrapper {
+        max-width: 75%;
+    }
+}
 @media (max-width: 768px) {
     .checkout_wrapper {
-        width: 100%;
+        max-width: 100%;
     }
 }
 </style>
