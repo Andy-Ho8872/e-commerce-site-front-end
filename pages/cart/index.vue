@@ -134,12 +134,24 @@
                     elevation="2"
                 >
                     <!-- 小計金額 -->
-                    <div class="subtotal text-sm-right text-center font-weight-bold">
-                        <div class="py-2">小計: ${{ subTotal }}</div>
-                        <div class="py-2">運費: ${{ delivery_fee }}</div>
-                        <div class="py-2">總金額: 
-                            <span class="blue--text text-h6">${{ subTotal + delivery_fee }}</span>
+                    <div class="subtotal text-sm-right font-weight-bold">
+                        <!-- <div class="py-2">小計: ${{ subTotal }}</div> -->
+                        <div class="py-2 d-flex">
+                            <div class="cart_footer_title">小計:</div>
+                            <div class="cart_footer_value">${{ subTotal }}</div>
                         </div>
+                        <!-- <div class="py-2">運費: ${{ delivery_fee }}</div> -->
+                        <div class="py-2 d-flex">
+                            <div class="cart_footer_title">運費:</div>
+                            <div class="cart_footer_value">${{ delivery_fee }}</div>
+                        </div>
+                        <div class="py-2 d-flex">
+                            <div class="cart_footer_title">總金額:</div>
+                            <div class="cart_footer_value">${{ subTotal + delivery_fee }}</div>
+                        </div>
+                        <!-- <div class="py-2">總金額: 
+                            <span class="blue--text text-h6">${{ subTotal + delivery_fee }}</span>
+                        </div> -->
                         <v-divider></v-divider>
                         <!-- 按鈕群組 -->
                         <div class="cart_footer_btn pt-4">
@@ -221,17 +233,17 @@
                 <div class="mobile_footer text-body-1 font-weight-bold">
                     <div>消費明細</div>
                     <div class="d-flex pt-4 text-button">
-                        <div class="grey--text">小計</div>
+                        <div class="grey--text text--darken-1">小計</div>
                         <v-spacer></v-spacer>
                         <div>${{ subTotal }}</div>
                     </div>
                     <div class="d-flex pt-4 text-button">
-                        <div class="grey--text">運費</div>
+                        <div class="grey--text text--darken-1">運費</div>
                         <v-spacer></v-spacer>
                         <div>${{ delivery_fee }}</div>
                     </div>
                     <div class="d-flex pt-4 text-button">
-                        <div class="grey--text">總金額</div>
+                        <div class="grey--text text--darken-1">總金額</div>
                         <v-spacer></v-spacer>
                         <div class="blue--text text-h6">${{ subTotal + delivery_fee }}</div>
                     </div>
@@ -351,6 +363,12 @@ $discounted_text__color: rgba(119, 112, 112, 0.65);
 //? Footer  -------------------------------Start
 .cart_footer .subtotal {
     width: 100%;
+}
+.cart_footer_title {
+    width: 90%;
+}
+.cart_footer_value {
+    width: 10%;
 }
 //? Footer  -------------------------------End
 
