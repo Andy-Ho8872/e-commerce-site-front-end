@@ -8,14 +8,17 @@
             </v-card-title>
             <v-list two-line>
                 <v-list-item v-for="item in userCart" :key="'item' + item.id">
-                    <v-list-item-avatar tile size="60">
+                    <v-list-item-avatar rounded="lg" size="60">
                         <v-img :src="item.imgUrl"></v-img>
                     </v-list-item-avatar>
                     <!-- 規格與價格 -->
                     <v-list-item-content>
                         <v-list-item-title class="font-weight-bold">{{ item.title }}</v-list-item-title>
                         <v-list-item-subtitle>
-                            <div class="my-2">{{ item.variation_option_values }}</div>
+                            <div class="my-2">規格: 
+                                <span v-if="item.variation_option_values.length">{{ item.variation_option_values }}</span>
+                                <span v-else>無</span>
+                            </div>
                             <div>${{ Math.floor(item.unit_price) }} x {{ item.product_quantity }}</div>
                         </v-list-item-subtitle>
                     </v-list-item-content>

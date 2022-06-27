@@ -63,8 +63,11 @@
                                         :src="item.imgUrl"
                                     ></v-img>
                                     <span class="mx-2">{{ item.title }}</span>
-                                    <span class="caption blue-grey--text text--darken-1" v-if="item.variation_option_values.length">{{ item.variation_option_values }}</span>
-                                
+                                    <div class="caption blue-grey--text text--darken-1" >
+                                        規格: 
+                                        <span v-if="item.variation_option_values.length">{{ item.variation_option_values }}</span>
+                                        <span v-else>無</span>
+                                    </div>
                                 </div>
                             </nuxt-link>
                         </div>
@@ -115,7 +118,7 @@
                             <!-- 刪除按鈕(單項商品) -->
                             <v-btn
                                 class="delete_single_item cart_section_btn white--text"
-                                @click="deleteFromCart(item.product_id)"
+                                @click="deleteFromCart({ product_id: item.product_id, variation_option_values: item.variation_option_values })"
                                 color="red"
                                 outlined
                             >
@@ -188,10 +191,14 @@
                         <!-- 商品訊息 -->
                         <div class="cart_content_details">
                             <div class="item_title text-body-2 font-weight-bold">{{ item.title }}</div>
-                            <div class="caption blue-grey--text text--darken-3" v-if="item.variation_option_values.length">{{ item.variation_option_values }}</div>
+                            <div class="caption blue-grey--text text--darken-3 mt-1">
+                                規格: 
+                                <span v-if="item.variation_option_values.length">{{ item.variation_option_values }}</span>
+                                <span v-else>無</span>
+                            </div>
                             <div class="item_unit_price text-button">
                                 <!-- 原價 -->
-                                <span class="blue-grey--text" :class="item.discount_rate != 1 ? 'text-decoration-line-through' : null">
+                                <span :class="item.discount_rate != 1 ? 'text-decoration-line-through' : null">
                                     ${{ Math.floor(item.unit_price) }}
                                 </span>
                                 <!-- 特價 -->
@@ -204,7 +211,7 @@
                         <div class="d-flex">
                             <QuantityField :product_id="item.product_id" :product_quantity="item.product_quantity"></QuantityField>
                             <!-- 刪除 -->
-                            <v-btn x-small fab outlined color="error" class="ml-4" @click="deleteFromCart(item.product_id)">
+                            <v-btn x-small fab outlined color="error" class="ml-4" @click="deleteFromCart({ product_id: item.product_id, variation_option_values: item.variation_option_values })">
                                 <v-icon x-small>fa-trash</v-icon>
                             </v-btn>
                         </div>
