@@ -18,42 +18,19 @@
             <v-card-title class="product_title font-weight-bold text-body-2 black--text">
                 <span class="text-truncate">{{ product.title }}</span>
             </v-card-title>
+            <!-- 評級 -->
+            <v-card-subtitle>
+                <Ratings :product="product" :size="12" class="pt-2"/>
+            </v-card-subtitle>
             <!-- 商品價格 -->
-            <v-card-text
-                class="product_unit_price d-flex"
-                :class="[
-                    product.discount_rate != 1
-                        ? 'text-body-1 font-weight-bold blue--text'
-                        : 'black--text',
-                ]"
-            >
-                $ {{ conditionalPrice }}
-            </v-card-text>
             <v-card-text>
-                <Ratings
-                    :product="product"
-                    :size="12"
-                    class="product_ratings mx-1"
-                />
+                <div class="product_unit_price d-flex" :class="[product.discount_rate != 1 ? 'text-body-1 font-weight-bold blue--text' : 'black--text']">$ {{ conditionalPrice }}</div>
             </v-card-text>
         </nuxt-link>
-        <!-- 放入購物車按鈕 -->
-        <v-btn
-            :elevation="elevation"
-            @click="addToCart(product.id)"
-            class="action_btn rounded-b-lg"
-            color="primary"
-            tile
-            large
-            depressed
-        >
-            <span>加入購物車</span>
-        </v-btn>
     </v-card>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 
 export default {
     //? passed from pages/index.vue
@@ -83,12 +60,6 @@ export default {
                 ? Math.floor(this.product.unit_price)
                 : Math.floor(this.product.unit_price * this.product.discount_rate)
         },
-    },
-    methods: {
-        ...mapActions({
-            //* 加入購物車
-            addToCart: 'cart/addToCart',
-        }),
     },
 }
 </script>

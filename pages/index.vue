@@ -30,9 +30,9 @@
             <v-row>
                 <v-col v-for="item in items.hot_sale_products" :key="item.id" cols="6" lg="2" md="3" sm="4">
                     <!-- 骨架屏 -->
-                    <SkeletonCardV2 :cardWidth="200" v-if="loading" class="mt-8 mb-16"/>
+                    <SkeletonCardV2 :cardWidth="200" v-if="loading" class="mt-8"/>
                     <!-- 商品卡片 -->
-                    <ProductV2 :product="item" :cardWidth="200" :elevation="4" v-if="!loading" class="mt-8 mb-16"/>
+                    <ProductV2 :product="item" :cardWidth="200" :elevation="4" v-if="!loading" class="mt-8"/>
                 </v-col>
             </v-row>
         </v-sheet>
