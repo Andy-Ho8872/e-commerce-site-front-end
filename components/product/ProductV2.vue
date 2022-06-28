@@ -13,7 +13,7 @@
                 <span>{{ formatLabel }} 折</span>
             </div>
             <!-- 標籤名稱 -->
-            <Tags :product="product" class="product_tags mx-2" />
+            <Tags :product="product" :sliced="true" class="product_tags mx-2" />
             <!-- 商品名稱 -->
             <v-card-title class="product_title font-weight-bold text-body-2 black--text">
                 <span class="text-truncate">{{ product.title }}</span>

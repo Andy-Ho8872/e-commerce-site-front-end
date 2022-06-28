@@ -21,6 +21,10 @@
                             {{ product.title }}
                         </v-card-title>
                         <!-- 價格 -->
+                        <v-card-subtitle>
+                            <!-- 評級 -->
+                            <Ratings :product="product" size="20" class="my-4"/>
+                        </v-card-subtitle>
                         <v-card-text class="title">
                             <v-sheet rounded="lg" class="pa-2">
                                 <!-- 原價 -->
@@ -35,16 +39,9 @@
                                 <v-badge tile :content="`${product.discount_rate * 10} 折`" v-if="product.discount_rate != 1"></v-badge>
                             </v-sheet>
                         </v-card-text>
-                        <!-- 評級 -->
                         <v-card-text>
-                            <Ratings :product="product" size="24"/>
                             <!-- 標籤 -->
-                            <v-chip-group class="pb-1" column>
-                                <v-chip label color="primary" small v-for="tag in product.tags" :key="tag.id">
-                                    <!-- 名稱 -->
-                                    <span>{{ tag.title }}</span>
-                                </v-chip>
-                            </v-chip-group>
+                            <Tags :product="product"/>
                         </v-card-text>
                         <!-- 選擇規格 -->
                         <v-card-text v-if="product.variations.length">
