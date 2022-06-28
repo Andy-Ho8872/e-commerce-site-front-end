@@ -56,8 +56,10 @@ describe('Header.vue', () => {
         const wrapper = mount(Header, {
             stubs: {
                 NuxtLink: RouterLinkStub, // fake router
-                MiniNotification: true, // fake component
-                AutoComplete: true, // fake component
+                // fake components
+                MiniNotification: true, 
+                AutoComplete: true, 
+                ItemPreview: true, 
             },
             localVue,
             vuetify,
@@ -86,8 +88,10 @@ describe('Header.vue', () => {
         const wrapper = mount(Header, {
             stubs: {
                 NuxtLink: RouterLinkStub, // fake router
-                MiniNotification: true, // fake component
-                AutoComplete: true, // fake component
+                // fake components
+                MiniNotification: true, 
+                AutoComplete: true, 
+                ItemPreview: true, 
             },
             localVue,
             vuetify,
@@ -107,8 +111,10 @@ describe('Header.vue', () => {
         const wrapper = mount(Header, {
             stubs: {
                 NuxtLink: RouterLinkStub, // fake router
-                MiniNotification: true, // fake component
-                AutoComplete: true, // fake component
+                // fake components
+                MiniNotification: true, 
+                AutoComplete: true, 
+                ItemPreview: true,
             },
             localVue,
             vuetify,
@@ -123,8 +129,10 @@ describe('Header.vue', () => {
         const wrapper = mount(Header, {
             stubs: {
                 NuxtLink: RouterLinkStub, // fake router
-                MiniNotification: true, // fake component
-                AutoComplete: true, // fake component
+                // fake components
+                MiniNotification: true, 
+                AutoComplete: true, 
+                ItemPreview: true,
             },
             localVue,
             vuetify,
@@ -145,8 +153,10 @@ describe('Header.vue', () => {
         const wrapper = mount(Header, {
             stubs: {
                 NuxtLink: RouterLinkStub, // fake router
-                MiniNotification: true, // fake component
-                AutoComplete: true, // fake component
+                // fake components
+                MiniNotification: true, 
+                AutoComplete: true, 
+                ItemPreview: true,
             },
             localVue,
             vuetify,

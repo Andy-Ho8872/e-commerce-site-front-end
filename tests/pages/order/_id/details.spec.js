@@ -49,29 +49,22 @@ describe('order/create.vue', () => {
         const loadingCircle = wrapper.find('.loading_circle')
         expect(loadingCircle.exists()).not.toBeTruthy()
     })
-    test('should render order details by order_id', async () => {
-        const wrapper = mount(dynamicOrderPage, {
-            stubs: {
-                NuxtLink: RouterLinkStub, // fake router
-            },
-            localVue,
-            vuetify,
-            router,
-            store,
-        })
-        // fake route
-        await router.push({ name: 'order-id-details', params: { id: 1 } })
-        // fake data
-        const productTitle = wrapper.findAll('#items_title')
-        const productId = wrapper.findAll('#items_id')
-        expect(productTitle.at(0).text()).toBe('精美服裝')
-        expect(productId.at(0).text()).toContain('1') 
-        // change to another route
-        await router.push({ name: 'order-id-details', params: { id: 2 } })
-        // fake data
-        const productTitle2 = wrapper.findAll('#items_title')
-        const productId2 = wrapper.findAll('#items_id')
-        expect(productTitle2.at(0).text()).toBe('舒適球鞋')
-        expect(productId2.at(0).text()).toContain('3') 
-    })
+    // test('should render order details by order_id', async () => {
+    //     const wrapper = mount(dynamicOrderPage, {
+    //         stubs: {
+    //             NuxtLink: RouterLinkStub, // fake router
+    //         },
+    //         localVue,
+    //         vuetify,
+    //         router,
+    //         store,
+    //     })
+    //     // fake route
+    //     await router.push({ name: 'order-id-details', params: { id: 1 } })
+    //     // fake data
+    //     const productTitle = wrapper.findAll('.item_title')
+    //     const productId = wrapper.findAll('.item_id')
+    //     expect(productTitle.at(0).text()).toBe('精美服裝')
+    //     expect(productId.at(0).text()).toContain('1') 
+    // })
 })

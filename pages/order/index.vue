@@ -26,7 +26,7 @@
                                 <template v-for="payment in payments">
                                     <v-chip 
                                         v-if="order.payment_id == payment.id" :key="'payment' + payment.id"
-                                        class="mx-2"
+                                        class="payment_id mx-2"
                                         color="blue"
                                         text-color="white"
                                         label
@@ -39,7 +39,7 @@
                                 <template v-for="status in status">
                                     <v-chip 
                                         v-if="order.status_id === status.id" :key="'status' + status.id"
-                                        class="mx-2"
+                                        class="status_id mx-2"
                                         color="orange"
                                         text-color="white"
                                         label
@@ -69,7 +69,7 @@
                         <v-card-title class="font-weight-bold">編輯操作</v-card-title>
                         <v-card-subtitle>
                             <DeleteDialog :order="order" class="delete_dialog_component"/>
-                            <v-btn class="my-2 mx-2" color="primary" nuxt :to="{ name: 'order-id-details', params: { id: order.id } }">查看</v-btn>
+                            <v-btn class="nav_button my-2 mx-2" color="primary" nuxt :to="{ name: 'order-id-details', params: { id: order.id } }">查看</v-btn>
                         </v-card-subtitle>
                     </v-card>
                 </v-col>

@@ -5,16 +5,34 @@ export const state = () => ({
     //* 單筆訂單 (測試)
     order: {
         id: 1,
+        payment_id: 1,
+        status_id: 1,
+        items_count: 2,
+        sumSubtotal: 1380,
         items: [
             {
                 id: 1,
-                title: 'item-1',
+                title: '精美服裝',
+                imgUrl: 'https://example.com/images/1',
+                pivot: {
+                    product_id: 1,
+                    product_quantity: 1,
+                },
+                subtotal: 800,
             },
             {
                 id: 2,
-                title: 'item-22',
+                title: '時尚背包',
+                imgUrl: 'https://example.com/images/2',
+                pivot: {
+                    product_id: 2,
+                    product_quantity: 1,
+                },
+                subtotal: 580,
             },
         ],
+        address: '桃園市OO區OO路OO號',
+        created_at: '2021/09/04',
     },
     //* 所有訂單
     orders: [

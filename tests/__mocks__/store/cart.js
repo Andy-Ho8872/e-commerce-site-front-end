@@ -9,6 +9,7 @@ export const state = () => ({
             quantity: 1,
             //! readonly
             total: 850, // unit_price * discount_rate * quantity
+            variation_option_values: ['高級版']
         },
         {
             id: 2,
@@ -19,6 +20,7 @@ export const state = () => ({
             quantity: 1,
             //! readonly
             total: 500, // unit_price * discount_rate * quantity
+            variation_option_values: ['黑色']
         },
     ],
     product: {

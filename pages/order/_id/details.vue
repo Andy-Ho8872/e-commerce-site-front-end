@@ -23,7 +23,7 @@
                             <div class="right">
                                 <v-card-subtitle class="font-weight-bold">
                                     <div class="my-4">商品編號:
-                                        <span class="mx-2">#{{ item.pivot.product_id }}</span>
+                                        <span class="item_id mx-2">#{{ item.pivot.product_id }}</span>
                                     </div>
                                     <div class="my-4 d-flex">
                                         商品名稱:
@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="my-4 d-flex" v-if="item.pivot.variation_option_values.length">
                                         商品規格:
-                                        <div class="item_title mx-2 text-truncate">
+                                        <div class="item_variation_option_values mx-2 text-truncate">
                                             <span v-for="(option, index) in item.pivot.variation_option_values" :key="'option' + index">{{ option }} 、</span>
                                         </div>
                                     </div>

@@ -115,11 +115,11 @@ describe('cart.vue', () => {
             router,
             store,
         })
-        const subtotal = wrapper.find('.subtotal > span')
+        const subtotal = wrapper.find('.cart_footer_value')
         // item 1    850
         // item 2    500
         // subtotal = item 1 + item 2
-        expect(subtotal.text()).toBe('1350')
+        expect(subtotal.text()).toContain('1350')
     })
     test('deleteFromCart action should be call with REMOVE_SINGLE_PRODUCT_FROM_CART mutation', async () => {
         const wrapper = mount(cartPage, {

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import VueRouter from 'vue-router'
 // components
-import ProductV2 from '@/components/product/ProductV2.vue'
+import ProductCard from '@/components/product/ProductCard.vue'
 // Utilities
 import { createLocalVue, RouterLinkStub, mount } from '@vue/test-utils'
 // use packages or library
@@ -10,7 +10,7 @@ Vue.use(Vuetify)
 const localVue = createLocalVue()
 localVue.use(VueRouter)
 
-describe('ProductV2.vue', () => {
+describe('ProductCard.vue', () => {
     // presets
     let vuetify
     let router
@@ -25,7 +25,7 @@ describe('ProductV2.vue', () => {
         router = new VueRouter({ routes })
     })
     test('should render product title', async () => {
-        const wrapper = mount(ProductV2, {
+        const wrapper = mount(ProductCard, {
             propsData: {
                 // fake data
                 product: {
@@ -48,32 +48,8 @@ describe('ProductV2.vue', () => {
         const productTitle = wrapper.find('.product_title')
         expect(productTitle.text()).toBe('product-1')
     })
-    test('should render shorter product title correctly when title is too long', async () => {
-        const wrapper = mount(ProductV2, {
-            propsData: {
-                // fake data
-                product: {
-                    id: 1,
-                    title: 'very long product name',
-                    imgUrl: 'https://www.example.com/iamge/1.jpg',
-                    unit_price: 888,
-                    discount_rate: 1,
-                    ratings: 5,
-                },
-            },
-            stubs: {
-                NuxtLink: RouterLinkStub, // fake router
-                Tags: true, // fake component
-                Ratings: true, // fake component
-            },
-            localVue,
-            vuetify,
-        })
-        const productTitle = wrapper.find('.product_title')
-        expect(productTitle.text()).toBe('very long prod...')
-    })
     test('should render formatted product label when discount_rate is not equal to 1', async () => {
-        const wrapper = mount(ProductV2, {
+        const wrapper = mount(ProductCard, {
             propsData: {
                 // fake data
                 product: {
@@ -99,7 +75,7 @@ describe('ProductV2.vue', () => {
         expect(productLabel.text()).toContain('8.5')
     })
     test('should render discounted unit_price and class when discount_rate is not equal to 1', async () => {
-        const wrapper = mount(ProductV2, {
+        const wrapper = mount(ProductCard, {
             propsData: {
                 // fake data
                 product: {
@@ -126,7 +102,7 @@ describe('ProductV2.vue', () => {
         expect(productUnitPrice.classes()).toContainEqual('blue--text') //* discounted class
     })
     test('should not render product_label when discount_rate is equal to 1', async () => {
-        const wrapper = mount(ProductV2, {
+        const wrapper = mount(ProductCard, {
             propsData: {
                 // fake data
                 product: {
@@ -150,7 +126,7 @@ describe('ProductV2.vue', () => {
         expect(productLabel.exists()).toBeFalsy()
     })
     test('should receive correct route params after clicking product card', async () => {
-        const wrapper = mount(ProductV2, {
+        const wrapper = mount(ProductCard, {
             propsData: {
                 // fake data
                 product: {

@@ -70,7 +70,7 @@ describe('order/index.vue', () => {
             router,
             store,
         })
-        const paymentMethod = wrapper.findAll('#payment_id')
+        const paymentMethod = wrapper.findAll('.payment_id')
         expect(paymentMethod.at(0).text()).toBe('現金付款')
         expect(paymentMethod.at(1).text()).toBe('刷卡付款')
     })
@@ -87,7 +87,7 @@ describe('order/index.vue', () => {
             router,
             store,
         })
-        const status = wrapper.findAll('#status_id')
+        const status = wrapper.findAll('.status_id')
         expect(status.at(0).text()).toBe('出貨中')
         expect(status.at(1).text()).toBe('已到貨')
     })
