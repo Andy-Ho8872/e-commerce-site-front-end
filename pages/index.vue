@@ -5,7 +5,7 @@
         <!-- 優惠計時 (月份從 0 開始計算， 例如: 數字5 == 6月)-->
         <CountdownTimer
             background="blue darken-1"
-            :year="2021"
+            :year="2022"
             :month="9"
             :day="5"
             :hour="8"
@@ -26,16 +26,7 @@
         <CarouselV3 :cardWidth="340" :cardHeight="340" :data="items.latest_products" v-show="!loading"/>
         <!-- 熱門商品 -->
         <Banner elevation="2" icon="fa-burn" iconColor="red lighten-1" text="熱門商品" backgroundColor="white" class="mt-16"/>
-        <v-sheet elevation="6" rounded="lg" class="px-4 px-md-6">
-            <v-row>
-                <v-col v-for="item in items.hot_sale_products" :key="item.id" cols="6" lg="2" md="3" sm="4">
-                    <!-- 骨架屏 -->
-                    <SkeletonCardV2 :cardWidth="200" v-if="loading" class="mt-8"/>
-                    <!-- 商品卡片 -->
-                    <ProductV2 :product="item" :cardWidth="200" :elevation="4" v-if="!loading" class="mt-8"/>
-                </v-col>
-            </v-row>
-        </v-sheet>
+        <ProductGrid :data="items.hot_sale_products" :loading="loading"/>
         <!-- 觀看更多商品 -->
         <div class="text-center">
             <!-- 預設點擊後到第一頁 -->
