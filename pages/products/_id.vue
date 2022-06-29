@@ -142,9 +142,9 @@
                     </v-card-text>
                 </v-card>
                 <!-- 猜你喜歡 -->
-                <div class="my-8">
+                <div class="guess_you_like_container my-8 mx-auto" :style="{ 'max-width': width + 'px' }">
                     <Banner text="猜你喜歡"/>
-                    <ProductGrid :data="youMayLikeProducts"/>
+                    <ProductGrid :data="youMayLikeProducts" cols="6" lg="3"/>
                 </div>
             </v-col>
         </v-row>
