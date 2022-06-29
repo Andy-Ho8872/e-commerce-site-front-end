@@ -95,6 +95,8 @@ authRequest.interceptors.response.use(
         if(error && error.response) {
             switch (error.response.status) {
                 case 401:
+                    localStorage.removeItem("Token")
+                    localStorage.removeItem("UserEmail")
                     //* 重新導向
                     $nuxt._router.push({ name: 'auth-login' })
                     break; 
