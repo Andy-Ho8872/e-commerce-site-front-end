@@ -142,12 +142,10 @@
                     </v-card-text>
                 </v-card>
                 <!-- 猜你喜歡 -->
-                <v-card-title class="font-weight-bold text-h6 text-md-h5">猜你喜歡</v-card-title>
-                <v-row class="px-4">
-                    <v-col v-for="item in youMayLikeProducts" :key="'guess' + item.id" cols="6" lg="2" md="3" sm="4">
-                        <ProductV2 :product="item" :cardWidth="200" :elevation="4" class="mt-8 mb-16"/>
-                    </v-col>
-                </v-row>
+                <div class="my-8">
+                    <Banner text="猜你喜歡"/>
+                    <ProductGrid :data="youMayLikeProducts"/>
+                </div>
             </v-col>
         </v-row>
     </v-container>
