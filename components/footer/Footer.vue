@@ -34,6 +34,9 @@
             <li @click="scrollToTop">
                 <nuxt-link :to="{ name: 'user-notification' }">通知總覽</nuxt-link>
             </li>
+            <li>
+                <nuxt-link :to="{ name: 'privacy-policy' }">隱私政策</nuxt-link>
+            </li>
         </ul>
         <ul class="author_links">
             <h2>聯繫作者</h2>
