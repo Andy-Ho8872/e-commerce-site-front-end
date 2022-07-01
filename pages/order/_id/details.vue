@@ -3,15 +3,19 @@
         <!-- loading -->
         <LoadingCircle v-if="userOrder.length == 0" class="loading_circle"/>
         <!-- content -->
-        <div v-if="order">
-            <!-- 返回按鈕 -->
-            <div class="text-center my-4">
-                <v-btn dark rounded outlined x-large nuxt :to="{ name: 'order'}" color="blue lighten-2" class="mx-1">
+        <div v-if="order" class="mt-md-12">
+            <v-card color="blue" rounded="lg" max-width="1200" class="d-flex justify-center align-center ma-auto mb-4">
+                <v-card-title class="white--text font-weight-bold">
+                    <div>訂單編號: #{{ order.id }}</div>
+                </v-card-title>
+                <!-- 返回按鈕 -->
+                <v-spacer></v-spacer>
+                <v-btn outlined x-large nuxt :to="{ name: 'order'}" color="white" class="mx-4">
                     <v-icon>fa-long-arrow-alt-left fa-fw</v-icon>
                     <span>訂單總覽</span>
-                </v-btn> 
-            </div>
-            <v-sheet color="blue lighten-2" rounded="lg" max-width="1200" class="ma-auto mb-4 pa-8">
+                </v-btn>
+            </v-card>
+            <v-sheet color="blue" rounded="lg" max-width="1200" class="ma-auto mb-4 pa-8">
                 <v-row>
                     <v-col v-for="item in order.items" :key="'item' + item.pivot.product_id" cols="12" sm="6">
                         <v-card rounded="lg" class="d-flex mb-4" nuxt :to="{ name: 'products-id', params: { id : item.pivot.product_id } }">
@@ -29,7 +33,7 @@
                                         商品名稱:
                                         <div class="item_title mx-2 text-truncate">{{ item.title }}</div>
                                     </div>
-                                    <div class="my-4 d-flex" v-if="item.pivot.variation_option_values.length">
+                                    <div class="my-4 d-flex" v-if="item.pivot.variation_option_values.length !== 0">
                                         商品規格:
                                         <div class="item_variation_option_values mx-2 text-truncate">
                                             <span v-for="(option, index) in item.pivot.variation_option_values" :key="'option' + index">{{ option }} 、</span>
