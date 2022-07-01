@@ -18,10 +18,12 @@
             <v-sheet color="blue" rounded="lg" max-width="1200" class="ma-auto mb-4 pa-8">
                 <v-row>
                     <v-col v-for="item in order.items" :key="'item' + item.pivot.product_id" cols="12" sm="6">
-                        <v-card rounded="lg" class="d-flex mb-4" nuxt :to="{ name: 'products-id', params: { id : item.pivot.product_id } }">
+                        <v-card rounded="lg" class="d-flex mb-4">
                             <div class="left my-auto">
                                 <v-card-subtitle>
-                                    <v-img :src="item.imgUrl" :alt="item.title" max-height="80" max-width="80"></v-img>
+                                    <nuxt-link :to="{ name: 'products-id', params: { id : item.pivot.product_id } }">
+                                        <v-img :src="item.imgUrl" :alt="item.title" max-height="80" max-width="80"></v-img>
+                                    </nuxt-link>
                                 </v-card-subtitle>
                             </div>
                             <div class="right">
