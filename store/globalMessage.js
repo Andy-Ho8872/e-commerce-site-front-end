@@ -26,6 +26,6 @@ export const actions = {
             commit('CLEAR_MESSAGE')
             //* 清除 timeout 以防止記憶體洩漏 
             clearTimeout(timeout)
-        }, 3000)
+        }, 5000)
     }
 }
