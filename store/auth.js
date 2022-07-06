@@ -1,14 +1,3 @@
-//! old version
-// import {
-//     apiUserRegister,
-//     apiUserLogin,
-//     // apiCsrfLogin, //! 暫時不用
-//     apiGetUserInfo,
-//     apiUserLogout,
-//     apiUpdateUserProfile,
-//     apiClearUserProfile
-// } from '~/APIs/api.js'
-//* new version
 import {
     apiUserRegister,
     apiUserLogin,
@@ -111,7 +100,11 @@ export const actions = {
                 password_confirmation: user.password_confirmation,
             })
             //* 註冊成功後跳轉
-            alert('註冊成功，即將為您跳轉至登入頁面。')
+            const message = {
+                type: 'success',
+                text: '註冊成功，歡迎加入。',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
             this.$router.push({ name: 'auth-login' })
         } catch (error) {
             //* 錯誤訊息
@@ -147,11 +140,12 @@ export const actions = {
     },
     //* 確認使用者是否已經登入
     async checkIfUserHasLoggedIn({ state }) {
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             if (state.user) {
                 this.$router.push({ name: 'index' })
                 console.log('您目前已經登入，將導向至首頁')
             }
+            clearTimeout(timeout)
         }, 3000)
     },
     //* 登入流程
@@ -171,7 +165,12 @@ export const actions = {
             //* 撈取必要的資料
             await dispatch('fetchRequiredData')
             //* 重新導向
-            this.$router.push({ name: 'user-account' })
+            await this.$router.push({ name: 'index' })
+            const message = {
+                type: 'success',
+                text: '已經登入，歡迎光臨。',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             //* 錯誤訊息
             const msg = error.response.data.errors
@@ -187,7 +186,13 @@ export const actions = {
         try {
             //* 開啟第三方登入的網址
             window.location.href = (`${apiUserSocialiteLogin(provider)}`)
+            const message = {
+                type: 'success',
+                text: '已經登入，歡迎光臨。',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
+            this.$router.push({ name: 'auth-login' })
             console.log(error);
         }
         commit('SET_LOADING', false)
@@ -211,8 +216,12 @@ export const actions = {
             //* 清空 Vuex 暫存
             await dispatch('clearAllVuexStates')
             //* 重新導向
-            this.$router.push({ name: 'index' })
-            alert('您已經登出')
+            await this.$router.push({ name: 'index' })
+            const message = {
+                type: 'success',
+                text: '已經登出，感謝您的光臨。',
+            }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
             console.log('error from store/auth.js')
         }

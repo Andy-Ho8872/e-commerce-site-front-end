@@ -12,12 +12,15 @@ import { mapActions } from 'vuex';
 export default {
     data() {
         return {
-            token: this.$route.query.token ? this.$route.query.token : null
+            token: this.$route.query.token || null,
+            errorCode: this.$route.query.errorCode || null,
+            errorMessage: this.$route.query.errorMessage || null
         }
     },
     methods: {
         ...mapActions({
-            fetchRequiredData: 'auth/fetchRequiredData'
+            fetchRequiredData: 'auth/fetchRequiredData',
+            setFlashMessage: 'globalMessage/setFlashMessage'
         })
     },
     async mounted() {
@@ -26,7 +29,14 @@ export default {
             this.fetchRequiredData()
             this.$router.push({ name: 'index' })
         }
-        this.$router.push({ name: 'index' })
+        if(this.errorCode) {
+            await this.$router.push({ name: 'auth-login' })
+            const message = {
+                type: 'error',
+                text: this.errorMessage
+            }
+            this.setFlashMessage(message)
+        }
     }
 }
 </script>
