@@ -45,8 +45,7 @@ a {
 }
 
 table {
-  width: 80%;
-  margin: auto;
+  width: 100%;
   border-collapse: collapse;
   border-bottom: 4px solid;
   box-shadow: 2px 2px 4px #eceff1;
