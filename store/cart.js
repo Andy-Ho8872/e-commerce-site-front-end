@@ -49,10 +49,10 @@ export const mutations = {
         state.loading = loading
     },
     //***** 處理購物車的暫存 *****//
-    //* 清除資料 
-    REMOVE_SINGLE_PRODUCT_FROM_CART(state, productId) { //? 單筆資料
-        const index = state.userCart.findIndex((item) => {
-            return item.product_id == productId
+    //* 清除資料 //todo refactor with item.id
+    REMOVE_SINGLE_PRODUCT_FROM_CART(state, cart_id) { //? 單筆資料
+        const index = state.userCart.findIndex((cart) => {
+            return cart.id == cart_id
         })
         if(index !== -1) {
             state.userCart.splice(index, 1)
@@ -210,11 +210,11 @@ export const actions = {
         commit('SET_LOADING', false)
     },
     //* 從購物車中"移除"商品
-    async deleteFromCart({ dispatch, commit }, productId) {
+    async deleteFromCart({ dispatch, commit }, data) {
         try {
-            await apiDeleteFromCart(productId)
+            await apiDeleteFromCart(data)
             //* 刪除該商品的暫存數據(可以減少向後端發送撈取的 request)
-            await commit('REMOVE_SINGLE_PRODUCT_FROM_CART', productId)
+            await commit('REMOVE_SINGLE_PRODUCT_FROM_CART', data.cart_id)
             //* 確認購物車內是否還有商品
             await commit('CHECK_AND_SET_VALID_STATUS')
             // 提示訊息

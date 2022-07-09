@@ -12,7 +12,7 @@ export const apiAddToCart = (productId) => config.authRequest.get(`/cart/product
 export const apiAddToCartWithData = (data) => config.authRequest.post(`/cart/product/${data.product_id}/create`, data);
 //* 刪除
     //? 購物車中移除商品
-export const apiDeleteFromCart = (productId) => config.authRequest.delete(`/cart/product/${productId}/delete`);
+export const apiDeleteFromCart = (data) => config.authRequest.delete(`/cart/product/${data.product_id}/delete`, { data });
     //? 清空購物車
 export const apiDeleteAllFromCart = () => config.authRequest.delete(`/cart/product/deleteAll`);
 //* 修改

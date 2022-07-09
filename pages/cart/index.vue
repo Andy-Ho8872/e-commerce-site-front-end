@@ -118,7 +118,7 @@
                             <!-- 刪除按鈕(單項商品) -->
                             <v-btn
                                 class="delete_single_item cart_section_btn white--text"
-                                @click="deleteFromCart({ product_id: item.product_id, variation_option_values: item.variation_option_values })"
+                                @click="deleteFromCart({ product_id: item.product_id, cart_id: item.id })"
                                 color="red"
                                 outlined
                             >
@@ -135,12 +135,10 @@
                 >
                     <!-- 小計金額 -->
                     <div class="subtotal text-sm-right font-weight-bold">
-                        <!-- <div class="py-2">小計: ${{ subTotal }}</div> -->
                         <div class="py-2 d-flex">
                             <div class="cart_footer_title">小計:</div>
                             <div class="cart_footer_value">${{ subTotal }}</div>
                         </div>
-                        <!-- <div class="py-2">運費: ${{ delivery_fee }}</div> -->
                         <div class="py-2 d-flex">
                             <div class="cart_footer_title">運費:</div>
                             <div class="cart_footer_value">${{ delivery_fee }}</div>
@@ -149,9 +147,6 @@
                             <div class="cart_footer_title">總金額:</div>
                             <div class="cart_footer_value">${{ subTotal + delivery_fee }}</div>
                         </div>
-                        <!-- <div class="py-2">總金額: 
-                            <span class="blue--text text-h6">${{ subTotal + delivery_fee }}</span>
-                        </div> -->
                         <v-divider></v-divider>
                         <!-- 按鈕群組 -->
                         <div class="cart_footer_btn pt-4">
@@ -223,7 +218,7 @@
                         <div class="d-flex">
                             <QuantityField :product_id="item.product_id" :product_quantity="item.product_quantity"></QuantityField>
                             <!-- 刪除 -->
-                            <v-btn x-small fab outlined color="error" class="ml-4" @click="deleteFromCart({ product_id: item.product_id, variation_option_values: item.variation_option_values })">
+                            <v-btn x-small fab outlined color="error" class="ml-4" @click="deleteFromCart({ product_id: item.product_id, cart_id: item.id })">
                                 <v-icon x-small>fa-trash</v-icon>
                             </v-btn>
                         </div>
