@@ -13,7 +13,7 @@
                             <v-text-field label="商品圖片網址" name="imgUrl" v-model="formInput.imgUrl" :rules="[rules.required]"></v-text-field>
                         </v-card-subtitle>
                         <v-card-subtitle>
-                            <v-text-field label="單價" name="unit_price" v-model="formInput.unit_price" :rules="[rules.required]"></v-text-field>
+                            <v-text-field label="單價" name="unit_price" v-model="formInput.unit_price" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
                         </v-card-subtitle>
                         <v-card-subtitle>
                             <v-textarea label="敘述" name="description" v-model="formInput.description" :rules="[rules.required]"></v-textarea>
@@ -48,8 +48,8 @@
                         </v-card-subtitle>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="error" text class="ma-2" @click="dialog = false">取消</v-btn>
-                            <v-btn color="primary" class="ma-2" :disabled="!valid" @click="storeProduct(formInput)">上架</v-btn>
+                            <v-btn color="error" text class="ma-2" @click="closeAndInitForm">取消</v-btn>
+                            <v-btn color="primary" class="ma-2" :disabled="!valid" @click="[storeProduct(formInput), closeAndInitForm()]">上架</v-btn>
                         </v-card-actions>
                     </v-form>
                 </v-card-text>
@@ -138,8 +138,8 @@ export default {
                 rating: '',
                 stock_quantity: '',
                 tags: [],
-                discount_rate: 1,
-                available: 1
+                discount_rate: '',
+                available: ''
             }
         }
     },
@@ -155,6 +155,20 @@ export default {
             fetchProductTags: 'admin/fetchProductTags',
             storeProduct: 'admin/storeProduct',
         }),
+        closeAndInitForm() {
+            this.formInput = {
+                title: '',
+                imgUrl: '',
+                unit_price: '',
+                description: '',
+                rating: '',
+                stock_quantity: '',
+                tags: [],
+                discount_rate: '',
+                available: ''
+            }
+            this.dialog = false
+        }
     },
     created() {
         this.fetchProducts()
@@ -164,9 +178,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-table {
-    width:80%
-}
+
 </style>
 
 

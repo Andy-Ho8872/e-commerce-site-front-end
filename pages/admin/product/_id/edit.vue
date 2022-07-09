@@ -16,7 +16,7 @@
                         <v-text-field label="商品圖片網址" name="imgUrl" v-model="formInput.imgUrl" :rules="[rules.required]"></v-text-field>
                     </v-card-subtitle>
                     <v-card-subtitle>
-                        <v-text-field label="單價" name="unit_price" v-model="formInput.unit_price" :rules="[rules.required]"></v-text-field>
+                        <v-text-field label="單價" name="unit_price" v-model="formInput.unit_price" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
                     </v-card-subtitle>
                     <v-card-subtitle>
                         <v-textarea label="敘述" name="description" v-model="formInput.description" :rules="[rules.required]"></v-textarea>
@@ -187,17 +187,20 @@ export default {
                 rating: '',
                 stock_quantity: '',
                 tags: [],
-                discount_rate: 1,
-                available: 1
+                discount_rate: '',
+                available: ''
             }
         }
     },
     computed: {
         ...mapGetters({
             products: 'admin/getViewedProducts',
-            product: 'admin/getProduct',
+            // product: 'admin/getProduct',
             productTags: 'admin/getProductTags'
         }),
+        product() {
+            return this.products.find(p => p.id == this.$route.params.id) 
+        }
     },
     methods: {
         ...mapActions({
@@ -209,15 +212,15 @@ export default {
         }),
         initFormInput() {
             this.formInput = {
-                title: this.product.title || null,
-                imgUrl: this.product.imgUrl || null,
-                unit_price: this.product.unit_price || null,
-                description: this.product.description || null,
-                rating: this.product.rating || null,
-                stock_quantity: this.product.stock_quantity || null,
-                tags: this.product.tags || null,
-                discount_rate: this.product.discount_rate || null,
-                available: this.product.available || null
+                title: this.product.title || '',
+                imgUrl: this.product.imgUrl || '',
+                unit_price: this.product.unit_price || '',
+                description: this.product.description || '',
+                rating: this.product.rating || '',
+                stock_quantity: this.product.stock_quantity || '',
+                tags: this.product.tags || [],
+                discount_rate: this.product.discount_rate || '',
+                available: this.product.available || ''
             }
         },
         resetVariationPayload() {
