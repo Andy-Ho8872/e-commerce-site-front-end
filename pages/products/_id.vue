@@ -259,7 +259,14 @@ export default {
                 case inputVal > 99:
                     this.productPayload.quantity = 99
             }
-        }
+        },
+        resetProductPayload() {
+            this.productPayload = {
+                id: this.$route.params.id,
+                quantity: 1, //* 產品當前數量 預設 1 個
+                optionValues: [] //* 產品規格
+            }
+        },
     },
     async created() {
         await this.fetchSingleProduct(this.$route.params.id) 
@@ -268,6 +275,9 @@ export default {
             this.fetchYouMayLikeProducts(this.product.tags[0].id)
         }
     },
+    mounted() {
+        this.resetProductPayload()
+    }
 }
 </script>
 
