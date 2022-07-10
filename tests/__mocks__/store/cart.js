@@ -59,9 +59,9 @@ export const mutations = {
     CHECK_AND_SET_VALID_STATUS: jest.fn((state) => {
         state.userCart.length ? (state.valid = true) : (state.valid = false)
     }),
-    REMOVE_SINGLE_PRODUCT_FROM_CART: jest.fn((state, productId) => {
-        const index = state.userCart.findIndex(item => {
-            return item.product_id == productId
+    REMOVE_SINGLE_PRODUCT_FROM_CART: jest.fn((state, cart_id) => {
+        const index = state.userCart.findIndex(cart => {
+            return cart.id == cart_id
         })
         if (index !== -1) {
             state.userCart.splice(index, 1)
@@ -80,8 +80,8 @@ export const actions = {
     async decreaseByOne({ commit }) {
         commit('DECREMENT')
     },
-    deleteFromCart: jest.fn(({ commit }, productId) => {
-        commit('REMOVE_SINGLE_PRODUCT_FROM_CART', productId)
+    deleteFromCart: jest.fn(({ commit }, data) => {
+        commit('REMOVE_SINGLE_PRODUCT_FROM_CART', data.cart_id)
     }),
     deleteAllFromCart: jest.fn(async ({ commit }) => {
         //* 確認購物車內是否還有商品
