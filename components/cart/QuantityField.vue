@@ -22,7 +22,7 @@
         <!-- 增加數量 -->
         <v-btn 
             @click="increment(product_id)"
-            :disabled='loading || product_quantity >= 99'
+            :disabled='loading || product_quantity >= stock_quantity'
             fab
             x-small 
             outlined 
@@ -47,6 +47,10 @@ export default {
             type: Number,
             require: true,
             default: 1
+        },
+        stock_quantity: {
+            type: Number,
+            require: true
         }
     },
     data () {  
@@ -82,8 +86,8 @@ export default {
                 case !valid || inputVal < 1: //* 如果第一個數字為 0 或是小於 1
                     this.productPayload.quantity = 1
                     break;
-                case inputVal > 99:
-                    this.productPayload.quantity = 99
+                case inputVal > this.stock_quantity:
+                    this.productPayload.quantity = this.stock_quantity
             }
         },
         //* 增加數量

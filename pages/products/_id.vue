@@ -45,8 +45,8 @@
                         </v-card-text>
                         <!-- 選擇規格 -->
                         <v-card-text v-if="product.variations.length">
-                            <div v-for="(variation, variationIndex) in product.variations" :key="variation.id" class="d-flex align-center">
-                                <div class="font-weight-bold">{{ variation.title }}</div>
+                            <div v-for="(variation, variationIndex) in product.variations" :key="variation.id" class="d-flex align-top">
+                                <div class="flex_text_title font-weight-bold pt-2">{{ variation.title }}</div>
                                 <v-chip-group column class="ml-4">
                                     <v-chip filter outlined small label color="indigo" 
                                         v-for="(option, index) in variation.options" 
@@ -61,7 +61,7 @@
                         <!-- 輸入數量 -->
                         <v-card-text>
                             <div class="d-flex align-center">
-                                <div class="font-weight-bold">數量</div>
+                                <div class="flex_text_title font-weight-bold">數量</div>
                                 <div class="input_container ml-4">
                                     <!-- 減少按鈕 -->
                                     <v-btn
@@ -97,6 +97,7 @@
                                         <v-icon>fa-plus fa-fw</v-icon>
                                     </v-btn>
                                 </div>
+                                <div>還剩 {{ product.stock_quantity }} 個</div>
                             </div>
                         </v-card-text>
                         <!-- 購買按鈕-->
@@ -215,8 +216,8 @@ export default {
                 case inputVal < 1: //* 數字將不會小於 1
                     this.productPayload.quantity = 1
                     break;
-                case inputVal > 99: //* 數字將不大於 99
-                    this.productPayload.quantity = 99
+                case inputVal > this.product.stock_quantity: //* 數字將不大於 庫存
+                    this.productPayload.quantity = this.product.stock_quantity
                     break;
             }
         },
@@ -256,8 +257,8 @@ export default {
                 case !valid || inputVal < 1:
                     this.productPayload.quantity = 1
                     break;
-                case inputVal > 99:
-                    this.productPayload.quantity = 99
+                case inputVal > this.product.stock_quantity:
+                    this.productPayload.quantity = this.product.stock_quantity
             }
         },
         resetProductPayload() {
@@ -288,9 +289,15 @@ export default {
 .discounted {
     text-decoration: line-through;
 }
+.flex_text_title {
+    width: 42px;
+}
 //* 購買按鈕
 .purchase_btn span {
     width: 6rem;
+}
+.input_container {
+    width: 180px;
 }
 input {
     width: 20%;

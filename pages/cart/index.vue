@@ -107,6 +107,7 @@
                                 <QuantityField
                                     :product_quantity="item.product_quantity"
                                     :product_id="item.product_id"
+                                    :stock_quantity="item.stock_quantity"
                                 />
                             </div>
                             <!-- 商品總價 -->
