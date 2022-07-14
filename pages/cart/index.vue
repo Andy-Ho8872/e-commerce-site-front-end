@@ -105,6 +105,7 @@
                             <!-- 增加 減少數量按鈕 -->
                             <div class="quantity_field">
                                 <QuantityField
+                                    :cart_id="item.id"
                                     :product_quantity="item.product_quantity"
                                     :product_id="item.product_id"
                                     :stock_quantity="item.stock_quantity"
@@ -119,7 +120,7 @@
                             <!-- 刪除按鈕(單項商品) -->
                             <v-btn
                                 class="delete_single_item cart_section_btn white--text"
-                                @click="deleteFromCart({ product_id: item.product_id, cart_id: item.id })"
+                                @click="deleteFromCart(item.id)"
                                 color="red"
                                 outlined
                             >
@@ -217,9 +218,9 @@
                         </div>
                         <!-- 按鈕群組 -->
                         <div class="d-flex">
-                            <QuantityField :product_id="item.product_id" :product_quantity="item.product_quantity"></QuantityField>
+                            <QuantityField :cart_id="item.id" :product_id="item.product_id" :product_quantity="item.product_quantity" :stock_quantity="item.stock_quantity"/>
                             <!-- 刪除 -->
-                            <v-btn x-small fab outlined color="error" class="ml-4" @click="deleteFromCart({ product_id: item.product_id, cart_id: item.id })">
+                            <v-btn x-small fab outlined color="error" class="ml-4" @click="deleteFromCart(item.id)">
                                 <v-icon x-small>fa-trash</v-icon>
                             </v-btn>
                         </div>

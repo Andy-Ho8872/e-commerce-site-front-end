@@ -117,18 +117,16 @@ export const actions = {
                 product_quantity: product.quantity,
                 variation_option_values: product.optionValues
             })
-            if(res.status == 201) {
-                //* 重新撈取資料
-                await dispatch('fetchUserCart')
-                //? 回傳提示訊息給使用者
-                const message = {
-                    type: 'success',
-                    text: '已經新增至購物車',
-                }
-                dispatch('globalMessage/setFlashMessage', message, { root: true })
+            //* 重新撈取資料
+            await dispatch('fetchUserCart')
+            //? 回傳提示訊息給使用者
+            const message = {
+                type: res.data.type,
+                text: res.data.msg,
             }
+            dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
-            if(error || error.response.status == 401) {
+            if(error.response.status == 401) {
                 //* 提示訊息
                 const message = {
                     type: 'error',
@@ -141,21 +139,18 @@ export const actions = {
 
 // 購物車結帳頁面 (pages/cart/index.vue)
     //* "修改"商品數量
-    async updateQuantity({ dispatch, commit }, product) {
+    async updateQuantity({ dispatch, commit }, data) {
         //? start loading
         commit('SET_LOADING', true)
         try {
-            await apiUpdateQuantity
-            (
-                product.id, //* 產品 id
-                { product_quantity: product.quantity } //* 變更數量
-            )
+            const res = await apiUpdateQuantity
+            ({ cart_id: data.cart_id, product_quantity: data.product_quantity })
             //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
             const message = {
-                type: 'warning',
-                text: '您修改了商品數量，請查看',
+                type: res.data.type,
+                text: res.data.msg,
             }
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
@@ -166,18 +161,18 @@ export const actions = {
         commit('SET_LOADING', false)
     },
     //* 商品數量增加 1
-    async increaseByOne({ dispatch, commit }, productId) {
+    async increaseByOne({ dispatch, commit }, cart_id) {
         //? start loading
         commit('SET_LOADING', true)
         try {
             //* 增加數量
-            await apiIncreaseQuantityByOne(productId)
+            const res = await apiIncreaseQuantityByOne(cart_id)
             //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
             const message = {
-                type: 'warning',
-                text: '您增加了商品數量，請查看',
+                type: res.data.type,
+                text: res.data.msg,
             }
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
@@ -188,18 +183,18 @@ export const actions = {
         commit('SET_LOADING', false)
     },
     //* 商品數量減少 1
-    async decreaseByOne({ dispatch, commit }, productId) {
+    async decreaseByOne({ dispatch, commit }, cart_id) {
         //? start loading
         commit('SET_LOADING', true)
         try {
             //* 減少數量
-            await apiDecreaseQuantityByOne(productId)
+            const res = await apiDecreaseQuantityByOne(cart_id)
             //* 重新撈取資料
             await dispatch('fetchUserCart')
             // 提示訊息
             const message = {
-                type: 'warning',
-                text: '您減少了商品數量，請查看',
+                type: res.data.type,
+                text: res.data.msg,
             }
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
@@ -210,17 +205,17 @@ export const actions = {
         commit('SET_LOADING', false)
     },
     //* 從購物車中"移除"商品
-    async deleteFromCart({ dispatch, commit }, data) {
+    async deleteFromCart({ dispatch, commit }, cart_id) {
         try {
-            await apiDeleteFromCart(data)
+            const res = await apiDeleteFromCart(cart_id)
             //* 刪除該商品的暫存數據(可以減少向後端發送撈取的 request)
-            await commit('REMOVE_SINGLE_PRODUCT_FROM_CART', data.cart_id)
+            await commit('REMOVE_SINGLE_PRODUCT_FROM_CART', cart_id)
             //* 確認購物車內是否還有商品
             await commit('CHECK_AND_SET_VALID_STATUS')
             // 提示訊息
             const message = {
-                type: 'error',
-                text: '您刪除了一項商品',
+                type: res.data.type,
+                text: res.data.msg,
             }
             dispatch('globalMessage/setFlashMessage', message, { root: true })
         } catch (error) {
@@ -233,15 +228,15 @@ export const actions = {
         //* 購物車內有商品才發出請求
         if(state.userCart.length) {
             try {
-                await apiDeleteAllFromCart()
+                const res = await apiDeleteAllFromCart()
                 //* 刪除所有商品的暫存數據
                 await commit('REMOVE_ALL_FROM_CART')
                 //* 確認購物車內是否還有商品
                 await commit('CHECK_AND_SET_VALID_STATUS')
                 // 提示訊息
                 const message = {
-                    type: 'error',
-                    text: '您的購物車已經清空',
+                    type: res.data.type,
+                    text: res.data.msg,
                 }
                 dispatch('globalMessage/setFlashMessage', message, { root: true })
             } catch (error) {

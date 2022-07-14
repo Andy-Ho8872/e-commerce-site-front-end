@@ -12,14 +12,14 @@ export const apiAddToCart = (productId) => config.authRequest.get(`/cart/product
 export const apiAddToCartWithData = (data) => config.authRequest.post(`/cart/product/${data.product_id}/create`, data);
 //* 刪除
     //? 購物車中移除商品
-export const apiDeleteFromCart = (data) => config.authRequest.delete(`/cart/product/${data.product_id}/delete`, { data });
+export const apiDeleteFromCart = (cart_id) => config.authRequest.delete(`/cart/${cart_id}/delete`);
     //? 清空購物車
-export const apiDeleteAllFromCart = () => config.authRequest.delete(`/cart/product/deleteAll`);
+export const apiDeleteAllFromCart = () => config.authRequest.delete(`/cart/deleteAll`);
 //* 修改
     //? 直接輸入
-export const apiUpdateQuantity = (productId, quantity) => config.authRequest.post(`/cart/product/${productId}/update`, quantity);
+export const apiUpdateQuantity = (data) => config.authRequest.post(`/cart/${data.cart_id}/update`, data);
     //? 增加 1
-export const apiIncreaseQuantityByOne = (productId) => config.authRequest.get(`/cart/product/${productId}/increaseByOne`);
+export const apiIncreaseQuantityByOne = (cart_id) => config.authRequest.get(`/cart/${cart_id}/increaseByOne`);
     //? 減少 1
-export const apiDecreaseQuantityByOne = (productId) => config.authRequest.get(`/cart/product/${productId}/decreaseByOne`);
+export const apiDecreaseQuantityByOne = (cart_id) => config.authRequest.get(`/cart/${cart_id}/decreaseByOne`);
 //-------------------------------------------------- 購物車相關 API --------------------------------------------------//
