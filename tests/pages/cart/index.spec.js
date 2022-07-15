@@ -134,13 +134,10 @@ describe('cart.vue', () => {
             router,
             store,
         })
-        const data = {
-            cart_id: 1,
-            product_id: 1
-        }
+        const cart_id = 1
         const commit = jest.fn()
-        await cart.actions.deleteFromCart({ commit }, data)
-        expect(commit).toBeCalledWith('REMOVE_SINGLE_PRODUCT_FROM_CART', data.cart_id)
+        await cart.actions.deleteFromCart({ commit }, cart_id)
+        expect(commit).toBeCalledWith('REMOVE_SINGLE_PRODUCT_FROM_CART', cart_id)
     })
     test('should delete item with product_id by clicking delete single item button', async () => {
         const wrapper = mount(cartPage, {

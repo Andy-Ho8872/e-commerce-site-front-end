@@ -80,8 +80,8 @@ export const actions = {
     async decreaseByOne({ commit }) {
         commit('DECREMENT')
     },
-    deleteFromCart: jest.fn(({ commit }, data) => {
-        commit('REMOVE_SINGLE_PRODUCT_FROM_CART', data.cart_id)
+    deleteFromCart: jest.fn(({ commit }, cart_id) => {
+        commit('REMOVE_SINGLE_PRODUCT_FROM_CART', cart_id)
     }),
     deleteAllFromCart: jest.fn(async ({ commit }) => {
         //* 確認購物車內是否還有商品

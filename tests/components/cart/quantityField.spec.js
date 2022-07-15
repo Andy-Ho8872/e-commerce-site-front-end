@@ -32,7 +32,7 @@ describe('QuantityField.vue', () => {
             vuetify, // 在這個 wrapper 內使用 vuetify
             store, // 在這個 wrapper 內使用 vuex store
         })
-        const product_quantity = wrapper.vm.productPayload.quantity
+        const product_quantity = wrapper.vm.payload.product_quantity
         expect(product_quantity).toBe(1)
     })
     test('should receive correct props value of product_quantity and merge the value in data', async () => {
@@ -45,7 +45,7 @@ describe('QuantityField.vue', () => {
                 product_quantity: 2,
             },
         })
-        const product_quantity = wrapper.vm.productPayload.quantity
+        const product_quantity = wrapper.vm.payload.product_quantity
         expect(product_quantity).toBe(2)
     })
     test('increment function should change the value of product_quantity', async () => {
@@ -54,7 +54,7 @@ describe('QuantityField.vue', () => {
             vuetify,
             store,
         })
-        let product_quantity = wrapper.vm.productPayload.quantity
+        let product_quantity = wrapper.vm.payload.product_quantity
         // test function
         const incrementByOne = () => {
             product_quantity += 1
@@ -68,7 +68,7 @@ describe('QuantityField.vue', () => {
             vuetify,
             store,
         })
-        const product_quantity = wrapper.vm.productPayload.quantity
+        const product_quantity = wrapper.vm.payload.product_quantity
         // regex
         const pattern = /^[1-9]\d{0,}/gi
         expect(pattern.test(product_quantity)).toBeTruthy()
