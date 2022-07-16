@@ -8,11 +8,6 @@
   opacity: 0;
 }
 
-html,
-body {
-  overflow: hidden;
-}
-
 .v-main_wrap {
   padding: auto 0;
 }
