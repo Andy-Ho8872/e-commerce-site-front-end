@@ -11,8 +11,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "test": "jest",
-    "generate": "nuxt generate",
-    "heroku-prebuild": "npm i -f"
+    "generate": "nuxt generate"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
