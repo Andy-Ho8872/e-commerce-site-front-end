@@ -63,12 +63,18 @@
                 </v-row>
                 <!--  若使用者沒有登入 (註冊、登入按鈕) -->
                 <v-row v-else class="content">
-                    <li v-for="(list, index) in userList" :key="index">
-                        <nuxt-link :to="list.to">
-                            <v-icon class="icon" dark small>{{ list.icon }}</v-icon>
-                            <span>{{ list.text }}</span>
+                    <li>
+                        <nuxt-link :to="{ name: 'auth-register' }">
+                            <v-icon class="icon" dark small>fa-user-tie fa-fw</v-icon>
+                            <span>註冊</span>
                         </nuxt-link>
                     </li>
+                    <l>
+                        <nuxt-link :to="{ name: 'auth-login' }">
+                            <v-icon class="icon" dark small>fa-user-circle fa-fw</v-icon>
+                            <span>登入</span>
+                        </nuxt-link>
+                    </l>
                 </v-row>
             </div>
         </v-row>
@@ -112,19 +118,6 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
     data() {
         return {
-            //* 帳戶操作
-            userList: [
-                {
-                    icon: 'fa-user-tie fa-fw',
-                    text: '註冊',
-                    to: { name: 'auth-register' },
-                },
-                {
-                    icon: 'fa-user-circle fa-fw',
-                    text: '登入',
-                    to: { name: 'auth-login' },
-                },
-            ],
             //* 觸發 class 
             active: false, //* 漢堡 sidebar
             showNotifications: false, //* 通知列表
