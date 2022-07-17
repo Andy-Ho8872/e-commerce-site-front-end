@@ -9,9 +9,10 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt build && nuxt start",
+    "start": "nuxt start",
     "test": "jest",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "heroku-prebuild": "npm i -f"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
