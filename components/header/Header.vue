@@ -69,12 +69,12 @@
                             <span>註冊</span>
                         </nuxt-link>
                     </li>
-                    <l>
+                    <li>
                         <nuxt-link :to="{ name: 'auth-login' }">
                             <v-icon class="icon" dark small>fa-user-circle fa-fw</v-icon>
                             <span>登入</span>
                         </nuxt-link>
-                    </l>
+                    </li>
                 </v-row>
             </div>
         </v-row>
