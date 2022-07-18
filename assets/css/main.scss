@@ -11,6 +11,9 @@
 
 //* layouts-------------------------------- Start
 // default.vue & paginate.vue
+body {
+    overflow-x: hidden;
+}
 .v-main_wrap {
     padding: auto 0;
 }
