@@ -1,4 +1,5 @@
 import axios from 'axios';
+import auth from '@/store/auth'
 axios.defaults.withCredentials = true;
 
 //* URL 與 設定
@@ -58,6 +59,8 @@ adminRequest.interceptors.response.use(
         if(error && error.response) {
             switch (error.response.status) {
                 case 401:
+                    localStorage.removeItem("Token")
+                    localStorage.removeItem("UserEmail")
                     //* 重新導向
                     $nuxt._router.push({ name: 'auth-login' })
                     break; 

@@ -139,11 +139,13 @@ export const actions = {
         }) //? 使用者的通知
     },
     //* 確認使用者是否已經登入
-    async checkIfUserHasLoggedIn({ state }) {
+    async checkIfUserHasLoggedIn({ state, dispatch }) {
         const timeout = setTimeout(() => {
             if (state.user) {
                 this.$router.push({ name: 'index' })
-                console.log('您目前已經登入，將導向至首頁')
+            }
+            if (!state.token) {
+                dispatch('clearAllVuexStates')
             }
             clearTimeout(timeout)
         }, 3000)
