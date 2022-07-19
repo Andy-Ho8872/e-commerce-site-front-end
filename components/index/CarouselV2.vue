@@ -51,6 +51,13 @@ export default {
             default: 340,
         },
     },
+    mounted() {
+        //* 修復頁面一開始渲染完成，next-icon 會有無法點擊的問題，以下 class 皆為 Vuetify 框架所自帶。
+        const next = document.querySelectorAll('.v-slide-group__next')
+        next.forEach(item => {
+            item.classList.remove('v-slide-group__next--disabled')
+        })
+    }
 }
 </script>
 
