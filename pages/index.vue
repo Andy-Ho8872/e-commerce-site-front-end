@@ -16,14 +16,16 @@
         <!-- 限時特賣 -->
         <Banner elevation="2" icon="fa-clock" iconColor="blue lighten-1" text="限時特賣" backgroundColor="white" class="mt-6"/>
         <SkeletonCarousel :cardHeight="355" v-if="loading"/>
-        <CarouselV3 :cardWidth="340" :cardHeight="340" :data="items.flash_sale_products" v-show="!loading"/>
+        <!-- <CarouselV3 :cardWidth="340" :cardHeight="340" :data="items.flash_sale_products" v-show="!loading"/> -->
+        <CarouselV2 :cardWidth="340" :cardHeight="340" :data="items.flash_sale_products" v-show="!loading"/>
         <!-- 標籤搜尋 (包含骨架屏)-->
         <Banner elevation="2" icon="fa-tags" iconColor="teal lighten-1" text="標籤搜尋" backgroundColor="white" class="mt-16"/>
         <SearchTag elevation="6" class="pa-6 mb-16"/>
         <!-- 最新上架 -->
         <Banner elevation="2" icon="fa-bullhorn" iconColor="blue lighten-1" text="最新上架" backgroundColor="white" class="mt-6"/>
         <SkeletonCarousel :cardHeight="355" v-if="loading"/>
-        <CarouselV3 :cardWidth="340" :cardHeight="340" :data="items.latest_products" v-show="!loading"/>
+        <!-- <CarouselV3 :cardWidth="340" :cardHeight="340" :data="items.latest_products" v-show="!loading"/> -->
+        <CarouselV2 :cardWidth="340" :cardHeight="340" :data="items.latest_products" v-show="!loading"/>
         <!-- 熱門商品 -->
         <Banner elevation="2" icon="fa-burn" iconColor="red lighten-1" text="熱門商品" backgroundColor="white" class="mt-16"/>
         <ProductGrid :data="items.hot_sale_products" :loading="loading"/>

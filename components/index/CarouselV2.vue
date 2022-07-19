@@ -1,5 +1,5 @@
 <template>
-    <v-sheet elevation="6" rounded="lg" :color="background">
+    <v-sheet elevation="6" :color="background">
         <v-slide-group class="slider_wrapper" show-arrows="desktop">
             <!-- icons -->
             <template v-slot:next>
@@ -9,11 +9,11 @@
                 <v-icon large class="slider_icon prev_icon">fa-chevron-circle-left</v-icon>
             </template>
             <!-- items -->
-            <v-slide-item v-for="item in items" :key="item.id">
+            <v-slide-item v-for="item in data" :key="item.id">
                 <v-card
                     elevation="8"
                     :max-width="cardWidth"
-                    class="carousel_item_container mx-4 my-6"
+                    class="slide_items mx-4 my-6"
                     nuxt
                     :to="{ name: 'products-id', params: { id: item.id } }"
                 >
@@ -23,8 +23,7 @@
                             <span class="red--text font-italic font-weight-medium">{{ item.discount_rate * 10 }} 折</span>
                         </v-card-subtitle>
                     </v-img>
-                    <v-card-subtitle class="title_background white--text text-center">{{ item.title }}</v-card-subtitle
-                    >
+                    <v-card-subtitle class="title_background white--text text-center">{{ item.title }}</v-card-subtitle>
                 </v-card>
             </v-slide-item>
         </v-slide-group>
@@ -35,7 +34,7 @@
 
 export default {
     props: {
-        items: {
+        data: {
             type: Array,
             require: true
         },
@@ -82,7 +81,7 @@ $icon-offset: -0.5em;
 }
 
 @media (max-width: 768px) {
-    .carousel_item_container {
+    .slide_items {
         width: 200px;
         height: 254px;
     }
