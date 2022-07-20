@@ -15,6 +15,7 @@ export const state = () => ({
     user: null, //* 使用者資料
     message: null, //* 錯誤訊息
     loading: false,
+    timeout_id: null
 })
 
 export const getters = {
@@ -51,6 +52,9 @@ export const mutations = {
     SET_MESSAGE(state, msg) {
         state.message = msg
     },
+    SET_TIMEOUT_ID(state, timeout_id) {
+        state.timeout_id = timeout_id
+    },
     //* 設置 Loading 狀態
     SET_LOADING(state, loading) {
         state.loading = loading
@@ -79,15 +83,16 @@ export const mutations = {
 
 export const actions = {
     //* 提示訊息
-    async setFlashMessage({ commit }, message) {
-        //* 設置訊息
+    async setAuthPageMessage({ state, commit }, message) {
+        //* 將原本的 timeout 清除
+        clearTimeout(state.timeout_id)
+        //* 設置訊息 
         commit('SET_MESSAGE', message)
-        //* 3秒後清除訊息
-        const timeout = setTimeout(() => {
+        //* 清除訊息 
+        const new_timeout_id = setTimeout(() => {
+            commit('SET_TIMEOUT_ID', new_timeout_id)
             commit('CLEAR_MESSAGE')
-            //* 清除 timeout 以防止記憶體洩漏
-            clearTimeout(timeout)
-        }, 3000)
+        }, 3500)
     },
     //* 註冊流程
     async register({ dispatch, commit }, user) {
@@ -109,7 +114,7 @@ export const actions = {
         } catch (error) {
             //* 錯誤訊息
             const msg = error.response.data.errors
-            dispatch('setFlashMessage', msg)
+            dispatch('setAuthPageMessage', msg)
         }
         //? end loading
         commit('SET_LOADING', false)
@@ -155,8 +160,6 @@ export const actions = {
         //? start loading
         commit('SET_LOADING', true)
         try {
-            //* 先取得 CSRF Cookie
-            // await apiCsrfLogin() //! 暫時不用
             //* 從 login 頁面 抓取資料
             const res = await apiUserLogin({
                 email: user.email,
@@ -176,7 +179,7 @@ export const actions = {
         } catch (error) {
             //* 錯誤訊息
             const msg = error.response.data.errors
-            dispatch('setFlashMessage', msg)
+            dispatch('setAuthPageMessage', msg)
         }
         //? end loading
         commit('SET_LOADING', false)
