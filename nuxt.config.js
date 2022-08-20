@@ -33,7 +33,10 @@ export default {
     css: ['@/assets/css/main.css', '@/assets/css/main.scss'],
 
     env: {
-        apiUrl: process.env.API_URL || 'http://localhost:8000/api/v1'
+        apiUrl: process.env.API_URL || 'http://localhost:8000/api/v1',
+        imgur_api_url: process.env.IMGUR_API_URL,
+        imgur_client_id: process.env.IMGUR_CLIENT_ID,
+        imgur_client_secret: process.env.IMGUR_CLIENT_SECRET,
     },
 
     components: true,

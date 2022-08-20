@@ -12,8 +12,19 @@
                     <v-card-subtitle> 
                         <v-text-field label="名稱" name="title" v-model="formInput.title" :rules="[rules.required]"></v-text-field>
                     </v-card-subtitle>
+                    <v-file-input
+                        v-model="imageFile"
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        :loading="loading"
+                        chips
+                        show-size
+                        label="上傳商品圖片(上限 10MB)"
+                    ></v-file-input>
                     <v-card-subtitle> 
-                        <v-text-field label="商品圖片網址" name="imgUrl" v-model="formInput.imgUrl" :rules="[rules.required]"></v-text-field>
+                        <!-- 若有上傳圖片，則 URL 不可任意更動 -->
+                        <v-text-field :readonly="imageFile ? true : false" label="商品圖片網址" name="imgUrl" v-model="formInput.imgUrl" :rules="[rules.required]"></v-text-field>
                     </v-card-subtitle>
                     <v-card-subtitle>圖片預覽:
                         <v-img :src="formInput.imgUrl" :alt="formInput.title" width="200" height="200"></v-img>
@@ -145,6 +156,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { apiUploadImage } from '~/APIs/externalAPI/imgur'
 import inputRulesMixin from '~/mixins/inputRulesMixin'
 
 export default {
@@ -182,9 +194,11 @@ export default {
                 variation_id: null, 
             },
             //* 表單內容
+            loading: false,
+            imageFile: null, // 上傳的圖片->會先上傳到 imgur 的圖床然後在記錄下該圖片 URL 再賦值到 formInput 裡面的 imgUrl 
             formInput: {
                 title: '',
-                imgUrl: '',
+                imgUrl: '', // 也可以直接輸入想上傳圖片的網址
                 unit_price: '',
                 description: '',
                 rating: '',
@@ -226,6 +240,17 @@ export default {
                 available: this.product.available || ''
             }
         },
+        async handleFileUpload() {
+            this.loading = true
+            try {
+                const res = await apiUploadImage(this.imageFile)
+                this.formInput.imgUrl = res.data.data.link
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.loading = false
+            }
+        },
         resetVariationPayload() {
             this.variationPayload = {
                 product_id: this.$route.params.id,
@@ -256,6 +281,11 @@ export default {
     async mounted() {
         await this.fetchSingleProduct(this.$route.params.id)
         this.initFormInput()
+    },
+    watch: {
+        'imageFile': function () {
+            this.imageFile ? this.handleFileUpload() : this.formInput.imgUrl = ''
+        }
     }
 }
 </script>
