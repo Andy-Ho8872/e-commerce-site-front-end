@@ -10,6 +10,9 @@
             <!-- 商品資訊 -->
             <v-card class="my-4" >
                 <v-card-title class="my-4 font-weight-bold">產品資訊</v-card-title>
+                <v-card-subtitle>圖片預覽:
+                    <v-img :src="product.imgUrl" :alt="product.title" width="200" height="200"></v-img>
+                </v-card-subtitle>
                 <v-card-subtitle>編號: {{ product.id }}</v-card-subtitle>
                 <v-card-subtitle>名稱: {{ product.title }}</v-card-subtitle>
                 <v-card-subtitle>單價: {{ product.unit_price }}</v-card-subtitle>

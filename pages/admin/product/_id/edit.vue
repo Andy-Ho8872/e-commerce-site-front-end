@@ -15,6 +15,9 @@
                     <v-card-subtitle> 
                         <v-text-field label="商品圖片網址" name="imgUrl" v-model="formInput.imgUrl" :rules="[rules.required]"></v-text-field>
                     </v-card-subtitle>
+                    <v-card-subtitle>圖片預覽:
+                        <v-img :src="formInput.imgUrl" :alt="formInput.title" width="200" height="200"></v-img>
+                    </v-card-subtitle>
                     <v-card-subtitle>
                         <v-text-field label="單價" name="unit_price" v-model="formInput.unit_price" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
                     </v-card-subtitle>
