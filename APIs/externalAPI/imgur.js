@@ -1,10 +1,10 @@
 import axios from 'axios';
-axios.defaults.withCredentials = true;
 
 const apiUrl = process.env.imgur_api_url // 從 nuxt.config.js 中讀取
 const clientId = process.env.imgur_client_id
 
 const imgurRequest = axios.create({
+    withCredentials: false,
     baseURL: apiUrl
 });
 
