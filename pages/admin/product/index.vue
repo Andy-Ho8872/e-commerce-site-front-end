@@ -1,68 +1,22 @@
 <template>
     <v-container>
-        <v-btn class="mb-4" color="primary" @click="dialog = true">上架商品</v-btn>
+        <v-btn class="mb-4" color="primary" @click="[dialog = true]">上架商品</v-btn>
         <v-dialog v-model="dialog" max-width="600" scrollable>
             <v-card>
                 <v-card-title>上架商品</v-card-title>
                 <v-card-text style="height: 500px">
                     <v-form v-model="valid">
-                        <v-card-subtitle> 
-                            <v-text-field label="名稱" name="title" v-model="formInput.title" :rules="[rules.required]"></v-text-field>
-                        </v-card-subtitle>
-                        <v-file-input
-                            v-model="imageFile"
-                            type="file"
-                            name="image"
-                            accept="image/*"
-                            :loading="loading"
-                            chips
-                            show-size
-                            label="上傳商品圖片(上限10MB)"
-                        ></v-file-input>
-                        <v-card-subtitle> 
-                            <!-- 若有上傳圖片，則 URL 不可任意更動 -->
-                            <v-text-field :readonly="imageFile ? true : false" label="商品圖片網址(若有上傳圖片則無法變動)" name="imgUrl" v-model="formInput.imgUrl" :rules="[rules.required]"></v-text-field>
-                        </v-card-subtitle>
-                        <v-card-subtitle>
-                            <v-text-field label="單價" name="unit_price" v-model="formInput.unit_price" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
-                        </v-card-subtitle>
-                        <v-card-subtitle>
-                            <v-textarea label="敘述" name="description" v-model="formInput.description" :rules="[rules.required]"></v-textarea>
-                        </v-card-subtitle>
-                        <v-card-subtitle>
-                            <v-text-field label="評分(最多5、最少1)" name="ratings" type="number" v-model="formInput.rating" :rules="[rules.required, rules.maxValue2, rules.minValue2 ,rules.maxLetterLength2]"></v-text-field>
-                        </v-card-subtitle>
-                        <v-card-subtitle>
-                            <v-text-field label="庫存" name="stock_quantity" v-model="formInput.stock_quantity" :rules="[rules.required]"></v-text-field>
-                        </v-card-subtitle>
-                        <v-card-subtitle>
-                            <v-combobox 
-                                v-model="formInput.tags"
-                                label="標籤" 
-                                chips 
-                                multiple 
-                                return-object 
-                                :items="productTags" 
-                                item-text="title" 
-                                item-value="id">
-                            </v-combobox>
-                        </v-card-subtitle>
-                        <v-card-subtitle>
-                            規格(請先上架商品在至編輯頁面新增):
-                        </v-card-subtitle>
-                        <!-- 折價率 -->
-                        <v-card-subtitle>
-                            <v-text-field label="折價率: 最多1(預設)、最少0.01" type="number" name="discount_rate" v-model="formInput.discount_rate" :rules="[rules.required, rules.maxValue, rules.minValue, rules.maxLetterLength]"></v-text-field>
-                        </v-card-subtitle>
-                        <v-card-subtitle>  
-                            <v-select label="是否有現貨(預設是)" :items="selectOptions" item-text="text" item-value="value" v-model="formInput.available" :rules="[rules.required]"></v-select>
-                        </v-card-subtitle>
+                        <InputForm @passFormInput="receiveFormInputFromChild"/>
+                        <!-- 按鈕操作 -->
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="error" text class="ma-2" @click="closeAndInitForm">取消</v-btn>
-                            <v-btn color="primary" class="ma-2" :disabled="!valid" @click="[storeProduct(formInput), closeAndInitForm()]">上架</v-btn>
+                            <v-btn color="error" text class="ma-2" @click="[dialog = false]">取消</v-btn>
+                            <v-btn color="primary" class="ma-2" :disabled="!valid" @click="[storeProduct(formInput), dialog = false, scrollToBottom()]">上架</v-btn>
                         </v-card-actions>
                     </v-form>
+                    <v-card-subtitle>
+                        規格(請先上架商品在至編輯頁面新增):
+                    </v-card-subtitle>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -122,7 +76,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { apiUploadImage } from '~/APIs/externalAPI/imgur'
 import inputRulesMixin from '~/mixins/inputRulesMixin'
 
 export default {
@@ -131,30 +84,8 @@ export default {
         return {
             dialog: false,
             valid: false,
-            selectOptions: [
-                { 
-                    text: '是',
-                    value: '1' 
-                },
-                { 
-                    text: '否',
-                    value: '0' 
-                },
-            ],
-            //* 表單內容
-            loading: false,
-            imageFile: null, // 上傳的圖片->會先上傳到 imgur 的圖床然後在記錄下該圖片 URL 再賦值到 formInput 裡面的 imgUrl 
-            formInput: {
-                title: '',
-                imgUrl: '', // 也可以直接輸入想上傳圖片的網址
-                unit_price: '',
-                description: '',
-                rating: '',
-                stock_quantity: '',
-                tags: [],
-                discount_rate: '',
-                available: ''
-            }
+            //* 父元件表單
+            formInput: null,
         }
     },
     computed: {
@@ -169,47 +100,23 @@ export default {
             fetchProductTags: 'admin/fetchProductTags',
             storeProduct: 'admin/storeProduct',
         }),
-        async handleFileUpload() {
-            this.loading = true
-            try {
-                const res = await apiUploadImage(this.imageFile)
-                this.formInput.imgUrl = res.data.data.link
-            } catch (error) {
-                console.log(error);
-            } finally {
-                this.loading = false
-            }
+        receiveFormInputFromChild(value) {
+            this.formInput = value
         },
-        closeAndInitForm() {
-            this.imageFile = null
-            this.formInput = {
-                title: '',
-                imgUrl: '',
-                unit_price: '',
-                description: '',
-                rating: '',
-                stock_quantity: '',
-                tags: [],
-                discount_rate: '',
-                available: ''
-            }
-            this.dialog = false
+        scrollToBottom() {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            })
         }
     },
     created() {
         this.fetchProducts()
         this.fetchProductTags()
     },
-    watch: {
-        'imageFile': function () {
-            this.imageFile ? this.handleFileUpload() : this.formInput.imgUrl = ''
-        }
-    }
 }
 </script>
 
 <style lang="scss" scoped>
 
 </style>
-
-
