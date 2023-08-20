@@ -77,7 +77,7 @@
                                 <v-card-title class="font-weight-bold">選擇信用卡</v-card-title>
                                 <v-card-text>
                                     <v-radio-group>
-                                        <v-radio v-for="(creditCard, index) in user.credit_cards" :key="'creditCard' + creditCard.id" :label="`卡號: ${creditCard.masked_card_number}`" @click="setCurrentSelectedCreditCardInputs(index)"></v-radio>
+                                        <v-radio v-for="(creditCard, index) in user.credit_cards" :key="'creditCard' + creditCard.id" :label="`卡號: ${creditCard.masked_card_number}`" :checked="index == selectedCreditCardIndex" @click="setCurrentSelectedCreditCardInputs(index)"></v-radio>
                                     </v-radio-group>
                                 </v-card-text>
                                 <v-card-actions>
@@ -211,6 +211,7 @@ export default {
                     cvv: '', 
                 },  
             },
+            selectedCreditCardIndex: 0,
             creditCardIcon: 'fa-regular fa-credit-card',
             //* cleave.js(套件) 驗證所需的參數
             options: {
@@ -328,7 +329,7 @@ export default {
         fillCreditCardInfo() {
             if(this.autoFillCreditCard) {
                 this.selectCreditCardDialog = true
-                this.setCurrentSelectedCreditCardInputs()
+                this.setCurrentSelectedCreditCardInputs(this.selectedCreditCardIndex)
             } else {
                 this.selectCreditCardDialog = false
                 this.form.creditCard.type = 'unknown'
@@ -341,6 +342,7 @@ export default {
         },
         //* 設定輸入欄位的值(信用卡) 預設為第一張
         setCurrentSelectedCreditCardInputs(index = 0) {
+            this.selectedCreditCardIndex = index
             if(this.autoFillCreditCard && this.checkIfUserHasCreditCard()) {
                 this.form.creditCard.type = this.user.credit_cards[index].card_type
                 this.form.creditCard.number = this.user.credit_cards[index].card_number
