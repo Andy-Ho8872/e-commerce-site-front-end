@@ -34,8 +34,8 @@
                     <v-card-title class="font-weight-bold">選擇您的付款方式</v-card-title>
                     <v-card-subtitle class="mt-2">
                         <v-chip-group mandatory active-class="deep-purple--text text--accent-4" name="payment_id" v-model="form.payment_id">
-                            <v-chip v-for="payment in payments" :key="'payment' + payment.id" :value="payment.id" large label @click="checkPaymentMethod(payment)" class="payment_title">
-                                {{ payment.title }}
+                            <v-chip  large label v-for="payment in payments" :key="'payment' + payment.id" :value="payment.id" :disabled="payment.title == '刷卡付款' && user.credit_cards.length == 0" class="payment_title" @click="checkPaymentMethod(payment)">
+                                {{ payment.title == "刷卡付款" && user.credit_cards.length == 0 ? "請至個人資料新增信用卡" : payment.title  }}
                             </v-chip>
                         </v-chip-group>
                     </v-card-subtitle>
@@ -44,24 +44,10 @@
                         <v-card-title class="font-weight-bold">選擇刷卡帳戶</v-card-title>
                         <!-- 信用卡輸入欄位 -->
                         <v-card-text>
-                            <VCleaveInput
-                                class="text_field"
-                                v-model="form.creditCard.number"
-                                :options="options"
-                                :rules="[rules.required]"
-                                :append-icon="creditCardIcon"
-                                outlined
-                                label="卡號"
-                            />
-                            <v-text-field class="text_field" label="持有人" outlined v-model="form.creditCard.holder_name" :rules="[rules.required]"></v-text-field>
-                            <v-select class="text_field" label="到期日(月)" outlined :items="months" v-model="form.creditCard.expiration_month" :rules="[rules.required]"></v-select>
-                            <v-select class="text_field" label="到期日(年)" outlined :items="years" v-model="form.creditCard.expiration_year" :rules="[rules.required]"></v-select>
-                            <v-text-field class="text_field" label="安全碼(CVV)" outlined maxlength="3" counter="3" v-model="form.creditCard.cvv" :rules="[rules.required, rules.numbersOnly]"></v-text-field>
+                            <v-text-field class="text_field" label="卡號" outlined v-model="form.creditCard.masked_number" :rules="[rules.required]" :append-icon="'fa-brands fa-cc-' + form.creditCard.type" disabled></v-text-field>
+                            <!-- 自動填入我的信用卡 -->
+                            <v-switch v-model="autoFillCreditCard" inset label="填入我的信用卡"></v-switch>
                         </v-card-text>
-                        <!-- 自動填入我的信用卡 -->
-                        <v-card-subtitle>
-                            <v-switch @click="[autoFillCreditCard = !autoFillCreditCard, fillCreditCardInfo()]" inset label="填入我的信用卡"></v-switch>
-                        </v-card-subtitle>
                         <!-- 選擇已經輸入的信用卡 -->
                         <v-dialog max-width="600" v-model="selectCreditCardDialog">
                             <v-card v-if="!user.credit_cards.length">
@@ -82,7 +68,7 @@
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
-                                    <v-btn color="primary" outlined @click="selectCreditCardDialog = false">關閉</v-btn>
+                                    <v-btn color="primary" outlined @click="selectCreditCardDialog = false">確定</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
@@ -121,11 +107,9 @@
                             label="您的地址"
                             placeholder="OO市OO區OO路OO號..."
                         ></v-text-field>
+                        <v-switch @click="autoFillUserProfile" v-model="autoFillProfile" inset label="填入我的個人資料"></v-switch>
                     </v-card-text>
                     <!-- 使用常用資料 -->
-                    <v-card-subtitle>
-                        <v-switch @click="autoFillUserProfile" v-model="autoFillProfile" inset label="填入我的個人資料"></v-switch>
-                    </v-card-subtitle>
                     <v-divider></v-divider>
                     <!-- 提醒視窗 -->
                     <v-dialog v-model="dialog" width="600">
@@ -164,14 +148,10 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import inputRulesMixins from '~/mixins/inputRulesMixin'
-import VCleaveInput from "vuetify-cleave";
 
 export default {
     middleware: 'authenticated', //* 要先通過驗證才能訪問此頁面
     mixins:[inputRulesMixins],
-    components: {
-        VCleaveInput, //* 以套件來驗證輸入的信用卡
-    },
     head() {
         return {
             title: '建立訂單',
@@ -209,52 +189,10 @@ export default {
                     expiration_month: '',
                     expiration_year: '',
                     cvv: '', 
+                    masked_number: '', //* 隱藏卡號
                 },  
             },
             selectedCreditCardIndex: 0,
-            creditCardIcon: 'fa-regular fa-credit-card',
-            //* cleave.js(套件) 驗證所需的參數
-            options: {
-                creditCard: true,
-                delimiter: '-',
-                onCreditCardTypeChanged: (type) => {
-                    this.form.creditCard.type = type //* 表單內 credit card 的 type
-                    if(type == 'unknown') this.creditCardIcon = "fa-regular fa-credit-card"
-                    if(type == 'visa') this.creditCardIcon = "fa-brands fa-cc-visa"
-                    if(type == 'jcb') this.creditCardIcon = "fa-brands fa-cc-jcb"
-                    if(type == 'diners') this.creditCardIcon = "fa-brands fa-cc-diners-club"
-                    if(type == 'amex') this.creditCardIcon = "fa-brands fa-cc-amex"
-                    if(type == 'mastercard') this.creditCardIcon = "fa-brands fa-cc-mastercard"
-                    if(type == 'discover') this.creditCardIcon = "fa-brands fa-cc-discover"
-                }
-            },
-            // 有效日期(月)
-            months: [
-                '01',
-                '02',
-                '03',
-                '04',
-                '05',
-                '06',
-                '07',
-                '08',
-                '09',
-                '10',
-                '11',
-                '12',
-            ],
-            // 有效日期(年)
-            years: [
-                '22',
-                '23',
-                '24',
-                '25',
-                '26',
-                '27',
-                '28',
-                '29',
-                '30',
-            ],
             //* 彈出視窗
             dialog: false,
             selectCreditCardDialog: false,
@@ -311,7 +249,15 @@ export default {
         },
         //* 檢查使用者的付款方式 
         checkPaymentMethod(payment) {
-            payment.title == "刷卡付款" ? this.creditCardFormDisabled = false : this.creditCardFormDisabled = true
+            //* 檢查有無信用卡
+            if(payment.title == "刷卡付款" && this.user.credit_cards.length != 0) {
+                this.creditCardFormDisabled = false
+                this.autoFillCreditCard = false
+            } 
+            else {
+                this.creditCardFormDisabled = true
+                this.clearCreditCardInfo()
+            }
         },
         //* 設定輸入欄位的值(購買者資訊)
         setUserProfileInputs() {
@@ -332,13 +278,16 @@ export default {
                 this.setCurrentSelectedCreditCardInputs(this.selectedCreditCardIndex)
             } else {
                 this.selectCreditCardDialog = false
-                this.form.creditCard.type = 'unknown'
-                this.form.creditCard.number = ''
-                this.form.creditCard.holder_name = ''
-                this.form.creditCard.expiration_month = ''
-                this.form.creditCard.expiration_year = ''
-                this.form.creditCard.cvv = ''
             }
+        },
+        clearCreditCardInfo() {
+            this.form.creditCard.type = 'unknown'
+            this.form.creditCard.number = ''
+            this.form.creditCard.holder_name = ''
+            this.form.creditCard.expiration_month = ''
+            this.form.creditCard.expiration_year = ''
+            this.form.creditCard.cvv = ''
+            this.form.creditCard.masked_number = ''
         },
         //* 設定輸入欄位的值(信用卡) 預設為第一張
         setCurrentSelectedCreditCardInputs(index = 0) {
@@ -350,6 +299,7 @@ export default {
                 this.form.creditCard.expiration_month = this.user.credit_cards[index].card_expiration_date.substring(0, 2)
                 this.form.creditCard.expiration_year = this.user.credit_cards[index].card_expiration_date.substring(3, 5)
                 this.form.creditCard.cvv = this.user.credit_cards[index].card_CVV
+                this.form.creditCard.masked_number = this.user.credit_cards[index].masked_card_number
             }
         },
         //* 建立訂單 
@@ -359,6 +309,15 @@ export default {
             }
         }
     },
+    watch: {
+        autoFillCreditCard: function() {
+            if(this.autoFillCreditCard == true) {
+                this.fillCreditCardInfo()
+            } else {
+                this.clearCreditCardInfo()
+            }
+        }
+    }
 }
 </script>
 
