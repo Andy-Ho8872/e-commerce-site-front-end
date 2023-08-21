@@ -5,7 +5,7 @@
         <!-- 優惠計時 (月份從 0 開始計算， 例如: 數字5 == 6月)-->
         <CountdownTimer
             background="blue darken-1"
-            :year="2022"
+            :year="2023"
             :month="9"
             :day="5"
             :hour="8"
