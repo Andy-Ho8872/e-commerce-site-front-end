@@ -29,7 +29,7 @@ export default {
                 },
                 {
                     icon: 'fa-list-alt fa-fw',
-                    title: '我的訂單',
+                    title: '訂單總覽',
                     to: { name: 'user-order' },
                 },
                 {
