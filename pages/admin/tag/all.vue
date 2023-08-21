@@ -1,9 +1,9 @@
 <template>
     <v-container>
         <!-- action btn -->
-        <v-btn color="primary" @click="[dialogToCreate = true, resetFormInput()]">新增商品標籤</v-btn>
+        <v-btn class="mb-4" color="primary" @click="[dialogToCreate = true, resetFormInput()]">新增標籤</v-btn>
         <!-- table -->
-        <table class="elevation-2 mt-16">
+        <table class="elevation-2">
             <!-- header -->
             <thead>
                 <tr>
