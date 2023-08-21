@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-btn color="error" outlined :disabled="disabled" @click="initFormInput">清空資料</v-btn>
+        <v-btn color="error" outlined class="ml-4" :disabled="disabled" @click="initFormInput">清空資料</v-btn>
         <v-card-subtitle>
             <v-text-field
                 label="名稱"
