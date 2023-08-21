@@ -149,7 +149,7 @@ export const actions = {
                 buyer_name: order.user_profile.buyer_name,
                 buyer_phone: order.user_profile.buyer_phone,
                 //* 信用卡欄位(如果有勾選刷卡付款才需要填入) 
-                card_type: order.creditCard.type, //* 預設是 visa
+                card_type: order.creditCard.type, //* 預設是 unknown
                 card_number: order.creditCard.number,
                 card_holder: order.creditCard.holder_name,
                 card_expiration_month: order.creditCard.expiration_month,

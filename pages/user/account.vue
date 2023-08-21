@@ -237,7 +237,7 @@ export default {
             },
             //* 信用卡相關欄位 
             creditCard: {
-                type: '', // 預設
+                type: 'known', // 預設
                 number: '',
                 holder_name: '',
                 expiration_month: '',
