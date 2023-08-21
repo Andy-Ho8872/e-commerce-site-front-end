@@ -9,7 +9,7 @@
                 <!-- Banner -->
                 <Banner
                     icon="fa-shopping-cart"
-                    text="您的購物車"
+                    text="我的購物車"
                     elevation="1"
                     class="my-4"
                 />
@@ -18,7 +18,7 @@
                     <!-- left -->
                     <div class="cart_header__left">
                         <div class="icon_group">
-                            <v-icon>fa-shopping-cart fa-fw</v-icon>
+                            <v-icon>fa-bag-shopping fa-fw</v-icon>
                             <span>商品</span>
                         </div>
                     </div>
